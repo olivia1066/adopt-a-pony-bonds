@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 const investments = [
   {
@@ -33,51 +34,60 @@ export default function Dashboard() {
   const totalRembourse = investments.reduce((sum, i) => sum + i.montant + i.montant * i.taux * (i.duree / 12), 0)
 
   return (
-    <main className="min-h-screen bg-gray-50 font-sans">
+    <main className="min-h-screen font-sans" style={{backgroundColor: '#0D0D2B', color: 'white'}}>
+
       {/* Header */}
-      <header className="bg-white flex justify-between items-center px-8 py-4 border-b border-gray-100">
+      <header className="flex justify-between items-center px-8 py-5 border-b border-white/10">
         <div className="flex items-center gap-2">
-          <span className="text-2xl">🐴</span>
-          <span className="font-bold text-lg">Adopt a Pony</span>
+          <span className="text-xl">🐴</span>
+          <span className="font-bold" style={{color: '#00E5CC'}}>pony</span>
         </div>
         <div className="flex items-center gap-4">
-          <a href="/campagne" className="text-sm bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800">
+          <Link href="/campagne"
+            className="text-sm font-bold px-5 py-2.5 rounded-xl transition-colors"
+            style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
             + Nouvel investissement
-          </a>
-          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-bold">O</div>
+          </Link>
+          <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
+            style={{backgroundColor: '#1E1B4B', color: '#00E5CC'}}>
+            O
+          </div>
         </div>
       </header>
 
-      <div className="max-w-5xl mx-auto px-8 py-8">
+      <div className="max-w-5xl mx-auto px-8 py-12">
+
         {/* Welcome */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold">Bonjour Olivia 👋</h1>
-          <p className="text-gray-500 text-sm mt-1">Voici un résumé de vos investissements</p>
+        <div className="mb-10">
+          <h1 className="text-3xl font-bold mb-1">Bonjour Olivia 👋</h1>
+          <p className="text-sm" style={{color: 'rgba(255,255,255,0.5)'}}>Voici un résumé de vos investissements</p>
         </div>
 
         {/* KPI strip */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
-          <div className="bg-white rounded-2xl p-6">
-            <p className="text-sm text-gray-400 mb-1">Total investi</p>
-            <p className="text-2xl font-bold">{totalInvesti.toLocaleString('fr-FR')} €</p>
-          </div>
-          <div className="bg-white rounded-2xl p-6">
-            <p className="text-sm text-gray-400 mb-1">Revenus mensuels</p>
-            <p className="text-2xl font-bold text-green-600">+{totalMensuel.toFixed(2).replace('.', ',')} €</p>
-          </div>
-          <div className="bg-white rounded-2xl p-6">
-            <p className="text-sm text-gray-400 mb-1">Total remboursé à terme</p>
-            <p className="text-2xl font-bold">{totalRembourse.toLocaleString('fr-FR', {maximumFractionDigits: 0})} €</p>
-          </div>
+        <div className="grid grid-cols-3 gap-4 mb-10">
+          {[
+            { label: 'Total investi', value: `${totalInvesti.toLocaleString('fr-FR')} €`, color: 'white' },
+            { label: 'Revenus mensuels', value: `+${totalMensuel.toFixed(2).replace('.', ',')} €`, color: '#00E5CC' },
+            { label: 'Total remboursé à terme', value: `${totalRembourse.toLocaleString('fr-FR', {maximumFractionDigits: 0})} €`, color: 'white' },
+          ].map((kpi, i) => (
+            <div key={i} className="rounded-2xl p-6" style={{backgroundColor: '#1E1B4B'}}>
+              <p className="text-xs mb-2" style={{color: 'rgba(255,255,255,0.5)'}}>{kpi.label}</p>
+              <p className="text-2xl font-bold" style={{color: kpi.color}}>{kpi.value}</p>
+            </div>
+          ))}
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-4 mb-6 border-b border-gray-200">
+        <div className="flex gap-6 mb-8 border-b border-white/10">
           {['portfolio', 'paiements'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`pb-3 text-sm font-medium capitalize ${activeTab === tab ? 'border-b-2 border-black text-black' : 'text-gray-400 hover:text-black'}`}
+              className="pb-3 text-sm font-medium transition-colors"
+              style={{
+                color: activeTab === tab ? '#00E5CC' : 'rgba(255,255,255,0.4)',
+                borderBottom: activeTab === tab ? '2px solid #00E5CC' : '2px solid transparent',
+              }}
             >
               {tab === 'portfolio' ? 'Mon portfolio' : 'Calendrier des paiements'}
             </button>
@@ -88,50 +98,49 @@ export default function Dashboard() {
         {activeTab === 'portfolio' && (
           <div className="space-y-4">
             {investments.map(inv => (
-              <div key={inv.id} className="bg-white rounded-2xl p-6">
-                <div className="flex justify-between items-start mb-4">
+              <div key={inv.id} className="rounded-2xl p-6" style={{backgroundColor: '#1E1B4B'}}>
+                <div className="flex justify-between items-start mb-5">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className={`text-xs px-2 py-1 rounded-full ${inv.statut === 'Actif' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                        {inv.statut === 'Actif' ? '🟢' : '🟡'} {inv.statut}
+                      <span className="text-xs px-2 py-1 rounded-full font-medium"
+                        style={{
+                          backgroundColor: inv.statut === 'Actif' ? 'rgba(0,229,204,0.15)' : 'rgba(255,200,0,0.15)',
+                          color: inv.statut === 'Actif' ? '#00E5CC' : '#FFC800'
+                        }}>
+                        {inv.statut === 'Actif' ? '● Actif' : '● En attente'}
                       </span>
-                      <span className="text-xs text-gray-400">{inv.id}</span>
+                      <span className="text-xs" style={{color: 'rgba(255,255,255,0.3)'}}>{inv.id}</span>
                     </div>
-                    <h3 className="font-bold">{inv.campagne}</h3>
+                    <h3 className="font-bold text-lg">{inv.campagne}</h3>
                   </div>
                   <div className="text-right">
-                    <p className="text-xl font-bold">{inv.montant.toLocaleString('fr-FR')} €</p>
-                    <p className="text-xs text-gray-400">investi</p>
+                    <p className="text-2xl font-bold">{inv.montant.toLocaleString('fr-FR')} €</p>
+                    <p className="text-xs" style={{color: 'rgba(255,255,255,0.4)'}}>investi</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-4 gap-4 text-sm">
-                  <div>
-                    <p className="text-gray-400 text-xs mb-1">Taux</p>
-                    <p className="font-bold">{(inv.taux * 100).toFixed(0)}%</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-xs mb-1">Durée</p>
-                    <p className="font-bold">{inv.duree} mois</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-xs mb-1">Mensualité</p>
-                    <p className="font-bold text-green-600">+{inv.mensualite.toFixed(2).replace('.', ',')} €</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-xs mb-1">Total remboursé</p>
-                    <p className="font-bold">{(inv.montant + inv.montant * inv.taux * (inv.duree / 12)).toLocaleString('fr-FR')} €</p>
-                  </div>
+                <div className="grid grid-cols-4 gap-4 text-sm mb-5">
+                  {[
+                    { label: 'Taux', value: `${(inv.taux * 100).toFixed(0)}%` },
+                    { label: 'Durée', value: `${inv.duree} mois` },
+                    { label: 'Mensualité', value: `+${inv.mensualite.toFixed(2).replace('.', ',')} €`, green: true },
+                    { label: 'Total remboursé', value: `${(inv.montant + inv.montant * inv.taux * (inv.duree / 12)).toLocaleString('fr-FR')} €` },
+                  ].map((stat, i) => (
+                    <div key={i}>
+                      <p className="text-xs mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>{stat.label}</p>
+                      <p className="font-bold" style={{color: stat.green ? '#00E5CC' : 'white'}}>{stat.value}</p>
+                    </div>
+                  ))}
                 </div>
 
                 {/* Progress bar */}
-                <div className="mt-4">
-                  <div className="flex justify-between text-xs text-gray-400 mb-1">
+                <div>
+                  <div className="flex justify-between text-xs mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>
                     <span>Début: {inv.dateDebut}</span>
                     <span>{inv.duree} mois restants</span>
                   </div>
-                  <div className="w-full bg-gray-100 rounded-full h-1.5">
-                    <div className="bg-black h-1.5 rounded-full" style={{width: inv.statut === 'Actif' ? '4%' : '0%'}}></div>
+                  <div className="w-full rounded-full h-1" style={{backgroundColor: 'rgba(255,255,255,0.1)'}}>
+                    <div className="h-1 rounded-full" style={{width: inv.statut === 'Actif' ? '4%' : '0%', backgroundColor: '#00E5CC'}}></div>
                   </div>
                 </div>
               </div>
@@ -141,32 +150,38 @@ export default function Dashboard() {
 
         {/* Paiements tab */}
         {activeTab === 'paiements' && (
-          <div className="bg-white rounded-2xl overflow-hidden">
+          <div className="rounded-2xl overflow-hidden" style={{backgroundColor: '#1E1B4B'}}>
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 border-b border-gray-100">
-                <tr>
-                  <th className="text-left px-6 py-4 text-gray-400 font-medium">Date</th>
-                  <th className="text-left px-6 py-4 text-gray-400 font-medium">Campagne</th>
-                  <th className="text-left px-6 py-4 text-gray-400 font-medium">Type</th>
-                  <th className="text-right px-6 py-4 text-gray-400 font-medium">Montant</th>
-                  <th className="text-right px-6 py-4 text-gray-400 font-medium">Statut</th>
+              <thead>
+                <tr style={{borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
+                  {['Date', 'Campagne', 'Type', 'Montant', 'Statut'].map((h, i) => (
+                    <th key={i} className={`px-6 py-4 text-xs font-medium ${i >= 3 ? 'text-right' : 'text-left'}`}
+                      style={{color: 'rgba(255,255,255,0.4)'}}>
+                      {h}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
                 {[
-                  { date: '01/05/2026', campagne: 'Flotte Printemps 2026', type: 'Intérêts', montant: 29.17, statut: 'À venir' },
-                  { date: '01/06/2026', campagne: 'Flotte Printemps 2026', type: 'Intérêts', montant: 29.17, statut: 'À venir' },
-                  { date: '01/06/2026', campagne: 'Flotte Été 2026', type: 'Intérêts', montant: 13.33, statut: 'À venir' },
-                  { date: '01/07/2026', campagne: 'Flotte Printemps 2026', type: 'Intérêts', montant: 29.17, statut: 'À venir' },
-                  { date: '01/04/2028', campagne: 'Flotte Printemps 2026', type: 'Remboursement capital', montant: 5000, statut: 'À venir' },
+                  { date: '01/05/2026', campagne: 'Flotte Printemps 2026', type: 'Intérêts', montant: 29.17 },
+                  { date: '01/06/2026', campagne: 'Flotte Printemps 2026', type: 'Intérêts', montant: 29.17 },
+                  { date: '01/06/2026', campagne: 'Flotte Été 2026', type: 'Intérêts', montant: 13.33 },
+                  { date: '01/07/2026', campagne: 'Flotte Printemps 2026', type: 'Intérêts', montant: 29.17 },
+                  { date: '01/04/2028', campagne: 'Flotte Printemps 2026', type: 'Remboursement capital', montant: 5000 },
                 ].map((p, i) => (
-                  <tr key={i} className="border-b border-gray-50 hover:bg-gray-50">
+                  <tr key={i} style={{borderBottom: '1px solid rgba(255,255,255,0.05)'}}>
                     <td className="px-6 py-4">{p.date}</td>
-                    <td className="px-6 py-4 text-gray-600">{p.campagne}</td>
-                    <td className="px-6 py-4 text-gray-600">{p.type}</td>
-                    <td className="px-6 py-4 text-right font-bold text-green-600">+{p.montant.toFixed(2).replace('.', ',')} €</td>
+                    <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.6)'}}>{p.campagne}</td>
+                    <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.6)'}}>{p.type}</td>
+                    <td className="px-6 py-4 text-right font-bold" style={{color: '#00E5CC'}}>
+                      +{p.montant.toFixed(2).replace('.', ',')} €
+                    </td>
                     <td className="px-6 py-4 text-right">
-                      <span className="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded-full">{p.statut}</span>
+                      <span className="text-xs px-2 py-1 rounded-full"
+                        style={{backgroundColor: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)'}}>
+                        À venir
+                      </span>
                     </td>
                   </tr>
                 ))}

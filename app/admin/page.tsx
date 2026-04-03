@@ -3,347 +3,374 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-const BG = '#09091F'
-const CARD = '#1A1545'
-const CYAN = '#00E5CC'
+const campaigns = [
+  { id: 'C001', name: 'Flotte Printemps 2026', target: 500000, raised: 312000, rate: 7, duration: 24, status: 'Ouverte', startDate: '2026-04-01' },
+  { id: 'C002', name: 'Flotte Été 2026', target: 500000, raised: 0, rate: 8, duration: 36, status: 'À venir', startDate: '2026-06-01' },
+]
 
 const investors = [
-  { id: '1', name: 'Olivia Bally', email: 'olivia@example.com', kyc: 'approved', montantTotal: 7000, investissements: 2, date: '2026-04-01' },
-  { id: '2', name: 'Thomas Durand', email: 'thomas@example.com', kyc: 'pending', montantTotal: 5000, investissements: 1, date: '2026-04-02' },
-  { id: '3', name: 'Marie Martin', email: 'marie@example.com', kyc: 'pending', montantTotal: 10000, investissements: 1, date: '2026-04-03' },
-  { id: '4', name: 'Lucas Bernard', email: 'lucas@example.com', kyc: 'rejected', montantTotal: 0, investissements: 0, date: '2026-03-28' },
-  { id: '5', name: 'Sophie Petit', email: 'sophie@example.com', kyc: 'approved', montantTotal: 3000, investissements: 1, date: '2026-03-25' },
+  {
+    id: 'PONY-2026-001',
+    prenom: 'Olivia',
+    nom: 'Bally',
+    email: 'olivia.bally@yahoo.fr',
+    telephone: '0766774973',
+    dateNaissance: '19.05.1997',
+    lieuNaissance: 'Bruxelles',
+    nationalite: 'Française',
+    residenceFiscale: 'France',
+    adresse: '12 rue de la Paix, Paris',
+    profession: 'Performance and Strategy Manager',
+    revenus: 'Entre 4 000 € et 8 000 €',
+    pep: 'Non',
+    documentType: 'Passeport',
+    documentNumero: 'XX123456',
+    iban: 'FR76 XXXX XXXX XXXX',
+    kyc: 'En attente',
+    montant: 5000,
+    campagne: 'Flotte Printemps 2026',
+    statut: 'Actif',
+  },
+  {
+    id: 'PONY-2026-002',
+    prenom: 'Jean',
+    nom: 'Dupont',
+    email: 'jean.dupont@gmail.com',
+    telephone: '0612345678',
+    dateNaissance: '15.03.1985',
+    lieuNaissance: 'Paris',
+    nationalite: 'Française',
+    residenceFiscale: 'France',
+    adresse: '5 avenue Victor Hugo, Lyon',
+    profession: 'Ingénieur',
+    revenus: 'Plus de 8 000 €',
+    pep: 'Non',
+    documentType: 'Carte nationale d\'identité',
+    documentNumero: 'YY789012',
+    iban: 'FR76 YYYY YYYY YYYY',
+    kyc: 'Validé',
+    montant: 2000,
+    campagne: 'Flotte Été 2026',
+    statut: 'En attente',
+  },
 ]
 
-const investissements = [
-  { ref: 'PONY-2026-001', investor: 'Olivia Bally', campagne: 'Flotte Printemps 2026', montant: 5000, taux: '7%', duree: '24 mois', statut: 'Actif', date: '2026-04-01' },
-  { ref: 'PONY-2026-002', investor: 'Olivia Bally', campagne: 'Flotte Été 2026', montant: 2000, taux: '8%', duree: '36 mois', statut: 'En attente', date: '2026-04-01' },
-  { ref: 'PONY-2026-003', investor: 'Thomas Durand', campagne: 'Flotte Printemps 2026', montant: 5000, taux: '7%', duree: '24 mois', statut: 'En attente', date: '2026-04-02' },
-  { ref: 'PONY-2026-004', investor: 'Sophie Petit', campagne: 'Flotte Printemps 2026', montant: 3000, taux: '7%', duree: '24 mois', statut: 'Actif', date: '2026-03-25' },
-  { ref: 'PONY-2026-005', investor: 'Marie Martin', campagne: 'Flotte Printemps 2026', montant: 10000, taux: '7%', duree: '24 mois', statut: 'En attente', date: '2026-04-03' },
+const payments = [
+  { id: 1, investor: 'Olivia Bally', campagne: 'Flotte Printemps 2026', type: 'Intérêts', montant: 29.17, date: '01/05/2026', statut: 'À envoyer' },
+  { id: 2, investor: 'Olivia Bally', campagne: 'Flotte Printemps 2026', type: 'Intérêts', montant: 29.17, date: '01/06/2026', statut: 'À envoyer' },
+  { id: 3, investor: 'Jean Dupont', campagne: 'Flotte Été 2026', type: 'Intérêts', montant: 13.33, date: '01/06/2026', statut: 'À envoyer' },
+  { id: 4, investor: 'Olivia Bally', campagne: 'Flotte Printemps 2026', type: 'Remboursement capital', montant: 5000, date: '01/04/2028', statut: 'À envoyer' },
 ]
-
-type Tab = 'overview' | 'investors' | 'investments' | 'campaign'
-
-const kycColor = (k: string) => {
-  if (k === 'approved') return { bg: 'rgba(0,229,204,0.12)', border: 'rgba(0,229,204,0.3)', color: CYAN }
-  if (k === 'rejected') return { bg: 'rgba(255,80,80,0.12)', border: 'rgba(255,80,80,0.3)', color: '#FF5050' }
-  return { bg: 'rgba(255,200,0,0.12)', border: 'rgba(255,200,0,0.3)', color: '#FFD700' }
-}
-
-const kycLabel = (k: string) => k === 'approved' ? 'Approuvé' : k === 'rejected' ? 'Rejeté' : 'En attente'
-
-const statutColor = (s: string) => s === 'Actif'
-  ? { bg: 'rgba(0,229,204,0.12)', border: 'rgba(0,229,204,0.3)', color: CYAN }
-  : { bg: 'rgba(255,200,0,0.12)', border: 'rgba(255,200,0,0.3)', color: '#FFD700' }
 
 export default function Admin() {
-  const [tab, setTab] = useState<Tab>('overview')
-
-  const totalCollecte = investissements.reduce((s, i) => s + i.montant, 0)
-  const kycPending = investors.filter(i => i.kyc === 'pending').length
+  const [activeTab, setActiveTab] = useState('campagnes')
+  const [selectedInvestor, setSelectedInvestor] = useState<typeof investors[0] | null>(null)
+  const [showNewCampaign, setShowNewCampaign] = useState(false)
+  const [kycStatuses, setKycStatuses] = useState<Record<string, string>>(
+    Object.fromEntries(investors.map(i => [i.id, i.kyc]))
+  )
+  const [paymentStatuses, setPaymentStatuses] = useState<Record<number, string>>(
+    Object.fromEntries(payments.map(p => [p.id, p.statut]))
+  )
+  const [newCampaign, setNewCampaign] = useState({
+    name: '', target: '', rate: '', duration: '', startDate: ''
+  })
 
   return (
-    <main style={{ backgroundColor: BG, color: 'white', fontFamily: 'var(--font-poppins)', minHeight: '100vh' }}>
+    <main className="min-h-screen font-sans" style={{backgroundColor: '#0D0D2B', color: 'white'}}>
 
-      {/* Nav */}
-      <header className="flex justify-between items-center px-10 py-4"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <div className="flex items-center gap-6">
-          <Link href="/" className="font-bold text-lg" style={{ color: CYAN }}>pony</Link>
-          <span className="text-xs font-bold px-3 py-1 rounded-full"
-            style={{ backgroundColor: 'rgba(255,100,100,0.15)', border: '1px solid rgba(255,100,100,0.3)', color: '#FF6464' }}>
-            ADMIN
+      {/* Header */}
+      <header className="flex justify-between items-center px-8 py-5 border-b border-white/10">
+        <div className="flex items-center gap-4">
+          <span className="text-xl">🐴</span>
+          <span className="font-bold" style={{color: '#00E5CC'}}>pony</span>
+          <span className="text-xs px-2 py-1 rounded-full font-medium"
+            style={{backgroundColor: 'rgba(255,200,0,0.15)', color: '#FFC800'}}>
+            Admin
           </span>
         </div>
-        <Link href="/dashboard" className="text-sm transition-colors hover:text-white"
-          style={{ color: 'rgba(255,255,255,0.4)' }}>
-          Vue investisseur →
+        <Link href="/" className="text-sm hover:opacity-70" style={{color: 'rgba(255,255,255,0.5)'}}>
+          ← Retour au site
         </Link>
       </header>
 
-      <div className="flex h-[calc(100vh-57px)]">
+      <div className="max-w-6xl mx-auto px-8 py-10">
 
-        {/* Sidebar */}
-        <aside className="w-56 flex-shrink-0 p-6 space-y-1"
-          style={{ borderRight: '1px solid rgba(255,255,255,0.06)' }}>
-          {([
-            { key: 'overview', label: 'Vue d\'ensemble', icon: '📊' },
-            { key: 'investors', label: 'Investisseurs', icon: '👥', badge: kycPending > 0 ? kycPending : undefined },
-            { key: 'investments', label: 'Investissements', icon: '💼' },
-            { key: 'campaign', label: 'Campagne', icon: '📢' },
-          ] as Array<{ key: Tab; label: string; icon: string; badge?: number }>).map(item => (
-            <button key={item.key} onClick={() => setTab(item.key)}
-              className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-left transition-all"
-              style={tab === item.key
-                ? { backgroundColor: 'rgba(0,229,204,0.1)', color: CYAN, border: '1px solid rgba(0,229,204,0.2)' }
-                : { color: 'rgba(255,255,255,0.4)', border: '1px solid transparent' }}>
-              <span className="flex items-center gap-2">
-                <span>{item.icon}</span>
-                {item.label}
-              </span>
-              {item.badge !== undefined && (
-                <span className="text-xs font-bold px-2 py-0.5 rounded-full"
-                  style={{ backgroundColor: '#FFD700', color: BG }}>{item.badge}</span>
-              )}
+        {/* Title */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-1">Panel Admin</h1>
+          <p className="text-sm" style={{color: 'rgba(255,255,255,0.4)'}}>Gérez les campagnes, investisseurs et paiements</p>
+        </div>
+
+        {/* KPI strip */}
+        <div className="grid grid-cols-4 gap-4 mb-10">
+          {[
+            { label: 'Campagnes actives', value: '1' },
+            { label: 'Total investisseurs', value: investors.length.toString() },
+            { label: 'KYC en attente', value: Object.values(kycStatuses).filter(s => s === 'En attente').length.toString() },
+            { label: 'Total collecté', value: '314 000 €' },
+          ].map((kpi, i) => (
+            <div key={i} className="rounded-2xl p-5" style={{backgroundColor: '#1E1B4B'}}>
+              <p className="text-xs mb-2" style={{color: 'rgba(255,255,255,0.4)'}}>{kpi.label}</p>
+              <p className="text-2xl font-bold" style={{color: i === 2 && kpi.value !== '0' ? '#FFC800' : '#00E5CC'}}>{kpi.value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Tabs */}
+        <div className="flex gap-6 mb-8 border-b border-white/10">
+          {['campagnes', 'investisseurs', 'paiements'].map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className="pb-3 text-sm font-medium capitalize transition-colors"
+              style={{
+                color: activeTab === tab ? '#00E5CC' : 'rgba(255,255,255,0.4)',
+                borderBottom: activeTab === tab ? '2px solid #00E5CC' : '2px solid transparent',
+              }}
+            >
+              {tab === 'campagnes' ? 'Campagnes' : tab === 'investisseurs' ? 'Investisseurs' : 'Paiements'}
             </button>
           ))}
-        </aside>
-
-        {/* Main */}
-        <div className="flex-1 overflow-auto p-8">
-
-          {/* Overview */}
-          {tab === 'overview' && (
-            <div>
-              <h1 className="text-2xl font-extrabold mb-8">Vue d'ensemble</h1>
-              <div className="grid grid-cols-4 gap-4 mb-10">
-                {[
-                  { label: 'Total collecté', value: `${totalCollecte.toLocaleString('fr-FR')} €`, cyan: true },
-                  { label: 'Investisseurs', value: investors.length.toString() },
-                  { label: 'KYC en attente', value: kycPending.toString(), warn: kycPending > 0 },
-                  { label: 'Taux remplissage', value: `${Math.round((totalCollecte / 500000) * 100)} %` },
-                ].map((kpi, i) => (
-                  <div key={i} className="rounded-2xl p-5"
-                    style={{ backgroundColor: CARD, border: '1px solid rgba(255,255,255,0.06)' }}>
-                    <p className="text-xs font-bold uppercase tracking-widest mb-2"
-                      style={{ color: kpi.cyan ? CYAN : kpi.warn ? '#FFD700' : 'rgba(255,255,255,0.35)' }}>{kpi.label}</p>
-                    <p className="text-3xl font-extrabold"
-                      style={kpi.cyan ? { color: CYAN } : kpi.warn ? { color: '#FFD700' } : undefined}>{kpi.value}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Progress */}
-              <div className="rounded-2xl p-6 mb-6"
-                style={{ backgroundColor: CARD, border: '1px solid rgba(255,255,255,0.06)' }}>
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="font-bold">Flotte Printemps 2026</h2>
-                  <span className="text-xs font-bold px-3 py-1 rounded-full" style={{ backgroundColor: CYAN, color: BG }}>EN COURS</span>
-                </div>
-                <div className="w-full rounded-full h-2 mb-3" style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}>
-                  <div className="h-2 rounded-full" style={{ width: `${Math.round((totalCollecte / 500000) * 100)}%`, backgroundColor: CYAN }} />
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span style={{ color: 'rgba(255,255,255,0.4)' }}>{totalCollecte.toLocaleString('fr-FR')} € collectés</span>
-                  <span style={{ color: CYAN }}>{Math.round((totalCollecte / 500000) * 100)} %</span>
-                  <span style={{ color: 'rgba(255,255,255,0.4)' }}>objectif 500 000 €</span>
-                </div>
-              </div>
-
-              {/* KYC queue */}
-              {kycPending > 0 && (
-                <div className="rounded-2xl p-6"
-                  style={{ backgroundColor: CARD, border: '1px solid rgba(255,200,0,0.2)' }}>
-                  <h2 className="font-bold mb-4">KYC en attente de validation</h2>
-                  <div className="space-y-3">
-                    {investors.filter(i => i.kyc === 'pending').map(inv => (
-                      <div key={inv.id} className="flex items-center justify-between p-4 rounded-xl"
-                        style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                        <div>
-                          <p className="font-semibold text-sm">{inv.name}</p>
-                          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>{inv.email} · {inv.date}</p>
-                        </div>
-                        <div className="flex gap-2">
-                          <button className="text-xs px-4 py-2 rounded-full font-bold transition-all hover:opacity-90"
-                            style={{ backgroundColor: CYAN, color: BG }}>Approuver</button>
-                          <button className="text-xs px-4 py-2 rounded-full font-bold transition-all"
-                            style={{ border: '1px solid rgba(255,80,80,0.4)', color: '#FF5050' }}>Rejeter</button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Investors */}
-          {tab === 'investors' && (
-            <div>
-              <h1 className="text-2xl font-extrabold mb-8">Investisseurs</h1>
-              <div className="rounded-2xl overflow-hidden"
-                style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
-                <table className="w-full text-sm">
-                  <thead style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}>
-                    <tr>
-                      {['Nom', 'Email', 'KYC', 'Montant total', 'Investissements', 'Date', 'Actions'].map((h, i) => (
-                        <th key={h} className={`px-5 py-4 font-semibold text-xs uppercase tracking-wide ${i >= 3 ? 'text-right' : 'text-left'}`}
-                          style={{ color: 'rgba(255,255,255,0.35)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                          {h}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {investors.map((inv, i) => {
-                      const kc = kycColor(inv.kyc)
-                      return (
-                        <tr key={inv.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                          <td className="px-5 py-4 font-semibold">{inv.name}</td>
-                          <td className="px-5 py-4 text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>{inv.email}</td>
-                          <td className="px-5 py-4">
-                            <span className="text-xs font-bold px-3 py-1 rounded-full"
-                              style={{ backgroundColor: kc.bg, border: `1px solid ${kc.border}`, color: kc.color }}>
-                              {kycLabel(inv.kyc)}
-                            </span>
-                          </td>
-                          <td className="px-5 py-4 text-right font-bold"
-                            style={{ color: inv.montantTotal > 0 ? CYAN : 'rgba(255,255,255,0.3)' }}>
-                            {inv.montantTotal > 0 ? `${inv.montantTotal.toLocaleString('fr-FR')} €` : '—'}
-                          </td>
-                          <td className="px-5 py-4 text-right" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                            {inv.investissements}
-                          </td>
-                          <td className="px-5 py-4 text-right font-mono text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                            {inv.date}
-                          </td>
-                          <td className="px-5 py-4 text-right">
-                            {inv.kyc === 'pending' && (
-                              <div className="flex gap-2 justify-end">
-                                <button className="text-xs px-3 py-1.5 rounded-full font-bold"
-                                  style={{ backgroundColor: CYAN, color: BG }}>✓</button>
-                                <button className="text-xs px-3 py-1.5 rounded-full font-bold"
-                                  style={{ border: '1px solid rgba(255,80,80,0.4)', color: '#FF5050' }}>✕</button>
-                              </div>
-                            )}
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* Investments */}
-          {tab === 'investments' && (
-            <div>
-              <h1 className="text-2xl font-extrabold mb-8">Investissements</h1>
-              <div className="rounded-2xl overflow-hidden"
-                style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
-                <table className="w-full text-sm">
-                  <thead style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}>
-                    <tr>
-                      {['Référence', 'Investisseur', 'Campagne', 'Montant', 'Taux', 'Durée', 'Statut', 'Date'].map((h, i) => (
-                        <th key={h} className={`px-4 py-4 font-semibold text-xs uppercase tracking-wide ${i >= 3 ? 'text-right' : 'text-left'}`}
-                          style={{ color: 'rgba(255,255,255,0.35)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                          {h}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {investissements.map((inv, i) => {
-                      const sc = statutColor(inv.statut)
-                      return (
-                        <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                          <td className="px-4 py-4 font-mono text-xs" style={{ color: CYAN }}>{inv.ref}</td>
-                          <td className="px-4 py-4 font-semibold">{inv.investor}</td>
-                          <td className="px-4 py-4 text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{inv.campagne}</td>
-                          <td className="px-4 py-4 text-right font-bold" style={{ color: CYAN }}>
-                            {inv.montant.toLocaleString('fr-FR')} €
-                          </td>
-                          <td className="px-4 py-4 text-right font-semibold">{inv.taux}</td>
-                          <td className="px-4 py-4 text-right" style={{ color: 'rgba(255,255,255,0.5)' }}>{inv.duree}</td>
-                          <td className="px-4 py-4 text-right">
-                            <span className="text-xs font-bold px-3 py-1 rounded-full"
-                              style={{ backgroundColor: sc.bg, border: `1px solid ${sc.border}`, color: sc.color }}>
-                              {inv.statut}
-                            </span>
-                          </td>
-                          <td className="px-4 py-4 text-right font-mono text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                            {inv.date}
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* Campaign */}
-          {tab === 'campaign' && (
-            <div>
-              <h1 className="text-2xl font-extrabold mb-8">Gestion de la campagne</h1>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="rounded-2xl p-6 col-span-2"
-                  style={{ backgroundColor: CARD, border: '1px solid rgba(255,255,255,0.06)' }}>
-                  <div className="flex justify-between items-center mb-6">
-                    <h2 className="font-bold">Flotte Printemps 2026</h2>
-                    <span className="text-xs font-bold px-3 py-1 rounded-full" style={{ backgroundColor: CYAN, color: BG }}>EN COURS</span>
-                  </div>
-                  <div className="grid grid-cols-4 gap-4">
-                    {[
-                      { label: 'Objectif', value: '500 000 €' },
-                      { label: 'Collecté', value: `${totalCollecte.toLocaleString('fr-FR')} €`, cyan: true },
-                      { label: 'Restant', value: `${(500000 - totalCollecte).toLocaleString('fr-FR')} €` },
-                      { label: 'Souscripteurs', value: investors.filter(i => i.investissements > 0).length.toString() },
-                    ].map((stat, i) => (
-                      <div key={i} className="rounded-xl p-4"
-                        style={{ backgroundColor: 'rgba(255,255,255,0.04)' }}>
-                        <p className="text-xs font-bold uppercase tracking-wide mb-1"
-                          style={{ color: stat.cyan ? CYAN : 'rgba(255,255,255,0.35)' }}>{stat.label}</p>
-                        <p className="text-xl font-extrabold" style={stat.cyan ? { color: CYAN } : undefined}>{stat.value}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-6">
-                    <div className="w-full rounded-full h-2 mb-2" style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}>
-                      <div className="h-2 rounded-full" style={{ width: `${Math.round((totalCollecte / 500000) * 100)}%`, backgroundColor: CYAN }} />
-                    </div>
-                    <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                      {Math.round((totalCollecte / 500000) * 100)} % de l'objectif atteint
-                    </p>
-                  </div>
-                </div>
-
-                <div className="rounded-2xl p-6"
-                  style={{ backgroundColor: CARD, border: '1px solid rgba(255,255,255,0.06)' }}>
-                  <h2 className="font-bold mb-5">Paramètres</h2>
-                  <div className="space-y-4 text-sm">
-                    {[
-                      { label: 'Taux 12 mois', value: '6 %' },
-                      { label: 'Taux 24 mois', value: '7 %' },
-                      { label: 'Taux 36 mois', value: '8 %' },
-                      { label: 'Taux 48 mois', value: '9 %' },
-                      { label: 'Min. investissement', value: '500 €' },
-                      { label: 'Max. investissement', value: '50 000 €' },
-                    ].map(row => (
-                      <div key={row.label} className="flex justify-between py-3"
-                        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                        <span style={{ color: 'rgba(255,255,255,0.4)' }}>{row.label}</span>
-                        <span className="font-bold" style={{ color: CYAN }}>{row.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-2xl p-6"
-                  style={{ backgroundColor: CARD, border: '1px solid rgba(255,255,255,0.06)' }}>
-                  <h2 className="font-bold mb-5">Actions</h2>
-                  <div className="space-y-3">
-                    {[
-                      { label: 'Clôturer la campagne', color: '#FF5050', bg: 'rgba(255,80,80,0.1)', border: 'rgba(255,80,80,0.3)' },
-                      { label: 'Exporter les souscriptions (CSV)', color: CYAN, bg: 'rgba(0,229,204,0.1)', border: 'rgba(0,229,204,0.3)' },
-                      { label: 'Envoyer email aux investisseurs', color: 'rgba(255,255,255,0.7)', bg: 'rgba(255,255,255,0.05)', border: 'rgba(255,255,255,0.12)' },
-                    ].map(action => (
-                      <button key={action.label}
-                        className="w-full py-3 px-5 rounded-xl text-sm font-semibold text-left transition-all hover:opacity-80"
-                        style={{ backgroundColor: action.bg, border: `1px solid ${action.border}`, color: action.color }}>
-                        {action.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
         </div>
+
+        {/* CAMPAGNES TAB */}
+        {activeTab === 'campagnes' && (
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold">Campagnes</h2>
+              <button
+                onClick={() => setShowNewCampaign(!showNewCampaign)}
+                className="text-sm px-4 py-2 rounded-xl font-bold"
+                style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
+                + Nouvelle campagne
+              </button>
+            </div>
+
+            {/* New campaign form */}
+            {showNewCampaign && (
+              <div className="rounded-2xl p-6 mb-6" style={{backgroundColor: '#1E1B4B', border: '1px solid rgba(0,229,204,0.3)'}}>
+                <h3 className="font-bold mb-4" style={{color: '#00E5CC'}}>Nouvelle campagne</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { label: 'Nom', key: 'name', placeholder: 'Flotte Automne 2026' },
+                    { label: 'Objectif (€)', key: 'target', placeholder: '500000' },
+                    { label: 'Taux (%)', key: 'rate', placeholder: '7' },
+                    { label: 'Durée (mois)', key: 'duration', placeholder: '24' },
+                    { label: 'Date de début', key: 'startDate', placeholder: '2026-09-01' },
+                  ].map(field => (
+                    <div key={field.key}>
+                      <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>{field.label}</label>
+                      <input
+                        type="text"
+                        placeholder={field.placeholder}
+                        value={newCampaign[field.key as keyof typeof newCampaign]}
+                        onChange={e => setNewCampaign(prev => ({...prev, [field.key]: e.target.value}))}
+                        className="w-full rounded-xl px-4 py-3 text-sm text-white"
+                        style={{backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)'}}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex gap-3 mt-4">
+                  <button className="px-6 py-2 rounded-xl text-sm font-bold"
+                    style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
+                    Créer la campagne
+                  </button>
+                  <button onClick={() => setShowNewCampaign(false)}
+                    className="px-6 py-2 rounded-xl text-sm"
+                    style={{backgroundColor: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.6)'}}>
+                    Annuler
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="space-y-4">
+              {campaigns.map(c => (
+                <div key={c.id} className="rounded-2xl p-6" style={{backgroundColor: '#1E1B4B'}}>
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs px-2 py-1 rounded-full font-medium"
+                          style={{
+                            backgroundColor: c.status === 'Ouverte' ? 'rgba(0,229,204,0.15)' : 'rgba(255,255,255,0.1)',
+                            color: c.status === 'Ouverte' ? '#00E5CC' : 'rgba(255,255,255,0.5)',
+                          }}>
+                          {c.status}
+                        </span>
+                        <span className="text-xs" style={{color: 'rgba(255,255,255,0.3)'}}>{c.id}</span>
+                      </div>
+                      <h3 className="font-bold text-lg">{c.name}</h3>
+                    </div>
+                    {c.status === 'Ouverte' && (
+                      <button className="text-sm px-4 py-2 rounded-xl"
+                        style={{backgroundColor: 'rgba(255,100,100,0.15)', color: '#FF6464'}}>
+                        Clôturer
+                      </button>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-4 gap-4 text-sm mb-4">
+                    {[
+                      { label: 'Taux', value: `${c.rate}%` },
+                      { label: 'Durée', value: `${c.duration} mois` },
+                      { label: 'Objectif', value: `${c.target.toLocaleString('fr-FR')} €` },
+                      { label: 'Collecté', value: `${c.raised.toLocaleString('fr-FR')} €` },
+                    ].map((stat, i) => (
+                      <div key={i}>
+                        <p className="text-xs mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>{stat.label}</p>
+                        <p className="font-bold">{stat.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="w-full rounded-full h-1.5" style={{backgroundColor: 'rgba(255,255,255,0.1)'}}>
+                    <div className="h-1.5 rounded-full" style={{
+                      width: `${(c.raised / c.target) * 100}%`,
+                      backgroundColor: '#00E5CC'
+                    }}></div>
+                  </div>
+                  <p className="text-xs mt-1" style={{color: 'rgba(255,255,255,0.3)'}}>
+                    {((c.raised / c.target) * 100).toFixed(0)}% financé
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* INVESTISSEURS TAB */}
+        {activeTab === 'investisseurs' && (
+          <div>
+            <h2 className="text-xl font-bold mb-6">Investisseurs</h2>
+            <div className="space-y-4">
+              {investors.map(inv => (
+                <div key={inv.id} className="rounded-2xl p-6" style={{backgroundColor: '#1E1B4B'}}>
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs px-2 py-1 rounded-full font-medium"
+                          style={{
+                            backgroundColor: kycStatuses[inv.id] === 'Validé' ? 'rgba(0,229,204,0.15)' :
+                              kycStatuses[inv.id] === 'Rejeté' ? 'rgba(255,100,100,0.15)' : 'rgba(255,200,0,0.15)',
+                            color: kycStatuses[inv.id] === 'Validé' ? '#00E5CC' :
+                              kycStatuses[inv.id] === 'Rejeté' ? '#FF6464' : '#FFC800',
+                          }}>
+                          KYC: {kycStatuses[inv.id]}
+                        </span>
+                        <span className="text-xs" style={{color: 'rgba(255,255,255,0.3)'}}>{inv.id}</span>
+                      </div>
+                      <h3 className="font-bold text-lg">{inv.prenom} {inv.nom}</h3>
+                      <p className="text-sm" style={{color: 'rgba(255,255,255,0.4)'}}>{inv.email} · {inv.telephone}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xl font-bold">{inv.montant.toLocaleString('fr-FR')} €</p>
+                      <p className="text-xs" style={{color: 'rgba(255,255,255,0.4)'}}>{inv.campagne}</p>
+                    </div>
+                  </div>
+
+                  {/* KYC Details */}
+                  <div className="grid grid-cols-3 gap-3 text-sm mb-4 p-4 rounded-xl"
+                    style={{backgroundColor: 'rgba(255,255,255,0.03)'}}>
+                    {[
+                      { label: 'Date de naissance', value: inv.dateNaissance },
+                      { label: 'Lieu de naissance', value: inv.lieuNaissance },
+                      { label: 'Nationalité', value: inv.nationalite },
+                      { label: 'Résidence fiscale', value: inv.residenceFiscale },
+                      { label: 'Adresse', value: inv.adresse },
+                      { label: 'Profession', value: inv.profession },
+                      { label: 'Revenus mensuels', value: inv.revenus },
+                      { label: 'PEP', value: inv.pep },
+                      { label: 'Document', value: `${inv.documentType} — ${inv.documentNumero}` },
+                      { label: 'IBAN', value: inv.iban },
+                    ].map((field, i) => (
+                      <div key={i}>
+                        <p className="text-xs mb-0.5" style={{color: 'rgba(255,255,255,0.3)'}}>{field.label}</p>
+                        <p style={{color: 'rgba(255,255,255,0.8)'}}>{field.value}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* KYC Actions */}
+                  {kycStatuses[inv.id] === 'En attente' && (
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => setKycStatuses(prev => ({...prev, [inv.id]: 'Validé'}))}
+                        className="px-5 py-2 rounded-xl text-sm font-bold"
+                        style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
+                        ✓ Valider le KYC
+                      </button>
+                      <button
+                        onClick={() => setKycStatuses(prev => ({...prev, [inv.id]: 'Rejeté'}))}
+                        className="px-5 py-2 rounded-xl text-sm font-bold"
+                        style={{backgroundColor: 'rgba(255,100,100,0.15)', color: '#FF6464'}}>
+                        ✗ Rejeter
+                      </button>
+                    </div>
+                  )}
+                  {kycStatuses[inv.id] === 'Validé' && (
+                    <p className="text-sm font-medium" style={{color: '#00E5CC'}}>✓ KYC validé</p>
+                  )}
+                  {kycStatuses[inv.id] === 'Rejeté' && (
+                    <p className="text-sm font-medium" style={{color: '#FF6464'}}>✗ KYC rejeté</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* PAIEMENTS TAB */}
+        {activeTab === 'paiements' && (
+          <div>
+            <h2 className="text-xl font-bold mb-6">Paiements</h2>
+            <div className="rounded-2xl overflow-hidden" style={{backgroundColor: '#1E1B4B'}}>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
+                    {['Date', 'Investisseur', 'Campagne', 'Type', 'Montant', 'Statut', 'Action'].map((h, i) => (
+                      <th key={i} className={`px-6 py-4 text-xs font-medium ${i >= 4 ? 'text-right' : 'text-left'}`}
+                        style={{color: 'rgba(255,255,255,0.4)'}}>
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {payments.map(p => (
+                    <tr key={p.id} style={{borderBottom: '1px solid rgba(255,255,255,0.05)'}}>
+                      <td className="px-6 py-4">{p.date}</td>
+                      <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.7)'}}>{p.investor}</td>
+                      <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.5)'}}>{p.campagne}</td>
+                      <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.5)'}}>{p.type}</td>
+                      <td className="px-6 py-4 text-right font-bold" style={{color: '#00E5CC'}}>
+                        +{p.montant.toFixed(2).replace('.', ',')} €
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <span className="text-xs px-2 py-1 rounded-full"
+                          style={{
+                            backgroundColor: paymentStatuses[p.id] === 'Envoyé' ? 'rgba(0,229,204,0.15)' : 'rgba(255,200,0,0.15)',
+                            color: paymentStatuses[p.id] === 'Envoyé' ? '#00E5CC' : '#FFC800',
+                          }}>
+                          {paymentStatuses[p.id]}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        {paymentStatuses[p.id] === 'À envoyer' && (
+                          <button
+                            onClick={() => setPaymentStatuses(prev => ({...prev, [p.id]: 'Envoyé'}))}
+                            className="text-xs px-3 py-1 rounded-xl font-medium"
+                            style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
+                            Marquer envoyé
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
     </main>
   )

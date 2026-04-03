@@ -1,21 +1,11 @@
 @import "tailwindcss";
 
-:root {
-  --pony-green: #00C896;
-  --pony-green-light: #E6FAF5;
-  --pony-dark: #1A1A1A;
-}
-
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: #1A1A1A;
-  background: white;
   -webkit-font-smoothing: antialiased;
 }
 

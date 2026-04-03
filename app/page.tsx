@@ -5,20 +5,18 @@ export default function Home() {
     <main className="min-h-screen font-sans" style={{backgroundColor: '#0D0D2B', color: 'white'}}>
 
       {/* Header */}
-      <header className="flex justify-between items-center px-12 py-7 border-b border-white/10">
-        <nav className="flex gap-8 text-sm text-white/70">
-          <Link href="/" className="hover:text-white transition-colors">Accueil</Link>
-          <Link href="/campagne" className="hover:text-white transition-colors">Adopter</Link>
-          <a href="https://pony.bike" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-1">
-            Riders <span style={{color: '#00E5CC'}}>↗</span>
-          </a>
+      <header className="flex justify-between items-center px-8 py-5">
+        <nav className="flex gap-8 text-sm text-white">
+          <a href="#" className="hover:opacity-70">Home</a>
+          <a href="#" className="hover:opacity-70">Adopt</a>
+          <a href="#" className="hover:opacity-70">Riders ↗</a>
         </nav>
         <div className="absolute left-1/2 -translate-x-1/2">
-          <span className="text-2xl font-bold tracking-tight" style={{color: '#00E5CC', fontFamily: 'system-ui, sans-serif', letterSpacing: '-0.02em'}}>pony</span>
+          <span className="text-2xl font-bold" style={{color: '#00E5CC'}}>🐴 pony</span>
         </div>
-        <div className="flex items-center gap-4 text-sm text-white/70">
-          <Link href="/dashboard" className="hover:text-white transition-colors">Connexion</Link>
-        </div>
+        <Link href="/dashboard" className="text-sm text-white hover:opacity-70">
+          Sign In
+        </Link>
       </header>
 
       {/* Hero */}

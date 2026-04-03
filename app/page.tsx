@@ -25,7 +25,7 @@ export default function Home() {
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-8" style={{backgroundColor: '#00E5CC'}}>
             👼
           </div>
-          <h1 className="text-6xl font-bold leading-tight mb-6">
+          <h1 className="text-6xl font-extrabold leading-tight mb-6">
             Sponsorisez<br />la flotte Pony.
           </h1>
           <p className="text-gray-400 text-lg mb-10 leading-relaxed">

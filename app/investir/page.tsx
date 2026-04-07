@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
-export default function Investir() {
+function InvestirForm() {
   const searchParams = useSearchParams()
   const campaignId = searchParams.get('campaignId')
   const amount = Number(searchParams.get('amount')) || 5000
@@ -45,8 +45,17 @@ export default function Investir() {
     setForm(prev => ({ ...prev, [field]: value }))
 
   async function handleSubmitKYC() {
-    setLoading(true)
     setError('')
+
+    if (!form.prenom || !form.nom || !form.email || !form.telephone ||
+        !form.dateNaissance || !form.lieuNaissance || !form.nationalite ||
+        !form.adresse || !form.profession || !form.revenus ||
+        !form.documentNumero || !form.iban) {
+      setError('Veuillez remplir tous les champs obligatoires.')
+      return
+    }
+
+    setLoading(true)
     try {
       const { data, error } = await supabase
         .from('investors')
@@ -73,7 +82,6 @@ export default function Investir() {
 
       if (error) throw error
 
-      // Save investment
       await supabase.from('investments').insert({
         investor_id: data.id,
         campaign_id: campaignId,
@@ -95,7 +103,6 @@ export default function Investir() {
   return (
     <main className="min-h-screen font-sans" style={{backgroundColor: '#0D0D2B', color: 'white'}}>
 
-      {/* Header */}
       <header className="flex justify-between items-center px-8 py-5 border-b border-white/10">
         <div className="flex items-center gap-2">
           <span className="text-xl">🐴</span>
@@ -106,7 +113,6 @@ export default function Investir() {
         </Link>
       </header>
 
-      {/* Stepper */}
       <div className="flex justify-center items-center gap-4 py-10">
         {[1, 2, 3].map(s => (
           <div key={s} className="flex items-center gap-4">
@@ -145,42 +151,176 @@ export default function Investir() {
                 <h2 className="text-xl font-bold mb-4">Informations personnelles</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Prénom</label>
+                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Prénom *</label>
                     <input type="text" value={form.prenom} onChange={e => update('prenom', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Nom</label>
+                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Nom *</label>
                     <input type="text" value={form.nom} onChange={e => update('nom', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div className="col-span-2">
-                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Email</label>
+                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Email *</label>
                     <input type="email" value={form.email} onChange={e => update('email', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Lieu de naissance</label>
+                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Lieu de naissance *</label>
                     <input type="text" value={form.lieuNaissance} onChange={e => update('lieuNaissance', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Date de naissance</label>
+                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Date de naissance *</label>
                     <input type="date" value={form.dateNaissance} onChange={e => update('dateNaissance', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Nationalité</label>
+                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Pays de nationalité *</label>
                     <select value={form.nationalite} onChange={e => update('nationalite', e.target.value)}
                       className={inputClass} style={inputStyle}>
                       <option value="">Veuillez faire un choix</option>
-                      <option value="française">Française</option>
-                      <option value="belge">Belge</option>
-                      <option value="autre">Autre</option>
+                      <option value="Afghanistan">Afghanistan</option>
+                      <option value="Albanie">Albanie</option>
+                      <option value="Algérie">Algérie</option>
+                      <option value="Allemagne">Allemagne</option>
+                      <option value="Andorre">Andorre</option>
+                      <option value="Angola">Angola</option>
+                      <option value="Arabie Saoudite">Arabie Saoudite</option>
+                      <option value="Argentine">Argentine</option>
+                      <option value="Arménie">Arménie</option>
+                      <option value="Australie">Australie</option>
+                      <option value="Autriche">Autriche</option>
+                      <option value="Azerbaïdjan">Azerbaïdjan</option>
+                      <option value="Bahreïn">Bahreïn</option>
+                      <option value="Bangladesh">Bangladesh</option>
+                      <option value="Belgique">Belgique</option>
+                      <option value="Bénin">Bénin</option>
+                      <option value="Bolivie">Bolivie</option>
+                      <option value="Bosnie-Herzégovine">Bosnie-Herzégovine</option>
+                      <option value="Botswana">Botswana</option>
+                      <option value="Brésil">Brésil</option>
+                      <option value="Bulgarie">Bulgarie</option>
+                      <option value="Burkina Faso">Burkina Faso</option>
+                      <option value="Burundi">Burundi</option>
+                      <option value="Cambodge">Cambodge</option>
+                      <option value="Cameroun">Cameroun</option>
+                      <option value="Canada">Canada</option>
+                      <option value="Chili">Chili</option>
+                      <option value="Chine">Chine</option>
+                      <option value="Chypre">Chypre</option>
+                      <option value="Colombie">Colombie</option>
+                      <option value="Congo">Congo</option>
+                      <option value="Corée du Sud">Corée du Sud</option>
+                      <option value="Costa Rica">Costa Rica</option>
+                      <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                      <option value="Croatie">Croatie</option>
+                      <option value="Cuba">Cuba</option>
+                      <option value="Danemark">Danemark</option>
+                      <option value="Égypte">Égypte</option>
+                      <option value="Émirats Arabes Unis">Émirats Arabes Unis</option>
+                      <option value="Équateur">Équateur</option>
+                      <option value="Espagne">Espagne</option>
+                      <option value="Estonie">Estonie</option>
+                      <option value="Éthiopie">Éthiopie</option>
+                      <option value="Finlande">Finlande</option>
+                      <option value="France">France</option>
+                      <option value="Gabon">Gabon</option>
+                      <option value="Ghana">Ghana</option>
+                      <option value="Grèce">Grèce</option>
+                      <option value="Guatemala">Guatemala</option>
+                      <option value="Guinée">Guinée</option>
+                      <option value="Haïti">Haïti</option>
+                      <option value="Honduras">Honduras</option>
+                      <option value="Hongrie">Hongrie</option>
+                      <option value="Inde">Inde</option>
+                      <option value="Indonésie">Indonésie</option>
+                      <option value="Iran">Iran</option>
+                      <option value="Irak">Irak</option>
+                      <option value="Irlande">Irlande</option>
+                      <option value="Islande">Islande</option>
+                      <option value="Israël">Israël</option>
+                      <option value="Italie">Italie</option>
+                      <option value="Jamaïque">Jamaïque</option>
+                      <option value="Japon">Japon</option>
+                      <option value="Jordanie">Jordanie</option>
+                      <option value="Kazakhstan">Kazakhstan</option>
+                      <option value="Kenya">Kenya</option>
+                      <option value="Koweït">Koweït</option>
+                      <option value="Laos">Laos</option>
+                      <option value="Lettonie">Lettonie</option>
+                      <option value="Liban">Liban</option>
+                      <option value="Libye">Libye</option>
+                      <option value="Liechtenstein">Liechtenstein</option>
+                      <option value="Lituanie">Lituanie</option>
+                      <option value="Luxembourg">Luxembourg</option>
+                      <option value="Macédoine">Macédoine</option>
+                      <option value="Madagascar">Madagascar</option>
+                      <option value="Malaisie">Malaisie</option>
+                      <option value="Mali">Mali</option>
+                      <option value="Malte">Malte</option>
+                      <option value="Maroc">Maroc</option>
+                      <option value="Maurice">Maurice</option>
+                      <option value="Mauritanie">Mauritanie</option>
+                      <option value="Mexique">Mexique</option>
+                      <option value="Moldavie">Moldavie</option>
+                      <option value="Monaco">Monaco</option>
+                      <option value="Mongolie">Mongolie</option>
+                      <option value="Monténégro">Monténégro</option>
+                      <option value="Mozambique">Mozambique</option>
+                      <option value="Namibie">Namibie</option>
+                      <option value="Népal">Népal</option>
+                      <option value="Nicaragua">Nicaragua</option>
+                      <option value="Niger">Niger</option>
+                      <option value="Nigéria">Nigéria</option>
+                      <option value="Norvège">Norvège</option>
+                      <option value="Nouvelle-Zélande">Nouvelle-Zélande</option>
+                      <option value="Oman">Oman</option>
+                      <option value="Ouganda">Ouganda</option>
+                      <option value="Ouzbékistan">Ouzbékistan</option>
+                      <option value="Pakistan">Pakistan</option>
+                      <option value="Panama">Panama</option>
+                      <option value="Paraguay">Paraguay</option>
+                      <option value="Pays-Bas">Pays-Bas</option>
+                      <option value="Pérou">Pérou</option>
+                      <option value="Philippines">Philippines</option>
+                      <option value="Pologne">Pologne</option>
+                      <option value="Portugal">Portugal</option>
+                      <option value="Qatar">Qatar</option>
+                      <option value="Roumanie">Roumanie</option>
+                      <option value="Royaume-Uni">Royaume-Uni</option>
+                      <option value="Russie">Russie</option>
+                      <option value="Rwanda">Rwanda</option>
+                      <option value="Sénégal">Sénégal</option>
+                      <option value="Serbie">Serbie</option>
+                      <option value="Singapour">Singapour</option>
+                      <option value="Slovaquie">Slovaquie</option>
+                      <option value="Slovénie">Slovénie</option>
+                      <option value="Somalie">Somalie</option>
+                      <option value="Soudan">Soudan</option>
+                      <option value="Sri Lanka">Sri Lanka</option>
+                      <option value="Suède">Suède</option>
+                      <option value="Suisse">Suisse</option>
+                      <option value="Syrie">Syrie</option>
+                      <option value="Taïwan">Taïwan</option>
+                      <option value="Tanzanie">Tanzanie</option>
+                      <option value="Tchad">Tchad</option>
+                      <option value="Thaïlande">Thaïlande</option>
+                      <option value="Togo">Togo</option>
+                      <option value="Tunisie">Tunisie</option>
+                      <option value="Turquie">Turquie</option>
+                      <option value="Ukraine">Ukraine</option>
+                      <option value="Uruguay">Uruguay</option>
+                      <option value="Venezuela">Venezuela</option>
+                      <option value="Vietnam">Vietnam</option>
+                      <option value="Yémen">Yémen</option>
+                      <option value="Zambie">Zambie</option>
+                      <option value="Zimbabwe">Zimbabwe</option>
+                      <option value="Autre">Autre</option>
                     </select>
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Numéro de téléphone</label>
+                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Numéro de téléphone *</label>
                     <input type="tel" value={form.telephone} onChange={e => update('telephone', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
@@ -193,11 +333,13 @@ export default function Investir() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Résidence fiscale</label>
+                    <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Résidence fiscale *</label>
                     <select value={form.residenceFiscale} onChange={e => update('residenceFiscale', e.target.value)}
                       className={inputClass} style={inputStyle}>
                       <option value="france">France</option>
                       <option value="belgique">Belgique</option>
+                      <option value="suisse">Suisse</option>
+                      <option value="luxembourg">Luxembourg</option>
                       <option value="autre">Autre</option>
                     </select>
                   </div>
@@ -217,9 +359,7 @@ export default function Investir() {
 
               <div>
                 <h2 className="text-xl font-bold mb-4">Coordonnées bancaires</h2>
-                <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>
-                  IBAN du compte bancaire sur lequel vous souhaitez percevoir vos remboursements
-                </label>
+                <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>IBAN *</label>
                 <input type="text" placeholder="FR76..." value={form.iban}
                   onChange={e => update('iban', e.target.value)}
                   className={inputClass} style={inputStyle} />
@@ -227,12 +367,12 @@ export default function Investir() {
 
               <div className="space-y-4">
                 <div>
-                  <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Adresse</label>
+                  <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Adresse *</label>
                   <input type="text" value={form.adresse} onChange={e => update('adresse', e.target.value)}
                     className={inputClass} style={inputStyle} />
                 </div>
                 <div>
-                  <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Profession</label>
+                  <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Profession *</label>
                   <input type="text" value={form.profession} onChange={e => update('profession', e.target.value)}
                     className={inputClass} style={inputStyle} />
                 </div>
@@ -248,7 +388,7 @@ export default function Investir() {
               </div>
 
               <div>
-                <h2 className="text-xl font-bold mb-4">Niveau de revenus globaux mensuel</h2>
+                <h2 className="text-xl font-bold mb-4">Niveau de revenus globaux mensuel *</h2>
                 <select value={form.revenus} onChange={e => update('revenus', e.target.value)}
                   className={inputClass} style={inputStyle}>
                   <option value="">Sélectionner</option>
@@ -267,7 +407,7 @@ export default function Investir() {
                   <option value="cni">Carte nationale d'identité</option>
                   <option value="permis">Permis de conduire</option>
                 </select>
-                <input type="text" placeholder="Numéro de document" value={form.documentNumero}
+                <input type="text" placeholder="Numéro de document *" value={form.documentNumero}
                   onChange={e => update('documentNumero', e.target.value)}
                   className={inputClass} style={{...inputStyle, marginBottom: '1rem'}} />
                 <div className="rounded-xl p-8 text-center text-sm cursor-pointer"
@@ -277,7 +417,8 @@ export default function Investir() {
               </div>
 
               {error && (
-                <p className="text-sm px-4 py-3 rounded-xl" style={{backgroundColor: 'rgba(255,100,100,0.15)', color: '#FF6464'}}>
+                <p className="text-sm px-4 py-3 rounded-xl"
+                  style={{backgroundColor: 'rgba(255,100,100,0.15)', color: '#FF6464'}}>
                   {error}
                 </p>
               )}
@@ -327,7 +468,7 @@ export default function Investir() {
               <div className="text-6xl">🎉</div>
               <h2 className="text-2xl font-bold">Investissement confirmé !</h2>
               <p className="text-sm max-w-md mx-auto" style={{color: 'rgba(255,255,255,0.5)'}}>
-                Merci pour votre confiance. Votre investissement sera activé dès réception de votre virement. Vous recevrez un email de confirmation.
+                Merci pour votre confiance. Votre investissement sera activé dès réception de votre virement.
               </p>
               <Link href="/dashboard"
                 className="inline-block px-8 py-3 rounded-xl text-sm font-bold"
@@ -338,14 +479,13 @@ export default function Investir() {
           )}
         </div>
 
-        {/* Summary card */}
         {step < 3 && (
           <div className="rounded-2xl p-6 h-fit sticky top-8" style={{backgroundColor: '#1E1B4B'}}>
             <h3 className="font-bold mb-5">Résumé</h3>
             <div className="space-y-4 text-sm">
               {[
                 { label: 'Total', value: `${amount.toLocaleString('fr-FR')},00 €`, large: true },
-                { label: 'Taux d\'intérêt', value: `${(rate * 100).toFixed(0)} %` },
+                { label: "Taux d'intérêt", value: `${(rate * 100).toFixed(0)} %` },
                 { label: 'Durée', value: `${duration} mois` },
                 { label: 'Remboursement total', value: `${totalRepaid.toLocaleString('fr-FR', {maximumFractionDigits: 0})} €` },
                 { label: 'Mensualité', value: `${monthlyInterest.toFixed(2).replace('.', ',')} €` },
@@ -363,5 +503,17 @@ export default function Investir() {
         )}
       </div>
     </main>
+  )
+}
+
+export default function Investir() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#0D0D2B'}}>
+        <p style={{color: '#00E5CC'}}>Chargement...</p>
+      </main>
+    }>
+      <InvestirForm />
+    </Suspense>
   )
 }

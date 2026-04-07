@@ -1,15 +1,48 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { supabase } from '@/lib/supabase'
+
+type Campaign = {
+  id: string
+  name: string
+  target_amount: number
+  raised_amount: number
+  rate: number
+  duration: number
+  status: string
+  start_date: string
+}
 
 export default function Campagne() {
   const [amount, setAmount] = useState(5000)
   const [duration, setDuration] = useState(24)
+  const [campaign, setCampaign] = useState<Campaign | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchCampaign() {
+      const { data, error } = await supabase
+        .from('campaigns')
+        .select('*')
+        .eq('status', 'Ouverte')
+        .single()
+      if (data) setCampaign(data)
+      setLoading(false)
+    }
+    fetchCampaign()
+  }, [])
 
   const rate = duration === 12 ? 0.06 : duration === 24 ? 0.07 : duration === 36 ? 0.08 : 0.09
   const monthlyInterest = (amount * rate) / 12
   const totalRepaid = amount + amount * rate * (duration / 12)
+
+  if (loading) return (
+    <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#0D0D2B'}}>
+      <p style={{color: '#00E5CC'}}>Chargement...</p>
+    </main>
+  )
 
   return (
     <main className="min-h-screen font-sans" style={{backgroundColor: '#0D0D2B', color: 'white'}}>
@@ -52,7 +85,7 @@ export default function Campagne() {
               </span>
             </div>
             <h1 className="text-3xl font-bold text-white">
-              Sponsorisez la flotte<br />Pony Printemps 2026
+              {campaign?.name || 'Campagne en cours'}
             </h1>
           </div>
         </div>
@@ -64,7 +97,7 @@ export default function Campagne() {
             <span className="text-sm font-medium" style={{color: 'rgba(255,255,255,0.5)'}}>Statut</span>
             <span className="text-xs px-3 py-1 rounded-full font-medium"
               style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
-              🟢 En cours
+              🟢 {campaign?.status || 'En cours'}
             </span>
           </div>
           <div className="space-y-3 mb-4">
@@ -81,12 +114,15 @@ export default function Campagne() {
           </div>
           <div className="mb-1">
             <div className="w-full rounded-full h-1.5" style={{backgroundColor: 'rgba(255,255,255,0.1)'}}>
-              <div className="h-1.5 rounded-full" style={{width: '62%', backgroundColor: '#00E5CC'}}></div>
+              <div className="h-1.5 rounded-full" style={{
+                width: `${campaign ? (campaign.raised_amount / campaign.target_amount) * 100 : 0}%`,
+                backgroundColor: '#00E5CC'
+              }}></div>
             </div>
           </div>
           <div className="flex justify-between text-xs mb-3" style={{color: 'rgba(255,255,255,0.4)'}}>
-            <span>312 000 € financés</span>
-            <span>500 000 €</span>
+            <span>{campaign?.raised_amount.toLocaleString('fr-FR')} € financés</span>
+            <span>{campaign?.target_amount.toLocaleString('fr-FR')} €</span>
           </div>
           <div className="text-xs flex items-center gap-1" style={{color: 'rgba(255,255,255,0.4)'}}>
             🛡️ Capital protégé par la flotte
@@ -164,7 +200,8 @@ export default function Campagne() {
             </div>
           </div>
 
-          <Link href="/investir"
+          <Link
+            href={`/investir?campaignId=${campaign?.id}&amount=${amount}&duration=${duration}&rate=${rate}`}
             className="w-full py-4 rounded-xl font-bold text-sm text-center block mt-8 transition-colors"
             style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
             Investir dès maintenant →
@@ -181,7 +218,6 @@ export default function Campagne() {
           <p>Contrairement à l'ancien modèle Adopt a Pony, vous n'êtes pas propriétaire d'un véhicule spécifique — vous financez la flotte dans son ensemble, ce qui réduit le risque et simplifie votre expérience.</p>
         </div>
       </div>
-
     </main>
   )
 }

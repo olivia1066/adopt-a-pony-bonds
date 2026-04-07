@@ -1,10 +1,25 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
+import { supabase } from '@/lib/supabase'
 
 export default function Investir() {
+  const searchParams = useSearchParams()
+  const campaignId = searchParams.get('campaignId')
+  const amount = Number(searchParams.get('amount')) || 5000
+  const duration = Number(searchParams.get('duration')) || 24
+  const rate = Number(searchParams.get('rate')) || 0.07
+
+  const totalRepaid = amount + amount * rate * (duration / 12)
+  const monthlyInterest = (amount * rate) / 12
+
   const [step, setStep] = useState(1)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [investorId, setInvestorId] = useState('')
+
   const [form, setForm] = useState({
     type: 'individuel',
     prenom: '',
@@ -29,9 +44,53 @@ export default function Investir() {
   const update = (field: string, value: string | boolean) =>
     setForm(prev => ({ ...prev, [field]: value }))
 
-  const inputClass = "w-full rounded-xl px-4 py-3 text-sm text-white outline-none focus:ring-1"
+  async function handleSubmitKYC() {
+    setLoading(true)
+    setError('')
+    try {
+      const { data, error } = await supabase
+        .from('investors')
+        .insert({
+          prenom: form.prenom,
+          nom: form.nom,
+          email: form.email,
+          telephone: form.telephone,
+          date_naissance: form.dateNaissance,
+          lieu_naissance: form.lieuNaissance,
+          nationalite: form.nationalite,
+          residence_fiscale: form.residenceFiscale,
+          adresse: form.adresse,
+          profession: form.profession,
+          revenus: form.revenus,
+          pep: form.pep,
+          document_type: form.documentType,
+          document_numero: form.documentNumero,
+          iban: form.iban,
+          kyc_status: 'En attente',
+        })
+        .select()
+        .single()
+
+      if (error) throw error
+
+      // Save investment
+      await supabase.from('investments').insert({
+        investor_id: data.id,
+        campaign_id: campaignId,
+        montant: amount,
+        statut: 'En attente',
+      })
+
+      setInvestorId(data.id)
+      setStep(2)
+    } catch (err: any) {
+      setError(err.message || 'Une erreur est survenue')
+    }
+    setLoading(false)
+  }
+
+  const inputClass = "w-full rounded-xl px-4 py-3 text-sm text-white outline-none"
   const inputStyle = {backgroundColor: '#1E1B4B', border: '1px solid rgba(255,255,255,0.1)'}
-  const focusStyle = {ringColor: '#00E5CC'}
 
   return (
     <main className="min-h-screen font-sans" style={{backgroundColor: '#0D0D2B', color: 'white'}}>
@@ -151,7 +210,7 @@ export default function Investir() {
                   <input type="checkbox" checked={form.regimeFiscal}
                     onChange={e => update('regimeFiscal', e.target.checked)} className="mt-1" />
                   <span className="text-sm" style={{color: 'rgba(255,255,255,0.6)'}}>
-                    Je souhaite être dispensé(e) du prélèvement forfaitaire obligatoire non libératoire de 12,8% (barème progressif).
+                    Je souhaite être dispensé(e) du prélèvement forfaitaire obligatoire non libératoire de 12,8%.
                   </span>
                 </label>
               </div>
@@ -163,7 +222,7 @@ export default function Investir() {
                 </label>
                 <input type="text" placeholder="FR76..." value={form.iban}
                   onChange={e => update('iban', e.target.value)}
-                  className={inputClass} style={{...inputStyle, color: 'white'}} />
+                  className={inputClass} style={inputStyle} />
               </div>
 
               <div className="space-y-4">
@@ -217,10 +276,18 @@ export default function Investir() {
                 </div>
               </div>
 
-              <button onClick={() => setStep(2)}
+              {error && (
+                <p className="text-sm px-4 py-3 rounded-xl" style={{backgroundColor: 'rgba(255,100,100,0.15)', color: '#FF6464'}}>
+                  {error}
+                </p>
+              )}
+
+              <button
+                onClick={handleSubmitKYC}
+                disabled={loading}
                 className="w-full py-4 rounded-xl font-bold text-sm transition-colors"
-                style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
-                Valider →
+                style={{backgroundColor: '#00E5CC', color: '#0D0D2B', opacity: loading ? 0.7 : 1}}>
+                {loading ? 'Enregistrement...' : 'Valider →'}
               </button>
             </>
           )}
@@ -235,8 +302,8 @@ export default function Investir() {
                 {[
                   { label: 'Bénéficiaire', value: 'Pony Finance SA' },
                   { label: 'IBAN', value: 'FR76 XXXX XXXX XXXX XXXX' },
-                  { label: 'Référence', value: 'PONY-2026-XXXX' },
-                  { label: 'Montant', value: '5 000,00 €' },
+                  { label: 'Référence', value: `PONY-${investorId.slice(0, 8).toUpperCase()}` },
+                  { label: 'Montant', value: `${amount.toLocaleString('fr-FR')},00 €` },
                 ].map((row, i) => (
                   <div key={i} className="flex justify-between">
                     <span style={{color: 'rgba(255,255,255,0.4)'}}>{row.label}</span>
@@ -260,7 +327,7 @@ export default function Investir() {
               <div className="text-6xl">🎉</div>
               <h2 className="text-2xl font-bold">Investissement confirmé !</h2>
               <p className="text-sm max-w-md mx-auto" style={{color: 'rgba(255,255,255,0.5)'}}>
-                Merci pour votre confiance. Votre investissement sera activé dès réception de votre virement.
+                Merci pour votre confiance. Votre investissement sera activé dès réception de votre virement. Vous recevrez un email de confirmation.
               </p>
               <Link href="/dashboard"
                 className="inline-block px-8 py-3 rounded-xl text-sm font-bold"
@@ -277,10 +344,11 @@ export default function Investir() {
             <h3 className="font-bold mb-5">Résumé</h3>
             <div className="space-y-4 text-sm">
               {[
-                { label: 'Total', value: '5 000,00 €', large: true },
-                { label: 'Taux d\'intérêt', value: '7 %' },
-                { label: 'Durée', value: '24 mois' },
-                { label: 'Remboursement total', value: '5 700,00 €' },
+                { label: 'Total', value: `${amount.toLocaleString('fr-FR')},00 €`, large: true },
+                { label: 'Taux d\'intérêt', value: `${(rate * 100).toFixed(0)} %` },
+                { label: 'Durée', value: `${duration} mois` },
+                { label: 'Remboursement total', value: `${totalRepaid.toLocaleString('fr-FR', {maximumFractionDigits: 0})} €` },
+                { label: 'Mensualité', value: `${monthlyInterest.toFixed(2).replace('.', ',')} €` },
               ].map((row, i) => (
                 <div key={i} className="flex justify-between">
                   <span style={{color: 'rgba(255,255,255,0.4)'}}>{row.label}</span>
@@ -290,11 +358,6 @@ export default function Investir() {
                   </span>
                 </div>
               ))}
-            </div>
-            <div className="mt-5 pt-5" style={{borderTop: '1px solid rgba(255,255,255,0.1)'}}>
-              <input type="text" placeholder="Code promo"
-                className="w-full rounded-xl px-4 py-2 text-sm"
-                style={{backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white'}} />
             </div>
           </div>
         )}

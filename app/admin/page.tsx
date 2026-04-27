@@ -1,85 +1,134 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { supabase } from '@/lib/supabase'
 
-const campaigns = [
-  { id: 'C001', name: 'Flotte Printemps 2026', target: 500000, raised: 312000, rate: 7, duration: 24, status: 'Ouverte', startDate: '2026-04-01' },
-  { id: 'C002', name: 'Flotte Été 2026', target: 500000, raised: 0, rate: 8, duration: 36, status: 'À venir', startDate: '2026-06-01' },
-]
+type Campaign = {
+  id: string
+  name: string
+  target_amount: number
+  raised_amount: number
+  rate: number
+  duration: number
+  status: string
+  start_date: string
+}
 
-const investors = [
-  {
-    id: 'PONY-2026-001',
-    prenom: 'Olivia',
-    nom: 'Bally',
-    email: 'olivia.bally@yahoo.fr',
-    telephone: '0766774973',
-    dateNaissance: '19.05.1997',
-    lieuNaissance: 'Bruxelles',
-    nationalite: 'Française',
-    residenceFiscale: 'France',
-    adresse: '12 rue de la Paix, Paris',
-    profession: 'Performance and Strategy Manager',
-    revenus: 'Entre 4 000 € et 8 000 €',
-    pep: 'Non',
-    documentType: 'Passeport',
-    documentNumero: 'XX123456',
-    iban: 'FR76 XXXX XXXX XXXX',
-    kyc: 'En attente',
-    montant: 5000,
-    campagne: 'Flotte Printemps 2026',
-    statut: 'Actif',
-  },
-  {
-    id: 'PONY-2026-002',
-    prenom: 'Jean',
-    nom: 'Dupont',
-    email: 'jean.dupont@gmail.com',
-    telephone: '0612345678',
-    dateNaissance: '15.03.1985',
-    lieuNaissance: 'Paris',
-    nationalite: 'Française',
-    residenceFiscale: 'France',
-    adresse: '5 avenue Victor Hugo, Lyon',
-    profession: 'Ingénieur',
-    revenus: 'Plus de 8 000 €',
-    pep: 'Non',
-    documentType: 'Carte nationale d\'identité',
-    documentNumero: 'YY789012',
-    iban: 'FR76 YYYY YYYY YYYY',
-    kyc: 'Validé',
-    montant: 2000,
-    campagne: 'Flotte Été 2026',
-    statut: 'En attente',
-  },
-]
+type Investor = {
+  id: string
+  prenom: string
+  nom: string
+  email: string
+  telephone: string
+  date_naissance: string
+  lieu_naissance: string
+  nationalite: string
+  residence_fiscale: string
+  adresse: string
+  profession: string
+  revenus: string
+  pep: string
+  document_type: string
+  document_numero: string
+  iban: string
+  kyc_status: string
+  created_at: string
+  investments?: { montant: number, campaigns?: { name: string } }[]
+}
 
-const payments = [
-  { id: 1, investor: 'Olivia Bally', campagne: 'Flotte Printemps 2026', type: 'Intérêts', montant: 29.17, date: '01/05/2026', statut: 'À envoyer' },
-  { id: 2, investor: 'Olivia Bally', campagne: 'Flotte Printemps 2026', type: 'Intérêts', montant: 29.17, date: '01/06/2026', statut: 'À envoyer' },
-  { id: 3, investor: 'Jean Dupont', campagne: 'Flotte Été 2026', type: 'Intérêts', montant: 13.33, date: '01/06/2026', statut: 'À envoyer' },
-  { id: 4, investor: 'Olivia Bally', campagne: 'Flotte Printemps 2026', type: 'Remboursement capital', montant: 5000, date: '01/04/2028', statut: 'À envoyer' },
-]
+type Payment = {
+  id: string
+  type: string
+  montant: number
+  date_prevue: string
+  statut: string
+  investments?: { investors?: { prenom: string, nom: string }, campaigns?: { name: string } }
+}
 
 export default function Admin() {
   const [activeTab, setActiveTab] = useState('campagnes')
-  const [selectedInvestor, setSelectedInvestor] = useState<typeof investors[0] | null>(null)
+  const [campaigns, setCampaigns] = useState<Campaign[]>([])
+  const [investors, setInvestors] = useState<Investor[]>([])
+  const [payments, setPayments] = useState<Payment[]>([])
+  const [loading, setLoading] = useState(true)
   const [showNewCampaign, setShowNewCampaign] = useState(false)
-  const [kycStatuses, setKycStatuses] = useState<Record<string, string>>(
-    Object.fromEntries(investors.map(i => [i.id, i.kyc]))
-  )
-  const [paymentStatuses, setPaymentStatuses] = useState<Record<number, string>>(
-    Object.fromEntries(payments.map(p => [p.id, p.statut]))
-  )
   const [newCampaign, setNewCampaign] = useState({
     name: '', target: '', rate: '', duration: '', startDate: ''
   })
 
+  useEffect(() => {
+    fetchAll()
+  }, [])
+
+  async function fetchAll() {
+    setLoading(true)
+
+    const { data: camps } = await supabase
+      .from('campaigns')
+      .select('*')
+      .order('created_at', { ascending: false })
+
+    const { data: invs } = await supabase
+      .from('investors')
+      .select('*, investments(montant, campaigns(name))')
+      .order('created_at', { ascending: false })
+
+    const { data: pays } = await supabase
+      .from('payments')
+      .select('*, investments(investors(prenom, nom), campaigns(name))')
+      .order('date_prevue', { ascending: true })
+
+    if (camps) setCampaigns(camps)
+    if (invs) setInvestors(invs)
+    if (pays) setPayments(pays)
+    setLoading(false)
+  }
+
+  async function createCampaign() {
+    const { error } = await supabase.from('campaigns').insert({
+      name: newCampaign.name,
+      target_amount: Number(newCampaign.target),
+      rate: Number(newCampaign.rate),
+      duration: Number(newCampaign.duration),
+      start_date: newCampaign.startDate,
+      status: 'À venir',
+      raised_amount: 0,
+    })
+    if (!error) {
+      setShowNewCampaign(false)
+      setNewCampaign({ name: '', target: '', rate: '', duration: '', startDate: '' })
+      fetchAll()
+    }
+  }
+
+  async function closeCampaign(id: string) {
+    await supabase.from('campaigns').update({ status: 'Clôturée' }).eq('id', id)
+    fetchAll()
+  }
+
+  async function updateKyc(id: string, status: string) {
+    await supabase.from('investors').update({ kyc_status: status }).eq('id', id)
+    fetchAll()
+  }
+
+  async function markPaymentSent(id: string) {
+    await supabase.from('payments').update({ statut: 'Envoyé' }).eq('id', id)
+    fetchAll()
+  }
+
+  const totalCollecte = campaigns.reduce((sum, c) => sum + c.raised_amount, 0)
+  const kycEnAttente = investors.filter(i => i.kyc_status === 'En attente').length
+
+  if (loading) return (
+    <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#0D0D2B'}}>
+      <p style={{color: '#00E5CC'}}>Chargement...</p>
+    </main>
+  )
+
   return (
     <main className="min-h-screen font-sans" style={{backgroundColor: '#0D0D2B', color: 'white'}}>
 
-      {/* Header */}
       <header className="flex justify-between items-center px-8 py-5 border-b border-white/10">
         <div className="flex items-center gap-4">
           <span className="text-xl">🐴</span>
@@ -96,23 +145,22 @@ export default function Admin() {
 
       <div className="max-w-6xl mx-auto px-8 py-10">
 
-        {/* Title */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-1">Panel Admin</h1>
           <p className="text-sm" style={{color: 'rgba(255,255,255,0.4)'}}>Gérez les campagnes, investisseurs et paiements</p>
         </div>
 
-        {/* KPI strip */}
+        {/* KPIs */}
         <div className="grid grid-cols-4 gap-4 mb-10">
           {[
-            { label: 'Campagnes actives', value: '1' },
+            { label: 'Campagnes actives', value: campaigns.filter(c => c.status === 'Ouverte').length.toString() },
             { label: 'Total investisseurs', value: investors.length.toString() },
-            { label: 'KYC en attente', value: Object.values(kycStatuses).filter(s => s === 'En attente').length.toString() },
-            { label: 'Total collecté', value: '314 000 €' },
+            { label: 'KYC en attente', value: kycEnAttente.toString(), warn: kycEnAttente > 0 },
+            { label: 'Total collecté', value: `${totalCollecte.toLocaleString('fr-FR')} €` },
           ].map((kpi, i) => (
             <div key={i} className="rounded-2xl p-5" style={{backgroundColor: '#1E1B4B'}}>
               <p className="text-xs mb-2" style={{color: 'rgba(255,255,255,0.4)'}}>{kpi.label}</p>
-              <p className="text-2xl font-bold" style={{color: i === 2 && kpi.value !== '0' ? '#FFC800' : '#00E5CC'}}>{kpi.value}</p>
+              <p className="text-2xl font-bold" style={{color: kpi.warn ? '#FFC800' : '#00E5CC'}}>{kpi.value}</p>
             </div>
           ))}
         </div>
@@ -120,34 +168,29 @@ export default function Admin() {
         {/* Tabs */}
         <div className="flex gap-6 mb-8 border-b border-white/10">
           {['campagnes', 'investisseurs', 'paiements'].map(tab => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className="pb-3 text-sm font-medium capitalize transition-colors"
+            <button key={tab} onClick={() => setActiveTab(tab)}
+              className="pb-3 text-sm font-medium transition-colors"
               style={{
                 color: activeTab === tab ? '#00E5CC' : 'rgba(255,255,255,0.4)',
                 borderBottom: activeTab === tab ? '2px solid #00E5CC' : '2px solid transparent',
-              }}
-            >
+              }}>
               {tab === 'campagnes' ? 'Campagnes' : tab === 'investisseurs' ? 'Investisseurs' : 'Paiements'}
             </button>
           ))}
         </div>
 
-        {/* CAMPAGNES TAB */}
+        {/* CAMPAGNES */}
         {activeTab === 'campagnes' && (
           <div>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold">Campagnes</h2>
-              <button
-                onClick={() => setShowNewCampaign(!showNewCampaign)}
+              <button onClick={() => setShowNewCampaign(!showNewCampaign)}
                 className="text-sm px-4 py-2 rounded-xl font-bold"
                 style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
                 + Nouvelle campagne
               </button>
             </div>
 
-            {/* New campaign form */}
             {showNewCampaign && (
               <div className="rounded-2xl p-6 mb-6" style={{backgroundColor: '#1E1B4B', border: '1px solid rgba(0,229,204,0.3)'}}>
                 <h3 className="font-bold mb-4" style={{color: '#00E5CC'}}>Nouvelle campagne</h3>
@@ -161,19 +204,17 @@ export default function Admin() {
                   ].map(field => (
                     <div key={field.key}>
                       <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>{field.label}</label>
-                      <input
-                        type="text"
-                        placeholder={field.placeholder}
+                      <input type="text" placeholder={field.placeholder}
                         value={newCampaign[field.key as keyof typeof newCampaign]}
                         onChange={e => setNewCampaign(prev => ({...prev, [field.key]: e.target.value}))}
                         className="w-full rounded-xl px-4 py-3 text-sm text-white"
-                        style={{backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)'}}
-                      />
+                        style={{backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)'}} />
                     </div>
                   ))}
                 </div>
                 <div className="flex gap-3 mt-4">
-                  <button className="px-6 py-2 rounded-xl text-sm font-bold"
+                  <button onClick={createCampaign}
+                    className="px-6 py-2 rounded-xl text-sm font-bold"
                     style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
                     Créer la campagne
                   </button>
@@ -199,12 +240,12 @@ export default function Admin() {
                           }}>
                           {c.status}
                         </span>
-                        <span className="text-xs" style={{color: 'rgba(255,255,255,0.3)'}}>{c.id}</span>
                       </div>
                       <h3 className="font-bold text-lg">{c.name}</h3>
                     </div>
                     {c.status === 'Ouverte' && (
-                      <button className="text-sm px-4 py-2 rounded-xl"
+                      <button onClick={() => closeCampaign(c.id)}
+                        className="text-sm px-4 py-2 rounded-xl"
                         style={{backgroundColor: 'rgba(255,100,100,0.15)', color: '#FF6464'}}>
                         Clôturer
                       </button>
@@ -214,8 +255,8 @@ export default function Admin() {
                     {[
                       { label: 'Taux', value: `${c.rate}%` },
                       { label: 'Durée', value: `${c.duration} mois` },
-                      { label: 'Objectif', value: `${c.target.toLocaleString('fr-FR')} €` },
-                      { label: 'Collecté', value: `${c.raised.toLocaleString('fr-FR')} €` },
+                      { label: 'Objectif', value: `${c.target_amount.toLocaleString('fr-FR')} €` },
+                      { label: 'Collecté', value: `${c.raised_amount.toLocaleString('fr-FR')} €` },
                     ].map((stat, i) => (
                       <div key={i}>
                         <p className="text-xs mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>{stat.label}</p>
@@ -225,12 +266,12 @@ export default function Admin() {
                   </div>
                   <div className="w-full rounded-full h-1.5" style={{backgroundColor: 'rgba(255,255,255,0.1)'}}>
                     <div className="h-1.5 rounded-full" style={{
-                      width: `${(c.raised / c.target) * 100}%`,
+                      width: `${Math.min((c.raised_amount / c.target_amount) * 100, 100)}%`,
                       backgroundColor: '#00E5CC'
                     }}></div>
                   </div>
                   <p className="text-xs mt-1" style={{color: 'rgba(255,255,255,0.3)'}}>
-                    {((c.raised / c.target) * 100).toFixed(0)}% financé
+                    {((c.raised_amount / c.target_amount) * 100).toFixed(0)}% financé
                   </p>
                 </div>
               ))}
@@ -238,10 +279,10 @@ export default function Admin() {
           </div>
         )}
 
-        {/* INVESTISSEURS TAB */}
+        {/* INVESTISSEURS */}
         {activeTab === 'investisseurs' && (
           <div>
-            <h2 className="text-xl font-bold mb-6">Investisseurs</h2>
+            <h2 className="text-xl font-bold mb-6">Investisseurs ({investors.length})</h2>
             <div className="space-y-4">
               {investors.map(inv => (
                 <div key={inv.id} className="rounded-2xl p-6" style={{backgroundColor: '#1E1B4B'}}>
@@ -250,37 +291,44 @@ export default function Admin() {
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-xs px-2 py-1 rounded-full font-medium"
                           style={{
-                            backgroundColor: kycStatuses[inv.id] === 'Validé' ? 'rgba(0,229,204,0.15)' :
-                              kycStatuses[inv.id] === 'Rejeté' ? 'rgba(255,100,100,0.15)' : 'rgba(255,200,0,0.15)',
-                            color: kycStatuses[inv.id] === 'Validé' ? '#00E5CC' :
-                              kycStatuses[inv.id] === 'Rejeté' ? '#FF6464' : '#FFC800',
+                            backgroundColor: inv.kyc_status === 'Validé' ? 'rgba(0,229,204,0.15)' :
+                              inv.kyc_status === 'Rejeté' ? 'rgba(255,100,100,0.15)' : 'rgba(255,200,0,0.15)',
+                            color: inv.kyc_status === 'Validé' ? '#00E5CC' :
+                              inv.kyc_status === 'Rejeté' ? '#FF6464' : '#FFC800',
                           }}>
-                          KYC: {kycStatuses[inv.id]}
+                          KYC: {inv.kyc_status}
                         </span>
-                        <span className="text-xs" style={{color: 'rgba(255,255,255,0.3)'}}>{inv.id}</span>
+                        <span className="text-xs" style={{color: 'rgba(255,255,255,0.3)'}}>
+                          {new Date(inv.created_at).toLocaleDateString('fr-FR')}
+                        </span>
                       </div>
                       <h3 className="font-bold text-lg">{inv.prenom} {inv.nom}</h3>
                       <p className="text-sm" style={{color: 'rgba(255,255,255,0.4)'}}>{inv.email} · {inv.telephone}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xl font-bold">{inv.montant.toLocaleString('fr-FR')} €</p>
-                      <p className="text-xs" style={{color: 'rgba(255,255,255,0.4)'}}>{inv.campagne}</p>
+                      {inv.investments && inv.investments.length > 0 && (
+                        <>
+                          <p className="text-xl font-bold">{inv.investments[0].montant?.toLocaleString('fr-FR')} €</p>
+                          <p className="text-xs" style={{color: 'rgba(255,255,255,0.4)'}}>
+                            {inv.investments[0].campaigns?.name}
+                          </p>
+                        </>
+                      )}
                     </div>
                   </div>
 
-                  {/* KYC Details */}
                   <div className="grid grid-cols-3 gap-3 text-sm mb-4 p-4 rounded-xl"
                     style={{backgroundColor: 'rgba(255,255,255,0.03)'}}>
                     {[
-                      { label: 'Date de naissance', value: inv.dateNaissance },
-                      { label: 'Lieu de naissance', value: inv.lieuNaissance },
+                      { label: 'Date de naissance', value: inv.date_naissance },
+                      { label: 'Lieu de naissance', value: inv.lieu_naissance },
                       { label: 'Nationalité', value: inv.nationalite },
-                      { label: 'Résidence fiscale', value: inv.residenceFiscale },
+                      { label: 'Résidence fiscale', value: inv.residence_fiscale },
                       { label: 'Adresse', value: inv.adresse },
                       { label: 'Profession', value: inv.profession },
                       { label: 'Revenus mensuels', value: inv.revenus },
                       { label: 'PEP', value: inv.pep },
-                      { label: 'Document', value: `${inv.documentType} — ${inv.documentNumero}` },
+                      { label: 'Document', value: `${inv.document_type} — ${inv.document_numero}` },
                       { label: 'IBAN', value: inv.iban },
                     ].map((field, i) => (
                       <div key={i}>
@@ -290,85 +338,97 @@ export default function Admin() {
                     ))}
                   </div>
 
-                  {/* KYC Actions */}
-                  {kycStatuses[inv.id] === 'En attente' && (
+                  {inv.kyc_status === 'En attente' && (
                     <div className="flex gap-3">
-                      <button
-                        onClick={() => setKycStatuses(prev => ({...prev, [inv.id]: 'Validé'}))}
+                      <button onClick={() => updateKyc(inv.id, 'Validé')}
                         className="px-5 py-2 rounded-xl text-sm font-bold"
                         style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
                         ✓ Valider le KYC
                       </button>
-                      <button
-                        onClick={() => setKycStatuses(prev => ({...prev, [inv.id]: 'Rejeté'}))}
+                      <button onClick={() => updateKyc(inv.id, 'Rejeté')}
                         className="px-5 py-2 rounded-xl text-sm font-bold"
                         style={{backgroundColor: 'rgba(255,100,100,0.15)', color: '#FF6464'}}>
                         ✗ Rejeter
                       </button>
                     </div>
                   )}
-                  {kycStatuses[inv.id] === 'Validé' && (
+                  {inv.kyc_status === 'Validé' && (
                     <p className="text-sm font-medium" style={{color: '#00E5CC'}}>✓ KYC validé</p>
                   )}
-                  {kycStatuses[inv.id] === 'Rejeté' && (
+                  {inv.kyc_status === 'Rejeté' && (
                     <p className="text-sm font-medium" style={{color: '#FF6464'}}>✗ KYC rejeté</p>
                   )}
                 </div>
               ))}
+
+              {investors.length === 0 && (
+                <div className="text-center py-16" style={{color: 'rgba(255,255,255,0.3)'}}>
+                  Aucun investisseur pour le moment
+                </div>
+              )}
             </div>
           </div>
         )}
 
-        {/* PAIEMENTS TAB */}
+        {/* PAIEMENTS */}
         {activeTab === 'paiements' && (
           <div>
             <h2 className="text-xl font-bold mb-6">Paiements</h2>
-            <div className="rounded-2xl overflow-hidden" style={{backgroundColor: '#1E1B4B'}}>
-              <table className="w-full text-sm">
-                <thead>
-                  <tr style={{borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
-                    {['Date', 'Investisseur', 'Campagne', 'Type', 'Montant', 'Statut', 'Action'].map((h, i) => (
-                      <th key={i} className={`px-6 py-4 text-xs font-medium ${i >= 4 ? 'text-right' : 'text-left'}`}
-                        style={{color: 'rgba(255,255,255,0.4)'}}>
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {payments.map(p => (
-                    <tr key={p.id} style={{borderBottom: '1px solid rgba(255,255,255,0.05)'}}>
-                      <td className="px-6 py-4">{p.date}</td>
-                      <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.7)'}}>{p.investor}</td>
-                      <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.5)'}}>{p.campagne}</td>
-                      <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.5)'}}>{p.type}</td>
-                      <td className="px-6 py-4 text-right font-bold" style={{color: '#00E5CC'}}>
-                        +{p.montant.toFixed(2).replace('.', ',')} €
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <span className="text-xs px-2 py-1 rounded-full"
-                          style={{
-                            backgroundColor: paymentStatuses[p.id] === 'Envoyé' ? 'rgba(0,229,204,0.15)' : 'rgba(255,200,0,0.15)',
-                            color: paymentStatuses[p.id] === 'Envoyé' ? '#00E5CC' : '#FFC800',
-                          }}>
-                          {paymentStatuses[p.id]}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        {paymentStatuses[p.id] === 'À envoyer' && (
-                          <button
-                            onClick={() => setPaymentStatuses(prev => ({...prev, [p.id]: 'Envoyé'}))}
-                            className="text-xs px-3 py-1 rounded-xl font-medium"
-                            style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
-                            Marquer envoyé
-                          </button>
-                        )}
-                      </td>
+            {payments.length === 0 ? (
+              <div className="text-center py-16" style={{color: 'rgba(255,255,255,0.3)'}}>
+                Aucun paiement pour le moment
+              </div>
+            ) : (
+              <div className="rounded-2xl overflow-hidden" style={{backgroundColor: '#1E1B4B'}}>
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr style={{borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
+                      {['Date', 'Investisseur', 'Campagne', 'Type', 'Montant', 'Statut', 'Action'].map((h, i) => (
+                        <th key={i} className={`px-6 py-4 text-xs font-medium ${i >= 4 ? 'text-right' : 'text-left'}`}
+                          style={{color: 'rgba(255,255,255,0.4)'}}>
+                          {h}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {payments.map(p => (
+                      <tr key={p.id} style={{borderBottom: '1px solid rgba(255,255,255,0.05)'}}>
+                        <td className="px-6 py-4">{p.date_prevue ? new Date(p.date_prevue).toLocaleDateString('fr-FR') : '—'}</td>
+                        <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.7)'}}>
+                          {p.investments?.investors?.prenom} {p.investments?.investors?.nom}
+                        </td>
+                        <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.5)'}}>
+                          {p.investments?.campaigns?.name}
+                        </td>
+                        <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.5)'}}>{p.type}</td>
+                        <td className="px-6 py-4 text-right font-bold" style={{color: '#00E5CC'}}>
+                          +{p.montant.toFixed(2).replace('.', ',')} €
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <span className="text-xs px-2 py-1 rounded-full"
+                            style={{
+                              backgroundColor: p.statut === 'Envoyé' ? 'rgba(0,229,204,0.15)' : 'rgba(255,200,0,0.15)',
+                              color: p.statut === 'Envoyé' ? '#00E5CC' : '#FFC800',
+                            }}>
+                            {p.statut}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          {p.statut === 'À envoyer' && (
+                            <button onClick={() => markPaymentSent(p.id)}
+                              className="text-xs px-3 py-1 rounded-xl font-medium"
+                              style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
+                              Marquer envoyé
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         )}
       </div>

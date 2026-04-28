@@ -38,7 +38,7 @@ export default function Home() {
       {/* Hero */}
       <section style={{minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden', position: 'relative'}}>
 
-        {/* Background image — transparent */}
+        {/* Background image */}
         <div style={{
           position: 'absolute',
           right: 0,
@@ -49,20 +49,20 @@ export default function Home() {
           opacity: 0.15,
         }}>
           <img src="/Rectangle (1).png" alt=""
-            style={{width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'right center', width: '65%', marginLeft: 'auto'}} />
+            style={{objectFit: 'contain', objectPosition: 'right center', width: '65%', marginLeft: 'auto', height: '100%'}} />
         </div>
 
         {/* Content */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '80px',
+          gap: '60px',
           paddingLeft: '80px',
           paddingRight: '80px',
-          justifyContent: 'center',
           width: '100%',
           position: 'relative',
           zIndex: 1,
+          justifyContent: 'center',
         }}>
 
           {/* Left — text */}
@@ -216,10 +216,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* Value proposition */}
       <section style={{paddingLeft: '120px', paddingRight: '0', paddingTop: '96px', paddingBottom: '96px', display: 'flex', gap: '0', alignItems: 'stretch', overflow: 'hidden'}}>
-        
-        {/* Left — items */}
         <div style={{flex: '1', paddingRight: '80px'}}>
           <h2 className="text-4xl font-bold mb-16">Why invest with Pony?</h2>
           <div className="space-y-12">
@@ -254,7 +253,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Right — photo placeholder */}
         <div style={{flex: '0 0 45%', position: 'relative', borderRadius: '24px 0 0 24px', overflow: 'hidden', minHeight: '500px'}}>
           <div style={{
             width: '100%',
@@ -269,16 +267,14 @@ export default function Home() {
             <div style={{fontSize: '80px', opacity: 0.3}}>🛴</div>
             <p style={{color: 'rgba(255,255,255,0.2)', fontSize: '14px'}}>Photo placeholder</p>
           </div>
-          {/* Cyan overlay */}
           <div style={{
             position: 'absolute',
             inset: 0,
             background: 'linear-gradient(to right, #13102B 0%, transparent 30%)',
           }}></div>
         </div>
-
       </section>
-      
+
       {/* Stats */}
       <section className="border-t border-white/10 py-16">
         <div className="max-w-4xl mx-auto grid grid-cols-4 gap-8 text-center">

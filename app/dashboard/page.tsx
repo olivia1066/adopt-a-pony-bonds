@@ -70,7 +70,7 @@ export default function Dashboard() {
 
   if (loading) return (
     <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#13102B'}}>
-      <p style={{color: '#00E5CC'}}>Loading...</p>
+      <p style={{color: '#00FFFF'}}>Loading...</p>
     </main>
   )
 
@@ -85,7 +85,7 @@ export default function Dashboard() {
         <div className="flex items-center gap-4">
           <Link href="/campagne"
             className="text-sm font-bold px-5 py-2.5 rounded-xl transition-colors"
-            style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+            style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
             + New investment
           </Link>
           <button
@@ -112,7 +112,7 @@ export default function Dashboard() {
             style={{
               backgroundColor: investor?.kyc_status === 'Validé' ? 'rgba(0,229,204,0.15)' :
                 investor?.kyc_status === 'Rejeté' ? 'rgba(255,100,100,0.15)' : 'rgba(255,200,0,0.15)',
-              color: investor?.kyc_status === 'Validé' ? '#00E5CC' :
+              color: investor?.kyc_status === 'Validé' ? '#00FFFF' :
                 investor?.kyc_status === 'Rejeté' ? '#FF6464' : '#FFC800',
             }}>
             KYC: {investor?.kyc_status === 'Validé' ? 'Approved' : investor?.kyc_status === 'Rejeté' ? 'Rejected' : 'Pending'}
@@ -123,7 +123,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-3 gap-4 mb-10">
           {[
             { label: 'Total invested', value: `€${totalInvesti.toLocaleString('en-GB')}`, color: 'white' },
-            { label: 'Monthly income', value: `+€${totalMensuel.toFixed(2)}`, color: '#00E5CC' },
+            { label: 'Monthly income', value: `+€${totalMensuel.toFixed(2)}`, color: '#00FFFF' },
             { label: 'Total repaid at maturity', value: `€${totalRembourse.toLocaleString('en-GB', {maximumFractionDigits: 0})}`, color: 'white' },
           ].map((kpi, i) => (
             <div key={i} className="rounded-2xl p-6" style={{backgroundColor: '#1E1B4B'}}>
@@ -139,8 +139,8 @@ export default function Dashboard() {
             <button key={tab} onClick={() => setActiveTab(tab)}
               className="pb-3 text-sm font-medium transition-colors"
               style={{
-                color: activeTab === tab ? '#00E5CC' : 'rgba(255,255,255,0.4)',
-                borderBottom: activeTab === tab ? '2px solid #00E5CC' : '2px solid transparent',
+                color: activeTab === tab ? '#00FFFF' : 'rgba(255,255,255,0.4)',
+                borderBottom: activeTab === tab ? '2px solid #00FFFF' : '2px solid transparent',
               }}>
               {tab === 'portfolio' ? 'My portfolio' : 'Payment schedule'}
             </button>
@@ -155,7 +155,7 @@ export default function Dashboard() {
                 <p style={{color: 'rgba(255,255,255,0.3)'}}>No investments yet</p>
                 <Link href="/campagne"
                   className="inline-block px-6 py-3 rounded-xl text-sm font-bold"
-                  style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+                  style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
                   See the campaign →
                 </Link>
               </div>
@@ -174,7 +174,7 @@ export default function Dashboard() {
                         <span className="text-xs px-2 py-1 rounded-full font-medium"
                           style={{
                             backgroundColor: inv.statut === 'Actif' ? 'rgba(0,229,204,0.15)' : 'rgba(255,200,0,0.15)',
-                            color: inv.statut === 'Actif' ? '#00E5CC' : '#FFC800',
+                            color: inv.statut === 'Actif' ? '#00FFFF' : '#FFC800',
                           }}>
                           ● {inv.statut === 'Actif' ? 'Active' : 'Pending'}
                         </span>
@@ -196,7 +196,7 @@ export default function Dashboard() {
                     ].map((stat, i) => (
                       <div key={i}>
                         <p className="text-xs mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>{stat.label}</p>
-                        <p className="font-bold" style={{color: stat.green ? '#00E5CC' : 'white'}}>{stat.value}</p>
+                        <p className="font-bold" style={{color: stat.green ? '#00FFFF' : 'white'}}>{stat.value}</p>
                       </div>
                     ))}
                   </div>
@@ -207,7 +207,7 @@ export default function Dashboard() {
                       <span>{duration} months</span>
                     </div>
                     <div className="w-full rounded-full h-1" style={{backgroundColor: 'rgba(255,255,255,0.1)'}}>
-                      <div className="h-1 rounded-full" style={{width: '4%', backgroundColor: '#00E5CC'}}></div>
+                      <div className="h-1 rounded-full" style={{width: '4%', backgroundColor: '#00FFFF'}}></div>
                     </div>
                   </div>
                 </div>

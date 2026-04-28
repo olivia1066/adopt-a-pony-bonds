@@ -40,7 +40,7 @@ export default function Campagne() {
 
   if (loading) return (
     <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#13102B'}}>
-      <p style={{color: '#00E5CC'}}>Loading...</p>
+      <p style={{color: '#00FFFF'}}>Loading...</p>
     </main>
   )
 
@@ -74,7 +74,7 @@ export default function Campagne() {
           <div>
             <div className="flex gap-2 mb-4">
               <span className="text-xs px-3 py-1 rounded-full font-medium"
-                style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
+                style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00FFFF'}}>
                 🛴 Urban fleet
               </span>
               <span className="text-xs px-3 py-1 rounded-full font-medium"
@@ -94,7 +94,7 @@ export default function Campagne() {
           <div className="flex justify-between items-center mb-4">
             <span className="text-sm font-medium" style={{color: 'rgba(255,255,255,0.5)'}}>Status</span>
             <span className="text-xs px-3 py-1 rounded-full font-medium"
-              style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
+              style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00FFFF'}}>
               🟢 {campaign?.status || 'Open'}
             </span>
           </div>
@@ -114,7 +114,7 @@ export default function Campagne() {
             <div className="w-full rounded-full h-1.5" style={{backgroundColor: 'rgba(255,255,255,0.1)'}}>
               <div className="h-1.5 rounded-full" style={{
                 width: `${campaign ? (campaign.raised_amount / campaign.target_amount) * 100 : 0}%`,
-                backgroundColor: '#00E5CC'
+                backgroundColor: '#00FFFF'
               }}></div>
             </div>
           </div>
@@ -143,7 +143,7 @@ export default function Campagne() {
             type="range" min={500} max={50000} step={500} value={amount}
             onChange={e => setAmount(Number(e.target.value))}
             className="w-full mb-1"
-            style={{accentColor: '#00E5CC'}}
+            style={{accentColor: '#00FFFF'}}
           />
           <div className="flex justify-between text-xs mb-6" style={{color: 'rgba(255,255,255,0.4)'}}>
             <span>€500</span>
@@ -157,7 +157,7 @@ export default function Campagne() {
                 onClick={() => setDuration(d)}
                 className="py-2 rounded-xl text-sm font-medium transition-all"
                 style={{
-                  backgroundColor: duration === d ? '#00E5CC' : 'rgba(255,255,255,0.05)',
+                  backgroundColor: duration === d ? '#00FFFF' : 'rgba(255,255,255,0.05)',
                   color: duration === d ? '#13102B' : 'rgba(255,255,255,0.6)',
                   border: duration === d ? 'none' : '1px solid rgba(255,255,255,0.1)',
                 }}
@@ -177,7 +177,7 @@ export default function Campagne() {
           <div>
             <div className="mb-8">
               <p className="text-sm mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>You receive</p>
-              <p className="text-5xl font-bold" style={{color: '#00E5CC'}}>
+              <p className="text-5xl font-bold" style={{color: '#00FFFF'}}>
                 €{monthlyInterest.toFixed(2)}
               </p>
               <p className="text-sm mt-1" style={{color: 'rgba(255,255,255,0.4)'}}>per month</p>
@@ -197,7 +197,7 @@ export default function Campagne() {
           <Link
             href={`/investir?campaignId=${campaign?.id}&amount=${amount}&duration=${duration}&rate=${rate}`}
             className="w-full py-4 rounded-xl font-bold text-sm text-center block mt-8 transition-colors"
-            style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+            style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
             Invest now →
           </Link>
         </div>

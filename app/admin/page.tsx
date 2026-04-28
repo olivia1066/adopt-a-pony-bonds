@@ -109,7 +109,7 @@ export default function Admin() {
 
   if (loading) return (
     <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#13102B'}}>
-      <p style={{color: '#00E5CC'}}>Loading...</p>
+      <p style={{color: '#00FFFF'}}>Loading...</p>
     </main>
   )
 
@@ -146,7 +146,7 @@ export default function Admin() {
           ].map((kpi, i) => (
             <div key={i} className="rounded-2xl p-5" style={{backgroundColor: '#1E1B4B'}}>
               <p className="text-xs mb-2" style={{color: 'rgba(255,255,255,0.4)'}}>{kpi.label}</p>
-              <p className="text-2xl font-bold" style={{color: kpi.warn ? '#FFC800' : '#00E5CC'}}>{kpi.value}</p>
+              <p className="text-2xl font-bold" style={{color: kpi.warn ? '#FFC800' : '#00FFFF'}}>{kpi.value}</p>
             </div>
           ))}
         </div>
@@ -157,8 +157,8 @@ export default function Admin() {
             <button key={tab} onClick={() => setActiveTab(tab)}
               className="pb-3 text-sm font-medium capitalize transition-colors"
               style={{
-                color: activeTab === tab ? '#00E5CC' : 'rgba(255,255,255,0.4)',
-                borderBottom: activeTab === tab ? '2px solid #00E5CC' : '2px solid transparent',
+                color: activeTab === tab ? '#00FFFF' : 'rgba(255,255,255,0.4)',
+                borderBottom: activeTab === tab ? '2px solid #00FFFF' : '2px solid transparent',
               }}>
               {tab === 'campaigns' ? 'Campaigns' : tab === 'investors' ? 'Investors' : 'Payments'}
             </button>
@@ -172,14 +172,14 @@ export default function Admin() {
               <h2 className="text-xl font-bold">Campaigns</h2>
               <button onClick={() => setShowNewCampaign(!showNewCampaign)}
                 className="text-sm px-4 py-2 rounded-xl font-bold"
-                style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+                style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
                 + New campaign
               </button>
             </div>
 
             {showNewCampaign && (
               <div className="rounded-2xl p-6 mb-6" style={{backgroundColor: '#1E1B4B', border: '1px solid rgba(0,229,204,0.3)'}}>
-                <h3 className="font-bold mb-4" style={{color: '#00E5CC'}}>New campaign</h3>
+                <h3 className="font-bold mb-4" style={{color: '#00FFFF'}}>New campaign</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {[
                     { label: 'Name', key: 'name', placeholder: 'Autumn 2026 Fleet' },
@@ -201,7 +201,7 @@ export default function Admin() {
                 <div className="flex gap-3 mt-4">
                   <button onClick={createCampaign}
                     className="px-6 py-2 rounded-xl text-sm font-bold"
-                    style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+                    style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
                     Create campaign
                   </button>
                   <button onClick={() => setShowNewCampaign(false)}
@@ -222,7 +222,7 @@ export default function Admin() {
                         <span className="text-xs px-2 py-1 rounded-full font-medium"
                           style={{
                             backgroundColor: c.status === 'Ouverte' ? 'rgba(0,229,204,0.15)' : 'rgba(255,255,255,0.1)',
-                            color: c.status === 'Ouverte' ? '#00E5CC' : 'rgba(255,255,255,0.5)',
+                            color: c.status === 'Ouverte' ? '#00FFFF' : 'rgba(255,255,255,0.5)',
                           }}>
                           {c.status === 'Ouverte' ? 'Open' : c.status === 'Clôturée' ? 'Closed' : 'Upcoming'}
                         </span>
@@ -253,7 +253,7 @@ export default function Admin() {
                   <div className="w-full rounded-full h-1.5" style={{backgroundColor: 'rgba(255,255,255,0.1)'}}>
                     <div className="h-1.5 rounded-full" style={{
                       width: `${Math.min((c.raised_amount / c.target_amount) * 100, 100)}%`,
-                      backgroundColor: '#00E5CC'
+                      backgroundColor: '#00FFFF'
                     }}></div>
                   </div>
                   <p className="text-xs mt-1" style={{color: 'rgba(255,255,255,0.3)'}}>
@@ -279,7 +279,7 @@ export default function Admin() {
                           style={{
                             backgroundColor: inv.kyc_status === 'Validé' ? 'rgba(0,229,204,0.15)' :
                               inv.kyc_status === 'Rejeté' ? 'rgba(255,100,100,0.15)' : 'rgba(255,200,0,0.15)',
-                            color: inv.kyc_status === 'Validé' ? '#00E5CC' :
+                            color: inv.kyc_status === 'Validé' ? '#00FFFF' :
                               inv.kyc_status === 'Rejeté' ? '#FF6464' : '#FFC800',
                           }}>
                           KYC: {inv.kyc_status === 'Validé' ? 'Approved' : inv.kyc_status === 'Rejeté' ? 'Rejected' : 'Pending'}
@@ -328,7 +328,7 @@ export default function Admin() {
                     <div className="flex gap-3">
                       <button onClick={() => updateKyc(inv.id, 'Validé')}
                         className="px-5 py-2 rounded-xl text-sm font-bold"
-                        style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
+                        style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00FFFF'}}>
                         ✓ Approve KYC
                       </button>
                       <button onClick={() => updateKyc(inv.id, 'Rejeté')}
@@ -339,7 +339,7 @@ export default function Admin() {
                     </div>
                   )}
                   {inv.kyc_status === 'Validé' && (
-                    <p className="text-sm font-medium" style={{color: '#00E5CC'}}>✓ KYC approved</p>
+                    <p className="text-sm font-medium" style={{color: '#00FFFF'}}>✓ KYC approved</p>
                   )}
                   {inv.kyc_status === 'Rejeté' && (
                     <p className="text-sm font-medium" style={{color: '#FF6464'}}>✗ KYC rejected</p>
@@ -388,14 +388,14 @@ export default function Admin() {
                           {p.investments?.campaigns?.name}
                         </td>
                         <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.5)'}}>{p.type}</td>
-                        <td className="px-6 py-4 text-right font-bold" style={{color: '#00E5CC'}}>
+                        <td className="px-6 py-4 text-right font-bold" style={{color: '#00FFFF'}}>
                           +€{p.montant.toFixed(2)}
                         </td>
                         <td className="px-6 py-4 text-right">
                           <span className="text-xs px-2 py-1 rounded-full"
                             style={{
                               backgroundColor: p.statut === 'Envoyé' ? 'rgba(0,229,204,0.15)' : 'rgba(255,200,0,0.15)',
-                              color: p.statut === 'Envoyé' ? '#00E5CC' : '#FFC800',
+                              color: p.statut === 'Envoyé' ? '#00FFFF' : '#FFC800',
                             }}>
                             {p.statut === 'Envoyé' ? 'Sent' : 'To send'}
                           </span>
@@ -404,7 +404,7 @@ export default function Admin() {
                           {p.statut === 'À envoyer' && (
                             <button onClick={() => markPaymentSent(p.id)}
                               className="text-xs px-3 py-1 rounded-xl font-medium"
-                              style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
+                              style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00FFFF'}}>
                               Mark as sent
                             </button>
                           )}

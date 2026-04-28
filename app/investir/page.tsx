@@ -118,8 +118,8 @@ function InvestirForm() {
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
                 style={{
-                  backgroundColor: step === s ? '#00E5CC' : step > s ? 'rgba(0,229,204,0.2)' : 'rgba(255,255,255,0.1)',
-                  color: step === s ? '#13102B' : step > s ? '#00E5CC' : 'rgba(255,255,255,0.4)',
+                  backgroundColor: step === s ? '#00FFFF' : step > s ? 'rgba(0,229,204,0.2)' : 'rgba(255,255,255,0.1)',
+                  color: step === s ? '#13102B' : step > s ? '#00FFFF' : 'rgba(255,255,255,0.4)',
                 }}>
                 {s}
               </div>
@@ -429,7 +429,7 @@ function InvestirForm() {
                 onClick={handleSubmitKYC}
                 disabled={loading}
                 className="w-full py-4 rounded-xl font-bold text-sm transition-colors"
-                style={{backgroundColor: '#00E5CC', color: '#13102B', opacity: loading ? 0.7 : 1}}>
+                style={{backgroundColor: '#00FFFF', color: '#13102B', opacity: loading ? 0.7 : 1}}>
                 {loading ? 'Saving...' : 'Submit →'}
               </button>
             </>
@@ -459,7 +459,7 @@ function InvestirForm() {
               </p>
               <button onClick={() => setStep(3)}
                 className="w-full py-4 rounded-xl font-bold text-sm"
-                style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+                style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
                 I have made the transfer →
               </button>
             </div>
@@ -474,7 +474,7 @@ function InvestirForm() {
               </p>
               <Link href="/dashboard"
                 className="inline-block px-8 py-3 rounded-xl text-sm font-bold"
-                style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+                style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
                 View my portfolio →
               </Link>
             </div>
@@ -495,7 +495,7 @@ function InvestirForm() {
                 <div key={i} className="flex justify-between">
                   <span style={{color: 'rgba(255,255,255,0.4)'}}>{row.label}</span>
                   <span className={`font-bold ${row.large ? 'text-lg' : ''}`}
-                    style={{color: row.large ? '#00E5CC' : 'white'}}>
+                    style={{color: row.large ? '#00FFFF' : 'white'}}>
                     {row.value}
                   </span>
                 </div>
@@ -512,7 +512,7 @@ export default function Investir() {
   return (
     <Suspense fallback={
       <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#13102B'}}>
-        <p style={{color: '#00E5CC'}}>Loading...</p>
+        <p style={{color: '#00FFFF'}}>Loading...</p>
       </main>
     }>
       <InvestirForm />

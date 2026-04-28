@@ -93,13 +93,13 @@ export default function Login() {
             onClick={handleLogin}
             disabled={loading}
             className="w-full py-4 rounded-xl font-bold text-sm"
-            style={{backgroundColor: '#00E5CC', color: '#13102B', opacity: loading ? 0.7 : 1}}>
+            style={{backgroundColor: '#00FFFF', color: '#13102B', opacity: loading ? 0.7 : 1}}>
             {loading ? 'Signing in...' : 'Sign in →'}
           </button>
 
           <p className="text-center text-sm" style={{color: 'rgba(255,255,255,0.4)'}}>
             No account yet?{' '}
-            <Link href="/signup" style={{color: '#00E5CC'}}>Create an account</Link>
+            <Link href="/signup" style={{color: '#00FFFF'}}>Create an account</Link>
           </p>
 
           <p className="text-center text-sm">

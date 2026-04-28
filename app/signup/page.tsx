@@ -132,13 +132,13 @@ export default function Signup() {
 
               <button onClick={handleSignup} disabled={loading}
                 className="w-full py-4 rounded-xl font-bold text-sm"
-                style={{backgroundColor: '#00E5CC', color: '#13102B', opacity: loading ? 0.7 : 1}}>
+                style={{backgroundColor: '#00FFFF', color: '#13102B', opacity: loading ? 0.7 : 1}}>
                 {loading ? 'Creating account...' : 'Create my account →'}
               </button>
 
               <p className="text-center text-sm" style={{color: 'rgba(255,255,255,0.4)'}}>
                 Already have an account?{' '}
-                <Link href="/login" style={{color: '#00E5CC'}}>Sign in</Link>
+                <Link href="/login" style={{color: '#00FFFF'}}>Sign in</Link>
               </p>
             </div>
           </>
@@ -154,7 +154,7 @@ export default function Signup() {
             </p>
             <Link href="/login"
               className="inline-block px-8 py-3 rounded-xl text-sm font-bold"
-              style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+              style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
               Go to sign in →
             </Link>
           </div>

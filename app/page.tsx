@@ -24,7 +24,7 @@ export default function Home() {
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', maxWidth: '1400px', margin: '0 auto', gap: '20px'}}>
           
           {/* Left — text */}
-          <div style={{flex: '0 0 auto', maxWidth: '480px'}}>
+          <div style={{flex: '0 0 auto', maxWidth: '480px', paddingLeft: '30px'}}>
             <img src="/Icon (1).png" alt="Pony Angel" style={{width: '60px', height: '60px', marginBottom: '32px'}} />
             
             <div style={{position: 'relative', display: 'inline-block', marginBottom: '24px'}}>
@@ -32,7 +32,7 @@ export default function Home() {
                 position: 'absolute',
                 top: '-18px',
                 left: '30px',
-                backgroundColor: '#00E5CC',
+                backgroundColor: '#00FFFF',
                 color: '#13102B',
                 fontSize: '13px',
                 fontWeight: 900,
@@ -42,24 +42,24 @@ export default function Home() {
                 letterSpacing: '3px',
                 zIndex: 10,
                 boxShadow: '0 4px 15px rgba(0,229,204,0.4)',
-              }}>NEW</span>
+              }}>NEW FORMULA</span>
               <h1 className="font-extrabold leading-tight" style={{fontSize: '64px'}}>
                 Adopt a pony
               </h1>
             </div>
 
             <p className="text-lg mb-10 leading-relaxed" style={{color: 'rgba(255,255,255,0.6)'}}>
-              Lend money to Pony, we finance our fleet of bikes and scooters, and we pay you back with interest.
+              Invest in a pony ebike or scooter and get up to 9.5% regular returns
             </p>
             <div className="flex gap-4">
               <Link href="/campagne"
                 className="px-8 py-4 rounded-xl text-sm font-bold transition-colors"
-                style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+                style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
                 See the campaign
               </Link>
               <Link href="/login"
                 className="px-8 py-4 rounded-xl text-sm font-bold border transition-colors"
-                style={{borderColor: '#00E5CC', color: '#00E5CC'}}>
+                style={{borderColor: '#00FFFF', color: '#00FFFF'}}>
                 Sign in
               </Link>
             </div>
@@ -104,7 +104,7 @@ export default function Home() {
         <h2 className="text-3xl font-bold mb-10">Current campaign</h2>
         <div className="rounded-3xl p-8 max-w-md" style={{backgroundColor: '#1E1B4B'}}>
           <div className="flex justify-between items-start mb-6">
-            <span className="text-xs font-bold px-3 py-1 rounded-full" style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+            <span className="text-xs font-bold px-3 py-1 rounded-full" style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
               OPEN
             </span>
             <span className="text-sm" style={{color: 'rgba(255,255,255,0.4)'}}>April 2026</span>
@@ -115,15 +115,15 @@ export default function Home() {
           </p>
           <div className="grid grid-cols-3 gap-4 mb-6 text-center py-4 border-y border-white/10">
             <div>
-              <div className="text-xl font-bold" style={{color: '#00E5CC'}}>7%</div>
+              <div className="text-xl font-bold" style={{color: '#00FFFF'}}>7%</div>
               <div className="text-xs mt-0.5" style={{color: 'rgba(255,255,255,0.4)'}}>Annual rate</div>
             </div>
             <div>
-              <div className="text-xl font-bold" style={{color: '#00E5CC'}}>24 months</div>
+              <div className="text-xl font-bold" style={{color: '#00FFFF'}}>24 months</div>
               <div className="text-xs mt-0.5" style={{color: 'rgba(255,255,255,0.4)'}}>Duration</div>
             </div>
             <div>
-              <div className="text-xl font-bold" style={{color: '#00E5CC'}}>€500</div>
+              <div className="text-xl font-bold" style={{color: '#00FFFF'}}>€500</div>
               <div className="text-xs mt-0.5" style={{color: 'rgba(255,255,255,0.4)'}}>Minimum</div>
             </div>
           </div>
@@ -133,12 +133,12 @@ export default function Home() {
               <span>€500,000</span>
             </div>
             <div className="w-full rounded-full h-1.5" style={{backgroundColor: '#2D2B5E'}}>
-              <div className="h-1.5 rounded-full" style={{width: '62%', backgroundColor: '#00E5CC'}}></div>
+              <div className="h-1.5 rounded-full" style={{width: '62%', backgroundColor: '#00FFFF'}}></div>
             </div>
           </div>
           <Link href="/campagne"
             className="w-full py-4 rounded-xl text-sm font-bold block text-center transition-colors"
-            style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+            style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
             Invest now →
           </Link>
         </div>
@@ -154,7 +154,7 @@ export default function Home() {
             { value: '95%', label: 'CO2 saved' },
           ].map((stat, i) => (
             <div key={i}>
-              <p className="text-4xl font-bold" style={{color: '#00E5CC'}}>{stat.value}</p>
+              <p className="text-4xl font-bold" style={{color: '#00FFFF'}}>{stat.value}</p>
               <p className="mt-2 uppercase tracking-widest text-xs" style={{color: 'rgba(255,255,255,0.4)'}}>{stat.label}</p>
             </div>
           ))}

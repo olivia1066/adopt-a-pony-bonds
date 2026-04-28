@@ -15,15 +15,32 @@ type Campaign = {
   start_date: string
 }
 
+// Fixed product terms
+const ANNUAL_RATE = 0.095
+const TOTAL_MONTHS = 36
+const GRACE_MONTHS = 6
+const REPAYMENT_MONTHS = TOTAL_MONTHS - GRACE_MONTHS
+const MONTHLY_RATE = ANNUAL_RATE / 12
+
+function calcReturns(amount: number) {
+  const monthlyGrace = amount * MONTHLY_RATE
+  const monthlyRepayment =
+    amount * (MONTHLY_RATE * Math.pow(1 + MONTHLY_RATE, REPAYMENT_MONTHS)) /
+    (Math.pow(1 + MONTHLY_RATE, REPAYMENT_MONTHS) - 1)
+  const totalInterest =
+    monthlyGrace * GRACE_MONTHS + monthlyRepayment * REPAYMENT_MONTHS - amount
+  const totalRepaid = amount + totalInterest
+  return { monthlyGrace, monthlyRepayment, totalInterest, totalRepaid }
+}
+
 export default function Campagne() {
   const [amount, setAmount] = useState(5000)
-  const [duration, setDuration] = useState(24)
   const [campaign, setCampaign] = useState<Campaign | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchCampaign() {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('campaigns')
         .select('*')
         .eq('status', 'Ouverte')
@@ -34,184 +51,308 @@ export default function Campagne() {
     fetchCampaign()
   }, [])
 
-  const rate = duration === 12 ? 0.06 : duration === 24 ? 0.07 : duration === 36 ? 0.08 : 0.09
-  const monthlyInterest = (amount * rate) / 12
-  const totalRepaid = amount + amount * rate * (duration / 12)
+  const { monthlyGrace, monthlyRepayment, totalInterest, totalRepaid } = calcReturns(amount)
+  const raisedPct = campaign
+    ? Math.min((campaign.raised_amount / campaign.target_amount) * 100, 100)
+    : 62
 
   if (loading) return (
-    <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#13102B'}}>
-      <p style={{color: '#00FFFF'}}>Loading...</p>
+    <main className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#13102B' }}>
+      <p style={{ color: '#00FFFF' }}>Loading...</p>
     </main>
   )
 
   return (
-    <main className="min-h-screen font-sans" style={{backgroundColor: '#13102B', color: 'white'}}>
+    <main className="min-h-screen font-sans" style={{ backgroundColor: '#13102B', color: 'white' }}>
 
-      {/* Header */}
-      <header className="flex justify-between items-center px-8 py-5 border-b border-white/10">
-        <div className="flex items-center gap-2">
-          <img src="/Logo.png" alt="Pony" style={{height: '25px', width: 'auto'}} />
-        </div>
-        <div className="flex gap-4 items-center">
-          <Link href="/dashboard"
-            className="text-sm px-4 py-2 rounded-xl border transition-colors"
-            style={{borderColor: 'rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.6)'}}>
-            My investments
-          </Link>
-        </div>
+      {/* ── HEADER ── */}
+      <header style={{
+        position: 'sticky', top: 0, zIndex: 50,
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '0 40px', height: '64px',
+        backgroundColor: 'rgba(19,16,43,0.92)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+      }}>
+        <Link href="/">
+          <img src="/Logo.png" alt="Pony" style={{ height: '25px', width: 'auto' }} />
+        </Link>
+        <Link href="/dashboard"
+          style={{
+            fontSize: '13px', padding: '8px 18px', borderRadius: '10px',
+            border: '1px solid rgba(255,255,255,0.15)',
+            color: 'rgba(255,255,255,0.6)', textDecoration: 'none',
+          }}>
+          My investments
+        </Link>
       </header>
 
-      <div className="px-8 py-4">
-        <Link href="/" className="text-sm hover:opacity-70" style={{color: 'rgba(255,255,255,0.4)'}}>
-          ← Back to campaigns
+      {/* ── BACK ── */}
+      <div style={{ padding: '16px 40px' }}>
+        <Link href="/" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', textDecoration: 'none' }}>
+          ← Back
         </Link>
       </div>
 
-      {/* Hero */}
-      <div className="relative mx-8 rounded-3xl overflow-hidden h-80 mb-0"
-        style={{background: 'linear-gradient(135deg, #1E1B4B 0%, #0D0D2B 100%)'}}>
-        <div className="absolute inset-0 flex items-end p-8">
-          <div>
-            <div className="flex gap-2 mb-4">
-              <span className="text-xs px-3 py-1 rounded-full font-medium"
-                style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00FFFF'}}>
-                🛴 Urban fleet
-              </span>
-              <span className="text-xs px-3 py-1 rounded-full font-medium"
-                style={{backgroundColor: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)'}}>
-                📍 Paris & Lyon
-              </span>
-            </div>
-            <h1 className="text-3xl font-bold text-white">
-              {campaign?.name || 'Current campaign'}
-            </h1>
+      {/* ── HERO ── */}
+      <div style={{
+        margin: '0 40px', borderRadius: '24px', overflow: 'hidden',
+        position: 'relative', minHeight: '340px',
+        background: 'linear-gradient(135deg, #1E1B4B 0%, #0D0D2B 100%)',
+      }}>
+        {/* Fleet image as background */}
+        <img src="/Rectangle (1).png" alt=""
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            objectFit: 'cover', objectPosition: 'center',
+            opacity: 0.15,
+          }}
+        />
+        {/* Left fade */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to right, rgba(13,13,43,0.95) 30%, transparent 70%)',
+        }} />
+
+        {/* Title bottom-left */}
+        <div style={{ position: 'absolute', bottom: 0, left: 0, padding: '36px' }}>
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+            <span style={{
+              fontSize: '11px', padding: '4px 12px', borderRadius: '100px', fontWeight: 600,
+              backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF',
+            }}>🛴 Urban fleet</span>
+            <span style={{
+              fontSize: '11px', padding: '4px 12px', borderRadius: '100px', fontWeight: 600,
+              backgroundColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)',
+            }}>📍 France — 15+ cities</span>
           </div>
+          <h1 style={{ fontSize: '42px', fontWeight: 800, letterSpacing: '-1px', lineHeight: 1.1 }}>
+            {campaign?.name || 'Spring 2026 Fleet'}
+          </h1>
+          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)', marginTop: '8px' }}>
+            Finance Pony's electric fleet and earn regular monthly returns.
+          </p>
         </div>
 
-        {/* Stats card */}
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 rounded-2xl p-6 w-72"
-          style={{backgroundColor: 'rgba(13,13,43,0.9)', border: '1px solid rgba(255,255,255,0.1)'}}>
-          <div className="flex justify-between items-center mb-4">
-            <span className="text-sm font-medium" style={{color: 'rgba(255,255,255,0.5)'}}>Status</span>
-            <span className="text-xs px-3 py-1 rounded-full font-medium"
-              style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00FFFF'}}>
-              🟢 {campaign?.status || 'Open'}
-            </span>
+        {/* Stats card top-right */}
+        <div style={{
+          position: 'absolute', right: '36px', top: '50%',
+          transform: 'translateY(-50%)',
+          width: '280px', borderRadius: '20px', padding: '24px',
+          backgroundColor: 'rgba(13,11,32,0.92)',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255,255,255,0.08)',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)' }}>Status</span>
+            <span style={{
+              fontSize: '11px', padding: '4px 10px', borderRadius: '100px', fontWeight: 700,
+              backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF',
+            }}>🟢 Open</span>
           </div>
-          <div className="space-y-3 mb-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
             {[
-              { label: 'Interest rate', value: '6 – 9 %' },
-              { label: 'Duration', value: '12 to 48 months' },
-              { label: 'Repayment', value: 'At maturity' },
+              { label: 'Interest rate', value: '9.5%' },
+              { label: 'Duration', value: '36 months' },
+              { label: 'Grace period', value: '6 months' },
+              { label: 'Min. investment', value: '€500' },
             ].map((row, i) => (
-              <div key={i} className="flex justify-between text-sm">
-                <span style={{color: 'rgba(255,255,255,0.4)'}}>{row.label}</span>
-                <span className="font-bold">{row.value}</span>
+              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
+                <span style={{ color: 'rgba(255,255,255,0.4)' }}>{row.label}</span>
+                <span style={{ fontWeight: 700 }}>{row.value}</span>
               </div>
             ))}
           </div>
-          <div className="mb-1">
-            <div className="w-full rounded-full h-1.5" style={{backgroundColor: 'rgba(255,255,255,0.1)'}}>
-              <div className="h-1.5 rounded-full" style={{
-                width: `${campaign ? (campaign.raised_amount / campaign.target_amount) * 100 : 0}%`,
-                backgroundColor: '#00FFFF'
-              }}></div>
+          {/* Progress */}
+          <div style={{ marginBottom: '6px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '6px', color: 'rgba(255,255,255,0.4)' }}>
+              <span>€{(campaign?.raised_amount ?? 312000).toLocaleString('en-GB')} raised</span>
+              <span style={{ color: 'white', fontWeight: 700 }}>{raisedPct.toFixed(0)}%</span>
             </div>
+            <div style={{ width: '100%', height: '3px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
+              <div style={{
+                width: `${raisedPct}%`, height: '3px', borderRadius: '100px',
+                backgroundColor: '#00FFFF', boxShadow: '0 0 6px rgba(0,255,255,0.5)',
+              }} />
+            </div>
+            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '4px' }}>
+              €{(campaign?.target_amount ?? 500000).toLocaleString('en-GB')} target
+            </p>
           </div>
-          <div className="flex justify-between text-xs mb-3" style={{color: 'rgba(255,255,255,0.4)'}}>
-            <span>€{campaign?.raised_amount.toLocaleString('en-GB')} raised</span>
-            <span>€{campaign?.target_amount.toLocaleString('en-GB')}</span>
-          </div>
-          <div className="text-xs flex items-center gap-1" style={{color: 'rgba(255,255,255,0.4)'}}>
+          <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginTop: '8px' }}>
             🛡️ Capital protected by the fleet
           </div>
         </div>
       </div>
 
-      {/* Simulator */}
-      <div className="mx-8 mt-4 grid grid-cols-2 rounded-3xl overflow-hidden"
-        style={{border: '1px solid rgba(255,255,255,0.1)'}}>
+      {/* ── SIMULATOR ── */}
+      <div style={{
+        margin: '16px 40px 0',
+        display: 'grid', gridTemplateColumns: '1fr 1fr',
+        borderRadius: '24px', overflow: 'hidden',
+        border: '1px solid rgba(255,255,255,0.08)',
+      }}>
 
-        {/* Left */}
-        <div className="p-8" style={{backgroundColor: '#1E1B4B'}}>
-          <h2 className="text-xl font-bold mb-6">I want to invest</h2>
-          <div className="rounded-xl px-4 py-3 text-2xl font-bold text-center mb-3"
-            style={{backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)'}}>
+        {/* Left — input */}
+        <div style={{ padding: '40px', backgroundColor: '#1E1B4B' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: 800, marginBottom: '4px' }}>I want to invest</h2>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginBottom: '28px' }}>
+            36 months · 9.5% annual · 6-month grace period
+          </p>
+
+          {/* Amount display */}
+          <div style={{
+            borderRadius: '14px', padding: '16px 20px',
+            backgroundColor: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            fontSize: '32px', fontWeight: 800, textAlign: 'center',
+            color: '#00FFFF', letterSpacing: '-1px', marginBottom: '12px',
+          }}>
             €{amount.toLocaleString('en-GB')}
           </div>
+
           <input
             type="range" min={500} max={50000} step={500} value={amount}
             onChange={e => setAmount(Number(e.target.value))}
-            className="w-full mb-1"
-            style={{accentColor: '#00FFFF'}}
+            style={{ accentColor: '#00FFFF', width: '100%', cursor: 'pointer' }}
           />
-          <div className="flex justify-between text-xs mb-6" style={{color: 'rgba(255,255,255,0.4)'}}>
-            <span>€500</span>
-            <span>€50,000</span>
+          <div style={{
+            display: 'flex', justifyContent: 'space-between',
+            fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '4px', marginBottom: '32px',
+          }}>
+            <span>€500</span><span>€50,000</span>
           </div>
-          <h3 className="font-bold mb-3">For</h3>
-          <div className="grid grid-cols-4 gap-2">
-            {[12, 24, 36, 48].map(d => (
-              <button
-                key={d}
-                onClick={() => setDuration(d)}
-                className="py-2 rounded-xl text-sm font-medium transition-all"
-                style={{
-                  backgroundColor: duration === d ? '#00FFFF' : 'rgba(255,255,255,0.05)',
-                  color: duration === d ? '#13102B' : 'rgba(255,255,255,0.6)',
-                  border: duration === d ? 'none' : '1px solid rgba(255,255,255,0.1)',
-                }}
-              >
-                {d}m
-              </button>
+
+          {/* Term pills */}
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
+            {[
+              { icon: '📅', label: '36 months' },
+              { icon: '📈', label: '9.5% / year' },
+              { icon: '🛡️', label: '6-month grace' },
+            ].map((pill, i) => (
+              <span key={i} style={{
+                fontSize: '11px', padding: '6px 12px', borderRadius: '100px',
+                backgroundColor: 'rgba(0,255,255,0.06)',
+                border: '1px solid rgba(0,255,255,0.12)',
+                color: 'rgba(255,255,255,0.6)',
+              }}>
+                {pill.icon} {pill.label}
+              </span>
             ))}
           </div>
-          <div className="mt-6 flex gap-4 text-xs" style={{color: 'rgba(255,255,255,0.3)'}}>
-            <span className="underline cursor-pointer hover:opacity-70">Tax information</span>
-            <span className="underline cursor-pointer hover:opacity-70">Investment note</span>
+
+          <div style={{ display: 'flex', gap: '16px', fontSize: '12px' }}>
+            <span style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'underline', cursor: 'pointer' }}>
+              Tax information
+            </span>
+            <span style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'underline', cursor: 'pointer' }}>
+              Investment note
+            </span>
           </div>
         </div>
 
-        {/* Right */}
-        <div className="p-8 flex flex-col justify-between" style={{backgroundColor: '#0D0D2B'}}>
+        {/* Right — results */}
+        <div style={{
+          padding: '40px', backgroundColor: '#0D0D2B',
+          display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+        }}>
           <div>
-            <div className="mb-8">
-              <p className="text-sm mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>You receive</p>
-              <p className="text-5xl font-bold" style={{color: '#00FFFF'}}>
-                €{monthlyInterest.toFixed(2)}
-              </p>
-              <p className="text-sm mt-1" style={{color: 'rgba(255,255,255,0.4)'}}>per month</p>
-            </div>
-            <div>
-              <p className="text-sm mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>Total repaid</p>
-              <p className="text-2xl font-bold">
-                €{totalRepaid.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
-              </p>
-            </div>
-            <div className="mt-4 text-xs cursor-pointer hover:opacity-70"
-              style={{color: 'rgba(255,255,255,0.3)'}}>
-              📅 Payment schedule
+            {/* Main figure */}
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>
+              You receive
+            </p>
+            <p style={{ fontSize: '56px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-2px', lineHeight: 1 }}>
+              €{monthlyGrace.toFixed(2)}
+            </p>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginTop: '4px', marginBottom: '32px' }}>
+              per month during grace period
+            </p>
+
+            {/* Secondary figures */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
+              {[
+                { label: 'Monthly (months 7–36)', value: `€${monthlyRepayment.toFixed(2)}` },
+                { label: 'Total interest', value: `€${totalInterest.toFixed(2)}` },
+                { label: 'Total repaid', value: `€${totalRepaid.toFixed(2)}` },
+              ].map((item, i) => (
+                <div key={i} style={{
+                  padding: '14px 16px', borderRadius: '14px',
+                  backgroundColor: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                }}>
+                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px' }}>
+                    {item.label}
+                  </p>
+                  <p style={{ fontSize: '18px', fontWeight: 800, color: 'white' }}>{item.value}</p>
+                </div>
+              ))}
             </div>
           </div>
 
           <Link
-            href={`/investir?campaignId=${campaign?.id}&amount=${amount}&duration=${duration}&rate=${rate}`}
-            className="w-full py-4 rounded-xl font-bold text-sm text-center block mt-8 transition-colors"
-            style={{backgroundColor: '#00FFFF', color: '#13102B'}}>
+            href={`/investir?campaignId=${campaign?.id}&amount=${amount}`}
+            style={{
+              display: 'block', textAlign: 'center',
+              backgroundColor: '#00FFFF', color: '#13102B',
+              padding: '16px', borderRadius: '14px',
+              fontSize: '15px', fontWeight: 800, textDecoration: 'none',
+              letterSpacing: '0.3px',
+              boxShadow: '0 4px 24px rgba(0,255,255,0.25)',
+            }}>
             Invest now →
           </Link>
         </div>
       </div>
 
-      {/* Description */}
-      <div className="mx-8 mt-12 grid grid-cols-3 gap-12 pb-16">
-        <h2 className="text-2xl font-bold">Description</h2>
-        <div className="col-span-2 text-sm leading-relaxed space-y-4" style={{color: 'rgba(255,255,255,0.6)'}}>
-          <p>Here is an opportunity to directly sponsor the Pony fleet — electric bikes and scooters deployed in French cities.</p>
-          <p>Your investment finances the acquisition and deployment of new vehicles. In return, Pony repays you with interest over the chosen duration.</p>
-          <p>Unlike the old Adopt a Pony model, you do not own a specific vehicle — you finance the entire fleet, which reduces risk and simplifies your experience.</p>
+      {/* ── DESCRIPTION ── */}
+      <div style={{ margin: '64px 40px 80px', display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px' }}>
+        <div>
+          <h2 style={{ fontSize: '24px', fontWeight: 800, marginBottom: '8px' }}>About this campaign</h2>
+          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>Spring 2026</p>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <p style={{ fontSize: '14px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
+            This campaign finances the acquisition and deployment of new Pony electric bikes and scooters
+            across French cities. Your investment goes directly into the fleet that riders use every day.
+          </p>
+          <p style={{ fontSize: '14px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
+            Unlike the previous Adopt a Pony model, you do not own a specific vehicle — you finance the
+            entire fleet, which reduces risk and simplifies your experience.
+          </p>
+          <p style={{ fontSize: '14px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
+            During the first 6 months (grace period), you receive interest-only payments. From month 7,
+            you receive a fixed monthly payment covering both capital repayment and interest until maturity at month 36.
+          </p>
+          <div style={{
+            borderRadius: '16px', padding: '20px',
+            backgroundColor: 'rgba(0,255,255,0.05)',
+            border: '1px solid rgba(0,255,255,0.12)',
+          }}>
+            <p style={{ fontSize: '12px', fontWeight: 700, color: '#00FFFF', marginBottom: '4px' }}>⚠️ Risk notice</p>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', lineHeight: '1.6' }}>
+              All investments carry risk, including the risk of partial or total capital loss.
+              Past performance is not a guarantee of future results.
+            </p>
+          </div>
         </div>
       </div>
+
+      {/* ── FOOTER ── */}
+      <footer style={{
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        padding: '32px 40px',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      }}>
+        <img src="/Logo.png" alt="Pony" style={{ height: '22px', width: 'auto' }} />
+        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)', textAlign: 'center', maxWidth: '400px' }}>
+          All investments carry risk, including the risk of capital loss.
+        </p>
+        <div style={{ display: 'flex', gap: '24px', fontSize: '12px' }}>
+          <a href="#" style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>Privacy policy</a>
+          <a href="#" style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>Terms</a>
+        </div>
+      </footer>
+
     </main>
   )
 }

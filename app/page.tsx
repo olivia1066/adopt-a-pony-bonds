@@ -478,9 +478,10 @@ export default function Home() {
           All investments carry risk, including the risk of capital loss. Past performance is not indicative of future results.
         </p>
         <div style={{ display: 'flex', gap: '24px', fontSize: '12px' }}>
-          <a href="#" style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>Privacy policy</a>
-          <a href="#" style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>Terms</a>
-        </div>
+            <a href="#" style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>Privacy policy</a>
+            <a href="#" style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>Terms</a>
+            <Link href="/admin" style={{ color: 'rgba(255,255,255,0.15)', textDecoration: 'none' }}>Admin</Link>
+          </div>
       </footer>
 
     </main>

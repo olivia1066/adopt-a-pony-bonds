@@ -101,30 +101,23 @@ export default function Campagne() {
 
         {/* Riders image — right side */}
         <img
-          src="/hero-photo.jpg"
+          src="/hero-photo2.jpg"
           alt=""
           style={{
             position: 'absolute',
-            right: '320px',
-            top: '0',
+            inset: 0,
+            width: '100%',
             height: '100%',
-            width: 'auto',
-            objectFit: 'contain',
-            objectPosition: 'center top',
-            opacity: 0.7,
+            objectFit: 'cover',
+            objectPosition: 'center 30%',
+            opacity: 1,
           }}
         />
 
-        {/* Left fade so text is readable */}
+        {/* Dark overlay for readability */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to right, rgba(13,13,43,1) 25%, rgba(13,13,43,0.6) 50%, transparent 75%)',
-        }} />
-
-        {/* Right fade so stats card is readable */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(to left, rgba(13,13,43,0.95) 20%, transparent 50%)',
+          background: 'linear-gradient(to right, rgba(13,13,43,0.6) 20%, rgba(13,13,43,0.1) 60%, rgba(13,13,43,0.5) 100%)',
         }} />
 
         {/* Title bottom-left */}

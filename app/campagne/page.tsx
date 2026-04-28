@@ -15,7 +15,6 @@ type Campaign = {
   start_date: string
 }
 
-// Fixed product terms
 const ANNUAL_RATE = 0.095
 const TOTAL_MONTHS = 36
 const GRACE_MONTHS = 6
@@ -77,12 +76,11 @@ export default function Campagne() {
         <Link href="/">
           <img src="/Logo.png" alt="Pony" style={{ height: '25px', width: 'auto' }} />
         </Link>
-        <Link href="/dashboard"
-          style={{
-            fontSize: '13px', padding: '8px 18px', borderRadius: '10px',
-            border: '1px solid rgba(255,255,255,0.15)',
-            color: 'rgba(255,255,255,0.6)', textDecoration: 'none',
-          }}>
+        <Link href="/dashboard" style={{
+          fontSize: '13px', padding: '8px 18px', borderRadius: '10px',
+          border: '1px solid rgba(255,255,255,0.15)',
+          color: 'rgba(255,255,255,0.6)', textDecoration: 'none',
+        }}>
           My investments
         </Link>
       </header>
@@ -97,25 +95,40 @@ export default function Campagne() {
       {/* ── HERO ── */}
       <div style={{
         margin: '0 40px', borderRadius: '24px', overflow: 'hidden',
-        position: 'relative', minHeight: '340px',
+        position: 'relative', minHeight: '420px',
         background: 'linear-gradient(135deg, #1E1B4B 0%, #0D0D2B 100%)',
       }}>
-        {/* Fleet image as background */}
-        <img src="/Rectangle (1).png" alt=""
+
+        {/* Riders image — right side */}
+        <img
+          src="/hero-photo.jpg"
+          alt=""
           style={{
-            position: 'absolute', inset: 0, width: '100%', height: '100%',
-            objectFit: 'cover', objectPosition: 'center',
-            opacity: 0.15,
+            position: 'absolute',
+            right: '320px',
+            top: '0',
+            height: '100%',
+            width: 'auto',
+            objectFit: 'contain',
+            objectPosition: 'center top',
+            opacity: 0.7,
           }}
         />
-        {/* Left fade */}
+
+        {/* Left fade so text is readable */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to right, rgba(13,13,43,0.95) 30%, transparent 70%)',
+          background: 'linear-gradient(to right, rgba(13,13,43,1) 25%, rgba(13,13,43,0.6) 50%, transparent 75%)',
+        }} />
+
+        {/* Right fade so stats card is readable */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to left, rgba(13,13,43,0.95) 20%, transparent 50%)',
         }} />
 
         {/* Title bottom-left */}
-        <div style={{ position: 'absolute', bottom: 0, left: 0, padding: '36px' }}>
+        <div style={{ position: 'absolute', bottom: 0, left: 0, padding: '36px', zIndex: 2 }}>
           <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
             <span style={{
               fontSize: '11px', padding: '4px 12px', borderRadius: '100px', fontWeight: 600,
@@ -134,13 +147,14 @@ export default function Campagne() {
           </p>
         </div>
 
-        {/* Stats card top-right */}
+        {/* Stats card — right */}
         <div style={{
           position: 'absolute', right: '36px', top: '50%',
           transform: 'translateY(-50%)',
-          width: '280px', borderRadius: '20px', padding: '24px',
-          backgroundColor: 'rgba(13,11,32,0.92)',
-          backdropFilter: 'blur(12px)',
+          zIndex: 2,
+          width: '260px', borderRadius: '20px', padding: '24px',
+          backgroundColor: 'rgba(13,11,32,0.95)',
+          backdropFilter: 'blur(16px)',
           border: '1px solid rgba(255,255,255,0.08)',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
@@ -163,7 +177,6 @@ export default function Campagne() {
               </div>
             ))}
           </div>
-          {/* Progress */}
           <div style={{ marginBottom: '6px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '6px', color: 'rgba(255,255,255,0.4)' }}>
               <span>€{(campaign?.raised_amount ?? 312000).toLocaleString('en-GB')} raised</span>
@@ -192,15 +205,12 @@ export default function Campagne() {
         borderRadius: '24px', overflow: 'hidden',
         border: '1px solid rgba(255,255,255,0.08)',
       }}>
-
         {/* Left — input */}
         <div style={{ padding: '40px', backgroundColor: '#1E1B4B' }}>
           <h2 style={{ fontSize: '20px', fontWeight: 800, marginBottom: '4px' }}>I want to invest</h2>
           <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginBottom: '28px' }}>
             36 months · 9.5% annual · 6-month grace period
           </p>
-
-          {/* Amount display */}
           <div style={{
             borderRadius: '14px', padding: '16px 20px',
             backgroundColor: 'rgba(255,255,255,0.05)',
@@ -210,7 +220,6 @@ export default function Campagne() {
           }}>
             €{amount.toLocaleString('en-GB')}
           </div>
-
           <input
             type="range" min={500} max={50000} step={500} value={amount}
             onChange={e => setAmount(Number(e.target.value))}
@@ -222,8 +231,6 @@ export default function Campagne() {
           }}>
             <span>€500</span><span>€50,000</span>
           </div>
-
-          {/* Term pills */}
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
             {[
               { icon: '📅', label: '36 months' },
@@ -240,7 +247,6 @@ export default function Campagne() {
               </span>
             ))}
           </div>
-
           <div style={{ display: 'flex', gap: '16px', fontSize: '12px' }}>
             <span style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'underline', cursor: 'pointer' }}>
               Tax information
@@ -257,7 +263,6 @@ export default function Campagne() {
           display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
         }}>
           <div>
-            {/* Main figure */}
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>
               You receive
             </p>
@@ -267,8 +272,6 @@ export default function Campagne() {
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginTop: '4px', marginBottom: '32px' }}>
               per month during grace period
             </p>
-
-            {/* Secondary figures */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
               {[
                 { label: 'Monthly (months 7–36)', value: `€${monthlyRepayment.toFixed(2)}` },
@@ -288,7 +291,6 @@ export default function Campagne() {
               ))}
             </div>
           </div>
-
           <Link
             href={`/investir?campaignId=${campaign?.id}&amount=${amount}`}
             style={{

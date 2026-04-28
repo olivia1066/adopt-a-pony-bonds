@@ -68,14 +68,12 @@ function InvestirForm() {
     async function checkSession() {
       const { data: { session } } = await supabase.auth.getSession()
 
-      // Not logged in → redirect to login with return URL
       if (!session) {
-        const returnUrl = `/investir?campaignId=${campaignId}&amount=${amount}`
+        const returnUrl = `/campagne`
         window.location.href = `/login?redirect=${encodeURIComponent(returnUrl)}`
         return
       }
 
-      // Logged in → check existing investor record
       const { data: investor } = await supabase
         .from('investors')
         .select('*')
@@ -94,20 +92,16 @@ function InvestirForm() {
           adresse: investor.adresse || '',
           profession: investor.profession || '',
           iban: investor.iban || '',
+          nationalite: investor.nationalite || '',
+          documentType: investor.document_type || 'passport',
+          documentNumero: investor.document_numero || '',
         }))
 
-        // KYC approved → skip to payment
+        // KYC approved → skip to confirmation
         if (investor.kyc_status === 'Validé') {
-          await supabase.from('investments').insert({
-            investor_id: investor.id,
-            campaign_id: campaignId,
-            montant: amount,
-            statut: 'En attente',
-          })
           setStep(2)
         }
       } else {
-        // Logged in but no KYC record yet → pre-fill email
         setForm(prev => ({ ...prev, email: session.user.email || '' }))
       }
 
@@ -151,16 +145,24 @@ function InvestirForm() {
         .single()
 
       if (error) throw error
+      setInvestorId(data.id)
+      setStep(2) // → confirmation
+    } catch (err: any) {
+      setError(err.message || 'An error occurred.')
+    }
+    setLoading(false)
+  }
 
+  async function handleConfirm() {
+    setLoading(true)
+    try {
       await supabase.from('investments').insert({
-        investor_id: data.id,
+        investor_id: investorId,
         campaign_id: campaignId,
         montant: amount,
         statut: 'En attente',
       })
-
-      setInvestorId(data.id)
-      setStep(2)
+      setStep(3)
     } catch (err: any) {
       setError(err.message || 'An error occurred.')
     }
@@ -169,6 +171,13 @@ function InvestirForm() {
 
   const inputClass = "w-full rounded-xl px-4 py-3 text-sm text-white outline-none"
   const inputStyle = { backgroundColor: '#1E1B4B', border: '1px solid rgba(255,255,255,0.1)' }
+
+  const STEPS = [
+    { n: 1, label: 'KYC' },
+    { n: 2, label: 'Confirmation' },
+    { n: 3, label: 'Payment' },
+    { n: 4, label: 'Done' },
+  ]
 
   if (checkingSession) return (
     <main className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#13102B' }}>
@@ -184,7 +193,7 @@ function InvestirForm() {
         <div className="text-6xl">⏳</div>
         <h2 className="text-2xl font-bold">KYC under review</h2>
         <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
-          Your identity verification is currently being reviewed. You'll receive an email once approved and you'll be able to invest.
+          Your identity verification is currently being reviewed. You'll receive an email once approved.
         </p>
         <Link href="/dashboard"
           className="inline-block px-8 py-4 rounded-xl text-sm font-bold"
@@ -204,7 +213,7 @@ function InvestirForm() {
         <h2 className="text-2xl font-bold">KYC rejected</h2>
         <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
           Your identity verification was rejected. Please contact us at{' '}
-          <span style={{ color: '#00FFFF' }}>support@ridepony.com</span> for more information.
+          <span style={{ color: '#00FFFF' }}>support@ridepony.com</span>.
         </p>
         <Link href="/"
           className="inline-block px-8 py-4 rounded-xl text-sm font-bold"
@@ -236,11 +245,7 @@ function InvestirForm() {
 
       {/* Steps */}
       <div className="flex justify-center items-center gap-4 py-10">
-        {[
-          { n: 1, label: 'KYC' },
-          { n: 2, label: 'Payment' },
-          { n: 3, label: 'Done' },
-        ].map(({ n, label }, i) => (
+        {STEPS.map(({ n, label }, i) => (
           <div key={n} className="flex items-center gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
@@ -255,7 +260,9 @@ function InvestirForm() {
                 {label}
               </span>
             </div>
-            {i < 2 && <div className="w-16 h-px" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }} />}
+            {i < STEPS.length - 1 && (
+              <div className="w-16 h-px" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }} />
+            )}
           </div>
         ))}
       </div>
@@ -461,10 +468,7 @@ function InvestirForm() {
                   }}
                   onClick={() => document.getElementById('doc-upload')?.click()}
                 >
-                  <input
-                    id="doc-upload"
-                    type="file"
-                    accept="image/*,.pdf"
+                  <input id="doc-upload" type="file" accept="image/*,.pdf"
                     style={{ display: 'none' }}
                     onChange={e => {
                       const file = e.target.files?.[0]
@@ -474,9 +478,7 @@ function InvestirForm() {
                   {uploadedFile ? (
                     <div>
                       <p style={{ color: '#00FFFF', fontWeight: 700 }}>✓ {uploadedFile.name}</p>
-                      <p style={{ fontSize: '11px', marginTop: '4px', color: 'rgba(255,255,255,0.3)' }}>
-                        Click to change
-                      </p>
+                      <p style={{ fontSize: '11px', marginTop: '4px', color: 'rgba(255,255,255,0.3)' }}>Click to change</p>
                     </div>
                   ) : (
                     <div>
@@ -500,13 +502,117 @@ function InvestirForm() {
               <button onClick={handleSubmitKYC} disabled={loading}
                 className="w-full py-4 rounded-xl font-bold text-sm transition-opacity hover:opacity-90"
                 style={{ backgroundColor: '#00FFFF', color: '#13102B', opacity: loading ? 0.7 : 1 }}>
-                {loading ? 'Saving...' : 'Submit →'}
+                {loading ? 'Saving...' : 'Continue →'}
               </button>
             </>
           )}
 
-          {/* ── STEP 2: Payment ── */}
+          {/* ── STEP 2: CONFIRMATION ── */}
           {step === 2 && (
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold">Confirm your information</h2>
+                <button
+                  onClick={() => setStep(1)}
+                  style={{ fontSize: '13px', color: '#00FFFF', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}
+                >
+                  Modify
+                </button>
+              </div>
+
+              {/* Personal info */}
+              <div className="rounded-2xl p-6 space-y-4" style={{ backgroundColor: '#1E1B4B' }}>
+                <h3 className="font-bold text-sm" style={{ color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  Personal information
+                </h3>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  {[
+                    { label: 'Full name', value: `${form.prenom} ${form.nom}` },
+                    { label: 'Email', value: form.email },
+                    { label: 'Phone', value: form.telephone },
+                    { label: 'Address', value: form.adresse },
+                    { label: 'Nationality', value: form.nationalite },
+                    { label: 'Tax residence', value: form.residenceFiscale },
+                  ].map((row, i) => (
+                    <div key={i}>
+                      <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '11px', marginBottom: '2px' }}>{row.label}</p>
+                      <p style={{ color: 'white', fontWeight: 500 }}>{row.value || '—'}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bank + document */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-2xl p-6" style={{ backgroundColor: '#1E1B4B' }}>
+                  <h3 className="font-bold text-sm mb-3" style={{ color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                    Bank details
+                  </h3>
+                  <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '4px' }}>IBAN</p>
+                  <p style={{ fontSize: '13px', fontWeight: 700, fontFamily: 'monospace', wordBreak: 'break-all' }}>
+                    {form.iban || '—'}
+                  </p>
+                </div>
+                <div className="rounded-2xl p-6" style={{ backgroundColor: '#1E1B4B' }}>
+                  <h3 className="font-bold text-sm mb-3" style={{ color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                    Identity document
+                  </h3>
+                  <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '4px' }}>
+                    {form.documentType === 'passport' ? 'Passport' :
+                     form.documentType === 'id_card' ? 'National ID card' : 'Driving licence'}
+                  </p>
+                  <p style={{ fontSize: '13px', fontWeight: 700 }}>
+                    {form.documentNumero || '—'}
+                  </p>
+                  {uploadedFile && (
+                    <p style={{ fontSize: '11px', color: '#00FFFF', marginTop: '8px' }}>
+                      ✓ Document uploaded
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Investment summary */}
+              <div className="rounded-2xl p-6" style={{ backgroundColor: '#1E1B4B' }}>
+                <h3 className="font-bold text-sm mb-4" style={{ color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  Investment summary
+                </h3>
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  {[
+                    { label: 'Amount', value: `€${amount.toLocaleString('en-GB')}`, highlight: true },
+                    { label: 'Rate', value: '9.5% / year' },
+                    { label: 'Duration', value: '36 months' },
+                    { label: 'Grace period', value: '6 months' },
+                    { label: 'Monthly (grace)', value: `€${monthlyGrace.toFixed(2)}` },
+                    { label: 'Monthly (months 7–36)', value: `€${monthlyRepayment.toFixed(2)}` },
+                    { label: 'Total interest', value: `€${totalInterest.toFixed(2)}` },
+                    { label: 'Total repaid', value: `€${totalRepaid.toFixed(2)}` },
+                  ].map((row, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: 'rgba(255,255,255,0.4)' }}>{row.label}</span>
+                      <span style={{ fontWeight: 700, color: row.highlight ? '#00FFFF' : 'white' }}>{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {error && (
+                <p className="text-sm px-4 py-3 rounded-xl"
+                  style={{ backgroundColor: 'rgba(255,100,100,0.15)', color: '#FF6464' }}>
+                  {error}
+                </p>
+              )}
+
+              <button onClick={handleConfirm} disabled={loading}
+                className="w-full py-4 rounded-xl font-bold text-sm transition-opacity hover:opacity-90"
+                style={{ backgroundColor: '#00FFFF', color: '#13102B', opacity: loading ? 0.7 : 1 }}>
+                {loading ? 'Confirming...' : 'Confirm and continue →'}
+              </button>
+            </div>
+          )}
+
+          {/* ── STEP 3: PAYMENT ── */}
+          {step === 3 && (
             <div className="space-y-8">
               <div>
                 <h2 className="text-2xl font-bold mb-2">Bank transfer</h2>
@@ -535,7 +641,7 @@ function InvestirForm() {
                   <strong>2–3 business days</strong>. You will receive a confirmation email.
                 </p>
               </div>
-              <button onClick={() => setStep(3)}
+              <button onClick={() => setStep(4)}
                 className="w-full py-4 rounded-xl font-bold text-sm transition-opacity hover:opacity-90"
                 style={{ backgroundColor: '#00FFFF', color: '#13102B' }}>
                 I have made the transfer →
@@ -543,8 +649,8 @@ function InvestirForm() {
             </div>
           )}
 
-          {/* ── STEP 3: Done ── */}
-          {step === 3 && (
+          {/* ── STEP 4: DONE ── */}
+          {step === 4 && (
             <div className="text-center py-16 space-y-6">
               <div className="text-7xl">🎉</div>
               <h2 className="text-3xl font-bold">Investment confirmed!</h2>
@@ -562,7 +668,7 @@ function InvestirForm() {
         </div>
 
         {/* ── Sidebar ── */}
-        {step < 3 && (
+        {step < 4 && (
           <div className="rounded-2xl p-6 h-fit sticky top-8" style={{ backgroundColor: '#1E1B4B' }}>
             <h3 className="font-bold mb-5">Your investment</h3>
             <div className="space-y-4 text-sm">
@@ -578,7 +684,7 @@ function InvestirForm() {
                 { label: 'Duration', value: '36 months' },
                 { label: 'Grace period', value: '6 months' },
                 { label: 'Monthly (grace)', value: `€${monthlyGrace.toFixed(2)}` },
-                { label: 'Monthly (months 7–36)', value: `€${monthlyRepayment.toFixed(2)}` },
+                { label: 'Monthly (7–36)', value: `€${monthlyRepayment.toFixed(2)}` },
                 { label: 'Total interest', value: `€${totalInterest.toFixed(2)}` },
               ].map((row, i) => (
                 <div key={i} className="flex justify-between">

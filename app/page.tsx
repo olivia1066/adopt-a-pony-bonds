@@ -44,7 +44,7 @@ export default function Home() {
         </div>
         <Link href="/login" className="text-sm font-medium hover:text-white transition-colors"
           style={{ color: 'rgba(255,255,255,0.6)' }}>
-          Sign In
+          Log In
         </Link>
       </header>
 
@@ -114,7 +114,7 @@ export default function Home() {
               color: 'rgba(255,255,255,0.55)', fontSize: '17px',
               lineHeight: '1.65', marginBottom: '36px', maxWidth: '400px',
             }}>
-              Invest in Pony's electric fleet and earn up to{' '}
+              Invest in an ebike or escooter from pony's fleet and earn{' '}
               <span style={{ color: '#00FFFF', fontWeight: 700 }}>9.5%</span>{' '}
               annual returns — paid monthly.
             </p>
@@ -135,7 +135,7 @@ export default function Home() {
                 border: '1px solid rgba(255,255,255,0.2)',
                 textDecoration: 'none',
               }}>
-                Sign in
+                Log in
               </Link>
             </div>
             {/* Social proof */}
@@ -257,7 +257,7 @@ export default function Home() {
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
             {[
-              { emoji: '🛴', title: 'You sponsor', desc: 'Choose an amount starting from €500. No vehicle to manage.' },
+              { emoji: '🛴', title: 'You invest', desc: 'Choose an amount starting from €500. No vehicle to manage.' },
               { emoji: '🤝', title: 'We deploy', desc: 'Pony uses your investment to grow and maintain the fleet across French cities.' },
               { emoji: '📊', title: 'You earn interest', desc: 'Receive monthly payments from day one, with capital returned at maturity.' },
             ].map((item, i) => (

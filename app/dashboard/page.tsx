@@ -1,155 +1,230 @@
-import Link from 'next/link'
-import Image from 'next/image'
+'use client'
 
-export default function Home() {
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { supabase } from '@/lib/supabase'
+
+type Investment = {
+  id: string
+  montant: number
+  statut: string
+  created_at: string
+  campaigns: {
+    id: string
+    name: string
+    rate: number
+    duration: number
+    start_date: string
+  }
+}
+
+type Investor = {
+  id: string
+  prenom: string
+  nom: string
+  email: string
+  kyc_status: string
+  investments: Investment[]
+}
+
+export default function Dashboard() {
+  const router = useRouter()
+  const [activeTab, setActiveTab] = useState('portfolio')
+  const [investor, setInvestor] = useState<Investor | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function getSession() {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) {
+        router.push('/login')
+        return
+      }
+      const { data } = await supabase
+        .from('investors')
+        .select('*, investments(*, campaigns(*))')
+        .eq('email', session.user.email)
+        .single()
+      if (data) setInvestor(data)
+      setLoading(false)
+    }
+    getSession()
+  }, [])
+
+  async function handleLogout() {
+    await supabase.auth.signOut()
+    router.push('/login')
+  }
+
+  const totalInvesti = investor?.investments?.reduce((sum, i) => sum + i.montant, 0) || 0
+  const totalMensuel = investor?.investments?.reduce((sum, i) => {
+    const rate = i.campaigns?.rate / 100
+    return sum + (i.montant * rate) / 12
+  }, 0) || 0
+  const totalRembourse = investor?.investments?.reduce((sum, i) => {
+    const rate = i.campaigns?.rate / 100
+    const duration = i.campaigns?.duration
+    return sum + i.montant + i.montant * rate * (duration / 12)
+  }, 0) || 0
+
+  if (loading) return (
+    <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#13102B'}}>
+      <p style={{color: '#00E5CC'}}>Loading...</p>
+    </main>
+  )
+
   return (
-    <main className="min-h-screen font-sans" style={{backgroundColor: '#0D0D2B', color: 'white'}}>
+    <main className="min-h-screen font-sans" style={{backgroundColor: '#13102B', color: 'white'}}>
 
       {/* Header */}
-      <header className="flex justify-between items-center px-8 py-5">
-        <nav className="flex gap-8 text-sm text-white">
-          <a href="#" className="hover:opacity-70">Home</a>
-          <a href="#" className="hover:opacity-70">Adopt</a>
-          <a href="#" className="hover:opacity-70">Riders ↗</a>
-        </nav>
-        <div className="absolute left-1/2 -translate-x-1/2">
-          <Image src="/Logo.png" alt="Pony" width={80} height={30} />
+      <header className="flex justify-between items-center px-8 py-5 border-b border-white/10">
+        <div className="flex items-center gap-2">
+          <img src="/Logo.png" alt="Pony" style={{height: '25px', width: 'auto'}} />
         </div>
-        <Link href="/login" className="text-sm text-white hover:opacity-70">
-          Sign In
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link href="/campagne"
+            className="text-sm font-bold px-5 py-2.5 rounded-xl transition-colors"
+            style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+            + New investment
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="text-sm px-4 py-2 rounded-xl"
+            style={{backgroundColor: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.5)'}}>
+            Sign out
+          </button>
+        </div>
       </header>
 
-      {/* Hero */}
-      <section className="px-8 pt-16 pb-24 max-w-6xl mx-auto grid grid-cols-2 gap-12 items-center">
-        <div>
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-8" style={{backgroundColor: '#00E5CC'}}>
-            👼
-          </div>
-          <h1 className="text-6xl font-extrabold leading-tight mb-6">
-            Sponsorisez<br />la flotte Pony.
-          </h1>
-          <p className="text-gray-400 text-lg mb-10 leading-relaxed">
-            Prêtez de l'argent à Pony, nous finançons notre flotte de vélos et trottinettes, et nous vous remboursons avec des intérêts.
-          </p>
-          <div className="flex gap-4">
-            <Link href="/campagne"
-              className="px-8 py-4 rounded-xl text-sm font-bold transition-colors"
-              style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
-              Voir la campagne
-            </Link>
-            <Link href="/login"
-              className="px-8 py-4 rounded-xl text-sm font-bold border transition-colors"
-              style={{borderColor: '#00E5CC', color: '#00E5CC'}}>
-              Se connecter
-            </Link>
-          </div>
-        </div>
-        <div className="flex justify-center items-center">
-          <div className="text-center">
-            <div className="text-9xl">🛴</div>
-            <div className="text-6xl mt-4">🚲</div>
-          </div>
-        </div>
-      </section>
+      <div className="max-w-5xl mx-auto px-8 py-12">
 
-      {/* Mission */}
-      <section className="px-8 py-24 max-w-4xl mx-auto">
-        <h2 className="text-4xl font-bold leading-tight mb-20" style={{color: 'white'}}>
-          Chez Pony, notre mission est simple : permettre à chacun de participer directement à la transition vers la mobilité douce.
-        </h2>
-        <div className="grid grid-cols-3 gap-12">
+        <div className="mb-10 flex justify-between items-start">
+          <div>
+            <h1 className="text-3xl font-bold mb-1">
+              Hello {investor?.prenom} 👋
+            </h1>
+            <p className="text-sm" style={{color: 'rgba(255,255,255,0.5)'}}>
+              Here is a summary of your investments
+            </p>
+          </div>
+          <span className="text-xs px-3 py-1 rounded-full font-medium"
+            style={{
+              backgroundColor: investor?.kyc_status === 'Validé' ? 'rgba(0,229,204,0.15)' :
+                investor?.kyc_status === 'Rejeté' ? 'rgba(255,100,100,0.15)' : 'rgba(255,200,0,0.15)',
+              color: investor?.kyc_status === 'Validé' ? '#00E5CC' :
+                investor?.kyc_status === 'Rejeté' ? '#FF6464' : '#FFC800',
+            }}>
+            KYC: {investor?.kyc_status === 'Validé' ? 'Approved' : investor?.kyc_status === 'Rejeté' ? 'Rejected' : 'Pending'}
+          </span>
+        </div>
+
+        {/* KPIs */}
+        <div className="grid grid-cols-3 gap-4 mb-10">
           {[
-            { emoji: '🛴', title: 'Sponsorisez', desc: 'Choisissez un montant et une durée. À partir de 500€.' },
-            { emoji: '🤝', title: 'On déploie', desc: 'Pony utilise votre investissement pour financer la flotte en ville.' },
-            { emoji: '📊', title: 'Touchez des intérêts', desc: 'Recevez vos intérêts régulièrement et récupérez votre capital à terme.' },
-          ].map((item, i) => (
-            <div key={i}>
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-6" style={{backgroundColor: '#1A1A3E'}}>
-                {item.emoji}
+            { label: 'Total invested', value: `€${totalInvesti.toLocaleString('en-GB')}`, color: 'white' },
+            { label: 'Monthly income', value: `+€${totalMensuel.toFixed(2)}`, color: '#00E5CC' },
+            { label: 'Total repaid at maturity', value: `€${totalRembourse.toLocaleString('en-GB', {maximumFractionDigits: 0})}`, color: 'white' },
+          ].map((kpi, i) => (
+            <div key={i} className="rounded-2xl p-6" style={{backgroundColor: '#1E1B4B'}}>
+              <p className="text-xs mb-2" style={{color: 'rgba(255,255,255,0.5)'}}>{kpi.label}</p>
+              <p className="text-2xl font-bold" style={{color: kpi.color}}>{kpi.value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Tabs */}
+        <div className="flex gap-6 mb-8 border-b border-white/10">
+          {['portfolio', 'payments'].map(tab => (
+            <button key={tab} onClick={() => setActiveTab(tab)}
+              className="pb-3 text-sm font-medium transition-colors"
+              style={{
+                color: activeTab === tab ? '#00E5CC' : 'rgba(255,255,255,0.4)',
+                borderBottom: activeTab === tab ? '2px solid #00E5CC' : '2px solid transparent',
+              }}>
+              {tab === 'portfolio' ? 'My portfolio' : 'Payment schedule'}
+            </button>
+          ))}
+        </div>
+
+        {/* Portfolio */}
+        {activeTab === 'portfolio' && (
+          <div className="space-y-4">
+            {investor?.investments?.length === 0 && (
+              <div className="text-center py-16 space-y-4">
+                <p style={{color: 'rgba(255,255,255,0.3)'}}>No investments yet</p>
+                <Link href="/campagne"
+                  className="inline-block px-6 py-3 rounded-xl text-sm font-bold"
+                  style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+                  See the campaign →
+                </Link>
               </div>
-              <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+            )}
+            {investor?.investments?.map(inv => {
+              const rate = inv.campaigns?.rate / 100
+              const duration = inv.campaigns?.duration
+              const mensualite = (inv.montant * rate) / 12
+              const totalRemb = inv.montant + inv.montant * rate * (duration / 12)
 
-      {/* Campaign card */}
-      <section className="px-8 py-16 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-10">Campagne en cours</h2>
-        <div className="rounded-3xl p-8 max-w-md" style={{backgroundColor: '#1E1B4B'}}>
-          <div className="flex justify-between items-start mb-6">
-            <span className="text-xs font-bold px-3 py-1 rounded-full" style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
-              EN COURS
-            </span>
-            <span className="text-sm text-gray-400">Avril 2026</span>
-          </div>
-          <h3 className="text-2xl font-bold mb-2">Flotte Printemps 2026</h3>
-          <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-            Financement de 50 vélos et trottinettes déployés sur 5 villes françaises.
-          </p>
-          <div className="grid grid-cols-3 gap-4 mb-6 text-center py-4 border-y border-white/10">
-            <div>
-              <div className="text-xl font-bold" style={{color: '#00E5CC'}}>7%</div>
-              <div className="text-xs text-gray-400 mt-0.5">Taux annuel</div>
-            </div>
-            <div>
-              <div className="text-xl font-bold" style={{color: '#00E5CC'}}>24 mois</div>
-              <div className="text-xs text-gray-400 mt-0.5">Durée</div>
-            </div>
-            <div>
-              <div className="text-xl font-bold" style={{color: '#00E5CC'}}>500€</div>
-              <div className="text-xs text-gray-400 mt-0.5">Minimum</div>
-            </div>
-          </div>
-          <div className="mb-6">
-            <div className="flex justify-between text-xs text-gray-400 mb-2">
-              <span>312 000€ collectés</span>
-              <span>500 000€</span>
-            </div>
-            <div className="w-full rounded-full h-1.5" style={{backgroundColor: '#2D2B5E'}}>
-              <div className="h-1.5 rounded-full" style={{width: '62%', backgroundColor: '#00E5CC'}}></div>
-            </div>
-          </div>
-          <Link href="/campagne"
-            className="w-full py-4 rounded-xl text-sm font-bold block text-center transition-colors"
-            style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
-            Investir maintenant →
-          </Link>
-        </div>
-      </section>
+              return (
+                <div key={inv.id} className="rounded-2xl p-6" style={{backgroundColor: '#1E1B4B'}}>
+                  <div className="flex justify-between items-start mb-5">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs px-2 py-1 rounded-full font-medium"
+                          style={{
+                            backgroundColor: inv.statut === 'Actif' ? 'rgba(0,229,204,0.15)' : 'rgba(255,200,0,0.15)',
+                            color: inv.statut === 'Actif' ? '#00E5CC' : '#FFC800',
+                          }}>
+                          ● {inv.statut === 'Actif' ? 'Active' : 'Pending'}
+                        </span>
+                      </div>
+                      <h3 className="font-bold text-lg">{inv.campaigns?.name}</h3>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-2xl font-bold">€{inv.montant.toLocaleString('en-GB')}</p>
+                      <p className="text-xs" style={{color: 'rgba(255,255,255,0.4)'}}>invested</p>
+                    </div>
+                  </div>
 
-      {/* Stats */}
-      <section className="border-t border-white/10 py-16">
-        <div className="max-w-4xl mx-auto grid grid-cols-4 gap-8 text-center">
-          {[
-            { value: '500k+', label: 'Utilisateurs' },
-            { value: '15+', label: 'Villes partenaires' },
-            { value: '6–9%', label: 'Taux annuel' },
-            { value: '95%', label: 'CO2 économisé' },
-          ].map((stat, i) => (
-            <div key={i}>
-              <p className="text-4xl font-bold" style={{color: '#00E5CC'}}>{stat.value}</p>
-              <p className="text-sm text-gray-400 mt-2 uppercase tracking-widest text-xs">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+                  <div className="grid grid-cols-4 gap-4 text-sm mb-5">
+                    {[
+                      { label: 'Rate', value: `${inv.campaigns?.rate}%` },
+                      { label: 'Duration', value: `${duration} months` },
+                      { label: 'Monthly', value: `+€${mensualite.toFixed(2)}`, green: true },
+                      { label: 'Total repaid', value: `€${totalRemb.toLocaleString('en-GB', {maximumFractionDigits: 0})}` },
+                    ].map((stat, i) => (
+                      <div key={i}>
+                        <p className="text-xs mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>{stat.label}</p>
+                        <p className="font-bold" style={{color: stat.green ? '#00E5CC' : 'white'}}>{stat.value}</p>
+                      </div>
+                    ))}
+                  </div>
 
-      {/* Footer */}
-      <footer className="border-t border-white/10 px-8 py-10">
-        <div className="max-w-4xl mx-auto flex justify-between items-center">
-          <Image src="/Logo.png" alt="Pony" width={60} height={22} />
-          <p className="text-xs text-gray-500">
-            Tout investissement comporte des risques, notamment celui d'une perte en capital.
-          </p>
-          <div className="flex gap-6 text-xs text-gray-500">
-            <a href="#" className="hover:text-white transition-colors">Confidentialité</a>
-            <a href="#" className="hover:text-white transition-colors">CGU</a>
+                  <div>
+                    <div className="flex justify-between text-xs mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>
+                      <span>Start: {inv.campaigns?.start_date}</span>
+                      <span>{duration} months</span>
+                    </div>
+                    <div className="w-full rounded-full h-1" style={{backgroundColor: 'rgba(255,255,255,0.1)'}}>
+                      <div className="h-1 rounded-full" style={{width: '4%', backgroundColor: '#00E5CC'}}></div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </div>
-        </div>
-      </footer>
+        )}
+
+        {/* Payments */}
+        {activeTab === 'payments' && (
+          <div className="rounded-2xl p-8 text-center" style={{backgroundColor: '#1E1B4B'}}>
+            <p style={{color: 'rgba(255,255,255,0.4)'}}>
+              The payment schedule will be available once your KYC is approved.
+            </p>
+          </div>
+        )}
+      </div>
     </main>
   )
 }

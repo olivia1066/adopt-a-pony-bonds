@@ -39,33 +39,31 @@ export default function Campagne() {
   const totalRepaid = amount + amount * rate * (duration / 12)
 
   if (loading) return (
-    <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#0D0D2B'}}>
-      <p style={{color: '#00E5CC'}}>Chargement...</p>
+    <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#13102B'}}>
+      <p style={{color: '#00E5CC'}}>Loading...</p>
     </main>
   )
 
   return (
-    <main className="min-h-screen font-sans" style={{backgroundColor: '#0D0D2B', color: 'white'}}>
+    <main className="min-h-screen font-sans" style={{backgroundColor: '#13102B', color: 'white'}}>
 
       {/* Header */}
       <header className="flex justify-between items-center px-8 py-5 border-b border-white/10">
         <div className="flex items-center gap-2">
-          <span className="text-xl">🐴</span>
-          <Link href="/" className="font-bold" style={{color: '#00E5CC'}}>pony</Link>
+          <img src="/Logo.png" alt="Pony" style={{height: '25px', width: 'auto'}} />
         </div>
         <div className="flex gap-4 items-center">
           <Link href="/dashboard"
             className="text-sm px-4 py-2 rounded-xl border transition-colors"
             style={{borderColor: 'rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.6)'}}>
-            Mes investissements
+            My investments
           </Link>
         </div>
       </header>
 
-      {/* Back */}
       <div className="px-8 py-4">
         <Link href="/" className="text-sm hover:opacity-70" style={{color: 'rgba(255,255,255,0.4)'}}>
-          ← Retour aux campagnes
+          ← Back to campaigns
         </Link>
       </div>
 
@@ -77,7 +75,7 @@ export default function Campagne() {
             <div className="flex gap-2 mb-4">
               <span className="text-xs px-3 py-1 rounded-full font-medium"
                 style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
-                🛴 Flotte urbaine
+                🛴 Urban fleet
               </span>
               <span className="text-xs px-3 py-1 rounded-full font-medium"
                 style={{backgroundColor: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)'}}>
@@ -85,7 +83,7 @@ export default function Campagne() {
               </span>
             </div>
             <h1 className="text-3xl font-bold text-white">
-              {campaign?.name || 'Campagne en cours'}
+              {campaign?.name || 'Current campaign'}
             </h1>
           </div>
         </div>
@@ -94,17 +92,17 @@ export default function Campagne() {
         <div className="absolute right-8 top-1/2 -translate-y-1/2 rounded-2xl p-6 w-72"
           style={{backgroundColor: 'rgba(13,13,43,0.9)', border: '1px solid rgba(255,255,255,0.1)'}}>
           <div className="flex justify-between items-center mb-4">
-            <span className="text-sm font-medium" style={{color: 'rgba(255,255,255,0.5)'}}>Statut</span>
+            <span className="text-sm font-medium" style={{color: 'rgba(255,255,255,0.5)'}}>Status</span>
             <span className="text-xs px-3 py-1 rounded-full font-medium"
               style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
-              🟢 {campaign?.status || 'En cours'}
+              🟢 {campaign?.status || 'Open'}
             </span>
           </div>
           <div className="space-y-3 mb-4">
             {[
-              { label: "Taux d'intérêt", value: '6 – 9 %' },
-              { label: 'Durée', value: '12 à 48 mois' },
-              { label: 'Remboursement', value: 'À terme' },
+              { label: 'Interest rate', value: '6 – 9 %' },
+              { label: 'Duration', value: '12 to 48 months' },
+              { label: 'Repayment', value: 'At maturity' },
             ].map((row, i) => (
               <div key={i} className="flex justify-between text-sm">
                 <span style={{color: 'rgba(255,255,255,0.4)'}}>{row.label}</span>
@@ -121,11 +119,11 @@ export default function Campagne() {
             </div>
           </div>
           <div className="flex justify-between text-xs mb-3" style={{color: 'rgba(255,255,255,0.4)'}}>
-            <span>{campaign?.raised_amount.toLocaleString('fr-FR')} € financés</span>
-            <span>{campaign?.target_amount.toLocaleString('fr-FR')} €</span>
+            <span>€{campaign?.raised_amount.toLocaleString('en-GB')} raised</span>
+            <span>€{campaign?.target_amount.toLocaleString('en-GB')}</span>
           </div>
           <div className="text-xs flex items-center gap-1" style={{color: 'rgba(255,255,255,0.4)'}}>
-            🛡️ Capital protégé par la flotte
+            🛡️ Capital protected by the fleet
           </div>
         </div>
       </div>
@@ -136,13 +134,11 @@ export default function Campagne() {
 
         {/* Left */}
         <div className="p-8" style={{backgroundColor: '#1E1B4B'}}>
-          <h2 className="text-xl font-bold mb-6">Je veux investir</h2>
-
+          <h2 className="text-xl font-bold mb-6">I want to invest</h2>
           <div className="rounded-xl px-4 py-3 text-2xl font-bold text-center mb-3"
             style={{backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)'}}>
-            €{amount.toLocaleString('fr-FR')}
+            €{amount.toLocaleString('en-GB')}
           </div>
-
           <input
             type="range" min={500} max={50000} step={500} value={amount}
             onChange={e => setAmount(Number(e.target.value))}
@@ -150,11 +146,10 @@ export default function Campagne() {
             style={{accentColor: '#00E5CC'}}
           />
           <div className="flex justify-between text-xs mb-6" style={{color: 'rgba(255,255,255,0.4)'}}>
-            <span>500 €</span>
-            <span>50 000 €</span>
+            <span>€500</span>
+            <span>€50,000</span>
           </div>
-
-          <h3 className="font-bold mb-3">Pendant</h3>
+          <h3 className="font-bold mb-3">For</h3>
           <div className="grid grid-cols-4 gap-2">
             {[12, 24, 36, 48].map(d => (
               <button
@@ -163,18 +158,17 @@ export default function Campagne() {
                 className="py-2 rounded-xl text-sm font-medium transition-all"
                 style={{
                   backgroundColor: duration === d ? '#00E5CC' : 'rgba(255,255,255,0.05)',
-                  color: duration === d ? '#0D0D2B' : 'rgba(255,255,255,0.6)',
+                  color: duration === d ? '#13102B' : 'rgba(255,255,255,0.6)',
                   border: duration === d ? 'none' : '1px solid rgba(255,255,255,0.1)',
                 }}
               >
-                {d} mois
+                {d}m
               </button>
             ))}
           </div>
-
           <div className="mt-6 flex gap-4 text-xs" style={{color: 'rgba(255,255,255,0.3)'}}>
-            <span className="underline cursor-pointer hover:opacity-70">Information fiscale</span>
-            <span className="underline cursor-pointer hover:opacity-70">Note d'investissement</span>
+            <span className="underline cursor-pointer hover:opacity-70">Tax information</span>
+            <span className="underline cursor-pointer hover:opacity-70">Investment note</span>
           </div>
         </div>
 
@@ -182,29 +176,29 @@ export default function Campagne() {
         <div className="p-8 flex flex-col justify-between" style={{backgroundColor: '#0D0D2B'}}>
           <div>
             <div className="mb-8">
-              <p className="text-sm mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>Vous recevez</p>
+              <p className="text-sm mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>You receive</p>
               <p className="text-5xl font-bold" style={{color: '#00E5CC'}}>
-                {monthlyInterest.toFixed(2).replace('.', ',')} €
+                €{monthlyInterest.toFixed(2)}
               </p>
-              <p className="text-sm mt-1" style={{color: 'rgba(255,255,255,0.4)'}}>par mois</p>
+              <p className="text-sm mt-1" style={{color: 'rgba(255,255,255,0.4)'}}>per month</p>
             </div>
             <div>
-              <p className="text-sm mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>Total remboursé</p>
+              <p className="text-sm mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>Total repaid</p>
               <p className="text-2xl font-bold">
-                {totalRepaid.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €
+                €{totalRepaid.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
               </p>
             </div>
             <div className="mt-4 text-xs cursor-pointer hover:opacity-70"
               style={{color: 'rgba(255,255,255,0.3)'}}>
-              📅 Calendrier des paiements
+              📅 Payment schedule
             </div>
           </div>
 
           <Link
             href={`/investir?campaignId=${campaign?.id}&amount=${amount}&duration=${duration}&rate=${rate}`}
             className="w-full py-4 rounded-xl font-bold text-sm text-center block mt-8 transition-colors"
-            style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
-            Investir dès maintenant →
+            style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+            Invest now →
           </Link>
         </div>
       </div>
@@ -213,9 +207,9 @@ export default function Campagne() {
       <div className="mx-8 mt-12 grid grid-cols-3 gap-12 pb-16">
         <h2 className="text-2xl font-bold">Description</h2>
         <div className="col-span-2 text-sm leading-relaxed space-y-4" style={{color: 'rgba(255,255,255,0.6)'}}>
-          <p>Vous avez ici l'opportunité de sponsoriser directement la flotte Pony — vélos et trottinettes électriques déployés dans les villes françaises.</p>
-          <p>Votre investissement finance l'acquisition et le déploiement de nouveaux véhicules. En échange, Pony vous rembourse avec des intérêts sur la durée choisie.</p>
-          <p>Contrairement à l'ancien modèle Adopt a Pony, vous n'êtes pas propriétaire d'un véhicule spécifique — vous financez la flotte dans son ensemble, ce qui réduit le risque et simplifie votre expérience.</p>
+          <p>Here is an opportunity to directly sponsor the Pony fleet — electric bikes and scooters deployed in French cities.</p>
+          <p>Your investment finances the acquisition and deployment of new vehicles. In return, Pony repays you with interest over the chosen duration.</p>
+          <p>Unlike the old Adopt a Pony model, you do not own a specific vehicle — you finance the entire fleet, which reduces risk and simplifies your experience.</p>
         </div>
       </div>
     </main>

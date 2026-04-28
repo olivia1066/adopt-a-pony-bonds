@@ -47,7 +47,7 @@ type Payment = {
 }
 
 export default function Admin() {
-  const [activeTab, setActiveTab] = useState('campagnes')
+  const [activeTab, setActiveTab] = useState('campaigns')
   const [campaigns, setCampaigns] = useState<Campaign[]>([])
   const [investors, setInvestors] = useState<Investor[]>([])
   const [payments, setPayments] = useState<Payment[]>([])
@@ -63,22 +63,9 @@ export default function Admin() {
 
   async function fetchAll() {
     setLoading(true)
-
-    const { data: camps } = await supabase
-      .from('campaigns')
-      .select('*')
-      .order('created_at', { ascending: false })
-
-    const { data: invs } = await supabase
-      .from('investors')
-      .select('*, investments(montant, campaigns(name))')
-      .order('created_at', { ascending: false })
-
-    const { data: pays } = await supabase
-      .from('payments')
-      .select('*, investments(investors(prenom, nom), campaigns(name))')
-      .order('date_prevue', { ascending: true })
-
+    const { data: camps } = await supabase.from('campaigns').select('*').order('created_at', { ascending: false })
+    const { data: invs } = await supabase.from('investors').select('*, investments(montant, campaigns(name))').order('created_at', { ascending: false })
+    const { data: pays } = await supabase.from('payments').select('*, investments(investors(prenom, nom), campaigns(name))').order('date_prevue', { ascending: true })
     if (camps) setCampaigns(camps)
     if (invs) setInvestors(invs)
     if (pays) setPayments(pays)
@@ -121,42 +108,41 @@ export default function Admin() {
   const kycEnAttente = investors.filter(i => i.kyc_status === 'En attente').length
 
   if (loading) return (
-    <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#0D0D2B'}}>
-      <p style={{color: '#00E5CC'}}>Chargement...</p>
+    <main className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#13102B'}}>
+      <p style={{color: '#00E5CC'}}>Loading...</p>
     </main>
   )
 
   return (
-    <main className="min-h-screen font-sans" style={{backgroundColor: '#0D0D2B', color: 'white'}}>
+    <main className="min-h-screen font-sans" style={{backgroundColor: '#13102B', color: 'white'}}>
 
       <header className="flex justify-between items-center px-8 py-5 border-b border-white/10">
         <div className="flex items-center gap-4">
-          <span className="text-xl">🐴</span>
-          <span className="font-bold" style={{color: '#00E5CC'}}>pony</span>
+          <img src="/Logo.png" alt="Pony" style={{height: '25px', width: 'auto'}} />
           <span className="text-xs px-2 py-1 rounded-full font-medium"
             style={{backgroundColor: 'rgba(255,200,0,0.15)', color: '#FFC800'}}>
             Admin
           </span>
         </div>
         <Link href="/" className="text-sm hover:opacity-70" style={{color: 'rgba(255,255,255,0.5)'}}>
-          ← Retour au site
+          ← Back to site
         </Link>
       </header>
 
       <div className="max-w-6xl mx-auto px-8 py-10">
 
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-1">Panel Admin</h1>
-          <p className="text-sm" style={{color: 'rgba(255,255,255,0.4)'}}>Gérez les campagnes, investisseurs et paiements</p>
+          <h1 className="text-3xl font-bold mb-1">Admin Panel</h1>
+          <p className="text-sm" style={{color: 'rgba(255,255,255,0.4)'}}>Manage campaigns, investors and payments</p>
         </div>
 
         {/* KPIs */}
         <div className="grid grid-cols-4 gap-4 mb-10">
           {[
-            { label: 'Campagnes actives', value: campaigns.filter(c => c.status === 'Ouverte').length.toString() },
-            { label: 'Total investisseurs', value: investors.length.toString() },
-            { label: 'KYC en attente', value: kycEnAttente.toString(), warn: kycEnAttente > 0 },
-            { label: 'Total collecté', value: `${totalCollecte.toLocaleString('fr-FR')} €` },
+            { label: 'Active campaigns', value: campaigns.filter(c => c.status === 'Ouverte').length.toString() },
+            { label: 'Total investors', value: investors.length.toString() },
+            { label: 'KYC pending', value: kycEnAttente.toString(), warn: kycEnAttente > 0 },
+            { label: 'Total raised', value: `€${totalCollecte.toLocaleString('en-GB')}` },
           ].map((kpi, i) => (
             <div key={i} className="rounded-2xl p-5" style={{backgroundColor: '#1E1B4B'}}>
               <p className="text-xs mb-2" style={{color: 'rgba(255,255,255,0.4)'}}>{kpi.label}</p>
@@ -167,40 +153,40 @@ export default function Admin() {
 
         {/* Tabs */}
         <div className="flex gap-6 mb-8 border-b border-white/10">
-          {['campagnes', 'investisseurs', 'paiements'].map(tab => (
+          {['campaigns', 'investors', 'payments'].map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)}
-              className="pb-3 text-sm font-medium transition-colors"
+              className="pb-3 text-sm font-medium capitalize transition-colors"
               style={{
                 color: activeTab === tab ? '#00E5CC' : 'rgba(255,255,255,0.4)',
                 borderBottom: activeTab === tab ? '2px solid #00E5CC' : '2px solid transparent',
               }}>
-              {tab === 'campagnes' ? 'Campagnes' : tab === 'investisseurs' ? 'Investisseurs' : 'Paiements'}
+              {tab === 'campaigns' ? 'Campaigns' : tab === 'investors' ? 'Investors' : 'Payments'}
             </button>
           ))}
         </div>
 
-        {/* CAMPAGNES */}
-        {activeTab === 'campagnes' && (
+        {/* CAMPAIGNS */}
+        {activeTab === 'campaigns' && (
           <div>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-bold">Campagnes</h2>
+              <h2 className="text-xl font-bold">Campaigns</h2>
               <button onClick={() => setShowNewCampaign(!showNewCampaign)}
                 className="text-sm px-4 py-2 rounded-xl font-bold"
-                style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
-                + Nouvelle campagne
+                style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+                + New campaign
               </button>
             </div>
 
             {showNewCampaign && (
               <div className="rounded-2xl p-6 mb-6" style={{backgroundColor: '#1E1B4B', border: '1px solid rgba(0,229,204,0.3)'}}>
-                <h3 className="font-bold mb-4" style={{color: '#00E5CC'}}>Nouvelle campagne</h3>
+                <h3 className="font-bold mb-4" style={{color: '#00E5CC'}}>New campaign</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {[
-                    { label: 'Nom', key: 'name', placeholder: 'Flotte Automne 2026' },
-                    { label: 'Objectif (€)', key: 'target', placeholder: '500000' },
-                    { label: 'Taux (%)', key: 'rate', placeholder: '7' },
-                    { label: 'Durée (mois)', key: 'duration', placeholder: '24' },
-                    { label: 'Date de début', key: 'startDate', placeholder: '2026-09-01' },
+                    { label: 'Name', key: 'name', placeholder: 'Autumn 2026 Fleet' },
+                    { label: 'Target (€)', key: 'target', placeholder: '500000' },
+                    { label: 'Rate (%)', key: 'rate', placeholder: '7' },
+                    { label: 'Duration (months)', key: 'duration', placeholder: '24' },
+                    { label: 'Start date', key: 'startDate', placeholder: '2026-09-01' },
                   ].map(field => (
                     <div key={field.key}>
                       <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>{field.label}</label>
@@ -215,13 +201,13 @@ export default function Admin() {
                 <div className="flex gap-3 mt-4">
                   <button onClick={createCampaign}
                     className="px-6 py-2 rounded-xl text-sm font-bold"
-                    style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
-                    Créer la campagne
+                    style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+                    Create campaign
                   </button>
                   <button onClick={() => setShowNewCampaign(false)}
                     className="px-6 py-2 rounded-xl text-sm"
                     style={{backgroundColor: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.6)'}}>
-                    Annuler
+                    Cancel
                   </button>
                 </div>
               </div>
@@ -238,7 +224,7 @@ export default function Admin() {
                             backgroundColor: c.status === 'Ouverte' ? 'rgba(0,229,204,0.15)' : 'rgba(255,255,255,0.1)',
                             color: c.status === 'Ouverte' ? '#00E5CC' : 'rgba(255,255,255,0.5)',
                           }}>
-                          {c.status}
+                          {c.status === 'Ouverte' ? 'Open' : c.status === 'Clôturée' ? 'Closed' : 'Upcoming'}
                         </span>
                       </div>
                       <h3 className="font-bold text-lg">{c.name}</h3>
@@ -247,16 +233,16 @@ export default function Admin() {
                       <button onClick={() => closeCampaign(c.id)}
                         className="text-sm px-4 py-2 rounded-xl"
                         style={{backgroundColor: 'rgba(255,100,100,0.15)', color: '#FF6464'}}>
-                        Clôturer
+                        Close
                       </button>
                     )}
                   </div>
                   <div className="grid grid-cols-4 gap-4 text-sm mb-4">
                     {[
-                      { label: 'Taux', value: `${c.rate}%` },
-                      { label: 'Durée', value: `${c.duration} mois` },
-                      { label: 'Objectif', value: `${c.target_amount.toLocaleString('fr-FR')} €` },
-                      { label: 'Collecté', value: `${c.raised_amount.toLocaleString('fr-FR')} €` },
+                      { label: 'Rate', value: `${c.rate}%` },
+                      { label: 'Duration', value: `${c.duration} months` },
+                      { label: 'Target', value: `€${c.target_amount.toLocaleString('en-GB')}` },
+                      { label: 'Raised', value: `€${c.raised_amount.toLocaleString('en-GB')}` },
                     ].map((stat, i) => (
                       <div key={i}>
                         <p className="text-xs mb-1" style={{color: 'rgba(255,255,255,0.4)'}}>{stat.label}</p>
@@ -271,7 +257,7 @@ export default function Admin() {
                     }}></div>
                   </div>
                   <p className="text-xs mt-1" style={{color: 'rgba(255,255,255,0.3)'}}>
-                    {((c.raised_amount / c.target_amount) * 100).toFixed(0)}% financé
+                    {((c.raised_amount / c.target_amount) * 100).toFixed(0)}% funded
                   </p>
                 </div>
               ))}
@@ -279,10 +265,10 @@ export default function Admin() {
           </div>
         )}
 
-        {/* INVESTISSEURS */}
-        {activeTab === 'investisseurs' && (
+        {/* INVESTORS */}
+        {activeTab === 'investors' && (
           <div>
-            <h2 className="text-xl font-bold mb-6">Investisseurs ({investors.length})</h2>
+            <h2 className="text-xl font-bold mb-6">Investors ({investors.length})</h2>
             <div className="space-y-4">
               {investors.map(inv => (
                 <div key={inv.id} className="rounded-2xl p-6" style={{backgroundColor: '#1E1B4B'}}>
@@ -296,10 +282,10 @@ export default function Admin() {
                             color: inv.kyc_status === 'Validé' ? '#00E5CC' :
                               inv.kyc_status === 'Rejeté' ? '#FF6464' : '#FFC800',
                           }}>
-                          KYC: {inv.kyc_status}
+                          KYC: {inv.kyc_status === 'Validé' ? 'Approved' : inv.kyc_status === 'Rejeté' ? 'Rejected' : 'Pending'}
                         </span>
                         <span className="text-xs" style={{color: 'rgba(255,255,255,0.3)'}}>
-                          {new Date(inv.created_at).toLocaleDateString('fr-FR')}
+                          {new Date(inv.created_at).toLocaleDateString('en-GB')}
                         </span>
                       </div>
                       <h3 className="font-bold text-lg">{inv.prenom} {inv.nom}</h3>
@@ -308,7 +294,7 @@ export default function Admin() {
                     <div className="text-right">
                       {inv.investments && inv.investments.length > 0 && (
                         <>
-                          <p className="text-xl font-bold">{inv.investments[0].montant?.toLocaleString('fr-FR')} €</p>
+                          <p className="text-xl font-bold">€{inv.investments[0].montant?.toLocaleString('en-GB')}</p>
                           <p className="text-xs" style={{color: 'rgba(255,255,255,0.4)'}}>
                             {inv.investments[0].campaigns?.name}
                           </p>
@@ -320,13 +306,13 @@ export default function Admin() {
                   <div className="grid grid-cols-3 gap-3 text-sm mb-4 p-4 rounded-xl"
                     style={{backgroundColor: 'rgba(255,255,255,0.03)'}}>
                     {[
-                      { label: 'Date de naissance', value: inv.date_naissance },
-                      { label: 'Lieu de naissance', value: inv.lieu_naissance },
-                      { label: 'Nationalité', value: inv.nationalite },
-                      { label: 'Résidence fiscale', value: inv.residence_fiscale },
-                      { label: 'Adresse', value: inv.adresse },
-                      { label: 'Profession', value: inv.profession },
-                      { label: 'Revenus mensuels', value: inv.revenus },
+                      { label: 'Date of birth', value: inv.date_naissance },
+                      { label: 'Place of birth', value: inv.lieu_naissance },
+                      { label: 'Nationality', value: inv.nationalite },
+                      { label: 'Tax residence', value: inv.residence_fiscale },
+                      { label: 'Address', value: inv.adresse },
+                      { label: 'Occupation', value: inv.profession },
+                      { label: 'Monthly income', value: inv.revenus },
                       { label: 'PEP', value: inv.pep },
                       { label: 'Document', value: `${inv.document_type} — ${inv.document_numero}` },
                       { label: 'IBAN', value: inv.iban },
@@ -343,47 +329,47 @@ export default function Admin() {
                       <button onClick={() => updateKyc(inv.id, 'Validé')}
                         className="px-5 py-2 rounded-xl text-sm font-bold"
                         style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
-                        ✓ Valider le KYC
+                        ✓ Approve KYC
                       </button>
                       <button onClick={() => updateKyc(inv.id, 'Rejeté')}
                         className="px-5 py-2 rounded-xl text-sm font-bold"
                         style={{backgroundColor: 'rgba(255,100,100,0.15)', color: '#FF6464'}}>
-                        ✗ Rejeter
+                        ✗ Reject
                       </button>
                     </div>
                   )}
                   {inv.kyc_status === 'Validé' && (
-                    <p className="text-sm font-medium" style={{color: '#00E5CC'}}>✓ KYC validé</p>
+                    <p className="text-sm font-medium" style={{color: '#00E5CC'}}>✓ KYC approved</p>
                   )}
                   {inv.kyc_status === 'Rejeté' && (
-                    <p className="text-sm font-medium" style={{color: '#FF6464'}}>✗ KYC rejeté</p>
+                    <p className="text-sm font-medium" style={{color: '#FF6464'}}>✗ KYC rejected</p>
                   )}
                 </div>
               ))}
 
               {investors.length === 0 && (
                 <div className="text-center py-16" style={{color: 'rgba(255,255,255,0.3)'}}>
-                  Aucun investisseur pour le moment
+                  No investors yet
                 </div>
               )}
             </div>
           </div>
         )}
 
-        {/* PAIEMENTS */}
-        {activeTab === 'paiements' && (
+        {/* PAYMENTS */}
+        {activeTab === 'payments' && (
           <div>
-            <h2 className="text-xl font-bold mb-6">Paiements</h2>
+            <h2 className="text-xl font-bold mb-6">Payments</h2>
             {payments.length === 0 ? (
               <div className="text-center py-16" style={{color: 'rgba(255,255,255,0.3)'}}>
-                Aucun paiement pour le moment
+                No payments yet
               </div>
             ) : (
               <div className="rounded-2xl overflow-hidden" style={{backgroundColor: '#1E1B4B'}}>
                 <table className="w-full text-sm">
                   <thead>
                     <tr style={{borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
-                      {['Date', 'Investisseur', 'Campagne', 'Type', 'Montant', 'Statut', 'Action'].map((h, i) => (
+                      {['Date', 'Investor', 'Campaign', 'Type', 'Amount', 'Status', 'Action'].map((h, i) => (
                         <th key={i} className={`px-6 py-4 text-xs font-medium ${i >= 4 ? 'text-right' : 'text-left'}`}
                           style={{color: 'rgba(255,255,255,0.4)'}}>
                           {h}
@@ -394,7 +380,7 @@ export default function Admin() {
                   <tbody>
                     {payments.map(p => (
                       <tr key={p.id} style={{borderBottom: '1px solid rgba(255,255,255,0.05)'}}>
-                        <td className="px-6 py-4">{p.date_prevue ? new Date(p.date_prevue).toLocaleDateString('fr-FR') : '—'}</td>
+                        <td className="px-6 py-4">{p.date_prevue ? new Date(p.date_prevue).toLocaleDateString('en-GB') : '—'}</td>
                         <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.7)'}}>
                           {p.investments?.investors?.prenom} {p.investments?.investors?.nom}
                         </td>
@@ -403,7 +389,7 @@ export default function Admin() {
                         </td>
                         <td className="px-6 py-4" style={{color: 'rgba(255,255,255,0.5)'}}>{p.type}</td>
                         <td className="px-6 py-4 text-right font-bold" style={{color: '#00E5CC'}}>
-                          +{p.montant.toFixed(2).replace('.', ',')} €
+                          +€{p.montant.toFixed(2)}
                         </td>
                         <td className="px-6 py-4 text-right">
                           <span className="text-xs px-2 py-1 rounded-full"
@@ -411,7 +397,7 @@ export default function Admin() {
                               backgroundColor: p.statut === 'Envoyé' ? 'rgba(0,229,204,0.15)' : 'rgba(255,200,0,0.15)',
                               color: p.statut === 'Envoyé' ? '#00E5CC' : '#FFC800',
                             }}>
-                            {p.statut}
+                            {p.statut === 'Envoyé' ? 'Sent' : 'To send'}
                           </span>
                         </td>
                         <td className="px-6 py-4 text-right">
@@ -419,7 +405,7 @@ export default function Admin() {
                             <button onClick={() => markPaymentSent(p.id)}
                               className="text-xs px-3 py-1 rounded-xl font-medium"
                               style={{backgroundColor: 'rgba(0,229,204,0.15)', color: '#00E5CC'}}>
-                              Marquer envoyé
+                              Mark as sent
                             </button>
                           )}
                         </td>

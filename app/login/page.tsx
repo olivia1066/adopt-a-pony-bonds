@@ -19,24 +19,20 @@ export default function Login() {
 
   async function handleLogin() {
     setError('')
-
     if (!form.email || !form.password) {
-      setError('Veuillez remplir tous les champs.')
+      setError('Please fill in all fields.')
       return
     }
-
     setLoading(true)
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email: form.email,
         password: form.password,
       })
-
       if (error) throw error
-
       router.push('/dashboard')
     } catch (err: any) {
-      setError('Email ou mot de passe incorrect.')
+      setError('Incorrect email or password.')
     }
     setLoading(false)
   }
@@ -46,18 +42,19 @@ export default function Login() {
 
   return (
     <main className="min-h-screen font-sans flex items-center justify-center"
-      style={{backgroundColor: '#0D0D2B', color: 'white'}}>
+      style={{backgroundColor: '#13102B', color: 'white'}}>
 
       <div className="w-full max-w-md px-8 py-12">
 
-        {/* Logo */}
         <div className="text-center mb-10">
-          <Link href="/" className="text-2xl font-bold" style={{color: '#00E5CC'}}>🐴 pony</Link>
+          <Link href="/">
+            <img src="/Logo.png" alt="Pony" style={{height: '35px', width: 'auto', margin: '0 auto'}} />
+          </Link>
         </div>
 
-        <h1 className="text-2xl font-bold mb-2 text-center">Se connecter</h1>
+        <h1 className="text-2xl font-bold mb-2 text-center">Sign in</h1>
         <p className="text-sm text-center mb-8" style={{color: 'rgba(255,255,255,0.4)'}}>
-          Accédez à votre portfolio d'investissement
+          Access your investment portfolio
         </p>
 
         <div className="space-y-4">
@@ -74,7 +71,7 @@ export default function Login() {
           </div>
 
           <div>
-            <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Mot de passe</label>
+            <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Password</label>
             <input
               type="password"
               value={form.password}
@@ -96,18 +93,18 @@ export default function Login() {
             onClick={handleLogin}
             disabled={loading}
             className="w-full py-4 rounded-xl font-bold text-sm"
-            style={{backgroundColor: '#00E5CC', color: '#0D0D2B', opacity: loading ? 0.7 : 1}}>
-            {loading ? 'Connexion...' : 'Se connecter →'}
+            style={{backgroundColor: '#00E5CC', color: '#13102B', opacity: loading ? 0.7 : 1}}>
+            {loading ? 'Signing in...' : 'Sign in →'}
           </button>
 
           <p className="text-center text-sm" style={{color: 'rgba(255,255,255,0.4)'}}>
-            Pas encore de compte ?{' '}
-            <Link href="/signup" style={{color: '#00E5CC'}}>Créer un compte</Link>
+            No account yet?{' '}
+            <Link href="/signup" style={{color: '#00E5CC'}}>Create an account</Link>
           </p>
 
           <p className="text-center text-sm">
             <Link href="/reset-password" className="text-xs" style={{color: 'rgba(255,255,255,0.3)'}}>
-              Mot de passe oublié ?
+              Forgot your password?
             </Link>
           </p>
         </div>

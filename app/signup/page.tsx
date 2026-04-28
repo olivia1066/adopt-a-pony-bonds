@@ -25,17 +25,17 @@ export default function Signup() {
     setError('')
 
     if (!form.email || !form.password || !form.confirmPassword || !form.prenom || !form.nom) {
-      setError('Veuillez remplir tous les champs.')
+      setError('Please fill in all fields.')
       return
     }
 
     if (form.password !== form.confirmPassword) {
-      setError('Les mots de passe ne correspondent pas.')
+      setError('Passwords do not match.')
       return
     }
 
     if (form.password.length < 8) {
-      setError('Le mot de passe doit contenir au moins 8 caractères.')
+      setError('Password must be at least 8 characters.')
       return
     }
 
@@ -54,7 +54,6 @@ export default function Signup() {
 
       if (error) throw error
 
-      // Create investor record
       await supabase.from('investors').insert({
         prenom: form.prenom,
         nom: form.nom,
@@ -64,7 +63,7 @@ export default function Signup() {
 
       setStep(2)
     } catch (err: any) {
-      setError(err.message || 'Une erreur est survenue')
+      setError(err.message || 'An error occurred.')
     }
     setLoading(false)
   }
@@ -74,31 +73,32 @@ export default function Signup() {
 
   return (
     <main className="min-h-screen font-sans flex items-center justify-center"
-      style={{backgroundColor: '#0D0D2B', color: 'white'}}>
+      style={{backgroundColor: '#13102B', color: 'white'}}>
 
       <div className="w-full max-w-md px-8 py-12">
 
-        {/* Logo */}
         <div className="text-center mb-10">
-          <Link href="/" className="text-2xl font-bold" style={{color: '#00E5CC'}}>🐴 pony</Link>
+          <Link href="/">
+            <img src="/Logo.png" alt="Pony" style={{height: '35px', width: 'auto', margin: '0 auto'}} />
+          </Link>
         </div>
 
         {step === 1 && (
           <>
-            <h1 className="text-2xl font-bold mb-2 text-center">Créer un compte</h1>
+            <h1 className="text-2xl font-bold mb-2 text-center">Create an account</h1>
             <p className="text-sm text-center mb-8" style={{color: 'rgba(255,255,255,0.4)'}}>
-              Rejoignez la communauté des investisseurs Pony
+              Join the Pony investor community
             </p>
 
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Prénom</label>
+                  <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>First name</label>
                   <input type="text" value={form.prenom} onChange={e => update('prenom', e.target.value)}
                     className={inputClass} style={inputStyle} />
                 </div>
                 <div>
-                  <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Nom</label>
+                  <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Last name</label>
                   <input type="text" value={form.nom} onChange={e => update('nom', e.target.value)}
                     className={inputClass} style={inputStyle} />
                 </div>
@@ -111,14 +111,14 @@ export default function Signup() {
               </div>
 
               <div>
-                <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Mot de passe</label>
+                <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Password</label>
                 <input type="password" value={form.password} onChange={e => update('password', e.target.value)}
                   className={inputClass} style={inputStyle} />
-                <p className="text-xs mt-1" style={{color: 'rgba(255,255,255,0.3)'}}>Minimum 8 caractères</p>
+                <p className="text-xs mt-1" style={{color: 'rgba(255,255,255,0.3)'}}>Minimum 8 characters</p>
               </div>
 
               <div>
-                <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Confirmer le mot de passe</label>
+                <label className="text-xs mb-1 block" style={{color: 'rgba(255,255,255,0.5)'}}>Confirm password</label>
                 <input type="password" value={form.confirmPassword} onChange={e => update('confirmPassword', e.target.value)}
                   className={inputClass} style={inputStyle} />
               </div>
@@ -132,13 +132,13 @@ export default function Signup() {
 
               <button onClick={handleSignup} disabled={loading}
                 className="w-full py-4 rounded-xl font-bold text-sm"
-                style={{backgroundColor: '#00E5CC', color: '#0D0D2B', opacity: loading ? 0.7 : 1}}>
-                {loading ? 'Création du compte...' : 'Créer mon compte →'}
+                style={{backgroundColor: '#00E5CC', color: '#13102B', opacity: loading ? 0.7 : 1}}>
+                {loading ? 'Creating account...' : 'Create my account →'}
               </button>
 
               <p className="text-center text-sm" style={{color: 'rgba(255,255,255,0.4)'}}>
-                Déjà un compte ?{' '}
-                <Link href="/login" style={{color: '#00E5CC'}}>Se connecter</Link>
+                Already have an account?{' '}
+                <Link href="/login" style={{color: '#00E5CC'}}>Sign in</Link>
               </p>
             </div>
           </>
@@ -147,15 +147,15 @@ export default function Signup() {
         {step === 2 && (
           <div className="text-center space-y-6">
             <div className="text-6xl">📧</div>
-            <h2 className="text-2xl font-bold">Vérifiez votre email !</h2>
+            <h2 className="text-2xl font-bold">Check your email!</h2>
             <p className="text-sm" style={{color: 'rgba(255,255,255,0.5)'}}>
-              Un email de confirmation a été envoyé à <strong>{form.email}</strong>. 
-              Cliquez sur le lien pour activer votre compte.
+              A confirmation email has been sent to <strong>{form.email}</strong>.
+              Click the link to activate your account.
             </p>
             <Link href="/login"
               className="inline-block px-8 py-3 rounded-xl text-sm font-bold"
-              style={{backgroundColor: '#00E5CC', color: '#0D0D2B'}}>
-              Aller à la connexion →
+              style={{backgroundColor: '#00E5CC', color: '#13102B'}}>
+              Go to sign in →
             </Link>
           </div>
         )}

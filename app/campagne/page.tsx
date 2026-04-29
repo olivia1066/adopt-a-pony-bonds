@@ -32,6 +32,79 @@ function calcReturns(amount: number) {
   return { monthlyGrace, monthlyRepayment, totalInterest, totalRepaid }
 }
 
+function FaqSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  const faqs = [
+    {
+      q: 'What is Pony and Adopt a Pony?',
+      a: 'Coming soon.',
+    },
+    {
+      q: 'Why invest with Adopt a Pony?',
+      a: 'Coming soon.',
+    },
+    {
+      q: 'How do you generate 9.5% returns?',
+      a: 'Coming soon.',
+    },
+    {
+      q: 'What is the risk associated to adopting a Pony?',
+      a: 'Coming soon.',
+    },
+    {
+      q: 'What is the associated fiscality?',
+      a: 'Coming soon.',
+    },
+  ]
+
+  return (
+    <div style={{ margin: '80px 40px', paddingBottom: '40px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px' }}>
+        <h2 style={{ fontSize: '56px', fontWeight: 800, letterSpacing: '-2px' }}>FAQs</h2>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {faqs.map((faq, i) => (
+          <div key={i} style={{
+            borderRadius: '16px',
+            backgroundColor: 'rgba(30,27,75,0.6)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            overflow: 'hidden',
+          }}>
+            <button
+              onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              style={{
+                width: '100%', display: 'flex', justifyContent: 'space-between',
+                alignItems: 'center', padding: '24px 28px',
+                background: 'none', border: 'none', cursor: 'pointer',
+                color: 'white', textAlign: 'left',
+              }}
+            >
+              <span style={{ fontSize: '17px', fontWeight: 700 }}>{faq.q}</span>
+              <span style={{
+                fontSize: '24px', fontWeight: 300,
+                color: '#00FFFF', flexShrink: 0, marginLeft: '16px',
+                display: 'inline-block',
+                transform: openIndex === i ? 'rotate(45deg)' : 'rotate(0)',
+                transition: 'transform 0.2s',
+              }}>+</span>
+            </button>
+            {openIndex === i && (
+              <div style={{
+                padding: '0 28px 24px',
+                fontSize: '15px', lineHeight: '1.7',
+                color: 'rgba(255,255,255,0.5)',
+              }}>
+                {faq.a}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Campagne() {
   const [amount, setAmount] = useState(5000)
   const [campaign, setCampaign] = useState<Campaign | null>(null)
@@ -98,23 +171,13 @@ export default function Campagne() {
         position: 'relative', minHeight: '420px',
         background: 'linear-gradient(135deg, #1E1B4B 0%, #0D0D2B 100%)',
       }}>
-
-        {/* Riders image — right side */}
-        <img
-          src="/hero-photo2.jpg"
-          alt=""
+        <img src="/hero-photo2.jpg" alt=""
           style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center 30%',
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            objectFit: 'cover', objectPosition: 'center 30%',
             opacity: 1,
           }}
         />
-
-        {/* Dark overlay for readability */}
         <div style={{
           position: 'absolute', inset: 0,
           background: 'linear-gradient(to right, rgba(13,13,43,0.6) 20%, rgba(13,13,43,0.1) 60%, rgba(13,13,43,0.5) 100%)',
@@ -140,11 +203,10 @@ export default function Campagne() {
           </p>
         </div>
 
-        {/* Stats card — right */}
+        {/* Stats card */}
         <div style={{
           position: 'absolute', right: '36px', top: '50%',
-          transform: 'translateY(-50%)',
-          zIndex: 2,
+          transform: 'translateY(-50%)', zIndex: 2,
           width: '260px', borderRadius: '20px', padding: '24px',
           backgroundColor: 'rgba(13,11,32,0.95)',
           backdropFilter: 'blur(16px)',
@@ -220,10 +282,28 @@ export default function Campagne() {
           />
           <div style={{
             display: 'flex', justifyContent: 'space-between',
-            fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '4px', marginBottom: '32px',
+            fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '4px', marginBottom: '24px',
           }}>
             <span>€500</span><span>€50,000</span>
           </div>
+
+          {/* Fleet equivalent */}
+          <div style={{
+            marginBottom: '24px', padding: '10px 14px', borderRadius: '10px',
+            backgroundColor: 'rgba(0,255,255,0.06)',
+            border: '1px solid rgba(0,255,255,0.12)',
+            display: 'flex', alignItems: 'center', gap: '8px',
+          }}>
+            <span style={{ fontSize: '16px' }}>🛴</span>
+            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
+              Your investment finances{' '}
+              <span style={{ color: '#00FFFF', fontWeight: 700 }}>
+                {(amount / 2100).toFixed(2)} e-bikes
+              </span>
+              {' '}in Pony's fleet
+            </span>
+          </div>
+
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
             {[
               { icon: '📅', label: '36 months' },
@@ -240,6 +320,7 @@ export default function Campagne() {
               </span>
             ))}
           </div>
+
           <div style={{ display: 'flex', gap: '16px', fontSize: '12px' }}>
             <span style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'underline', cursor: 'pointer' }}>
               Tax information
@@ -291,7 +372,6 @@ export default function Campagne() {
               backgroundColor: '#00FFFF', color: '#13102B',
               padding: '16px', borderRadius: '14px',
               fontSize: '15px', fontWeight: 800, textDecoration: 'none',
-              letterSpacing: '0.3px',
               boxShadow: '0 4px 24px rgba(0,255,255,0.25)',
             }}>
             Invest now →
@@ -300,7 +380,7 @@ export default function Campagne() {
       </div>
 
       {/* ── DESCRIPTION ── */}
-      <div style={{ margin: '64px 40px 80px', display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px' }}>
+      <div style={{ margin: '64px 40px 0', display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px' }}>
         <div>
           <h2 style={{ fontSize: '24px', fontWeight: 800, marginBottom: '8px' }}>About this campaign</h2>
           <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>Spring 2026</p>
@@ -331,6 +411,9 @@ export default function Campagne() {
           </div>
         </div>
       </div>
+
+      {/* ── FAQ ── */}
+      <FaqSection />
 
       {/* ── FOOTER ── */}
       <footer style={{

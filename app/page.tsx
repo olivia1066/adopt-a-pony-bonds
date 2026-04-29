@@ -482,7 +482,7 @@ export default function Home() {
               },
               {
                 icon: '📅',
-                title: 'Regular monthly payments',
+                title: 'Up to 9.5% in annual interests and regular monthly payments',
                 desc: 'Unlike most bonds, we pay you every month — not at the end. From month one, you receive interest. From month seven, you receive capital + interest.',
               },
               {

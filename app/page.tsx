@@ -260,20 +260,19 @@ export default function Home() {
       }}>
         <div style={{ flex: '1' }}>
           <p style={{
-            fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
+            fontSize: '14px', fontWeight: 700, letterSpacing: '3px',
             color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px',
-          }}>Our mission</p>
+          }}>We built this for people who want their money to do something real.</p>
           <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: '1.1', color: 'white', marginBottom: '16px' }}>
-            At Pony, we believe everyone should be able to participate directly in the future of urban mobility.
+            We believe everyone should be able to participate directly in the future of urban mobility.
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '17px', marginBottom: '56px' }}>
-            We built this for people who want their money to do something real.
+          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '17px', marginBottom: '56px' }}>
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
             {[
-              { emoji: '🛴', title: 'You invest and we deploy', desc: 'Choose your amount. From €500, no maximum. Pony buys and operates the fleet across French cities.' },
-              { emoji: '📅', title: 'You get paid every month', desc: '9.5% annual interest. Monthly income from day one. Capital fully repaid at the end of 36 months.' },
-              { emoji: '🎮', title: 'Follow your fleet', desc: 'Track your bikes and scooters in real time. See them ride, earn, and grow across French cities.' },
+              { emoji: '🛴', title: 'You choose how much you want to invest. We do the rest.', desc: 'Choose your amount — from €500. Pony takes it from there. We buy the bikes, deploy the fleet, handle every repair, every charge, every ride. Your only job is to watch the returns come in.' },
+              { emoji: '📅', title: 'Earn up to 9.5% monthly income from day one.', desc: 'Once you invest, your ebikes or scooters start riding and generating your payback. Up to 9.5% annual interest, landing in your bank account every single month. And after 36 months, your full capital comes back home.' },
+              { emoji: '🎮', title: 'The investment you will actually tell your friends about.', desc: 'Forget spreadsheets, open the pony app and watch your bikes move across French cities in real time. Track the kilometres and the performance. When someone asks about your investements, this is the answer that will get a reaction.' },
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
                 <div style={{
@@ -287,7 +286,7 @@ export default function Home() {
                 </div>
                 <div style={{ paddingTop: '8px' }}>
                   <h3 style={{ fontWeight: 700, fontSize: '17px', marginBottom: '4px' }}>{item.title}</h3>
-                  <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)', lineHeight: '1.6' }}>{item.desc}</p>
+                  <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.75)', lineHeight: '1.6' }}>{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -426,36 +425,174 @@ export default function Home() {
         {/* Right: content */}
         <div style={{ flex: '1', padding: '120px 96px' }}>
           <p style={{
-            fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
+            fontSize: '14px', fontWeight: 700, letterSpacing: '3px',
             color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px',
           }}>Why invest with Pony?</p>
           <h2 style={{ fontSize: '38px', fontWeight: 800, marginBottom: '64px', lineHeight: 1.1 }}>
-            Built different.<br />
-            <span style={{ color: 'rgba(255,255,255,0.3)', fontWeight: 400 }}>Designed to last.</span>
+            Most investments are invisible. This one rides through your city every day.
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
             {[
-              { icon: '🛡️', title: 'Backed by real assets', desc: 'Your investment finances a real, operating fleet. Pony vehicles are deployed daily across French cities, generating the revenue that pays you back.' },
-              { icon: '📅', title: 'Regular monthly payments', desc: 'Unlike most bonds, we pay you every month — not at the end. From month one, you receive interest. From month seven, you receive capital + interest.' },
-              { icon: '🌱', title: 'Invest in something you can see', desc: "Every euro you put in goes directly into bikes and scooters that real people ride every day. You'll see them move. You'll track them. They're yours." },
+              { icon: '🛡️', title: 'Backed by real assets and long-term city contracts with low default risk.', desc: 'A fleet of e-bikes and scooters, made of steel and rubber, generating revenue under long-term contracts with French cities. This is infrastructure-backed lending with a brand people already truct and use everyday.' },
+              { icon: '📈', title: 'High fixed returns as compared to classical investmet plateforms.', desc: '9.5% annual interest is significantly above what banks or most crowdfunding platforms offer today.' },
+              { icon: '🏙️', title: 'Risk spread over hundred of ebikes and scooters.', desc: "You don't invest in one vehicle, you invest in an entire fleet. Each Pony bike generates an average of €150/month in revenue. If one underperforms, the others cover it. That's how we protect your returns." },
+              { icon: '🚀', title: 'Join the adventure and fuel the expansion.', desc: '400k+ riders. 20+ cities. Fleets growing in our existing cities every month. When you adopt a pony, you\'re not just lending money, you\'re fuelling pony\'s expansion. We\'re building something big, and your capital is what makes it move.' },
+              { icon: '🌱', title: 'Good for your wallet. Good for the planet.', desc: 'Every bike you finance takes a car off the road. Pony is one of France\'s leading shared e-mobility operators — reducing CO2, cutting congestion, and making cities more liveable.' },
             ].map((item, i) => (
-              <div key={i}>
+              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
                 <div style={{
-                  width: '52px', height: '52px', borderRadius: '16px',
+                  width: '64px', height: '64px', borderRadius: '18px', flexShrink: 0,
                   backgroundColor: 'rgba(0,255,255,0.08)',
                   border: '1px solid rgba(0,255,255,0.15)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '24px', marginBottom: '16px',
+                  fontSize: '28px',
                 }}>
                   {item.icon}
                 </div>
-                <h3 style={{ fontWeight: 700, fontSize: '18px', marginBottom: '8px' }}>{item.title}</h3>
-                <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)', lineHeight: '1.65' }}>{item.desc}</p>
+                <div style={{ paddingTop: '8px' }}>
+                  <h3 style={{ fontWeight: 700, fontSize: '17px', marginBottom: '4px' }}>{item.title}</h3>
+                  <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.75)', lineHeight: '1.6' }}>{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+      
+      {/* ── COMPARISON TABLE ── */}
+      <section style={{
+        padding: '120px 96px',
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+      }}>
+        <p style={{
+          fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
+          color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px',
+        }}>How we compare</p>
+        <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: 1.1, marginBottom: '64px' }}>
+          One of the best risk-adjusted<br />returns on the French market.
+        </h2>
+
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+            <thead>
+              <tr>
+                {/* Empty first cell */}
+                <th style={{ width: '180px', padding: '16px 20px', textAlign: 'left' }} />
+                {/* Pony — highlighted */}
+                <th style={{
+                  padding: '20px 24px', textAlign: 'center',
+                  backgroundColor: '#00FFFF', borderRadius: '16px 16px 0 0',
+                  color: '#13102B',
+                }}>
+                  <img src="/Logo.png" alt="Pony" style={{ height: '20px', width: 'auto', filter: 'invert(1) brightness(0)' }} />
+                  <p style={{ fontSize: '11px', fontWeight: 700, marginTop: '4px', color: '#13102B' }}>Bonds</p>
+                </th>
+                {['Livret A', 'Assurance vie', 'Crowdfunding\nimmo', 'Bourse'].map((col, i) => (
+                  <th key={i} style={{
+                    padding: '16px 20px', textAlign: 'center',
+                    color: 'rgba(255,255,255,0.5)', fontWeight: 600, fontSize: '13px',
+                  }}>{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                {
+                  label: 'Annual rate',
+                  pony: '9.5%',
+                  others: ['3%', '3–4%', '8–12%', '5–7%'],
+                  highlight: true,
+                },
+                {
+                  label: 'Duration',
+                  pony: '36 months',
+                  others: ['Flexible', '8+ years', '12–24 months', 'Variable'],
+                  highlight: false,
+                },
+                {
+                  label: 'Monthly payments',
+                  pony: '✅',
+                  others: ['❌', '❌', '❌', '❌'],
+                  highlight: false,
+                },
+                {
+                  label: 'Capital backing',
+                  pony: 'Real fleet',
+                  others: ['State', 'Partial', 'Real estate', 'None'],
+                  highlight: false,
+                },
+                {
+                  label: 'Fees',
+                  pony: '0%',
+                  others: ['0%', '1–3%', '0–5%', '0–3%'],
+                  highlight: false,
+                },
+                {
+                  label: 'AMF regulated',
+                  pony: '✅',
+                  others: ['✅', '✅', '✅', '✅'],
+                  highlight: false,
+                },
+                {
+                  label: 'Tangible asset',
+                  pony: '✅ Real bikes',
+                  others: ['❌', '❌', '🏠 Property', '❌'],
+                  highlight: false,
+                },
+              ].map((row, rowIndex) => (
+                <tr key={rowIndex} style={{
+                  borderTop: '1px solid rgba(255,255,255,0.06)',
+                }}>
+                  {/* Row label */}
+                  <td style={{
+                    padding: '18px 20px',
+                    color: 'rgba(255,255,255,0.55)',
+                    fontSize: '13px', fontWeight: 500,
+                  }}>{row.label}</td>
+
+                  {/* Pony column */}
+                  <td style={{
+                    padding: '18px 24px', textAlign: 'center',
+                    backgroundColor: row.highlight ? 'rgba(0,255,255,0.15)' : 'rgba(0,255,255,0.06)',
+                    borderLeft: '1px solid rgba(0,255,255,0.2)',
+                    borderRight: '1px solid rgba(0,255,255,0.2)',
+                    color: '#00FFFF', fontWeight: 800, fontSize: '15px',
+                  }}>{row.pony}</td>
+
+                  {/* Other columns */}
+                  {row.others.map((val, i) => (
+                    <td key={i} style={{
+                      padding: '18px 20px', textAlign: 'center',
+                      color: 'rgba(255,255,255,0.4)', fontSize: '13px',
+                    }}>{val}</td>
+                  ))}
+                </tr>
+              ))}
+              {/* Bottom border of Pony column */}
+              <tr>
+                <td />
+                <td style={{
+                  backgroundColor: 'rgba(0,255,255,0.06)',
+                  borderLeft: '1px solid rgba(0,255,255,0.2)',
+                  borderRight: '1px solid rgba(0,255,255,0.2)',
+                  borderBottom: '2px solid rgba(0,255,255,0.3)',
+                  borderRadius: '0 0 16px 16px',
+                  height: '8px',
+                }} />
+                {[0,1,2,3].map(i => <td key={i} />)}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style={{
+          fontSize: '11px', color: 'rgba(255,255,255,0.2)',
+          marginTop: '24px', textAlign: 'center',
+        }}>
+          * Indicative figures based on publicly available market data. Past performance is not a guarantee of future results.
+        </p>
+      </section>
+
 
       {/* ── STATS BAR ── */}
       <section style={{

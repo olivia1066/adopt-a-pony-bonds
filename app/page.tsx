@@ -25,32 +25,10 @@ export default function Home() {
   return (
     <main className="min-h-screen font-sans" style={{ backgroundColor: '#13102B', color: 'white' }}>
 
-      {/* ── HEADER ── */}
-      <header style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        padding: '0 48px', height: '64px',
-        backgroundColor: 'rgba(19,16,43,0.85)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
-      }}>
-        <nav style={{ display: 'flex', gap: '32px', fontSize: '14px', color: 'rgba(255,255,255,0.6)' }}>
-          <a href="#" className="hover:text-white transition-colors">Home</a>
-          <a href="#" className="hover:text-white transition-colors">Adopt</a>
-          <a href="#" className="hover:text-white transition-colors">Riders ↗</a>
-        </nav>
-        <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
-          <img src="/Logo.png" alt="Pony" style={{ height: '28px', width: 'auto' }} />
-        </div>
-        <Link href="/login" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
-          Log in
-        </Link>
-      </header>
-
       {/* ── HERO ── */}
       <section style={{
         minHeight: '100vh', display: 'flex', alignItems: 'center',
-        paddingTop: '64px', position: 'relative', overflow: 'hidden',
+        position: 'relative', overflow: 'hidden',
       }}>
         <div style={{
           position: 'absolute', inset: 0, zIndex: 0,
@@ -169,7 +147,6 @@ export default function Home() {
               border: '1px solid rgba(255,255,255,0.08)',
               boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)',
             }}>
-              {/* Header row */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
                 <h2 style={{ fontSize: '22px', fontWeight: 800 }}>
                   Simulate your returns
@@ -186,8 +163,6 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-
-              {/* Amount */}
               <div style={{ marginBottom: '8px' }}>
                 <div style={{
                   display: 'flex', justifyContent: 'space-between',
@@ -228,7 +203,6 @@ export default function Home() {
                 </span>
               </div>
 
-              {/* Result cards */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
                 {[
                   { label: 'Monthly income', sub: 'months 1–6', value: `€${monthlyInterestOnly.toFixed(2)}` },
@@ -249,8 +223,6 @@ export default function Home() {
                     </p>
                   </div>
                 ))}
-
-                {/* Total repaid — highlighted */}
                 <div style={{
                   borderRadius: '14px', padding: '14px 16px',
                   backgroundColor: 'rgba(0,255,255,0.08)',
@@ -291,10 +263,7 @@ export default function Home() {
             fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
             color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px',
           }}>Our mission</p>
-          <h2 style={{
-            fontSize: '38px', fontWeight: 800, lineHeight: '1.1',
-            color: 'white', marginBottom: '16px',
-          }}>
+          <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: '1.1', color: 'white', marginBottom: '16px' }}>
             At Pony, we believe everyone should be able to participate directly in the future of urban mobility.
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '17px', marginBottom: '56px' }}>
@@ -417,7 +386,6 @@ export default function Home() {
             clipPath: 'polygon(100% 0, 100% 100%, 0 100%)',
             backgroundColor: '#0D0B20',
           }} />
-
           {/* Unit economics card */}
           <div style={{
             position: 'absolute', bottom: '48px', left: '48px',
@@ -425,27 +393,21 @@ export default function Home() {
             backgroundColor: 'rgba(13,11,32,0.92)',
             backdropFilter: 'blur(16px)',
             border: '1px solid rgba(255,255,255,0.1)',
-            width: '260px',
-            zIndex: 2,
+            width: '260px', zIndex: 2,
           }}>
             <p style={{
               fontSize: '10px', fontWeight: 700, letterSpacing: '2px',
-              color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase',
-              marginBottom: '20px',
+              color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: '20px',
             }}>Unit economics</p>
-
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
               {[
                 { label: 'Vehicle price', value: '€2,100' },
-                { label: 'Daily trips', value: '— ' },
-                { label: 'Daily revenue', value: '— ' },
+                { label: 'Daily trips', value: '—' },
+                { label: 'Daily revenue', value: '—' },
                 { label: 'CO₂ saved vs car', value: '95%' },
               ].map((row, i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{
-                    fontSize: '11px', fontWeight: 700, letterSpacing: '1px',
-                    textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)',
-                  }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>
                     {row.label}
                   </span>
                   <span style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF' }}>
@@ -454,9 +416,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-
             <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.08)', marginBottom: '16px' }} />
-
             <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', lineHeight: '1.5' }}>
               * Based on Pony's average fleet performance across French cities.
             </p>
@@ -475,21 +435,9 @@ export default function Home() {
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
             {[
-              {
-                icon: '🛡️',
-                title: 'Backed by real assets',
-                desc: 'Your investment finances a real, operating fleet. Pony vehicles are deployed daily across French cities, generating the revenue that pays you back.',
-              },
-              {
-                icon: '📅',
-                title: 'Up to 9.5% in annual interests and regular monthly payments',
-                desc: 'Unlike most bonds, we pay you every month — not at the end. From month one, you receive interest. From month seven, you receive capital + interest.',
-              },
-              {
-                icon: '🌱',
-                title: 'Invest in something you can see',
-                desc: "Every euro you put in goes directly into bikes and scooters that real people ride every day. You'll see them move. You'll track them. They're yours.",
-              },
+              { icon: '🛡️', title: 'Backed by real assets', desc: 'Your investment finances a real, operating fleet. Pony vehicles are deployed daily across French cities, generating the revenue that pays you back.' },
+              { icon: '📅', title: 'Regular monthly payments', desc: 'Unlike most bonds, we pay you every month — not at the end. From month one, you receive interest. From month seven, you receive capital + interest.' },
+              { icon: '🌱', title: 'Invest in something you can see', desc: "Every euro you put in goes directly into bikes and scooters that real people ride every day. You'll see them move. You'll track them. They're yours." },
             ].map((item, i) => (
               <div key={i}>
                 <div style={{

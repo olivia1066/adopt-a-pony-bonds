@@ -8,18 +8,10 @@ export default function Home() {
 
   const annualRate = 0.095
   const monthlyRate = annualRate / 12
-  const gracePeriod = 6
-  const totalMonths = 36
-  const repaymentMonths = totalMonths - gracePeriod
+  const totalMonths = 42
 
-  const monthlyInterestOnly = amount * monthlyRate
-  const monthlyRepayment =
-    amount * (monthlyRate * Math.pow(1 + monthlyRate, repaymentMonths)) /
-    (Math.pow(1 + monthlyRate, repaymentMonths) - 1)
-  const totalInterest =
-    monthlyInterestOnly * gracePeriod +
-    monthlyRepayment * repaymentMonths -
-    amount
+  const monthlyIncome = amount * monthlyRate
+  const totalInterest = monthlyIncome * totalMonths
   const totalRepaid = amount + totalInterest
 
   return (
@@ -64,17 +56,6 @@ export default function Home() {
                 style={{ width: '52px', height: '52px', borderRadius: '14px' }} />
             </div>
             <div style={{ marginBottom: '20px' }}>
-              <div style={{ display: 'inline-block', marginBottom: '10px' }}>
-                <span style={{
-                  display: 'inline-block',
-                  backgroundColor: '#00FFFF', color: '#13102B',
-                  fontSize: '10px', fontWeight: 900,
-                  padding: '4px 12px', borderRadius: '6px',
-                  transform: 'rotate(-2deg)',
-                  letterSpacing: '2.5px',
-                  boxShadow: '0 0 20px rgba(0,255,255,0.4)',
-                }}>NEW FORMULA</span>
-              </div>
               <h1 style={{
                 fontSize: '72px', lineHeight: '1.0', fontWeight: 800,
                 letterSpacing: '-2px', whiteSpace: 'nowrap',
@@ -84,18 +65,11 @@ export default function Home() {
             </div>
             <p style={{
               color: 'rgba(255,255,255,0.9)', fontSize: '18px', fontWeight: 600,
-              lineHeight: '1.5', marginBottom: '12px',
+              lineHeight: '1.5', marginBottom: '36px',
             }}>
               Invest in an e-bike or e-scooter. Earn monthly returns up to{' '}
               <span style={{ color: '#00FFFF' }}>9.5%</span>.
               Watch your bikes ride across France.
-            </p>
-            <p style={{
-              color: 'rgba(255,255,255,0.5)', fontSize: '15px',
-              lineHeight: '1.7', marginBottom: '36px',
-            }}>
-              For the first time, you can finance Pony's fleet, get paid back with
-              interest every month, and follow your fleet in real time.
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               <Link href="/campagne" style={{
@@ -136,40 +110,64 @@ export default function Home() {
                 <span style={{ color: 'white', fontWeight: 700 }}>500k+</span> Pony users already on the platform
               </span>
             </div>
+            <p style={{
+              marginTop: '16px', fontSize: '13px',
+              color: 'rgba(255,255,255,0.45)', lineHeight: '1.5',
+              paddingLeft: '4px',
+            }}>
+              All investments carry risk, including the risk of capital loss.
+            </p>
           </div>
 
           {/* Right: simulator */}
-          <div style={{ flex: '0 0 500px', marginLeft: 'auto' }}>
+          <div style={{ flex: '0 0 460px', marginLeft: 'auto', marginTop: '-80px', marginRight: '100px' }}>
             <div style={{
-              borderRadius: '24px', padding: '32px',
+              borderRadius: '24px',
               backgroundColor: 'rgba(30,27,75,0.9)',
               backdropFilter: 'blur(16px)',
               border: '1px solid rgba(255,255,255,0.08)',
               boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)',
+              overflow: 'hidden',
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
-                <h2 style={{ fontSize: '22px', fontWeight: 800 }}>
-                  Simulate your returns
+              {/* Top: slider */}
+              <div style={{ padding: '24px 24px 16px' }}>
+                <h2 style={{ fontSize: '20px', fontWeight: 800, marginBottom: '12px' }}>
+                  How much could you make
                 </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
-                  {['36 months', '9.5% annual', '6-month grace'].map((t, i) => (
-                    <span key={i} style={{
-                      fontSize: '11px', fontWeight: 700,
-                      padding: '3px 10px', borderRadius: '100px',
-                      backgroundColor: 'rgba(0,255,255,0.1)',
-                      border: '1px solid rgba(0,255,255,0.2)',
-                      color: '#00FFFF', letterSpacing: '0.3px',
-                    }}>{t}</span>
+
+                {/* Terms as compact inline rows */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '16px' }}>
+                  {[
+                    { label: 'Duration', value: '42 months' },
+                    { label: 'Annual interest rate', value: '9.5%' },
+                    { label: 'Capital returned', value: 'At maturity' },
+                  ].map((t, i) => (
+                    <div key={i} style={{
+                      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                      padding: '4px 0',
+                    }}>
+                      <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)' }}>{t.label}</span>
+                      <span style={{
+                        fontSize: '12px', fontWeight: 700,
+                        padding: '2px 10px', borderRadius: '6px',
+                        backgroundColor: 'rgba(0,255,255,0.1)',
+                        border: '1px solid rgba(0,255,255,0.2)',
+                        color: '#00FFFF',
+                      }}>{t.value}</span>
+                    </div>
                   ))}
                 </div>
-              </div>
-              <div style={{ marginBottom: '8px' }}>
+
+                {/* Divider before slider */}
+                <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '12px -24px' }} />
+
+                {/* Amount */}
                 <div style={{
                   display: 'flex', justifyContent: 'space-between',
-                  alignItems: 'center', marginBottom: '12px',
+                  alignItems: 'center', marginBottom: '8px',
                 }}>
-                  <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}>I invest</span>
-                  <span style={{ fontSize: '36px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px' }}>
+                  <span style={{ fontSize: '17px', fontWeight: 700, color: 'white' }}>If you invest</span>
+                  <span style={{ fontSize: '28px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px' }}>
                     €{amount.toLocaleString('en-GB')}
                   </span>
                 </div>
@@ -180,73 +178,97 @@ export default function Home() {
                 />
                 <div style={{
                   display: 'flex', justifyContent: 'space-between',
-                  fontSize: '11px', color: 'rgba(255,255,255,0.25)', marginTop: '4px',
+                  fontSize: '11px', color: 'rgba(255,255,255,0.25)', marginTop: '2px',
                 }}>
                   <span>€500</span><span>€50,000</span>
                 </div>
-              </div>
 
-              {/* Fleet equivalent */}
-              <div style={{
-                marginBottom: '20px', padding: '10px 14px', borderRadius: '10px',
-                backgroundColor: 'rgba(0,255,255,0.06)',
-                border: '1px solid rgba(0,255,255,0.12)',
-                display: 'flex', alignItems: 'center', gap: '8px',
-              }}>
-                <span style={{ fontSize: '16px' }}>🛴</span>
-                <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
-                  Your investment finances{' '}
-                  <span style={{ color: '#00FFFF', fontWeight: 700 }}>
-                    {(amount / 2100).toFixed(2)} e-bikes
-                  </span>
-                  {' '}in Pony's fleet
-                </span>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
-                {[
-                  { label: 'Monthly income', sub: 'months 1–6', value: `€${monthlyInterestOnly.toFixed(2)}` },
-                  { label: 'Monthly income', sub: 'months 7–36', value: `€${monthlyRepayment.toFixed(2)}` },
-                  { label: 'Total interest earned', sub: 'over 36 months', value: `€${totalInterest.toFixed(2)}` },
-                ].map((item, i) => (
-                  <div key={i} style={{
-                    borderRadius: '14px', padding: '14px 16px',
-                    backgroundColor: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(255,255,255,0.06)',
-                  }}>
-                    <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px', lineHeight: 1.3 }}>
-                      {item.label}<br />
-                      <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)' }}>{item.sub}</span>
-                    </p>
-                    <p style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-0.5px' }}>
-                      {item.value}
-                    </p>
-                  </div>
-                ))}
+                {/* Fleet equivalent */}
                 <div style={{
-                  borderRadius: '14px', padding: '14px 16px',
-                  backgroundColor: 'rgba(0,255,255,0.08)',
-                  border: '1px solid rgba(0,255,255,0.25)',
+                  marginTop: '12px', padding: '8px 12px', borderRadius: '10px',
+                  backgroundColor: 'rgba(0,255,255,0.06)',
+                  border: '1px solid rgba(0,255,255,0.12)',
+                  display: 'flex', alignItems: 'center', gap: '8px',
                 }}>
-                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', marginBottom: '4px', lineHeight: 1.3 }}>
-                    Total repaid<br />
-                    <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)' }}>at end of term</span>
-                  </p>
-                  <p style={{ fontSize: '20px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
-                    €{totalRepaid.toFixed(2)}
-                  </p>
+                  <span style={{ fontSize: '14px' }}>🛴</span>
+                  <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
+                    Your investment finances{' '}
+                    <span style={{ color: '#00FFFF', fontWeight: 700 }}>
+                      {amount / 2100 < 1 ? (amount / 2100).toFixed(1) : Math.floor(amount / 2100)} e-bikes
+                    </span>
+                    {' '}in Pony's fleet
+                  </span>
                 </div>
               </div>
 
-              <Link href="/campagne" style={{
-                display: 'block', width: '100%', textAlign: 'center',
-                backgroundColor: '#00FFFF', color: '#13102B',
-                padding: '15px', borderRadius: '12px',
-                fontSize: '14px', fontWeight: 800, textDecoration: 'none',
-                boxShadow: '0 4px 24px rgba(0,255,255,0.25)',
-              }}>
-                Adopt now →
-              </Link>
+              {/* Divider */}
+              <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
+
+              {/* Bottom: results */}
+              <div style={{ padding: '16px 24px 24px', backgroundColor: 'rgba(0,0,0,0.15)' }}>
+                {/* Big number */}
+                <div style={{ marginBottom: '14px' }}>
+                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '2px' }}>
+                    You receive every month
+                  </p>
+                  <p style={{ fontSize: '44px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-2px', lineHeight: 1 }}>
+                    €{monthlyIncome.toFixed(2)}
+                  </p>
+                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '2px' }}>
+                    for 42 months straight
+                  </p>
+                </div>
+
+                {/* Results grid */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '16px' }}>
+                  {/* Left: Total repaid */}
+                  <div style={{
+                    padding: '12px 14px', borderRadius: '12px',
+                    backgroundColor: 'rgba(0,255,255,0.08)',
+                    border: '1px solid rgba(0,255,255,0.25)',
+                    display: 'flex', flexDirection: 'column', justifyContent: 'center',
+                  }}>
+                    <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', fontWeight: 700, marginBottom: '4px' }}>Total repaid at end of term</p>
+                    <p style={{ fontSize: '35px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
+                      €{Math.round(totalRepaid).toLocaleString('en-GB')}
+                    </p>
+                  </div>
+
+                  {/* Right: stacked */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <div style={{
+                      padding: '10px 12px', borderRadius: '10px', flex: 1,
+                      backgroundColor: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                    }}>
+                      <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', marginBottom: '2px' }}>Total interest</p>
+                      <p style={{ fontSize: '15px', fontWeight: 800, color: '#00FFFF' }}>
+                        €{Math.round(totalInterest).toLocaleString('en-GB')}
+                      </p>
+                    </div>
+                    <div style={{
+                      padding: '10px 12px', borderRadius: '10px', flex: 1,
+                      backgroundColor: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                    }}>
+                      <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', marginBottom: '2px' }}>Capital returned</p>
+                      <p style={{ fontSize: '15px', fontWeight: 800, color: '#00FFFF' }}>
+                        €{amount.toLocaleString('en-GB')}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <Link href="/campagne" style={{
+                  display: 'block', width: '100%', textAlign: 'center',
+                  backgroundColor: '#00FFFF', color: '#13102B',
+                  padding: '13px', borderRadius: '12px',
+                  fontSize: '14px', fontWeight: 800, textDecoration: 'none',
+                  boxShadow: '0 4px 24px rgba(0,255,255,0.25)',
+                }}>
+                  Adopt now →
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -266,13 +288,12 @@ export default function Home() {
           <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: '1.1', color: 'white', marginBottom: '16px' }}>
             We believe everyone should be able to participate directly in the future of urban mobility.
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '17px', marginBottom: '56px' }}>
-          </p>
+          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '17px', marginBottom: '56px' }} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
             {[
               { emoji: '🛴', title: 'You choose how much you want to invest. We do the rest.', desc: 'Choose your amount — from €500. Pony takes it from there. We buy the bikes, deploy the fleet, handle every repair, every charge, every ride. Your only job is to watch the returns come in.' },
-              { emoji: '📅', title: 'Earn up to 9.5% monthly income from day one.', desc: 'Once you invest, your ebikes or scooters start riding and generating your payback. Up to 9.5% annual interest, landing in your bank account every single month. And after 36 months, your full capital comes back home.' },
-              { emoji: '🎮', title: 'The investment you will actually tell your friends about.', desc: 'Forget spreadsheets, open the pony app and watch your bikes move across French cities in real time. Track the kilometres and the performance. When someone asks about your investements, this is the answer that will get a reaction.' },
+              { emoji: '📅', title: 'Earn up to 9.5% monthly income from day one.', desc: 'Once you invest, your ebikes or scooters start riding and generating your payback. Up to 9.5% annual interest, landing in your bank account every single month. And after 42 months, your full capital comes back home.' },
+              { emoji: '🎮', title: 'The investment you will actually tell your friends about.', desc: 'Forget spreadsheets, open the pony app and watch your bikes move across French cities in real time. Track the kilometres and the performance. When someone asks about your investments, this is the answer that will get a reaction.' },
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
                 <div style={{
@@ -334,6 +355,18 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+              <div style={{ marginBottom: '16px', padding: '12px 16px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '4px' }}>Monthly income</p>
+                <p style={{ fontSize: '18px', fontWeight: 800, color: '#00FFFF' }}>
+                  €{Math.round(5000 * 0.095 / 12)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'rgba(255,255,255,0.35)' }}>/ month for 42 months</span>
+                </p>
+              </div>
+              <div style={{ marginBottom: '24px', padding: '12px 16px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '4px' }}>Capital repaid at maturity</p>
+                <p style={{ fontSize: '18px', fontWeight: 800, color: '#00FFFF' }}>
+                  €5,000 <span style={{ fontSize: '12px', fontWeight: 400, color: 'rgba(255,255,255,0.35)' }}>at end of month 36</span>
+                </p>
+              </div>
               <div style={{ marginBottom: '24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'rgba(255,255,255,0.4)' }}>
                   <span>€312,000 raised</span>
@@ -364,7 +397,6 @@ export default function Home() {
         borderTop: '1px solid rgba(255,255,255,0.05)',
         backgroundColor: '#0D0B20',
       }}>
-        {/* Left: cyan-tinted image */}
         <div style={{ flex: '0 0 45%', position: 'relative', overflow: 'hidden' }}>
           <img src="/hero-photo2.jpg" alt="Pony fleet"
             style={{
@@ -378,14 +410,12 @@ export default function Home() {
             backgroundColor: 'rgba(0,200,255,0.55)',
             mixBlendMode: 'color',
           }} />
-          {/* Diagonal cut */}
           <div style={{
             position: 'absolute', top: 0, right: 0, bottom: 0,
             width: '200px',
             clipPath: 'polygon(100% 0, 100% 100%, 0 100%)',
             backgroundColor: '#0D0B20',
           }} />
-          {/* Unit economics card */}
           <div style={{
             position: 'absolute', bottom: '48px', left: '48px',
             borderRadius: '20px', padding: '28px',
@@ -422,7 +452,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Right: content */}
         <div style={{ flex: '1', padding: '120px 96px' }}>
           <p style={{
             fontSize: '14px', fontWeight: 700, letterSpacing: '3px',
@@ -433,11 +462,11 @@ export default function Home() {
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
             {[
-              { icon: '🛡️', title: 'Backed by real assets and long-term city contracts with low default risk.', desc: 'A fleet of e-bikes and scooters, made of steel and rubber, generating revenue under long-term contracts with French cities. This is infrastructure-backed lending with a brand people already truct and use everyday.' },
-              { icon: '📈', title: 'High fixed returns as compared to classical investmet plateforms.', desc: '9.5% annual interest is significantly above what banks or most crowdfunding platforms offer today.' },
-              { icon: '🏙️', title: 'Risk spread over hundred of ebikes and scooters.', desc: "You don't invest in one vehicle, you invest in an entire fleet. Each Pony bike generates an average of €150/month in revenue. If one underperforms, the others cover it. That's how we protect your returns." },
-              { icon: '🚀', title: 'Join the adventure and fuel the expansion.', desc: '400k+ riders. 20+ cities. Fleets growing in our existing cities every month. When you adopt a pony, you\'re not just lending money, you\'re fuelling pony\'s expansion. We\'re building something big, and your capital is what makes it move.' },
-              { icon: '🌱', title: 'Good for your wallet. Good for the planet.', desc: 'Every bike you finance takes a car off the road. Pony is one of France\'s leading shared e-mobility operators — reducing CO2, cutting congestion, and making cities more liveable.' },
+              { icon: '🛡️', title: 'Backed by real assets and long-term city contracts with low default risk.', desc: 'A fleet of e-bikes and scooters, made of steel and rubber, generating revenue under long-term contracts with French cities. This is infrastructure-backed lending with a brand people already trust and use everyday.' },
+              { icon: '📈', title: 'High fixed returns as compared to classical investment platforms.', desc: '9.5% annual interest is significantly above what banks or most crowdfunding platforms offer today.' },
+              { icon: '🏙️', title: 'Risk spread over hundreds of ebikes and scooters.', desc: "You don't invest in one vehicle, you invest in an entire fleet. Each Pony bike generates an average of €150/month in revenue. If one underperforms, the others cover it. That's how we protect your returns." },
+              { icon: '🚀', title: 'Join the adventure and fuel the expansion.', desc: "400k+ riders. 20+ cities. Fleets growing in our existing cities every month. When you adopt a pony, you're not just lending money, you're fuelling pony's expansion. We're building something big, and your capital is what makes it move." },
+              { icon: '🌱', title: 'Good for your wallet. Good for the planet.', desc: "Every bike you finance takes a car off the road. Pony is one of France's leading shared e-mobility operators — reducing CO2, cutting congestion, and making cities more liveable." },
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
                 <div style={{
@@ -458,7 +487,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
+
       {/* ── COMPARISON TABLE ── */}
       <section style={{
         padding: '120px 96px',
@@ -471,14 +500,11 @@ export default function Home() {
         <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: 1.1, marginBottom: '64px' }}>
           One of the best risk-adjusted<br />returns on the French market.
         </h2>
-
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
             <thead>
               <tr>
-                {/* Empty first cell */}
                 <th style={{ width: '180px', padding: '16px 20px', textAlign: 'left' }} />
-                {/* Pony — highlighted */}
                 <th style={{
                   padding: '20px 24px', textAlign: 'center',
                   backgroundColor: '#00FFFF', borderRadius: '16px 16px 0 0',
@@ -497,60 +523,16 @@ export default function Home() {
             </thead>
             <tbody>
               {[
-                {
-                  label: 'Annual rate',
-                  pony: '9.5%',
-                  others: ['3%', '3–4%', '8–12%', '5–7%'],
-                  highlight: true,
-                },
-                {
-                  label: 'Duration',
-                  pony: '36 months',
-                  others: ['Flexible', '8+ years', '12–24 months', 'Variable'],
-                  highlight: false,
-                },
-                {
-                  label: 'Monthly payments',
-                  pony: '✅',
-                  others: ['❌', '❌', '❌', '❌'],
-                  highlight: false,
-                },
-                {
-                  label: 'Capital backing',
-                  pony: 'Real fleet',
-                  others: ['State', 'Partial', 'Real estate', 'None'],
-                  highlight: false,
-                },
-                {
-                  label: 'Fees',
-                  pony: '0%',
-                  others: ['0%', '1–3%', '0–5%', '0–3%'],
-                  highlight: false,
-                },
-                {
-                  label: 'AMF regulated',
-                  pony: '✅',
-                  others: ['✅', '✅', '✅', '✅'],
-                  highlight: false,
-                },
-                {
-                  label: 'Tangible asset',
-                  pony: '✅ Real bikes',
-                  others: ['❌', '❌', '🏠 Property', '❌'],
-                  highlight: false,
-                },
+                { label: 'Annual rate', pony: '9.5%', others: ['3%', '3–4%', '8–12%', '5–7%'], highlight: true },
+                { label: 'Duration', pony: '42 months', others: ['Flexible', '8+ years', '12–24 months', 'Variable'], highlight: false },
+                { label: 'Monthly payments', pony: '✅', others: ['❌', '❌', '❌', '❌'], highlight: false },
+                { label: 'Capital at maturity', pony: '✅', others: ['✅', 'Partial', '❌', '❌'], highlight: false },
+                { label: 'Fees', pony: '0%', others: ['0%', '1–3%', '0–5%', '0–3%'], highlight: false },
+                { label: 'AMF regulated', pony: '✅', others: ['✅', '✅', '✅', '✅'], highlight: false },
+                { label: 'Tangible asset', pony: '✅ Real bikes', others: ['❌', '❌', '🏠 Property', '❌'], highlight: false },
               ].map((row, rowIndex) => (
-                <tr key={rowIndex} style={{
-                  borderTop: '1px solid rgba(255,255,255,0.06)',
-                }}>
-                  {/* Row label */}
-                  <td style={{
-                    padding: '18px 20px',
-                    color: 'rgba(255,255,255,0.55)',
-                    fontSize: '13px', fontWeight: 500,
-                  }}>{row.label}</td>
-
-                  {/* Pony column */}
+                <tr key={rowIndex} style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                  <td style={{ padding: '18px 20px', color: 'rgba(255,255,255,0.55)', fontSize: '13px', fontWeight: 500 }}>{row.label}</td>
                   <td style={{
                     padding: '18px 24px', textAlign: 'center',
                     backgroundColor: row.highlight ? 'rgba(0,255,255,0.15)' : 'rgba(0,255,255,0.06)',
@@ -558,17 +540,11 @@ export default function Home() {
                     borderRight: '1px solid rgba(0,255,255,0.2)',
                     color: '#00FFFF', fontWeight: 800, fontSize: '15px',
                   }}>{row.pony}</td>
-
-                  {/* Other columns */}
                   {row.others.map((val, i) => (
-                    <td key={i} style={{
-                      padding: '18px 20px', textAlign: 'center',
-                      color: 'rgba(255,255,255,0.4)', fontSize: '13px',
-                    }}>{val}</td>
+                    <td key={i} style={{ padding: '18px 20px', textAlign: 'center', color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>{val}</td>
                   ))}
                 </tr>
               ))}
-              {/* Bottom border of Pony column */}
               <tr>
                 <td />
                 <td style={{
@@ -584,15 +560,10 @@ export default function Home() {
             </tbody>
           </table>
         </div>
-
-        <p style={{
-          fontSize: '11px', color: 'rgba(255,255,255,0.2)',
-          marginTop: '24px', textAlign: 'center',
-        }}>
+        <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.2)', marginTop: '24px', textAlign: 'center' }}>
           * Indicative figures based on publicly available market data. Past performance is not a guarantee of future results.
         </p>
       </section>
-
 
       {/* ── STATS BAR ── */}
       <section style={{

@@ -7,27 +7,16 @@ function TestimonialsSection() {
   const [current, setCurrent] = useState(0)
 
   const testimonials = [
-    {
-      name: 'Hugo',
-      title: 'The most mobile',
-      titleColor: '#FF6B6B',
-      cardColor: 'linear-gradient(135deg, #FF6B6B 0%, #C44B4B 100%)',
-      quote: "I like the idea of sharing the way Pony does because it's important to (re)create links between people.",
-    },
-    {
-      name: 'Vincent',
-      title: 'The environmental warrior',
-      titleColor: '#00FFFF',
-      cardColor: 'linear-gradient(135deg, #00BFFF 0%, #0066CC 100%)',
-      quote: "I am a bike person & I want to keep cars out of cities. I like the way adopting ponies supports my cause.",
-    },
-    {
-      name: 'Marie',
-      title: 'The smart investor',
-      titleColor: '#A78BFA',
-      cardColor: 'linear-gradient(135deg, #A78BFA 0%, #6D28D9 100%)',
-      quote: "9.5% annual return while doing something good for the planet? That's exactly what I was looking for.",
-    },
+    { name: 'Hugo', title: 'The most mobile', titleColor: '#FF6B6B', cardColor: 'linear-gradient(135deg, #FF6B6B 0%, #C44B4B 100%)', quote: 'I like the idea of sharing the way Pony does because it\'s important to (re)create links between people.' },
+    { name: 'Vincent', title: 'The environmental warrior', titleColor: '#00FFFF', cardColor: 'linear-gradient(135deg, #00BFFF 0%, #0066CC 100%)', quote: 'I am a bike person & I want to keep cars out of cities. I like the way adopting ponies supports my cause.' },
+    { name: 'Marie', title: 'The smart investor', titleColor: '#A78BFA', cardColor: 'linear-gradient(135deg, #A78BFA 0%, #6D28D9 100%)', quote: '9.5% annual return while doing something good for the planet? That\'s exactly what I was looking for.' },
+    { name: 'Thomas', title: 'The city builder', titleColor: '#34D399', cardColor: 'linear-gradient(135deg, #34D399 0%, #059669 100%)', quote: 'Investing in Pony means investing in the cities I live in. It\'s tangible, local and it makes sense.' },
+    { name: 'Camille', title: 'The daily commuter', titleColor: '#FBBF24', cardColor: 'linear-gradient(135deg, #FBBF24 0%, #D97706 100%)', quote: 'I use Pony every day to get to work. Now I also earn from it. Best investment I\'ve ever made.' },
+    { name: 'Antoine', title: 'The fintech native', titleColor: '#F472B6', cardColor: 'linear-gradient(135deg, #F472B6 0%, #DB2777 100%)', quote: 'The returns are real, the asset is real, the impact is real. This is what modern investing looks like.' },
+    { name: 'Lucie', title: 'The impact seeker', titleColor: '#00FFFF', cardColor: 'linear-gradient(135deg, #2DD4BF 0%, #0D9488 100%)', quote: 'I was looking for an investment that aligns with my values. Pony checks every single box.' },
+    { name: 'Maxime', title: 'The early adopter', titleColor: '#FB923C', cardColor: 'linear-gradient(135deg, #FB923C 0%, #EA580C 100%)', quote: 'I joined at the very beginning and I\'ve been recommending it to everyone since. It just works.' },
+    { name: 'Sophie', title: 'The long-term thinker', titleColor: '#A78BFA', cardColor: 'linear-gradient(135deg, #818CF8 0%, #4F46E5 100%)', quote: 'Monthly income for 42 months and my capital back at the end. The math is simple and I love it.' },
+    { name: 'Romain', title: 'The green convert', titleColor: '#4ADE80', cardColor: 'linear-gradient(135deg, #4ADE80 0%, #16A34A 100%)', quote: 'I used to invest in stocks. Now I invest in bikes that reduce CO2. Much more satisfying.' },
   ]
 
   const prev = () => setCurrent(i => (i - 1 + testimonials.length) % testimonials.length)
@@ -47,7 +36,7 @@ function TestimonialsSection() {
       borderTop: '1px solid rgba(255,255,255,0.05)',
       backgroundColor: '#13102B',
     }}>
-      <div style={{ marginBottom: '48px' }}>
+      <div style={{ marginBottom: '64px' }}>
         <h2 style={{ fontSize: '38px', fontWeight: 800, marginBottom: '16px' }}>
           Join hundreds of Pony Angels!
         </h2>
@@ -56,77 +45,123 @@ function TestimonialsSection() {
         </p>
       </div>
 
-      <div style={{ display: 'flex', gap: '24px', overflow: 'hidden', marginBottom: '40px' }}>
+      <div style={{ display: 'flex', gap: '24px', marginBottom: '40px' }}>
         {getVisible().map((idx, pos) => {
           const t = testimonials[idx]
           return (
             <div key={idx} style={{
               flex: '0 0 calc(33.333% - 16px)',
-              borderRadius: '20px',
+              borderRadius: '24px',
               overflow: 'hidden',
               backgroundColor: '#1E1B4B',
               border: '1px solid rgba(255,255,255,0.08)',
-              opacity: pos === 2 ? 0.5 : 1,
+              opacity: pos === 2 ? 0.4 : 1,
               transition: 'opacity 0.3s',
+              position: 'relative',
             }}>
+              {/* Decorative blobs */}
               <div style={{
-                height: '320px',
-                background: t.cardColor,
-                position: 'relative',
-                display: 'flex', alignItems: 'flex-start',
-                justifyContent: 'center',
-                paddingTop: '24px',
-              }}>
-                <div style={{ textAlign: 'center', zIndex: 1 }}>
-                  <p style={{ fontWeight: 700, fontSize: '16px', marginBottom: '4px' }}>{t.name}</p>
-                  <p style={{ fontSize: '14px', color: t.titleColor, fontWeight: 600 }}>{t.title}</p>
+                position: 'absolute', bottom: '160px', left: '-60px',
+                width: '220px', height: '220px', borderRadius: '50%',
+                backgroundColor: 'rgba(255,255,255,0.05)',
+                pointerEvents: 'none',
+              }} />
+              <div style={{
+                position: 'absolute', bottom: '80px', right: '-40px',
+                width: '160px', height: '160px', borderRadius: '50%',
+                backgroundColor: 'rgba(255,255,255,0.04)',
+                pointerEvents: 'none',
+              }} />
+              <div style={{
+                position: 'absolute', top: '200px', right: '-20px',
+                width: '80px', height: '80px', borderRadius: '50%',
+                backgroundColor: 'rgba(255,255,255,0.04)',
+                pointerEvents: 'none',
+              }} />
+
+              {/* Name + title */}
+              <div style={{ padding: '28px 28px 16px', textAlign: 'center' }}>
+                <p style={{ fontWeight: 700, fontSize: '16px', marginBottom: '4px' }}>{t.name}</p>
+                <p style={{ fontSize: '14px', color: t.titleColor, fontWeight: 600 }}>{t.title}</p>
+              </div>
+
+              {/* Photo card */}
+              <div style={{ padding: '0 20px 20px' }}>
+                <div style={{
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  position: 'relative',
+                }}>
+                  {/* Photo placeholder */}
+                  <div style={{
+                    height: '280px',
+                    background: t.cardColor,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    <div style={{
+                      width: '80px', height: '80px', borderRadius: '50%',
+                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '32px',
+                    }}>👤</div>
+                  </div>
+
+                  {/* Quote white box */}
+                  <div style={{
+                    backgroundColor: 'white',
+                    padding: '20px',
+                  }}>
+                    <p style={{
+                      fontSize: '13px', lineHeight: '1.6',
+                      color: '#1E1B4B', fontWeight: 500,
+                    }}>
+                      {t.quote}
+                    </p>
+                  </div>
                 </div>
-                <div style={{
-                  position: 'absolute', bottom: '-40px', left: '-40px',
-                  width: '200px', height: '200px', borderRadius: '50%',
-                  backgroundColor: 'rgba(255,255,255,0.06)',
-                }} />
-                <div style={{
-                  position: 'absolute', bottom: '20px', right: '-20px',
-                  width: '120px', height: '120px', borderRadius: '50%',
-                  backgroundColor: 'rgba(255,255,255,0.06)',
-                }} />
               </div>
 
-              <div style={{ padding: '24px', backgroundColor: 'white' }}>
-                <p style={{ fontSize: '14px', lineHeight: '1.6', color: '#1E1B4B', fontWeight: 500 }}>
-                  {t.quote}
-                </p>
-              </div>
-
+              {/* Social icons */}
               <div style={{
-                padding: '16px 24px',
+                padding: '0 28px 24px',
                 display: 'flex', gap: '16px', alignItems: 'center',
-                backgroundColor: '#1E1B4B',
+                justifyContent: 'flex-end',
               }}>
-                <span style={{ fontSize: '18px', cursor: 'pointer', opacity: 0.6 }}>𝕏</span>
-                <span style={{ fontSize: '18px', cursor: 'pointer', opacity: 0.6 }}>in</span>
+                <span style={{
+                  fontSize: '14px', cursor: 'pointer',
+                  color: 'rgba(255,255,255,0.5)',
+                  fontWeight: 700,
+                }}>𝕏</span>
+                <span style={{
+                  fontSize: '14px', cursor: 'pointer',
+                  color: 'rgba(255,255,255,0.5)',
+                  fontWeight: 700,
+                }}>in</span>
               </div>
             </div>
           )
         })}
       </div>
 
-      <div style={{ display: 'flex', gap: '12px' }}>
+      {/* Navigation */}
+      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
         <button onClick={prev} style={{
           width: '44px', height: '44px', borderRadius: '50%',
           backgroundColor: 'rgba(255,255,255,0.08)',
           border: '1px solid rgba(255,255,255,0.15)',
-          color: 'white', fontSize: '18px', cursor: 'pointer',
+          color: 'white', fontSize: '20px', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>‹</button>
         <button onClick={next} style={{
           width: '44px', height: '44px', borderRadius: '50%',
           backgroundColor: '#00FFFF',
           border: 'none',
-          color: '#13102B', fontSize: '18px', cursor: 'pointer',
+          color: '#13102B', fontSize: '20px', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>›</button>
+        <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.3)', marginLeft: '8px' }}>
+          {current + 1} / {testimonials.length}
+        </span>
       </div>
     </section>
   )
@@ -389,13 +424,47 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      
+      {/* ── PRESS ── */}
+      <section style={{
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        padding: '48px 96px',
+        marginBottom: '80px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '48px',
+      }}>
+        {[
+          { name: 'Maddyness', url: 'https://www.maddyness.com' },
+          { name: 'le Bonbon', url: 'https://www.lebonbon.fr' },
+          { name: 'TRAX', url: 'https://www.traxmag.com' },
+          { name: 'LE FIGARO', url: 'https://www.lefigaro.fr' },
+        ].map((press, i, arr) => (
+          <div key={i} style={{
+            flex: '1', textAlign: 'center',
+            borderRight: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+            padding: '0 32px',
+          }}>
+            <a href={press.url} target="_blank" rel="noopener noreferrer">
+              <div style={{
+                height: '32px',
+                backgroundColor: 'rgba(255,255,255,0.15)',
+                borderRadius: '6px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '13px', color: 'rgba(255,255,255,0.4)',
+              }}>
+                {press.name} logo
+              </div>
+            </a>
+          </div>
+        ))}
+      </section>
+      
       {/* ── MISSION + CAMPAIGN ── */}
       <section style={{
         padding: '120px 96px',
         display: 'flex', gap: '60px', alignItems: 'stretch',
-        borderTop: '1px solid rgba(255,255,255,0.05)',
         position: 'relative',
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`,
       }}>
         {/* Titles floating above — full width */}
         <div style={{
@@ -412,11 +481,11 @@ export default function Home() {
 
         {/* Left: items */}
         <div style={{ flex: '1', paddingTop: '220px', display: 'flex', alignItems: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '56px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '100px' }}>
             {[
-              { emoji: '🛴', title: 'You choose how much you want to invest. We do the rest.', desc: 'Choose your amount — from €500. Pony takes it from there. We buy the bikes, deploy the fleet, handle every repair, every charge, every ride. Your only job is to watch the returns come in.' },
-              { emoji: '📅', title: 'Earn up to 9.5% monthly income from day one.', desc: 'Once you invest, your ebikes or scooters start riding and generating your payback. Up to 9.5% annual interest, landing in your bank account every single month. And after 42 months, your full capital comes back home.' },
-              { emoji: '🎮', title: 'The investment you will actually tell your friends about.', desc: 'Forget spreadsheets, open the pony app and watch your bikes move across French cities in real time. Track the kilometres and the performance. When someone asks about your investments, this is the answer that will get a reaction.' },
+              { emoji: '🛴', title: 'Choose how much to invest.', desc: 'You can finance as many bikes and scooters, starting from €500.' },
+              { emoji: '📅', title: 'Pony manages your fleet.', desc: 'Pony deploys your bikes and scooters across our cities, and makes sure they are safe, in good condition, clean, and in the right place.' },
+              { emoji: '🎮', title: 'Get paid every month.', desc: 'Earn up to 9.5% annual interest, landing in your bank account every single month. And after 42 months, your full investment comes back home.' },
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
                 <div style={{
@@ -549,11 +618,108 @@ export default function Home() {
 
       {/* ── WHY INVEST ── */}
       <section style={{
-        display: 'flex', alignItems: 'stretch', overflow: 'hidden',
+        padding: '120px 96px',
         borderTop: '1px solid rgba(255,255,255,0.05)',
         backgroundColor: '#0D0B20',
       }}>
-        <div style={{ flex: '0 0 45%', position: 'relative', overflow: 'hidden' }}>
+        {/* Big statement */}
+        <p style={{
+          fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
+          color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px',
+        }}>Why invest with Pony?</p>
+        <h2 style={{
+          fontSize: '42px', fontWeight: 800, lineHeight: '1.2',
+          color: 'white', maxWidth: '900px', marginBottom: '96px',
+        }}>
+          Most investments are invisible. This one rides through your city every day.
+        </h2>
+
+        {/* 4 columns */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '48px' }}>
+          {[
+            {
+              icon: '🛡️',
+              title: 'Backed by real assets and long-term city contracts.',
+              desc: 'A fleet of real e-bikes generating revenue under long-term contracts with French cities.',
+            },
+            {
+              icon: '📈',
+              title: 'High fixed returns.',
+              desc: '9.5% annual interest is significantly above what banks or most crowdfunding platforms offer today.',
+            },
+            {
+              icon: '🏙️',
+              title: 'Risk spread over hundreds of ebikes and scooters.',
+              desc: "You don't invest in one vehicle, you invest in an entire fleet. If one underperforms, the others cover it.",
+            },
+            {
+              icon: '🌱',
+              title: 'Good for your wallet. Good for the planet.',
+              desc: "Every bike you finance takes a car off the road - reducing CO2, cutting congestion, and making cities more liveable.",
+            },
+          ].map((item, i) => (
+            <div key={i}>
+              <div style={{
+                width: '56px', height: '56px', borderRadius: '16px',
+                backgroundColor: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '26px', marginBottom: '24px',
+              }}>
+                {item.icon}
+              </div>
+              <h3 style={{ fontSize: '17px', fontWeight: 700, marginBottom: '12px' }}>{item.title}</h3>
+              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', lineHeight: '1.6' }}>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── HOW WE OPERATE ── */}
+      <section style={{
+        display: 'flex', alignItems: 'stretch', overflow: 'hidden',
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+      }}>
+        {/* Left: items */}
+        <div style={{
+          flex: '0 0 55%',
+          backgroundColor: '#321E64',
+          padding: '120px 96px',
+        }}>
+          <p style={{
+            fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
+            color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px',
+          }}>How we operate</p>
+          <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: '1.1', marginBottom: '64px' }}>
+            Pony takes care of everything.
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
+            {[
+              { icon: '🔋', title: 'Maintenance & charging', desc: 'The pony team makes sure your bikes and scooters are safe, sound, clean and at the right place for people to find them.' },
+              { icon: '🪖', title: '{PLACEHOLDER}', desc: '{For the duration of the cover, we will replace your pony with a pony of the same age if case of theft or irreversible damage.}' },
+              { icon: '📱', title: 'Follow your fleet in realtime', desc: 'Receive news of your pony rides, earnings and maintenance interventions. Access its position in real time to visit it!' },
+              { icon: '🏙️', title: 'Good city relations', desc: 'Pony maintains close relations with city officials in order to ensure smooth operations.' },
+            ].map((item, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
+                <div style={{
+                  width: '48px', height: '48px', borderRadius: '14px', flexShrink: 0,
+                  backgroundColor: 'rgba(255,255,255,0.1)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '22px',
+                }}>
+                  {item.icon}
+                </div>
+                <div>
+                  <h3 style={{ fontWeight: 700, fontSize: '17px', marginBottom: '6px' }}>{item.title}</h3>
+                  <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', lineHeight: '1.6' }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: cyan photo */}
+        <div style={{ flex: '1', position: 'relative', overflow: 'hidden' }}>
           <img src="/hero-photo2.jpg" alt="Pony fleet"
             style={{
               position: 'absolute', inset: 0,
@@ -567,79 +733,11 @@ export default function Home() {
             mixBlendMode: 'color',
           }} />
           <div style={{
-            position: 'absolute', top: 0, right: 0, bottom: 0,
-            width: '200px',
-            clipPath: 'polygon(100% 0, 100% 100%, 0 100%)',
-            backgroundColor: '#0D0B20',
+            position: 'absolute', top: 0, left: 0, bottom: 0,
+            width: '120px',
+            clipPath: 'polygon(0 0, 100% 0, 0 100%)',
+            backgroundColor: '#321E64',
           }} />
-          <div style={{
-            position: 'absolute', bottom: '48px', left: '48px',
-            borderRadius: '20px', padding: '28px',
-            backgroundColor: 'rgba(13,11,32,0.92)',
-            backdropFilter: 'blur(16px)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            width: '260px', zIndex: 2,
-          }}>
-            <p style={{
-              fontSize: '10px', fontWeight: 700, letterSpacing: '2px',
-              color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: '20px',
-            }}>Unit economics</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
-              {[
-                { label: 'Vehicle price', value: '€2,100' },
-                { label: 'Daily trips', value: '—' },
-                { label: 'Daily revenue', value: '—' },
-                { label: 'CO₂ saved vs car', value: '95%' },
-              ].map((row, i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>
-                    {row.label}
-                  </span>
-                  <span style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF' }}>
-                    {row.value}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.08)', marginBottom: '16px' }} />
-            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', lineHeight: '1.5' }}>
-              * Based on Pony's average fleet performance across French cities.
-            </p>
-          </div>
-        </div>
-
-        <div style={{ flex: '1', padding: '120px 96px 120px 48px' }}>
-          <p style={{
-            fontSize: '14px', fontWeight: 700, letterSpacing: '3px',
-            color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px',
-          }}>Why invest with Pony?</p>
-          <h2 style={{ fontSize: '38px', fontWeight: 800, marginBottom: '64px', lineHeight: 1.1 }}>
-            Most investments are invisible. This one rides through your city every day.
-          </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
-            {[
-              { icon: '🛡️', title: 'Backed by real assets and long-term city contracts.', desc: 'A fleet of real e-bikes generating revenue under long-term contracts with French cities.' },
-              { icon: '📈', title: 'High fixed returns.', desc: '9.5% annual interest is significantly above what banks or most crowdfunding platforms offer today.' },
-              { icon: '🏙️', title: 'Risk spread over hundreds of ebikes and scooters.', desc: "You don't invest in one vehicle, you invest in an entire fleet. If one underperforms, the others cover it." },
-              { icon: '🌱', title: 'Good for your wallet. Good for the planet.', desc: "Every bike you finance takes a car off the road - reducing CO2, cutting congestion, and making cities more liveable." },
-            ].map((item, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
-                <div style={{
-                  width: '64px', height: '64px', borderRadius: '18px', flexShrink: 0,
-                  backgroundColor: 'rgba(0,255,255,0.08)',
-                  border: '1px solid rgba(0,255,255,0.15)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '28px',
-                }}>
-                  {item.icon}
-                </div>
-                <div style={{ paddingTop: '8px' }}>
-                  <h3 style={{ fontWeight: 700, fontSize: '17px', marginBottom: '4px' }}>{item.title}</h3>
-                  <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.75)', lineHeight: '1.6' }}>{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

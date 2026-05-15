@@ -44,7 +44,7 @@ function FaqSection() {
   ]
 
   return (
-    <div style={{ margin: '80px 40px', paddingBottom: '40px' }}>
+    <div style={{ margin: '80px 200px', paddingBottom: '40px' }}>
       <div style={{ marginBottom: '48px' }}>
         <h2 style={{ fontSize: '56px', fontWeight: 800, letterSpacing: '-2px' }}>FAQs</h2>
       </div>
@@ -130,8 +130,8 @@ export default function Campagne() {
 
       {/* ── HERO ── */}
       <div style={{
-        margin: '0 40px', borderRadius: '24px', overflow: 'hidden',
-        position: 'relative', minHeight: '460px',
+        margin: '0 200px', borderRadius: '24px', overflow: 'hidden',
+        position: 'relative', minHeight: '420px',
         background: 'linear-gradient(135deg, #1E1B4B 0%, #0D0D2B 100%)',
       }}>
         <img src="/hero-photo2.jpg" alt=""
@@ -222,7 +222,7 @@ export default function Campagne() {
 
       {/* ── SIMULATOR ── */}
       <div style={{
-        margin: '16px 40px 0',
+        margin: '16px 200px 0',
         borderRadius: '24px', overflow: 'hidden',
         border: '1px solid rgba(255,255,255,0.08)',
         boxShadow: '0 24px 80px rgba(0,0,0,0.3)',
@@ -349,7 +349,7 @@ export default function Campagne() {
       </div>
 
       {/* ── ABOUT ── */}
-      <div style={{ margin: '80px 40px 0' }}>
+      <div style={{ margin: '80px 200px 0' }}>
         <p style={{
           fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
           color: '#00FFFF', textTransform: 'uppercase', marginBottom: '16px',
@@ -391,7 +391,7 @@ export default function Campagne() {
 
       {/* ── KEY NUMBERS ── */}
       <div style={{
-        margin: '80px 40px 0',
+        margin: '80px 200px 0',
         borderRadius: '24px', padding: '48px',
         backgroundColor: 'rgba(30,27,75,0.5)',
         border: '1px solid rgba(255,255,255,0.06)',
@@ -429,7 +429,7 @@ export default function Campagne() {
 
       {/* ── CTA ── */}
       <div style={{
-        margin: '80px 40px 0', borderRadius: '24px', padding: '64px',
+        margin: '80px 200px 0', borderRadius: '24px', padding: '64px',
         background: 'linear-gradient(135deg, #1E1B4B 0%, #0D0D2B 100%)',
         border: '1px solid rgba(255,255,255,0.08)',
         textAlign: 'center',

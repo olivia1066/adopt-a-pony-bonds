@@ -16,20 +16,14 @@ type Campaign = {
 }
 
 const ANNUAL_RATE = 0.095
-const TOTAL_MONTHS = 36
-const GRACE_MONTHS = 6
-const REPAYMENT_MONTHS = TOTAL_MONTHS - GRACE_MONTHS
+const TOTAL_MONTHS = 42
 const MONTHLY_RATE = ANNUAL_RATE / 12
 
 function calcReturns(amount: number) {
-  const monthlyGrace = amount * MONTHLY_RATE
-  const monthlyRepayment =
-    amount * (MONTHLY_RATE * Math.pow(1 + MONTHLY_RATE, REPAYMENT_MONTHS)) /
-    (Math.pow(1 + MONTHLY_RATE, REPAYMENT_MONTHS) - 1)
-  const totalInterest =
-    monthlyGrace * GRACE_MONTHS + monthlyRepayment * REPAYMENT_MONTHS - amount
+  const monthlyIncome = amount * MONTHLY_RATE
+  const totalInterest = monthlyIncome * TOTAL_MONTHS
   const totalRepaid = amount + totalInterest
-  return { monthlyGrace, monthlyRepayment, totalInterest, totalRepaid }
+  return { monthlyIncome, totalInterest, totalRepaid }
 }
 
 function FaqSection() {
@@ -107,7 +101,7 @@ export default function Campagne() {
     fetchCampaign()
   }, [])
 
-  const { monthlyGrace, monthlyRepayment, totalInterest, totalRepaid } = calcReturns(amount)
+  const { monthlyIncome, totalInterest, totalRepaid } = calcReturns(amount)
   const raisedPct = campaign
     ? Math.min((campaign.raised_amount / campaign.target_amount) * 100, 100)
     : 62
@@ -180,7 +174,7 @@ export default function Campagne() {
           boxShadow: '0 16px 48px rgba(0,0,0,0.6)',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)' }}>Status</span>
+            <span style={{ fontSize: '14px', color: 'white' }}>Status</span>
             <span style={{
               fontSize: '12px', padding: '5px 12px', borderRadius: '100px', fontWeight: 700,
               backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF',
@@ -189,20 +183,20 @@ export default function Campagne() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
             {[
               { label: 'Interest rate', value: '9.5%' },
-              { label: 'Duration', value: '36 months' },
-              { label: 'Grace period', value: '6 months' },
+              { label: 'Duration', value: '42 months' },
+              { label: 'Capital', value: 'At maturity' },
               { label: 'Min. investment', value: '€500' },
             ].map((row, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '15px' }}>
-                <span style={{ color: 'rgba(255,255,255,0.4)' }}>{row.label}</span>
-                <span style={{ fontWeight: 700 }}>{row.value}</span>
+                <span style={{ color: 'white' }}>{row.label}</span>
+                <span style={{ fontWeight: 700, color: 'white' }}>{row.value}</span>
               </div>
             ))}
           </div>
           <div style={{ marginBottom: '12px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'rgba(255,255,255,0.4)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
               <span>€{(campaign?.raised_amount ?? 312000).toLocaleString('en-GB')} raised</span>
-              <span style={{ color: 'white', fontWeight: 700 }}>{raisedPct.toFixed(0)}%</span>
+              <span style={{ fontWeight: 700 }}>{raisedPct.toFixed(0)}%</span>
             </div>
             <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
               <div style={{
@@ -210,11 +204,11 @@ export default function Campagne() {
                 backgroundColor: '#00FFFF', boxShadow: '0 0 8px rgba(0,255,255,0.5)',
               }} />
             </div>
-            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '6px' }}>
+            <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>
               €{(campaign?.target_amount ?? 500000).toLocaleString('en-GB')} target
             </p>
           </div>
-          <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '4px' }}>
+          <div style={{ fontSize: '12px', color: 'white', marginTop: '4px' }}>
             🛡️ Capital protected by the fleet
           </div>
         </div>
@@ -230,18 +224,13 @@ export default function Campagne() {
       }}>
         {/* Left — input */}
         <div style={{ padding: '40px', backgroundColor: '#1E1B4B' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: 800, marginBottom: '4px' }}>Simulate your returns</h2>
-          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginBottom: '28px' }}>
-            36 months · 9.5% annual · 6-month grace period
-          </p>
-          <div style={{
-            borderRadius: '14px', padding: '16px 20px',
-            backgroundColor: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            fontSize: '32px', fontWeight: 800, textAlign: 'center',
-            color: '#00FFFF', letterSpacing: '-1px', marginBottom: '12px',
-          }}>
-            €{amount.toLocaleString('en-GB')}
+          
+          {/* If you invest */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+            <span style={{ fontSize: '22px', fontWeight: 800, color: 'white' }}>If you invest</span>
+            <span style={{ fontSize: '28px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px' }}>
+              €{amount.toLocaleString('en-GB')}
+            </span>
           </div>
           <input
             type="range" min={500} max={50000} step={500} value={amount}
@@ -250,14 +239,43 @@ export default function Campagne() {
           />
           <div style={{
             display: 'flex', justifyContent: 'space-between',
-            fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '4px', marginBottom: '24px',
+            fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '4px', marginBottom: '20px',
           }}>
             <span>€500</span><span>€50,000</span>
           </div>
 
+          {/* Divider */}
+          <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', marginBottom: '20px' }} />
+
+          {/* Terms rows */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '20px' }}>
+            {[
+              { label: 'Duration', value: '42 months' },
+              { label: 'Annual interest rate', value: '9.5%' },
+              { label: 'Capital returned', value: 'At maturity' },
+            ].map((t, i) => (
+              <div key={i} style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                padding: '4px 0',
+              }}>
+                <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}>{t.label}</span>
+                <span style={{
+                  fontSize: '12px', fontWeight: 700,
+                  padding: '3px 12px', borderRadius: '6px',
+                  backgroundColor: 'rgba(0,255,255,0.1)',
+                  border: '1px solid rgba(0,255,255,0.2)',
+                  color: '#00FFFF',
+                }}>{t.value}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', marginBottom: '20px' }} />
+
           {/* Fleet equivalent */}
           <div style={{
-            marginBottom: '24px', padding: '10px 14px', borderRadius: '10px',
+            marginBottom: '28px', padding: '10px 14px', borderRadius: '10px',
             backgroundColor: 'rgba(0,255,255,0.06)',
             border: '1px solid rgba(0,255,255,0.12)',
             display: 'flex', alignItems: 'center', gap: '8px',
@@ -266,28 +284,10 @@ export default function Campagne() {
             <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
               Your investment finances{' '}
               <span style={{ color: '#00FFFF', fontWeight: 700 }}>
-                {(amount / 2100).toFixed(2)} e-bikes
+                {amount / 2100 < 1 ? (amount / 2100).toFixed(1) : Math.floor(amount / 2100)} e-bikes
               </span>
               {' '}in Pony's fleet
             </span>
-          </div>
-
-          {/* Term pills */}
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
-            {[
-              { icon: '📅', label: '36 months' },
-              { icon: '📈', label: '9.5% / year' },
-              { icon: '🛡️', label: '6-month grace' },
-            ].map((pill, i) => (
-              <span key={i} style={{
-                fontSize: '11px', padding: '6px 12px', borderRadius: '100px',
-                backgroundColor: 'rgba(0,255,255,0.06)',
-                border: '1px solid rgba(0,255,255,0.12)',
-                color: 'rgba(255,255,255,0.6)',
-              }}>
-                {pill.icon} {pill.label}
-              </span>
-            ))}
           </div>
 
           <div style={{ display: 'flex', gap: '16px', fontSize: '12px' }}>
@@ -303,34 +303,66 @@ export default function Campagne() {
         {/* Right — results */}
         <div style={{ padding: '40px', backgroundColor: '#0D0D2B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
-            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>You receive</p>
-            <p style={{ fontSize: '52px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-2px', lineHeight: 1 }}>
-              €{monthlyGrace.toFixed(2)}
-            </p>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '4px', marginBottom: '28px' }}>
-              per month — grace period
-            </p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+              <span style={{ fontSize: '22px', fontWeight: 800, color: 'white' }}>You receive every month</span>
+              <span style={{ fontSize: '52px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-2px', lineHeight: 1 }}>
+                €{monthlyIncome.toFixed(2)}
+              </span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
+              <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}>
+                for 42 months straight
+              </p>
+              <a href="#" style={{
+                display: 'flex', alignItems: 'center', gap: '6px',
+                fontSize: '12px', color: 'rgba(255,255,255,0.5)',
+                textDecoration: 'none',
+                padding: '6px 12px', borderRadius: '8px',
+                border: '1px solid rgba(255,255,255,0.15)',
+              }}>
+                📅 Payment schedule
+              </a>
+            </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
-              {[
-                { label: 'Monthly (months 7–36)', sub: 'capital + interest', value: `€${monthlyRepayment.toFixed(2)}`, highlight: false },
-                { label: 'Total interest earned', sub: 'over 36 months', value: `€${totalInterest.toFixed(2)}`, highlight: false },
-                { label: 'Total repaid', sub: 'at end of term', value: `€${totalRepaid.toFixed(2)}`, highlight: true },
-              ].map((item, i) => (
-                <div key={i} style={{
-                  borderRadius: '14px', padding: '14px 16px',
-                  backgroundColor: item.highlight ? 'rgba(0,255,255,0.08)' : 'rgba(255,255,255,0.04)',
-                  border: item.highlight ? '1px solid rgba(0,255,255,0.2)' : '1px solid rgba(255,255,255,0.06)',
+           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
+              {/* Left: Total repaid big */}
+              <div style={{
+                borderRadius: '14px', padding: '20px',
+                backgroundColor: 'rgba(0,255,255,0.08)',
+                border: '1px solid rgba(0,255,255,0.2)',
+                display: 'flex', flexDirection: 'column', justifyContent: 'center',
+              }}>
+                <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)', fontWeight: 700, marginBottom: '8px' }}>
+                  Total repaid at end of term
+                </p>
+                <p style={{ fontSize: '32px', fontWeight: 800, color: 'white', letterSpacing: '-1px' }}>
+                  €{Math.round(totalRepaid).toLocaleString('en-GB')}
+                </p>
+              </div>
+
+              {/* Right: stacked */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{
+                  borderRadius: '14px', padding: '16px', flex: 1,
+                  backgroundColor: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.06)',
                 }}>
-                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginBottom: '4px', lineHeight: 1.3 }}>
-                    {item.label}<br />
-                    <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)' }}>{item.sub}</span>
-                  </p>
-                  <p style={{ fontSize: '20px', fontWeight: 800, color: item.highlight ? 'white' : '#00FFFF', letterSpacing: '-0.5px' }}>
-                    {item.value}
+                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>Total interest</p>
+                  <p style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-0.5px' }}>
+                    €{Math.round(totalInterest).toLocaleString('en-GB')}
                   </p>
                 </div>
-              ))}
+                <div style={{
+                  borderRadius: '14px', padding: '16px', flex: 1,
+                  backgroundColor: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                }}>
+                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>Capital returned</p>
+                  <p style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-0.5px' }}>
+                    €{amount.toLocaleString('en-GB')}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -359,7 +391,7 @@ export default function Campagne() {
             <h2 style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1, marginBottom: '16px' }}>
               Spring 2026 Fleet
             </h2>
-            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>April 2026 — July 2026</p>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>April 2026 — October 2026</p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
@@ -367,12 +399,8 @@ export default function Campagne() {
               across French cities. Your investment goes directly into the fleet that riders use every day.
             </p>
             <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
-              Unlike the previous Adopt a Pony model, you do not own a specific vehicle — you finance the
-              entire fleet, which reduces risk and simplifies your experience.
-            </p>
-            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
-              During the first 6 months (grace period), you receive interest-only payments. From month 7,
-              you receive a fixed monthly payment covering both capital repayment and interest until maturity at month 36.
+              You finance the entire fleet, which reduces risk and simplifies your experience. Every month for 42 months,
+              you receive interest payments directly to your bank account. At the end of the term, your full capital is returned.
             </p>
             <div style={{
               borderRadius: '16px', padding: '20px',
@@ -405,7 +433,7 @@ export default function Campagne() {
             { value: '50', label: 'Vehicles financed' },
             { value: '5', label: 'French cities' },
             { value: '9.5%', label: 'Annual rate' },
-            { value: '36m', label: 'Duration' },
+            { value: '42m', label: 'Duration' },
           ].map((stat, i) => (
             <div key={i} style={{
               textAlign: 'center',

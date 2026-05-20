@@ -24,7 +24,7 @@
       "durationValue": "48 months",
       "rate": "Annual interest rate",
       "rateValue": "8.5%",
-      "capital": "Capital returned",
+      "capital": "Repayment ",
       "capitalValue": "Monthly (months 13–48)",
       "ifYouInvest": "If you invest",
       "fleetFinances": "Your investment finances",
@@ -35,7 +35,13 @@
       "graceNotice": "First 12 months: interest compounded, nothing paid out",
       "totalRepaid": "Total repaid at end of term",
       "totalInterest": "Total interest",
-      "capitalInvested": "Capital invested"
+      "capitalInvested": "Capital invested",
+      "ifYouInvestWith": "If you invest with pony...",
+      "youReceive": "...you receive every month",
+      "iWantToInvest": "I want to invest",
+      "paymentDetails": "Interest and capital paid from month 13, interest compounded",
+      "gracePeriod": "Grace period",
+      "gracePeriodValue": "12 months"
     },
     "mission": {
       "title": "At pony, our mission is simple: allow everyone to play a direct role in their city and beyond, in the transition away from a car centric society",

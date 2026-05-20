@@ -121,7 +121,7 @@ function calcReturns(amount: number) {
 export default function Home() {
   const locale = useLocale()
   const t = useTranslations('home')
-  const [amount, setAmount] = useState(5000)
+  const [amount, setAmount] = useState(2000)
 
   const { monthlyPayment, totalInterest, totalRepaid } = calcReturns(amount)
 
@@ -146,9 +146,9 @@ export default function Home() {
         </div>
         <div style={{ position: 'absolute', top: '50%', left: '15%', transform: 'translate(-50%, -50%)', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,255,255,0.06) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }} />
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '80px', padding: '80px 64px 80px 96px', width: '100%', position: 'relative', zIndex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '60px', padding: '80px 64px 80px 96px', width: '100%', position: 'relative', zIndex: 1 }}>
           {/* Left */}
-          <div style={{ flex: '0 0 auto', maxWidth: '500px' }}>
+          <div style={{ flex: '0 0 auto', maxWidth: '500px', marginTop: '-80px', marginLeft: '80px' }}>
             <div style={{ marginBottom: '28px' }}>
               <img src="/Icon (1).png" alt="Pony Angel" style={{ width: '52px', height: '52px', borderRadius: '14px' }} />
             </div>
@@ -184,46 +184,35 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Right: simulator */}
-          <div style={{ flex: '0 0 460px', marginLeft: 'auto', marginTop: '-80px', marginRight: '100px' }}>
-            <div style={{ borderRadius: '24px', backgroundColor: 'rgba(30,27,75,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)', overflow: 'hidden' }}>
-              <div style={{ padding: '24px 24px 16px' }}>
-                <h2 style={{ fontSize: '20px', fontWeight: 800, marginBottom: '12px' }}>
-                  {t('simulator.title')}
-                </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '16px' }}>
-                  {[
-                    { label: t('simulator.duration'), value: t('simulator.durationValue') },
-                    { label: t('simulator.rate'), value: t('simulator.rateValue') },
-                    { label: t('simulator.capital'), value: t('simulator.capitalValue') },
-                  ].map((row, i) => (
-                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 0' }}>
-                      <span style={{ fontSize: '12px', color: 'white' }}>{row.label}</span>
-                      <span style={{ fontSize: '12px', fontWeight: 700, padding: '2px 10px', borderRadius: '6px', backgroundColor: 'rgba(0,255,255,0.1)', border: '1px solid rgba(0,255,255,0.2)', color: '#00FFFF' }}>{row.value}</span>
-                    </div>
-                  ))}
-                </div>
+          {/* Right: simulator (2 columns) */}
+          <div style={{ flex: '0 0 720px', marginLeft: 'auto', marginTop: '-80px', marginRight: '80px' }}>
+            <div style={{ borderRadius: '24px', backgroundColor: 'rgba(30,27,75,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)', overflow: 'hidden', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
 
-                <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '12px -24px' }} />
+              {/* LEFT — INPUT */}
+              <div style={{ padding: '32px', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+                <p style={{ fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
+                  {t('simulator.ifYouInvestWith')}
+                </p>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '17px', fontWeight: 700, color: 'white' }}>{t('simulator.ifYouInvest')}</span>
-                  <span style={{ fontSize: '28px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                  <span style={{ fontSize: '13px', color: 'white' }}>{t('simulator.iWantToInvest')}</span>
+                  <span style={{ fontSize: '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
                     €{fmtInt(amount)}
                   </span>
                 </div>
+
                 <input
-                  type="range" min={500} max={50000} step={500} value={amount}
+                  type="range" min={500} max={200000} step={500} value={amount}
                   onChange={e => setAmount(Number(e.target.value))}
                   style={{ accentColor: '#00FFFF', width: '100%', cursor: 'pointer' }}
                 />
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'white', marginTop: '2px' }}>
-                  <span>€500</span><span>€50,000</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: 'white', marginTop: '2px' }}>
+                  <span>€500</span><span>€200,000</span>
                 </div>
 
-                <div style={{ marginTop: '12px', padding: '8px 12px', borderRadius: '10px', backgroundColor: 'rgba(0,255,255,0.06)', border: '1px solid rgba(0,255,255,0.12)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ marginTop: '20px', padding: '10px 14px', borderRadius: '10px', backgroundColor: 'rgba(0,255,255,0.06)', border: '1px solid rgba(0,255,255,0.12)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <span style={{ fontSize: '14px' }}>🛴</span>
-                  <span style={{ fontSize: '12px', color: 'white' }}>
+                  <span style={{ fontSize: '12px', color: 'white', lineHeight: 1.4 }}>
                     {t('simulator.fleetFinances')}{' '}
                     <span style={{ color: '#00FFFF', fontWeight: 700 }}>
                       {amount / 2100 < 1 ? (amount / 2100).toFixed(1) : Math.floor(amount / 2100)} {t('simulator.ebikes')}
@@ -231,50 +220,57 @@ export default function Home() {
                     {' '}{t('simulator.inFleet')}
                   </span>
                 </div>
+
+                <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '28px -32px 20px' }} />
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {[
+                    { label: t('simulator.duration'), value: t('simulator.durationValue') },
+                    { label: t('simulator.rate'), value: t('simulator.rateValue') },
+                    { label: t('simulator.capital'), value: t('simulator.capitalValue') },
+                    { label: t('simulator.gracePeriod'), value: t('simulator.gracePeriodValue') },
+                  ].map((row, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1px 0' }}>
+                      <span style={{ fontSize: '13px', color: 'white' }}>{row.label}</span>
+                      <span style={{ fontSize: '12px', fontWeight: 700, padding: '3px 12px', borderRadius: '6px', backgroundColor: 'rgba(0,255,255,0.1)', border: '1px solid rgba(0,255,255,0.2)', color: '#00FFFF' }}>{row.value}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
+              {/* RIGHT — RESULTS */}
+              <div style={{ padding: '32px', backgroundColor: 'rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column' }}>
+                <p style={{ fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
+                  {t('simulator.youReceive')}
+                </p>
 
-              <div style={{ padding: '16px 24px 24px', backgroundColor: 'rgba(0,0,0,0.15)' }}>
-                <div style={{ marginBottom: '14px' }}>
-                  <p style={{ fontSize: '11px', color: 'white', marginBottom: '2px' }}>
-                    {t('simulator.receiveMonthly')}
-                  </p>
-                  <p style={{ fontSize: '44px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-2px', lineHeight: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '4px', marginBottom: '24px' }}>
+                  <span style={{ fontSize: '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
                     €{fmtDec(monthlyPayment)}
-                  </p>
-                  <p style={{ fontSize: '11px', color: 'white', marginTop: '2px' }}>
-                    {t('simulator.fromMonth13')}
-                  </p>
-                  <p style={{ fontSize: '11px', color: 'white', marginTop: '2px' }}>
-                    {t('simulator.graceNotice')}
-                  </p>
+                  </span>
+                  <span title={t('simulator.paymentDetails')} style={{ fontSize: '14px', color: '#00FFFF', cursor: 'help' }}>*</span>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '16px' }}>
-                  <div style={{ padding: '12px 14px', borderRadius: '12px', backgroundColor: 'rgba(0,255,255,0.08)', border: '1px solid rgba(0,255,255,0.25)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <p style={{ fontSize: '11px', color: 'white', fontWeight: 700, marginBottom: '4px' }}>{t('simulator.totalRepaid')}</p>
-                    <p style={{ fontSize: '35px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
+                  <div style={{ padding: '14px 18px', borderRadius: '10px', backgroundColor: 'rgba(0,255,255,0.08)', border: '1px solid rgba(0,255,255,0.25)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p style={{ fontSize: '13px', color: 'white', fontWeight: 700 }}>{t('simulator.totalRepaid')}</p>
+                    <p style={{ fontSize: '20px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
                       €{fmtInt(totalRepaid)}
                     </p>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <div style={{ padding: '10px 12px', borderRadius: '10px', flex: 1, backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                      <p style={{ fontSize: '10px', color: 'white', marginBottom: '2px' }}>{t('simulator.totalInterest')}</p>
-                      <p style={{ fontSize: '15px', fontWeight: 800, color: '#00FFFF' }}>
-                        €{fmtInt(totalInterest)}
-                      </p>
-                    </div>
-                    <div style={{ padding: '10px 12px', borderRadius: '10px', flex: 1, backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                      <p style={{ fontSize: '10px', color: 'white', marginBottom: '2px' }}>{t('simulator.capitalInvested')}</p>
-                      <p style={{ fontSize: '15px', fontWeight: 800, color: '#00FFFF' }}>
-                        €{fmtInt(amount)}
-                      </p>
-                    </div>
+                  <div style={{ padding: '14px 18px', borderRadius: '10px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p style={{ fontSize: '13px', color: 'white', fontWeight: 700 }}>{t('simulator.totalInterest')}</p>
+                    <p style={{ fontSize: '20px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
+                      €{fmtInt(totalInterest)}
+                    </p>
                   </div>
                 </div>
 
-                <Link href="/campagne" style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '13px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none' }}>
+                <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', fontStyle: 'italic', marginBottom: '16px', lineHeight: 1.4 }}>
+                  *{t('simulator.paymentDetails')}
+                </p>
+
+                <Link href="/campagne" style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '14px', borderRadius: '10px', fontSize: '14px', fontWeight: 800, textDecoration: 'none', marginTop: 'auto' }}>
                   {t('hero.cta')}
                 </Link>
               </div>

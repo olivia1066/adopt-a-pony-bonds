@@ -24,7 +24,7 @@
       "durationValue": "48 mois",
       "rate": "Taux d'intérêt annuel",
       "rateValue": "8,5 %",
-      "capital": "Capital remboursé",
+      "capital": "Remboursement",
       "capitalValue": "Mensuel (mois 13–48)",
       "ifYouInvest": "Si vous investissez",
       "fleetFinances": "Votre investissement finance",
@@ -35,7 +35,16 @@
       "graceNotice": "12 premiers mois : intérêts capitalisés, aucun versement",
       "totalRepaid": "Total remboursé en fin de période",
       "totalInterest": "Intérêts totaux",
-      "capitalInvested": "Capital investi"
+      "capitalInvested": "Capital investi",
+      "totalRepaid": "Total remboursé en fin de période",
+      "totalInterest": "Intérêts totaux",
+      "capitalInvested": "Capital investi",
+      "ifYouInvestWith": "Si vous investissez avec pony...",
+      "youReceive": "...vous recevez chaque mois",
+      "iWantToInvest": "Je veux investir",
+      "paymentDetails": "Intérêts et capital versés à partir du 13e mois, intérêts capitalisés",
+      "gracePeriod": "Période de différé",
+      "gracePeriodValue": "12 mois"
     },
     "mission": {
       "title": "Chez pony, notre mission est simple : permettre à chacun de participer directement dans sa ville et ailleurs, à la transition vers les mobilités douces",

@@ -38,14 +38,13 @@
       "capitalInvested": "Capital investi"
     },
     "mission": {
-      "kicker": "Nous avons construit cette plateforme pour ceux qui veulent que leur argent serve à quelque chose de concret.",
-      "title": "Nous pensons que chacun devrait pouvoir participer directement à l'avenir de la mobilité urbaine.",
-      "item1Title": "Choisissez combien investir.",
-      "item1Desc": "Vous pouvez financer autant de vélos et trottinettes que vous le souhaitez, à partir de 500 €.",
-      "item2Title": "Pony gère votre flotte.",
-      "item2Desc": "Pony déploie vos vélos et trottinettes dans nos villes, et veille à ce qu'ils soient sûrs, en bon état, propres et au bon endroit.",
-      "item3Title": "Vous êtes payé chaque mois.",
-      "item3Desc": "Touchez jusqu'à 8,5 % d'intérêts annuels. Après une période de différé de 12 mois où les intérêts sont capitalisés, vous recevez des versements mensuels pendant 36 mois — capital et intérêts combinés."
+      "title": "Chez pony, notre mission est simple : permettre à chacun de participer directement dans sa ville et ailleurs, à la transition vers les mobilités douces",
+      "item1Title": "Choisissez combien vous investissez",
+      "item1Desc": "Financez des vélos et trottinettes pony, à partir de €500.",
+      "item2Title": "Pony gère votre flotte",
+      "item2Desc": "Pony déploie vos vélos et trottinettes dans nos villes. Nous gérons l'entretien, la recharge et les réparations. Vous ne faites rien..",
+      "item3Title": "Recevez un versement tous les mois",
+      "item3Desc": "Gagnez jusqu’à 8,5 % d’intérêt annuel, versé directement sur votre compte chaque mois. Et au bout de 42 mois, votre capital vous revient en intégralité."
     },
     "campaignCard": {
       "status": "● OUVERTE",
@@ -70,16 +69,17 @@
       "riders": "Trajets par jour"
     },
     "whyInvest": {
-      "kicker": "Pourquoi investir avec Pony ?",
-      "title": "La plupart des investissements sont invisibles. Celui-ci roule dans votre ville tous les jours.",
-      "item1Title": "Adossé à des actifs réels et à des contrats de ville long terme.",
-      "item1Desc": "Une flotte de vélos électriques réels qui génèrent des revenus dans le cadre de contrats long terme avec les villes françaises.",
-      "item2Title": "Rendements fixes élevés.",
-      "item2Desc": "Un taux annuel de 8,5 % est nettement au-dessus de ce que proposent les banques ou la plupart des plateformes de crowdfunding aujourd'hui.",
-      "item3Title": "Risque réparti sur des centaines de vélos et trottinettes.",
-      "item3Desc": "Vous n'investissez pas dans un seul véhicule, vous investissez dans toute une flotte. Si l'un performe moins, les autres compensent.",
-      "item4Title": "Bon pour votre portefeuille. Bon pour la planète.",
-      "item4Desc": "Chaque vélo financé retire une voiture de la circulation — réduisant le CO₂, désengorgeant les villes et les rendant plus agréables à vivre."
+      "kicker": "Pourquoi investir dans Pony ?",
+      "item1Title": "Rendement élevé",
+      "item1Desc": "Jusqu’à 9% d’intérêt annuel. Fondé sur la forte rentabilité structurelle des vélos et des trottinettes exploitées en libre service par pony",
+      "item2Title": "Un actif tangible",
+      "item2Desc": "L’investissement porte sur de vrais vélos et trottinettes, conçus par pony pour être durables et robustes. Un sous-jacent claire, basé sur un actif tangible avec sa valeur propre",
+      "item3Title": "10X moins d’émission",
+      "item3Desc": "Un trajet à pony émet jusqu’à 10x moins de Co2 qu’une voiture. Vous contribuez directement à réduire les émissions de CO2 là ou vous investissez",
+      "item4Title": "Soutenir la souveraineté",
+      "item4Desc": "Pony est le seul acteur français du secteur, et leader avec 22 villes en service. Nos vélos sont conçus en interne par nos ingénieurs et fabriqués en France par la Manufacture Française du Cycle.",
+      "item5Title": "Suivi en temps réel",
+      "item5Desc": "Au moment de votre investissement, nous vous allouons des pony qui deviennent virtuellement les vôtres. Recevez des notifications sur les trajets et les interventions de maintenance, et accédez à leur position GPS en direct !"
     },
     "howWeOperate": {
       "kicker": "Comment Pony opère",
@@ -178,12 +178,20 @@
     },
     "about": {
       "kicker": "À propos de cette campagne",
-      "title": "Flotte Printemps 2026",
-      "dates": "Avril 2026 — Octobre 2026",
+      "title": "Description",
       "paragraph1": "Cette campagne finance l'acquisition et le déploiement de nouveaux vélos et trottinettes électriques Pony dans les villes françaises. Votre investissement va directement dans la flotte que les utilisateurs empruntent chaque jour.",
       "paragraph2": "Vous financez l'ensemble de la flotte, ce qui réduit le risque et simplifie votre expérience. Pendant les 12 premiers mois, les intérêts sont capitalisés et ajoutés à votre capital. Ensuite, chaque mois du mois 13 au mois 48, vous recevez un versement fixe combinant capital et intérêts, directement sur votre compte bancaire.",
       "riskTitle": "⚠️ Avertissement sur les risques",
       "riskDesc": "Tout investissement comporte un risque, y compris le risque de perte partielle ou totale du capital. Les performances passées ne préjugent pas des performances futures."
+    },
+
+    "procedure": {
+      "title": "Procédure",
+      "soon": "Contenu détaillé bientôt disponible."
+    },
+    "capitalProtection": {
+      "title": "Protection du capital",
+      "soon": "Contenu détaillé bientôt disponible."
     },
     "keyNumbers": {
       "kicker": "Chiffres clés",

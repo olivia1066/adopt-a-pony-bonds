@@ -303,8 +303,9 @@ export default function Home() {
 
       {/* ── MISSION + CAMPAIGN ── */}
       <section style={{ padding: '120px 96px', display: 'flex', gap: '60px', alignItems: 'stretch', position: 'relative', backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")` }}>
-        <div style={{ position: 'absolute', top: '40px', left: '96px', right: '96px', zIndex: 1 }}>
-          <p style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '3px', color: '#00FFFF', textTransform: 'uppercase', marginBottom: '16px' }}>{t('mission.kicker')}</p>
+        <div style={{
+          position: 'absolute', top: '40px', left: '96px', right: '96px', zIndex: 1,
+        }}>
           <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: '1.1', color: 'white' }}>
             {t('mission.title')}
           </h2>
@@ -404,17 +405,18 @@ export default function Home() {
 
       {/* ── WHY INVEST ── */}
       <section style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: '#0D0B20' }}>
-        <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px' }}>{t('whyInvest.kicker')}</p>
-        <h2 style={{ fontSize: '42px', fontWeight: 800, lineHeight: '1.2', color: 'white', maxWidth: '900px', marginBottom: '96px' }}>
-          {t('whyInvest.title')}
-        </h2>
+        <p style={{
+          fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
+          color: '#00FFFF', textTransform: 'uppercase', marginBottom: '96px',
+        }}>{t('whyInvest.kicker')}</p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '48px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '32px' }}>
           {[
             { icon: '🛡️', title: t('whyInvest.item1Title'), desc: t('whyInvest.item1Desc') },
             { icon: '📈', title: t('whyInvest.item2Title'), desc: t('whyInvest.item2Desc') },
             { icon: '🏙️', title: t('whyInvest.item3Title'), desc: t('whyInvest.item3Desc') },
             { icon: '🌱', title: t('whyInvest.item4Title'), desc: t('whyInvest.item4Desc') },
+            { icon: '📡', title: t('whyInvest.item5Title'), desc: t('whyInvest.item5Desc') },
           ].map((item, i) => (
             <div key={i}>
               <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px', marginBottom: '24px' }}>

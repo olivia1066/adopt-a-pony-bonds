@@ -391,10 +391,9 @@ export default function Campagne() {
         }}>{t('about.kicker')}</p>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
           <div>
-            <h2 style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1, marginBottom: '16px' }}>
+            <h2 style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1 }}>
               {t('about.title')}
             </h2>
-            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>{t('about.dates')}</p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
@@ -413,6 +412,38 @@ export default function Campagne() {
                 {t('about.riskDesc')}
               </p>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── PROCÉDURE ── */}
+      <div style={{ margin: '80px 200px 0' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
+          <div>
+            <h2 style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1 }}>
+              {t('procedure.title')}
+            </h2>
+          </div>
+          <div>
+            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
+              {t('procedure.soon')}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── PROTECTION DU CAPITAL ── */}
+      <div style={{ margin: '80px 200px 0' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
+          <div>
+            <h2 style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1 }}>
+              {t('capitalProtection.title')}
+            </h2>
+          </div>
+          <div>
+            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
+              {t('capitalProtection.soon')}
+            </p>
           </div>
         </div>
       </div>

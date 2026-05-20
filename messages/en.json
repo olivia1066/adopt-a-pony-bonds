@@ -38,14 +38,13 @@
       "capitalInvested": "Capital invested"
     },
     "mission": {
-      "kicker": "We built this for people who want their money to do something real.",
-      "title": "We believe everyone should be able to participate directly in the future of urban mobility.",
-      "item1Title": "Choose how much to invest.",
+      "title": "At pony, our mission is simple: allow everyone to play a direct role in their city and beyond, in the transition away from a car centric society",
+      "item1Title": "Choose how much you invest",
       "item1Desc": "You can finance as many bikes and scooters, starting from €500.",
-      "item2Title": "Pony manages your fleet.",
+      "item2Title": "Pony manages your fleet",
       "item2Desc": "Pony deploys your bikes and scooters across our cities, and makes sure they are safe, in good condition, clean, and in the right place.",
-      "item3Title": "Get paid every month.",
-      "item3Desc": "Earn up to 8.5% annual interest. After a 12-month grace period where interest is compounded, you receive monthly payments for 36 months — capital and interest combined."
+      "item3Title": "You get paid every month",
+      "item3Desc": "Earn up to 8.5% annual interest, landing in your bank account every single month. And after 42 months, your full investment comes back home."
     },
     "campaignCard": {
       "status": "● OPEN",
@@ -70,16 +69,17 @@
       "riders": "Riders per day"
     },
     "whyInvest": {
-      "kicker": "Why invest with Pony?",
-      "title": "Most investments are invisible. This one rides through your city every day.",
-      "item1Title": "Backed by real assets and long-term city contracts.",
-      "item1Desc": "A fleet of real e-bikes generating revenue under long-term contracts with French cities.",
-      "item2Title": "High fixed returns.",
-      "item2Desc": "8.5% annual interest is significantly above what banks or most crowdfunding platforms offer today.",
-      "item3Title": "Risk spread over hundreds of ebikes and scooters.",
-      "item3Desc": "You don't invest in one vehicle, you invest in an entire fleet. If one underperforms, the others cover it.",
-      "item4Title": "Good for your wallet. Good for the planet.",
-      "item4Desc": "Every bike you finance takes a car off the road — reducing CO2, cutting congestion, and making cities more liveable."
+      "kicker": "Why invest in Pony?",
+      "item1Title": "High yield",
+      "item1Desc": "Up to 9% interest rate. Driven by the high structural profitability of shared bikes and scooters managed by pony",
+      "item2Title": "Tangible assets",
+      "item2Desc": "The investment is backed by physical bikes and scooters, engineered by pony for durability and resilience. Physical assets with their own worth.",
+      "item3Title": "Lower CO₂ emissions",
+      "item3Desc": "A pony ride produces up to 10× less CO₂ than a car, meaning your investment directly helps cut emissions.",
+      "item4Title": "French leader",
+      "item4Desc": "Pony is the only French player in the sector and a leading operator, with 22 cities in service. Our bikes are designed internally by our own engineering team and produced in France by the Manufacture Française du Cycle.",
+      "item5Title": "Real-time tracking",
+      "item5Desc": "At the time of your investment, we allocate specific ponies to you, they become virtually yours. Receive notifications on rides and maintenance activity, and access their live GPS location anytime!"
     },
     "howWeOperate": {
       "kicker": "How we operate",
@@ -178,12 +178,20 @@
     },
     "about": {
       "kicker": "About this campaign",
-      "title": "Spring 2026 Fleet",
-      "dates": "April 2026 — October 2026",
+      "title": "Description",
       "paragraph1": "This campaign finances the acquisition and deployment of new Pony electric bikes and scooters across French cities. Your investment goes directly into the fleet that riders use every day.",
       "paragraph2": "You finance the entire fleet, which reduces risk and simplifies your experience. For the first 12 months, interest is compounded and added to your capital. Then, every month from month 13 to month 48, you receive a fixed payment combining capital and interest directly to your bank account.",
       "riskTitle": "⚠️ Risk notice",
       "riskDesc": "All investments carry risk, including the risk of partial or total capital loss. Past performance is not a guarantee of future results."
+    },
+    
+    "procedure": {
+      "title": "Procedure",
+      "soon": "Detailed content coming soon."
+    },
+    "capitalProtection": {
+      "title": "Capital protection",
+      "soon": "Detailed content coming soon."
     },
     "keyNumbers": {
       "kicker": "Key numbers",

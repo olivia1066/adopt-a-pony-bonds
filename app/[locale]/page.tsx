@@ -153,19 +153,19 @@ export default function Home() {
               <img src="/Icon (1).png" alt="Pony Angel" style={{ width: '52px', height: '52px', borderRadius: '14px' }} />
             </div>
             <div style={{ marginBottom: '20px' }}>
-              <h1 style={{ fontSize: '72px', lineHeight: '1.0', fontWeight: 800, letterSpacing: '-2px', whiteSpace: 'nowrap' }}>
+              <h1 style={{ fontSize: '50px', lineHeight: '1.0', fontWeight: 800, letterSpacing: '-2px', whiteSpace: 'nowrap' }}>
                 {t('hero.title')}
               </h1>
             </div>
-            <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '18px', fontWeight: 600, lineHeight: '1.5', marginBottom: '36px' }}>
+            <p style={{ color: 'white', fontSize: '16px', fontWeight: 500, lineHeight: '1.5', marginBottom: '32px' }}>
               {t('hero.subtitle1')}{' '}
-              <span style={{ color: '#00FFFF' }}>8,5 %</span>{t('hero.subtitle2')}
+              <span style={{ color: '#00FFFF', fontWeight: 600 }}>8,5 %</span>{t('hero.subtitle2')}
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Link href="/campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, letterSpacing: '0.3px', textDecoration: 'none'}}>
+              <Link href="/campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none'}}>
                 {t('hero.cta')}
               </Link>
-              <a href="#" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, letterSpacing: '0.3px', textDecoration: 'none' }}>
+              <a href="#" style={{ backgroundColor: 'transparent', color: '#00FFFF', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none', border: '2px solid #00FFFF' }}>
                 {t('hero.bookMeeting')}
               </a>
             </div>

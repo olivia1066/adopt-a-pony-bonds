@@ -2,9 +2,7 @@
   "header": {
     "home": "Home",
     "campaigns": "Campaigns",
-    "dashboard": "My Dashboard",
-    "login": "Log in",
-    "logout": "Sign out"
+    "bookMeeting": "Book a meeting"
   },
   "metadata": {
     "title": "Adopt a Pony — Invest in soft mobility",
@@ -16,7 +14,7 @@
       "subtitle1": "Invest in an e-bike or e-scooter. Earn monthly returns up to",
       "subtitle2": ". Watch your bikes ride across France.",
       "cta": "Adopt now →",
-      "login": "Log in",
+      "bookMeeting": "Book a meeting",
       "usersBadge": "Pony users already on the platform",
       "riskNotice": "All investments carry risk, including the risk of capital loss."
     },
@@ -218,12 +216,6 @@
   "investir": {
     "loading": "Loading…",
     "processing": "Processing…",
-    "welcomeBack": "Welcome back",
-    "kycRejectedTitle": "KYC rejected",
-    "kycRejectedDesc": "Your identity verification was rejected. Please contact us at",
-    "kycPendingTitle": "KYC under review",
-    "kycPendingDesc": "We are reviewing your information. You'll be able to complete your investment as soon as your KYC is approved.",
-    "backToHome": "← Back to home",
     "errorGeneric": "An error occurred.",
     "errorFillAll": "Please fill in all required fields.",
     "errorReadContract": "Please confirm that you have read and agree to the contract.",
@@ -233,14 +225,6 @@
       "signature": "Signature",
       "payment": "Payment",
       "done": "Done"
-    },
-    "loginPrompt": {
-      "title": "Log in to continue",
-      "desc": "To invest, you need to log in to your account or create one.",
-      "login": "Log in →",
-      "signup": "Create an account",
-      "cancel": "Cancel",
-      "myDashboard": "My Dashboard →"
     },
     "kyc": {
       "accountType": "Account type",
@@ -277,8 +261,7 @@
       "documentNumber": "Document number",
       "iban": "IBAN",
       "ibanHelp": "The IBAN of the account that will receive your monthly repayments.",
-      "submit": "Submit my KYC →",
-      "required": "*"
+      "submit": "Submit my KYC →"
     },
     "confirmation": {
       "title": "Review your investment",
@@ -343,7 +326,6 @@
       "step1": "Receipt of the transfer and validation by our team",
       "step2": "Start of your grace period (12 months)",
       "step3": "First monthly payment at month 13",
-      "toDashboard": "Go to my dashboard →",
       "backHome": "Back to home"
     },
     "sidebar": {

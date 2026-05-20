@@ -162,12 +162,12 @@ export default function Home() {
               <span style={{ color: '#00FFFF' }}>8,5 %</span>{t('hero.subtitle2')}
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Link href="/campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, letterSpacing: '0.3px', textDecoration: 'none', boxShadow: '0 4px 24px rgba(0,255,255,0.3)' }}>
+              <Link href="/campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, letterSpacing: '0.3px', textDecoration: 'none'}}>
                 {t('hero.cta')}
               </Link>
-              <Link href="/login" style={{ backgroundColor: 'transparent', color: 'rgba(255,255,255,0.75)', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, border: '1px solid rgba(255,255,255,0.2)', textDecoration: 'none' }}>
-                {t('hero.login')}
-              </Link>
+              <a href="#" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, letterSpacing: '0.3px', textDecoration: 'none' }}>
+                {t('hero.bookMeeting')}
+              </a>
             </div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '32px', padding: '8px 16px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <div style={{ display: 'flex' }}>
@@ -274,7 +274,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <Link href="/campagne" style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '13px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none', boxShadow: '0 4px 24px rgba(0,255,255,0.25)' }}>
+                <Link href="/campagne" style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '13px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none' }}>
                   {t('hero.cta')}
                 </Link>
               </div>
@@ -371,12 +371,12 @@ export default function Home() {
                   <span style={{ fontWeight: 700, color: 'white' }}>62%</span>
                 </div>
                 <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
-                  <div style={{ width: '62%', height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF', boxShadow: '0 0 8px rgba(0,255,255,0.5)' }} />
+                  <div style={{ width: '62%', height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
                 </div>
                 <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '6px' }}>€{fmtInt(500000)} {t('campaignCard.target')}</p>
               </div>
             </div>
-            <Link href="/campagne" style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '15px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none', boxShadow: '0 4px 24px rgba(0,255,255,0.25)' }}>
+            <Link href="/campagne" style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '15px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none' }}>
               {t('campaignCard.cta')}
             </Link>
           </div>

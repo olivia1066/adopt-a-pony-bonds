@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { supabase } from '@/lib/supabase'
@@ -11,7 +11,6 @@ const ANNUAL_RATE = 0.085
 const MONTHLY_RATE = ANNUAL_RATE / 12
 const GRACE_MONTHS = 12
 const PAYBACK_MONTHS = 36
-const TOTAL_MONTHS = 48
 
 function calcReturns(amount: number) {
   const capitalAfterGrace = amount * Math.pow(1 + MONTHLY_RATE, GRACE_MONTHS)
@@ -114,13 +113,9 @@ function InvestirForm() {
 
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
-  const [checkingSession, setCheckingSession] = useState(true)
   const [error, setError] = useState('')
   const [investorId, setInvestorId] = useState('')
-  const [existingKycStatus, setExistingKycStatus] = useState<string | null>(null)
   const [contractSigned, setContractSigned] = useState(false)
-  const [showDashboardModal, setShowDashboardModal] = useState(false)
-  const [loggedIn, setLoggedIn] = useState(false)
 
   const [form, setForm] = useState({
     type: 'individual',
@@ -131,7 +126,7 @@ function InvestirForm() {
     dateNaissance: '',
     nationalite: '',
     telephone: '',
-    residenceFiscale: 'france',
+    residenceFiscale: 'fr',
     iban: '',
     adresse: '',
     profession: '',
@@ -143,53 +138,6 @@ function InvestirForm() {
 
   const update = (field: string, value: string | boolean) =>
     setForm(prev => ({ ...prev, [field]: value }))
-
-  useEffect(() => {
-    async function checkSession() {
-      const { data: { session } } = await supabase.auth.getSession()
-
-      if (!session) {
-        setLoggedIn(false)
-        setCheckingSession(false)
-        return
-      }
-
-      setLoggedIn(true)
-
-      const { data: investor } = await supabase
-        .from('investors')
-        .select('*')
-        .eq('email', session.user.email)
-        .single()
-
-      if (investor) {
-        setInvestorId(investor.id)
-        setExistingKycStatus(investor.kyc_status)
-        setForm(prev => ({
-          ...prev,
-          prenom: investor.prenom || '',
-          nom: investor.nom || '',
-          email: investor.email || '',
-          telephone: investor.telephone || '',
-          adresse: investor.adresse || '',
-          profession: investor.profession || '',
-          iban: investor.iban || '',
-          nationalite: investor.nationalite || '',
-          documentType: investor.document_type || 'passport',
-          documentNumero: investor.document_numero || '',
-        }))
-
-        if (investor.kyc_status === 'Validé') {
-          setStep(2)
-        }
-      } else {
-        setForm(prev => ({ ...prev, email: session.user.email || '' }))
-      }
-
-      setCheckingSession(false)
-    }
-    checkSession()
-  }, [])
 
   async function handleSubmitKYC() {
     setError('')
@@ -270,97 +218,8 @@ function InvestirForm() {
     { n: 5, label: t('steps.done') },
   ]
 
-  if (checkingSession) return (
-    <main className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#13102B' }}>
-      <p style={{ color: '#00FFFF' }}>{t('loading')}</p>
-    </main>
-  )
-
-  if (existingKycStatus === 'Rejeté' && step === 1) return (
-    <main className="min-h-screen font-sans flex items-center justify-center"
-      style={{ backgroundColor: '#13102B', color: 'white' }}>
-      <div className="text-center max-w-md px-8 space-y-6">
-        <div className="text-6xl">❌</div>
-        <h2 className="text-2xl font-bold">{t('kycRejectedTitle')}</h2>
-        <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
-          {t('kycRejectedDesc')}{' '}
-          <span style={{ color: '#00FFFF' }}>support@ridepony.com</span>.
-        </p>
-        <Link href="/" style={{ fontSize: '13px', color: '#00FFFF', textDecoration: 'none' }}>
-          {t('backToHome')}
-        </Link>
-      </div>
-    </main>
-  )
-
-  if (existingKycStatus === 'En attente' && step === 1) return (
-    <main className="min-h-screen font-sans flex items-center justify-center"
-      style={{ backgroundColor: '#13102B', color: 'white' }}>
-      <div className="text-center max-w-md px-8 space-y-6">
-        <div className="text-6xl">⏳</div>
-        <h2 className="text-2xl font-bold">{t('kycPendingTitle')}</h2>
-        <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
-          {t('kycPendingDesc')}
-        </p>
-        <Link href="/" style={{ fontSize: '13px', color: '#00FFFF', textDecoration: 'none' }}>
-          {t('backToHome')}
-        </Link>
-      </div>
-    </main>
-  )
-
   return (
     <main className="min-h-screen font-sans" style={{ backgroundColor: '#13102B', color: 'white' }}>
-
-      {/* Login modal */}
-      {showDashboardModal && (
-        <div style={{
-          position: 'fixed', inset: 0, zIndex: 100,
-          backgroundColor: 'rgba(0,0,0,0.7)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          padding: '20px',
-        }}>
-          <div style={{
-            backgroundColor: '#1E1B4B',
-            borderRadius: '20px', padding: '32px',
-            maxWidth: '380px', width: '100%',
-            border: '1px solid rgba(255,255,255,0.08)',
-          }}>
-            <h3 style={{ fontSize: '20px', fontWeight: 800, marginBottom: '8px' }}>{t('loginPrompt.title')}</h3>
-            <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', marginBottom: '24px', lineHeight: '1.5' }}>
-              {t('loginPrompt.desc')}
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <Link href="/login?redirect=/dashboard"
-                style={{
-                  display: 'block', textAlign: 'center',
-                  backgroundColor: '#00FFFF', color: '#13102B',
-                  padding: '14px', borderRadius: '12px',
-                  fontSize: '14px', fontWeight: 800, textDecoration: 'none',
-                }}>
-                {t('loginPrompt.login')}
-              </Link>
-              <Link href="/signup?redirect=/dashboard"
-                style={{
-                  display: 'block', textAlign: 'center',
-                  backgroundColor: 'transparent', color: 'rgba(255,255,255,0.75)',
-                  padding: '14px', borderRadius: '12px',
-                  fontSize: '14px', fontWeight: 600, textDecoration: 'none',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                }}>
-                {t('loginPrompt.signup')}
-              </Link>
-              <button onClick={() => setShowDashboardModal(false)}
-                style={{
-                  background: 'none', border: 'none', cursor: 'pointer',
-                  fontSize: '13px', color: 'rgba(255,255,255,0.3)', marginTop: '8px',
-                }}>
-                {t('loginPrompt.cancel')}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Steps indicator */}
       <div className="flex justify-center items-center gap-4 py-10">
@@ -392,12 +251,6 @@ function InvestirForm() {
           {/* ── STEP 1: KYC ── */}
           {step === 1 && (
             <>
-              {existingKycStatus === 'Validé' && (
-                <div className="rounded-xl px-4 py-3 text-sm" style={{ backgroundColor: 'rgba(0,255,255,0.08)', border: '1px solid rgba(0,255,255,0.2)', color: '#00FFFF' }}>
-                  👋 {t('welcomeBack')}
-                </div>
-              )}
-
               <div>
                 <h2 className="text-xl font-bold mb-4">{t('kyc.accountType')}</h2>
                 <select value={form.type} onChange={e => update('type', e.target.value)}
@@ -555,7 +408,7 @@ function InvestirForm() {
                 </div>
               )}
 
-              <button onClick={loggedIn ? handleSubmitKYC : () => setShowDashboardModal(true)}
+              <button onClick={handleSubmitKYC}
                 disabled={loading}
                 className="w-full py-4 rounded-xl font-bold text-sm transition-opacity hover:opacity-90"
                 style={{ backgroundColor: '#00FFFF', color: '#13102B', opacity: loading ? 0.7 : 1 }}>
@@ -781,7 +634,7 @@ function InvestirForm() {
                   {t('done.nextSteps')}
                 </h3>
                 <div className="space-y-3">
-                  {[t('done.step1'), t('done.step2'), t('done.step3')].map((step, i) => (
+                  {[t('done.step1'), t('done.step2'), t('done.step3')].map((stepText, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                       <div style={{
                         width: '24px', height: '24px', borderRadius: '50%', flexShrink: 0,
@@ -792,25 +645,18 @@ function InvestirForm() {
                         {i + 1}
                       </div>
                       <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', lineHeight: '1.6' }}>
-                        {step}
+                        {stepText}
                       </p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3">
-                <Link href="/dashboard"
-                  className="w-full py-4 rounded-xl font-bold text-sm text-center"
-                  style={{ backgroundColor: '#00FFFF', color: '#13102B', textDecoration: 'none' }}>
-                  {t('done.toDashboard')}
-                </Link>
-                <Link href="/"
-                  className="w-full py-3 rounded-xl text-sm text-center"
-                  style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>
-                  {t('done.backHome')}
-                </Link>
-              </div>
+              <Link href="/"
+                className="block w-full py-4 rounded-xl font-bold text-sm text-center"
+                style={{ backgroundColor: '#00FFFF', color: '#13102B', textDecoration: 'none' }}>
+                {t('done.backHome')}
+              </Link>
             </div>
           )}
 
@@ -847,30 +693,6 @@ function InvestirForm() {
               <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)', lineHeight: '1.6' }}>
                 {t('sidebar.secure')}
               </p>
-
-              {loggedIn ? (
-                <Link href="/dashboard" style={{
-                  display: 'block', width: '100%', marginTop: '24px', textAlign: 'center',
-                  backgroundColor: 'transparent', color: '#00FFFF',
-                  padding: '12px', borderRadius: '10px',
-                  fontSize: '13px', fontWeight: 700,
-                  border: '1px solid rgba(0,255,255,0.3)',
-                  textDecoration: 'none',
-                }}>
-                  {t('loginPrompt.myDashboard')}
-                </Link>
-              ) : (
-                <button onClick={() => setShowDashboardModal(true)} style={{
-                  width: '100%', marginTop: '24px',
-                  backgroundColor: 'transparent', color: '#00FFFF',
-                  padding: '12px', borderRadius: '10px',
-                  fontSize: '13px', fontWeight: 700,
-                  border: '1px solid rgba(0,255,255,0.3)',
-                  cursor: 'pointer',
-                }}>
-                  {t('loginPrompt.myDashboard')}
-                </button>
-              )}
             </div>
           </div>
         )}

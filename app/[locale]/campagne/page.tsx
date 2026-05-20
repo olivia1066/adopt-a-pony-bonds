@@ -212,7 +212,7 @@ export default function Campagne() {
             <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
               <div style={{
                 width: `${raisedPct}%`, height: '4px', borderRadius: '100px',
-                backgroundColor: '#00FFFF', boxShadow: '0 0 8px rgba(0,255,255,0.5)',
+                backgroundColor: '#00FFFF',
               }} />
             </div>
             <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>
@@ -377,7 +377,6 @@ export default function Campagne() {
               backgroundColor: '#00FFFF', color: '#13102B',
               padding: '16px', borderRadius: '14px',
               fontSize: '15px', fontWeight: 800, textDecoration: 'none',
-              boxShadow: '0 4px 24px rgba(0,255,255,0.25)',
             }}>
             {t('simulator.investNow')}
           </Link>
@@ -491,7 +490,6 @@ export default function Campagne() {
             backgroundColor: '#00FFFF', color: '#13102B',
             padding: '16px 48px', borderRadius: '14px',
             fontSize: '16px', fontWeight: 800, textDecoration: 'none',
-            boxShadow: '0 4px 32px rgba(0,255,255,0.35)',
           }}>
           {t('cta.button')}
         </Link>

@@ -2,9 +2,7 @@
   "header": {
     "home": "Accueil",
     "campaigns": "Campagnes",
-    "dashboard": "Mon espace",
-    "login": "Connexion",
-    "logout": "Déconnexion"
+    "bookMeeting": "Prendre rendez-vous"
   },
   "metadata": {
     "title": "Adopt a Pony — Investissez dans la mobilité douce",
@@ -16,7 +14,7 @@
       "subtitle1": "Investissez dans un vélo ou une trottinette électrique. Touchez des revenus mensuels jusqu'à",
       "subtitle2": ". Voyez vos vélos rouler à travers la France.",
       "cta": "Adopter maintenant →",
-      "login": "Connexion",
+      "bookMeeting": "Prendre rendez-vous",
       "usersBadge": "utilisateurs Pony déjà sur la plateforme",
       "riskNotice": "Tout investissement comporte un risque, y compris le risque de perte en capital."
     },
@@ -218,12 +216,6 @@
   "investir": {
     "loading": "Chargement…",
     "processing": "Traitement en cours…",
-    "welcomeBack": "Ravi de vous revoir",
-    "kycRejectedTitle": "KYC rejeté",
-    "kycRejectedDesc": "Votre vérification d'identité a été rejetée. Contactez-nous à",
-    "kycPendingTitle": "KYC en cours d'examen",
-    "kycPendingDesc": "Nous examinons vos informations. Vous pourrez finaliser votre investissement dès que votre KYC sera validé.",
-    "backToHome": "← Retour à l'accueil",
     "errorGeneric": "Une erreur s'est produite.",
     "errorFillAll": "Veuillez remplir tous les champs obligatoires.",
     "errorReadContract": "Veuillez confirmer que vous avez lu et accepté le contrat.",
@@ -233,14 +225,6 @@
       "signature": "Signature",
       "payment": "Paiement",
       "done": "Terminé"
-    },
-    "loginPrompt": {
-      "title": "Connectez-vous pour continuer",
-      "desc": "Pour investir, vous devez d'abord vous connecter à votre compte ou en créer un.",
-      "login": "Connexion →",
-      "signup": "Créer un compte",
-      "cancel": "Annuler",
-      "myDashboard": "Mon espace →"
     },
     "kyc": {
       "accountType": "Type de compte",
@@ -277,8 +261,7 @@
       "documentNumber": "Numéro du document",
       "iban": "IBAN",
       "ibanHelp": "L'IBAN du compte qui recevra vos remboursements mensuels.",
-      "submit": "Soumettre mon KYC →",
-      "required": "*"
+      "submit": "Soumettre mon KYC →"
     },
     "confirmation": {
       "title": "Vérifiez votre investissement",
@@ -343,7 +326,6 @@
       "step1": "Réception du virement et validation par notre équipe",
       "step2": "Démarrage de votre période de différé (12 mois)",
       "step3": "Premier versement mensuel au mois 13",
-      "toDashboard": "Accéder à mon espace →",
       "backHome": "Retour à l'accueil"
     },
     "sidebar": {

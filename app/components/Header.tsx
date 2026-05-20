@@ -1,8 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { supabase } from '@/lib/supabase'
 import { Link, useRouter, usePathname } from '@/i18n/navigation'
 
 export default function Header() {
@@ -10,35 +8,6 @@ export default function Header() {
   const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
-  const [loggedIn, setLoggedIn] = useState(false)
-
-  useEffect(() => {
-    async function checkSession() {
-      const { data: { session } } = await supabase.auth.getSession()
-      setLoggedIn(!!session)
-    }
-    checkSession()
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setLoggedIn(!!session)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  async function handleLogout() {
-    await supabase.auth.signOut()
-    router.push('/')
-  }
-
-  async function handleDashboard() {
-    const { data: { session } } = await supabase.auth.getSession()
-    if (session) {
-      router.push('/dashboard')
-    } else {
-      router.push('/login?redirect=/dashboard')
-    }
-  }
 
   function switchLocale(target: 'fr' | 'en') {
     if (target !== locale) {
@@ -63,12 +32,6 @@ export default function Header() {
         <Link href="/campagne" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
           {t('campaigns')}
         </Link>
-        <button onClick={handleDashboard} style={{
-          background: 'none', border: 'none', cursor: 'pointer',
-          fontSize: '14px', color: 'rgba(255,255,255,0.6)', padding: 0,
-        }}>
-          {t('dashboard')}
-        </button>
       </nav>
 
       {/* Center logo */}
@@ -101,18 +64,15 @@ export default function Header() {
           </button>
         </div>
 
-        {loggedIn ? (
-          <button onClick={handleLogout} style={{
-            background: 'none', border: 'none', cursor: 'pointer',
-            fontSize: '14px', color: 'rgba(255,255,255,0.6)', padding: 0,
-          }}>
-            {t('logout')}
-          </button>
-        ) : (
-          <Link href="/login" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
-            {t('login')}
-          </Link>
-        )}
+        {/* Book a meeting CTA */}
+        <a href="#" style={{
+          fontSize: '13px', fontWeight: 700,
+          color: '#13102B', backgroundColor: '#00FFFF',
+          padding: '8px 16px', borderRadius: '10px',
+          textDecoration: 'none',
+        }}>
+          {t('bookMeeting')}
+        </a>
       </div>
     </header>
   )

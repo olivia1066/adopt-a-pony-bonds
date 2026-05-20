@@ -77,7 +77,7 @@ function FaqSection() {
               <div style={{
                 padding: '0 28px 24px',
                 fontSize: '15px', lineHeight: '1.7',
-                color: 'rgba(255,255,255,0.5)',
+                color: 'white',
               }}>
                 {faq.a}
               </div>
@@ -130,7 +130,7 @@ export default function Campagne() {
 
       {/* ── BACK ── */}
       <div style={{ padding: '16px 40px' }}>
-        <Link href="/" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', textDecoration: 'none' }}>
+        <Link href="/" style={{ fontSize: '13px', color: 'white', textDecoration: 'none' }}>
           {t('back')}
         </Link>
       </div>
@@ -164,13 +164,13 @@ export default function Campagne() {
             }}>{t('hero.tagUrban')}</span>
             <span style={{
               fontSize: '11px', padding: '4px 12px', borderRadius: '100px', fontWeight: 600,
-              backgroundColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)',
+              backgroundColor: 'rgba(255,255,255,0.08)', color: 'white',
             }}>{t('hero.tagCities')}</span>
           </div>
           <h1 style={{ fontSize: '48px', fontWeight: 800, letterSpacing: '-1.5px', lineHeight: 1.05, marginBottom: '10px' }}>
             {campaign?.name || t('hero.defaultName')}
           </h1>
-          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.6)', maxWidth: '480px' }}>
+          <p style={{ fontSize: '16px', color: 'white', maxWidth: '480px' }}>
             {t('hero.subtitle')}
           </p>
         </div>
@@ -249,7 +249,7 @@ export default function Campagne() {
           />
           <div style={{
             display: 'flex', justifyContent: 'space-between',
-            fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '4px', marginBottom: '20px',
+            fontSize: '11px', color: 'white', marginTop: '4px', marginBottom: '20px',
           }}>
             <span>€500</span><span>€50,000</span>
           </div>
@@ -266,7 +266,7 @@ export default function Campagne() {
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 padding: '4px 0',
               }}>
-                <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}>{row.label}</span>
+                <span style={{ fontSize: '13px', color: 'white' }}>{row.label}</span>
                 <span style={{
                   fontSize: '12px', fontWeight: 700,
                   padding: '3px 12px', borderRadius: '6px',
@@ -287,7 +287,7 @@ export default function Campagne() {
             display: 'flex', alignItems: 'center', gap: '8px',
           }}>
             <span style={{ fontSize: '16px' }}>🛴</span>
-            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
+            <span style={{ fontSize: '12px', color: 'white' }}>
               {t('simulator.fleetFinances')}{' '}
               <span style={{ color: '#00FFFF', fontWeight: 700 }}>
                 {amount / 2100 < 1 ? (amount / 2100).toFixed(1) : Math.floor(amount / 2100)} {t('simulator.ebikes')}
@@ -297,10 +297,10 @@ export default function Campagne() {
           </div>
 
           <div style={{ display: 'flex', gap: '16px', fontSize: '12px' }}>
-            <span style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'underline', cursor: 'pointer' }}>
+            <span style={{ color: 'white', textDecoration: 'underline', cursor: 'pointer' }}>
               {t('simulator.taxInfo')}
             </span>
-            <span style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'underline', cursor: 'pointer' }}>
+            <span style={{ color: 'white', textDecoration: 'underline', cursor: 'pointer' }}>
               {t('simulator.investmentNote')}
             </span>
           </div>
@@ -316,12 +316,12 @@ export default function Campagne() {
               </span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
-              <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}>
+              <p style={{ fontSize: '12px', color: 'white' }}>
                 {t('simulator.fromMonth13')}
               </p>
               <a href="#" style={{
                 display: 'flex', alignItems: 'center', gap: '6px',
-                fontSize: '12px', color: 'rgba(255,255,255,0.5)',
+                fontSize: '12px', color: 'white',
                 textDecoration: 'none',
                 padding: '6px 12px', borderRadius: '8px',
                 border: '1px solid rgba(255,255,255,0.15)',
@@ -337,7 +337,7 @@ export default function Campagne() {
                 border: '1px solid rgba(0,255,255,0.2)',
                 display: 'flex', flexDirection: 'column', justifyContent: 'center',
               }}>
-                <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)', fontWeight: 700, marginBottom: '8px' }}>
+                <p style={{ fontSize: '12px', color: 'white', fontWeight: 700, marginBottom: '8px' }}>
                   {t('simulator.totalRepaid')}
                 </p>
                 <p style={{ fontSize: '32px', fontWeight: 800, color: 'white', letterSpacing: '-1px' }}>
@@ -351,7 +351,7 @@ export default function Campagne() {
                   backgroundColor: 'rgba(255,255,255,0.04)',
                   border: '1px solid rgba(255,255,255,0.06)',
                 }}>
-                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>{t('simulator.totalInterest')}</p>
+                  <p style={{ fontSize: '11px', color: 'white', marginBottom: '6px' }}>{t('simulator.totalInterest')}</p>
                   <p style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-0.5px' }}>
                     €{fmtInt(totalInterest)}
                   </p>
@@ -361,7 +361,7 @@ export default function Campagne() {
                   backgroundColor: 'rgba(255,255,255,0.04)',
                   border: '1px solid rgba(255,255,255,0.06)',
                 }}>
-                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>{t('simulator.capitalInvested')}</p>
+                  <p style={{ fontSize: '11px', color: 'white', marginBottom: '6px' }}>{t('simulator.capitalInvested')}</p>
                   <p style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-0.5px' }}>
                     €{fmtInt(amount)}
                   </p>
@@ -396,10 +396,10 @@ export default function Campagne() {
             </h2>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
+            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
               {t('about.paragraph1')}
             </p>
-            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
+            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
               {t('about.paragraph2')}
             </p>
             <div style={{
@@ -408,7 +408,7 @@ export default function Campagne() {
               border: '1px solid rgba(0,255,255,0.12)',
             }}>
               <p style={{ fontSize: '12px', fontWeight: 700, color: '#00FFFF', marginBottom: '4px' }}>{t('about.riskTitle')}</p>
-              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '13px', color: 'white', lineHeight: '1.6' }}>
                 {t('about.riskDesc')}
               </p>
             </div>
@@ -425,7 +425,7 @@ export default function Campagne() {
             </h2>
           </div>
           <div>
-            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
+            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
               {t('procedure.soon')}
             </p>
           </div>
@@ -441,7 +441,7 @@ export default function Campagne() {
             </h2>
           </div>
           <div>
-            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)' }}>
+            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
               {t('capitalProtection.soon')}
             </p>
           </div>
@@ -477,7 +477,7 @@ export default function Campagne() {
               <p style={{
                 marginTop: '6px', fontSize: '11px', fontWeight: 600,
                 letterSpacing: '2px', textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.35)',
+                color: 'white',
               }}>
                 {stat.label}
               </p>
@@ -509,7 +509,7 @@ export default function Campagne() {
           {t('cta.title')}
         </h2>
         <p style={{
-          fontSize: '16px', color: 'rgba(255,255,255,0.5)',
+          fontSize: '16px', color: 'white',
           maxWidth: '480px', margin: '0 auto 32px', lineHeight: '1.6',
         }}>
           {t('cta.subtitle')}
@@ -536,12 +536,12 @@ export default function Campagne() {
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
         <img src="/Logo.png" alt="Pony" style={{ height: '22px', width: 'auto' }} />
-        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)', textAlign: 'center', maxWidth: '400px' }}>
+        <p style={{ fontSize: '12px', color: 'white', textAlign: 'center', maxWidth: '400px' }}>
           {t('footer.disclaimer')}
         </p>
         <div style={{ display: 'flex', gap: '24px', fontSize: '12px' }}>
-          <a href="#" style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>{t('footer.privacy')}</a>
-          <a href="#" style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>{t('footer.terms')}</a>
+          <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.privacy')}</a>
+          <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.terms')}</a>
         </div>
       </footer>
 

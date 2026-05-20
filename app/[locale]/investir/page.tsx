@@ -264,37 +264,37 @@ function InvestirForm() {
                 <h2 className="text-xl font-bold mb-4">{t('kyc.personalInfo')}</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.firstName')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.firstName')} *</label>
                     <input type="text" value={form.prenom} onChange={e => update('prenom', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.lastName')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.lastName')} *</label>
                     <input type="text" value={form.nom} onChange={e => update('nom', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div className="col-span-2">
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.email')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.email')} *</label>
                     <input type="email" value={form.email} onChange={e => update('email', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div className="col-span-2">
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.phone')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.phone')} *</label>
                     <input type="tel" value={form.telephone} onChange={e => update('telephone', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.dateOfBirth')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.dateOfBirth')} *</label>
                     <input type="date" value={form.dateNaissance} onChange={e => update('dateNaissance', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.placeOfBirth')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.placeOfBirth')} *</label>
                     <input type="text" value={form.lieuNaissance} onChange={e => update('lieuNaissance', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.nationality')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.nationality')} *</label>
                     <select value={form.nationalite} onChange={e => update('nationalite', e.target.value)}
                       className={inputClass} style={inputStyle}>
                       <option value="">{t('kyc.selectCountry')}</option>
@@ -306,7 +306,7 @@ function InvestirForm() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.taxResidence')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.taxResidence')} *</label>
                     <select value={form.residenceFiscale} onChange={e => update('residenceFiscale', e.target.value)}
                       className={inputClass} style={inputStyle}>
                       {sortedCountries.filter(c => c.code !== 'OTHER').map(c => (
@@ -317,17 +317,17 @@ function InvestirForm() {
                     </select>
                   </div>
                   <div className="col-span-2">
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.address')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.address')} *</label>
                     <input type="text" value={form.adresse} onChange={e => update('adresse', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.profession')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.profession')} *</label>
                     <input type="text" value={form.profession} onChange={e => update('profession', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.annualIncome')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.annualIncome')} *</label>
                     <select value={form.revenus} onChange={e => update('revenus', e.target.value)}
                       className={inputClass} style={inputStyle}>
                       <option value="">{t('kyc.incomePlaceholder')}</option>
@@ -343,7 +343,7 @@ function InvestirForm() {
 
               <div>
                 <h2 className="text-xl font-bold mb-2">{t('kyc.pepTitle')}</h2>
-                <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <p className="text-sm mb-4" style={{ color: 'white' }}>
                   {t('kyc.pepDesc')}
                 </p>
                 <div className="flex gap-3">
@@ -378,7 +378,7 @@ function InvestirForm() {
                 <h2 className="text-xl font-bold mb-4">{t('kyc.documents')}</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.documentType')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.documentType')} *</label>
                     <select value={form.documentType} onChange={e => update('documentType', e.target.value)}
                       className={inputClass} style={inputStyle}>
                       <option value="passport">{t('kyc.passport')}</option>
@@ -387,15 +387,15 @@ function InvestirForm() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.documentNumber')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.documentNumber')} *</label>
                     <input type="text" value={form.documentNumero} onChange={e => update('documentNumero', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
                   <div className="col-span-2">
-                    <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>{t('kyc.iban')} *</label>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.iban')} *</label>
                     <input type="text" value={form.iban} onChange={e => update('iban', e.target.value)}
                       className={inputClass} style={inputStyle} placeholder="FR76 XXXX XXXX XXXX XXXX" />
-                    <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                    <p className="text-xs mt-1" style={{ color: 'white' }}>
                       {t('kyc.ibanHelp')}
                     </p>
                   </div>
@@ -422,13 +422,13 @@ function InvestirForm() {
             <div className="space-y-6">
               <div>
                 <h2 className="text-2xl font-bold mb-2">{t('confirmation.title')}</h2>
-                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <p className="text-sm" style={{ color: 'white' }}>
                   {t('confirmation.desc')}
                 </p>
               </div>
 
               <div className="rounded-2xl p-6" style={{ backgroundColor: '#1E1B4B' }}>
-                <h3 className="font-bold text-sm mb-4" style={{ color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <h3 className="font-bold text-sm mb-4" style={{ color: 'white', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   {t('confirmation.summaryTitle')}
                 </h3>
                 <div className="space-y-3 text-sm">
@@ -443,7 +443,7 @@ function InvestirForm() {
                     { label: t('confirmation.totalRepaid'), value: `€${fmtDec(totalRepaid)}` },
                   ].map((row, i) => (
                     <div key={i} className="flex justify-between items-center">
-                      <span style={{ color: 'rgba(255,255,255,0.5)' }}>{row.label}</span>
+                      <span style={{ color: 'white' }}>{row.label}</span>
                       <span className="font-bold" style={{ color: row.highlight ? '#00FFFF' : 'white' }}>{row.value}</span>
                     </div>
                   ))}
@@ -451,7 +451,7 @@ function InvestirForm() {
               </div>
 
               <div className="rounded-2xl p-6" style={{ backgroundColor: '#1E1B4B' }}>
-                <h3 className="font-bold text-sm mb-4" style={{ color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <h3 className="font-bold text-sm mb-4" style={{ color: 'white', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   {t('confirmation.documentsTitle')}
                 </h3>
                 <div className="space-y-3">
@@ -470,7 +470,7 @@ function InvestirForm() {
                         <span style={{ fontSize: '20px' }}>{doc.icon}</span>
                         <div>
                           <p style={{ fontSize: '13px', fontWeight: 600 }}>{doc.label}</p>
-                          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginTop: '2px' }}>{doc.sublabel}</p>
+                          <p style={{ fontSize: '11px', color: 'white', marginTop: '2px' }}>{doc.sublabel}</p>
                         </div>
                       </div>
                       <span style={{
@@ -499,7 +499,7 @@ function InvestirForm() {
             <div className="space-y-6">
               <div>
                 <h2 className="text-2xl font-bold mb-2">{t('signature.title')}</h2>
-                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <p className="text-sm" style={{ color: 'white' }}>
                   {t('signature.desc')}
                 </p>
               </div>
@@ -516,7 +516,7 @@ function InvestirForm() {
                     {t('signature.contractSoon')}
                   </span>
                 </div>
-                <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>
+                <div style={{ fontSize: '13px', color: 'white' }}>
                   {t('signature.contractDoc')}{form.prenom}_{form.nom}.pdf
                 </div>
               </div>
@@ -530,7 +530,7 @@ function InvestirForm() {
                 <input type="checkbox" checked={contractSigned}
                   onChange={e => setContractSigned(e.target.checked)}
                   style={{ accentColor: '#00FFFF', marginTop: '3px' }} />
-                <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', lineHeight: '1.6' }}>
+                <span style={{ fontSize: '13px', color: 'white', lineHeight: '1.6' }}>
                   {t('signature.checkbox1')}{' '}
                   <strong style={{ color: 'white' }}>€{fmtInt(amount)}</strong>{' '}
                   {t('signature.checkbox2')}{' '}
@@ -566,7 +566,7 @@ function InvestirForm() {
             <div className="space-y-8">
               <div>
                 <h2 className="text-2xl font-bold mb-2">{t('payment.title')}</h2>
-                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <p className="text-sm" style={{ color: 'white' }}>
                   {t('payment.desc')}
                 </p>
               </div>
@@ -579,14 +579,14 @@ function InvestirForm() {
                   { label: t('payment.amount'), value: `€${fmtInt(amount)}` },
                 ].map((row, i) => (
                   <div key={i} className="flex justify-between items-center">
-                    <span style={{ color: 'rgba(255,255,255,0.4)' }}>{row.label}</span>
+                    <span style={{ color: 'white' }}>{row.label}</span>
                     <span className="font-bold font-mono">{row.value}</span>
                   </div>
                 ))}
               </div>
               <div className="rounded-2xl p-4 text-sm"
                 style={{ backgroundColor: 'rgba(0,255,255,0.05)', border: '1px solid rgba(0,255,255,0.15)' }}>
-                <p style={{ color: 'rgba(255,255,255,0.6)' }}>
+                <p style={{ color: 'white' }}>
                   {t('payment.delayNotice1')}{' '}
                   <strong>{t('payment.delayNotice2')}</strong>{t('payment.delayNotice3')}
                 </p>
@@ -605,13 +605,13 @@ function InvestirForm() {
               <div className="text-center space-y-4">
                 <div className="text-7xl">🎉</div>
                 <h2 className="text-3xl font-bold">{t('done.title')}</h2>
-                <p className="text-sm max-w-md mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <p className="text-sm max-w-md mx-auto leading-relaxed" style={{ color: 'white' }}>
                   {t('done.desc')}
                 </p>
               </div>
 
               <div className="rounded-2xl p-6" style={{ backgroundColor: '#1E1B4B' }}>
-                <h3 className="font-bold text-sm mb-4" style={{ color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <h3 className="font-bold text-sm mb-4" style={{ color: 'white', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   {t('done.recap')}
                 </h3>
                 <div className="space-y-3 text-sm">
@@ -622,7 +622,7 @@ function InvestirForm() {
                     { label: t('done.duration'), value: t('confirmation.durationValue') },
                   ].map((row, i) => (
                     <div key={i} className="flex justify-between items-center">
-                      <span style={{ color: 'rgba(255,255,255,0.5)' }}>{row.label}</span>
+                      <span style={{ color: 'white' }}>{row.label}</span>
                       <span className="font-bold" style={{ color: 'white' }}>{row.value}</span>
                     </div>
                   ))}
@@ -630,7 +630,7 @@ function InvestirForm() {
               </div>
 
               <div className="rounded-2xl p-6" style={{ backgroundColor: '#1E1B4B' }}>
-                <h3 className="font-bold text-sm mb-4" style={{ color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <h3 className="font-bold text-sm mb-4" style={{ color: 'white', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   {t('done.nextSteps')}
                 </h3>
                 <div className="space-y-3">
@@ -644,7 +644,7 @@ function InvestirForm() {
                       }}>
                         {i + 1}
                       </div>
-                      <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', lineHeight: '1.6' }}>
+                      <p style={{ fontSize: '13px', color: 'white', lineHeight: '1.6' }}>
                         {stepText}
                       </p>
                     </div>
@@ -671,7 +671,7 @@ function InvestirForm() {
               padding: '24px',
               border: '1px solid rgba(255,255,255,0.06)',
             }}>
-              <h3 className="font-bold text-sm mb-4" style={{ color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+              <h3 className="font-bold text-sm mb-4" style={{ color: 'white', textTransform: 'uppercase', letterSpacing: '1px' }}>
                 {t('sidebar.title')}
               </h3>
               <div className="space-y-3 text-sm mb-4">
@@ -685,12 +685,12 @@ function InvestirForm() {
                   { label: t('sidebar.totalInterest'), value: `€${fmtDec(totalInterest)}` },
                 ].map((row, i) => (
                   <div key={i} className="flex justify-between items-center">
-                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>{row.label}</span>
+                    <span style={{ color: 'white' }}>{row.label}</span>
                     <span className="font-bold" style={{ color: row.highlight ? '#00FFFF' : 'white' }}>{row.value}</span>
                   </div>
                 ))}
               </div>
-              <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)', lineHeight: '1.6' }}>
+              <p className="text-xs" style={{ color: 'white', lineHeight: '1.6' }}>
                 {t('sidebar.secure')}
               </p>
             </div>

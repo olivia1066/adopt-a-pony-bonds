@@ -47,12 +47,12 @@ function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
           </span>
         </div>
         <h1 className="text-2xl font-bold text-center mb-2">Sign in</h1>
-        <p className="text-sm text-center mb-8" style={{ color: 'rgba(255,255,255,0.4)' }}>
+        <p className="text-sm text-center mb-8" style={{ color: 'white' }}>
           Restricted area — Pony team only
         </p>
         <div className="space-y-4">
           <div>
-            <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            <label className="text-xs mb-1 block" style={{ color: 'white' }}>
               Admin password
             </label>
             <input
@@ -182,12 +182,12 @@ function AdminPanel() {
           </span>
         </div>
         <div className="flex items-center gap-4">
-          <Link href="/" className="text-sm hover:opacity-70" style={{ color: 'rgba(255,255,255,0.5)' }}>
+          <Link href="/" className="text-sm hover:opacity-70" style={{ color: 'white' }}>
             ← Back to site
           </Link>
           <button onClick={handleLogout}
             className="text-sm px-4 py-2 rounded-xl"
-            style={{ backgroundColor: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)' }}>
+            style={{ backgroundColor: 'rgba(255,255,255,0.05)', color: 'white' }}>
             Sign out
           </button>
         </div>
@@ -197,7 +197,7 @@ function AdminPanel() {
 
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-1">Admin Panel</h1>
-          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>
+          <p className="text-sm" style={{ color: 'white' }}>
             Manage campaigns, investors and payments
           </p>
         </div>
@@ -211,7 +211,7 @@ function AdminPanel() {
             { label: 'Total raised', value: `€${totalCollecte.toLocaleString('en-GB')}` },
           ].map((kpi, i) => (
             <div key={i} className="rounded-2xl p-5" style={{ backgroundColor: '#1E1B4B' }}>
-              <p className="text-xs mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>{kpi.label}</p>
+              <p className="text-xs mb-2" style={{ color: 'white' }}>{kpi.label}</p>
               <p className="text-2xl font-bold" style={{ color: kpi.warn ? '#FFC800' : '#00FFFF' }}>{kpi.value}</p>
             </div>
           ))}
@@ -247,7 +247,7 @@ function AdminPanel() {
               <div className="rounded-2xl p-6 mb-6"
                 style={{ backgroundColor: '#1E1B4B', border: '1px solid rgba(0,255,255,0.3)' }}>
                 <h3 className="font-bold mb-1" style={{ color: '#00FFFF' }}>New campaign</h3>
-                <p className="text-xs mb-4" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                <p className="text-xs mb-4" style={{ color: 'white' }}>
                   Rate and duration are fixed: 8.5% / 48 months
                 </p>
                 <div className="grid grid-cols-2 gap-4">
@@ -257,7 +257,7 @@ function AdminPanel() {
                     { label: 'Start date', key: 'startDate', placeholder: '2026-09-01' },
                   ].map(field => (
                     <div key={field.key}>
-                      <label className="text-xs mb-1 block" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                      <label className="text-xs mb-1 block" style={{ color: 'white' }}>
                         {field.label}
                       </label>
                       <input type="text" placeholder={field.placeholder}
@@ -271,15 +271,15 @@ function AdminPanel() {
                   <div className="rounded-xl px-4 py-3 flex items-center gap-6"
                     style={{ backgroundColor: 'rgba(0,255,255,0.05)', border: '1px solid rgba(0,255,255,0.1)' }}>
                     <div>
-                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Rate</p>
+                      <p className="text-xs" style={{ color: 'white' }}>Rate</p>
                       <p className="font-bold" style={{ color: '#00FFFF' }}>8.5%</p>
                     </div>
                     <div>
-                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Duration</p>
+                      <p className="text-xs" style={{ color: 'white' }}>Duration</p>
                       <p className="font-bold" style={{ color: '#00FFFF' }}>36 months</p>
                     </div>
                     <div>
-                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Grace period</p>
+                      <p className="text-xs" style={{ color: 'white' }}>Grace period</p>
                       <p className="font-bold" style={{ color: '#00FFFF' }}>6 months</p>
                     </div>
                   </div>
@@ -292,7 +292,7 @@ function AdminPanel() {
                   </button>
                   <button onClick={() => setShowNewCampaign(false)}
                     className="px-6 py-2 rounded-xl text-sm"
-                    style={{ backgroundColor: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.6)' }}>
+                    style={{ backgroundColor: 'rgba(255,255,255,0.05)', color: 'white' }}>
                     Cancel
                   </button>
                 </div>
@@ -329,7 +329,7 @@ function AdminPanel() {
                       { label: 'Raised', value: `€${c.raised_amount.toLocaleString('en-GB')}` },
                     ].map((stat, i) => (
                       <div key={i}>
-                        <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.4)' }}>{stat.label}</p>
+                        <p className="text-xs mb-1" style={{ color: 'white' }}>{stat.label}</p>
                         <p className="font-bold">{stat.value}</p>
                       </div>
                     ))}
@@ -340,7 +340,7 @@ function AdminPanel() {
                       backgroundColor: '#00FFFF',
                     }} />
                   </div>
-                  <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                  <p className="text-xs mt-1" style={{ color: 'white' }}>
                     {((c.raised_amount / c.target_amount) * 100).toFixed(0)}% funded
                   </p>
                 </div>
@@ -355,7 +355,7 @@ function AdminPanel() {
             <h2 className="text-xl font-bold mb-6">Investors ({investors.length})</h2>
             <div className="space-y-4">
               {investors.length === 0 && (
-                <div className="text-center py-16" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                <div className="text-center py-16" style={{ color: 'white' }}>
                   No investors yet
                 </div>
               )}
@@ -373,12 +373,12 @@ function AdminPanel() {
                           }}>
                           KYC: {inv.kyc_status === 'Validé' ? 'Approved' : inv.kyc_status === 'Rejeté' ? 'Rejected' : 'Pending'}
                         </span>
-                        <span className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                        <span className="text-xs" style={{ color: 'white' }}>
                           {new Date(inv.created_at).toLocaleDateString('en-GB')}
                         </span>
                       </div>
                       <h3 className="font-bold text-lg">{inv.prenom} {inv.nom}</h3>
-                      <p className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                      <p className="text-sm" style={{ color: 'white' }}>
                         {inv.email} · {inv.telephone}
                       </p>
                     </div>
@@ -386,7 +386,7 @@ function AdminPanel() {
                       {inv.investments && inv.investments.length > 0 && (
                         <>
                           <p className="text-xl font-bold">€{inv.investments[0].montant?.toLocaleString('en-GB')}</p>
-                          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                          <p className="text-xs" style={{ color: 'white' }}>
                             {inv.investments[0].campaigns?.name}
                           </p>
                         </>
@@ -409,7 +409,7 @@ function AdminPanel() {
                       { label: 'IBAN', value: inv.iban },
                     ].map((field, i) => (
                       <div key={i}>
-                        <p className="text-xs mb-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>{field.label}</p>
+                        <p className="text-xs mb-0.5" style={{ color: 'white' }}>{field.label}</p>
                         <p style={{ color: 'rgba(255,255,255,0.8)' }}>{field.value}</p>
                       </div>
                     ))}
@@ -446,7 +446,7 @@ function AdminPanel() {
           <div>
             <h2 className="text-xl font-bold mb-6">Payments</h2>
             {payments.length === 0 ? (
-              <div className="text-center py-16" style={{ color: 'rgba(255,255,255,0.3)' }}>
+              <div className="text-center py-16" style={{ color: 'white' }}>
                 No payments yet
               </div>
             ) : (
@@ -456,7 +456,7 @@ function AdminPanel() {
                     <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
                       {['Date', 'Investor', 'Campaign', 'Type', 'Amount', 'Status', 'Action'].map((h, i) => (
                         <th key={i} className={`px-6 py-4 text-xs font-medium ${i >= 4 ? 'text-right' : 'text-left'}`}
-                          style={{ color: 'rgba(255,255,255,0.4)' }}>
+                          style={{ color: 'white' }}>
                           {h}
                         </th>
                       ))}
@@ -468,13 +468,13 @@ function AdminPanel() {
                         <td className="px-6 py-4">
                           {p.date_prevue ? new Date(p.date_prevue).toLocaleDateString('en-GB') : '—'}
                         </td>
-                        <td className="px-6 py-4" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                        <td className="px-6 py-4" style={{ color: 'white' }}>
                           {p.investments?.investors?.prenom} {p.investments?.investors?.nom}
                         </td>
-                        <td className="px-6 py-4" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                        <td className="px-6 py-4" style={{ color: 'white' }}>
                           {p.investments?.campaigns?.name}
                         </td>
-                        <td className="px-6 py-4" style={{ color: 'rgba(255,255,255,0.5)' }}>{p.type}</td>
+                        <td className="px-6 py-4" style={{ color: 'white' }}>{p.type}</td>
                         <td className="px-6 py-4 text-right font-bold" style={{ color: '#00FFFF' }}>
                           +€{p.montant.toFixed(2)}
                         </td>

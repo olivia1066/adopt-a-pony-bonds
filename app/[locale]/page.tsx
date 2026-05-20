@@ -42,7 +42,7 @@ function TestimonialsSection() {
         <h2 style={{ fontSize: '38px', fontWeight: 800, marginBottom: '16px' }}>
           {t('title')}
         </h2>
-        <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.5)', maxWidth: '400px', lineHeight: '1.6' }}>
+        <p style={{ fontSize: '16px', color: 'white', maxWidth: '400px', lineHeight: '1.6' }}>
           {t('subtitle')}
         </p>
       </div>
@@ -84,8 +84,8 @@ function TestimonialsSection() {
               </div>
 
               <div style={{ padding: '0 28px 24px', display: 'flex', gap: '16px', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <span style={{ fontSize: '14px', cursor: 'pointer', color: 'rgba(255,255,255,0.5)', fontWeight: 700 }}>𝕏</span>
-                <span style={{ fontSize: '14px', cursor: 'pointer', color: 'rgba(255,255,255,0.5)', fontWeight: 700 }}>in</span>
+                <span style={{ fontSize: '14px', cursor: 'pointer', color: 'white', fontWeight: 700 }}>𝕏</span>
+                <span style={{ fontSize: '14px', cursor: 'pointer', color: 'white', fontWeight: 700 }}>in</span>
               </div>
             </div>
           )
@@ -95,7 +95,7 @@ function TestimonialsSection() {
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
         <button onClick={prev} style={{ width: '44px', height: '44px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', color: 'white', fontSize: '20px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>‹</button>
         <button onClick={next} style={{ width: '44px', height: '44px', borderRadius: '50%', backgroundColor: '#00FFFF', border: 'none', color: '#13102B', fontSize: '20px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>›</button>
-        <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.3)', marginLeft: '8px' }}>
+        <span style={{ fontSize: '13px', color: 'white', marginLeft: '8px' }}>
           {current + 1} / {testimonials.length}
         </span>
       </div>
@@ -175,11 +175,11 @@ export default function Home() {
                   <div key={i} style={{ width: '22px', height: '22px', borderRadius: '50%', backgroundColor: c, border: '2px solid #13102B', marginLeft: i > 0 ? '-8px' : '0' }} />
                 ))}
               </div>
-              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
+              <span style={{ fontSize: '12px', color: 'white' }}>
                 <span style={{ color: 'white', fontWeight: 700 }}>500k+</span> {t('hero.usersBadge')}
               </span>
             </div>
-            <p style={{ marginTop: '16px', fontSize: '13px', color: 'rgba(255,255,255,0.45)', lineHeight: '1.5', paddingLeft: '4px' }}>
+            <p style={{ marginTop: '16px', fontSize: '13px', color: 'white', lineHeight: '1.5', paddingLeft: '4px' }}>
               {t('hero.riskNotice')}
             </p>
           </div>
@@ -198,7 +198,7 @@ export default function Home() {
                     { label: t('simulator.capital'), value: t('simulator.capitalValue') },
                   ].map((row, i) => (
                     <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 0' }}>
-                      <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)' }}>{row.label}</span>
+                      <span style={{ fontSize: '12px', color: 'white' }}>{row.label}</span>
                       <span style={{ fontSize: '12px', fontWeight: 700, padding: '2px 10px', borderRadius: '6px', backgroundColor: 'rgba(0,255,255,0.1)', border: '1px solid rgba(0,255,255,0.2)', color: '#00FFFF' }}>{row.value}</span>
                     </div>
                   ))}
@@ -217,13 +217,13 @@ export default function Home() {
                   onChange={e => setAmount(Number(e.target.value))}
                   style={{ accentColor: '#00FFFF', width: '100%', cursor: 'pointer' }}
                 />
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'rgba(255,255,255,0.25)', marginTop: '2px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'white', marginTop: '2px' }}>
                   <span>€500</span><span>€50,000</span>
                 </div>
 
                 <div style={{ marginTop: '12px', padding: '8px 12px', borderRadius: '10px', backgroundColor: 'rgba(0,255,255,0.06)', border: '1px solid rgba(0,255,255,0.12)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <span style={{ fontSize: '14px' }}>🛴</span>
-                  <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
+                  <span style={{ fontSize: '12px', color: 'white' }}>
                     {t('simulator.fleetFinances')}{' '}
                     <span style={{ color: '#00FFFF', fontWeight: 700 }}>
                       {amount / 2100 < 1 ? (amount / 2100).toFixed(1) : Math.floor(amount / 2100)} {t('simulator.ebikes')}
@@ -237,36 +237,36 @@ export default function Home() {
 
               <div style={{ padding: '16px 24px 24px', backgroundColor: 'rgba(0,0,0,0.15)' }}>
                 <div style={{ marginBottom: '14px' }}>
-                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '2px' }}>
+                  <p style={{ fontSize: '11px', color: 'white', marginBottom: '2px' }}>
                     {t('simulator.receiveMonthly')}
                   </p>
                   <p style={{ fontSize: '44px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-2px', lineHeight: 1 }}>
                     €{fmtDec(monthlyPayment)}
                   </p>
-                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '2px' }}>
+                  <p style={{ fontSize: '11px', color: 'white', marginTop: '2px' }}>
                     {t('simulator.fromMonth13')}
                   </p>
-                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '2px' }}>
+                  <p style={{ fontSize: '11px', color: 'white', marginTop: '2px' }}>
                     {t('simulator.graceNotice')}
                   </p>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '16px' }}>
                   <div style={{ padding: '12px 14px', borderRadius: '12px', backgroundColor: 'rgba(0,255,255,0.08)', border: '1px solid rgba(0,255,255,0.25)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', fontWeight: 700, marginBottom: '4px' }}>{t('simulator.totalRepaid')}</p>
+                    <p style={{ fontSize: '11px', color: 'white', fontWeight: 700, marginBottom: '4px' }}>{t('simulator.totalRepaid')}</p>
                     <p style={{ fontSize: '35px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
                       €{fmtInt(totalRepaid)}
                     </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     <div style={{ padding: '10px 12px', borderRadius: '10px', flex: 1, backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                      <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', marginBottom: '2px' }}>{t('simulator.totalInterest')}</p>
+                      <p style={{ fontSize: '10px', color: 'white', marginBottom: '2px' }}>{t('simulator.totalInterest')}</p>
                       <p style={{ fontSize: '15px', fontWeight: 800, color: '#00FFFF' }}>
                         €{fmtInt(totalInterest)}
                       </p>
                     </div>
                     <div style={{ padding: '10px 12px', borderRadius: '10px', flex: 1, backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                      <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', marginBottom: '2px' }}>{t('simulator.capitalInvested')}</p>
+                      <p style={{ fontSize: '10px', color: 'white', marginBottom: '2px' }}>{t('simulator.capitalInvested')}</p>
                       <p style={{ fontSize: '15px', fontWeight: 800, color: '#00FFFF' }}>
                         €{fmtInt(amount)}
                       </p>
@@ -293,7 +293,7 @@ export default function Home() {
         ].map((press, i, arr) => (
           <div key={i} style={{ flex: '1', textAlign: 'center', borderRight: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none', padding: '0 32px' }}>
             <a href={press.url} target="_blank" rel="noopener noreferrer">
-              <div style={{ height: '32px', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>
+              <div style={{ height: '32px', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', color: 'white' }}>
                 {press.name} logo
               </div>
             </a>
@@ -324,7 +324,7 @@ export default function Home() {
                 </div>
                 <div style={{ paddingTop: '8px' }}>
                   <h3 style={{ fontWeight: 700, fontSize: '17px', marginBottom: '4px' }}>{item.title}</h3>
-                  <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.75)', lineHeight: '1.6' }}>{item.desc}</p>
+                  <p style={{ fontSize: '15px', color: 'white', lineHeight: '1.6' }}>{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -336,10 +336,10 @@ export default function Home() {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
                 <span style={{ fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '100px', backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF', letterSpacing: '1px' }}>{t('campaignCard.status')}</span>
-                <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>{t('campaignCard.date')}</span>
+                <span style={{ fontSize: '13px', color: 'white' }}>{t('campaignCard.date')}</span>
               </div>
               <h3 style={{ fontSize: '22px', fontWeight: 800, marginBottom: '8px' }}>{t('campaignCard.title')}</h3>
-              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.45)', lineHeight: '1.6', marginBottom: '24px' }}>
+              <p style={{ fontSize: '14px', color: 'white', lineHeight: '1.6', marginBottom: '24px' }}>
                 {t('campaignCard.subtitle')}
               </p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', padding: '20px 0', borderTop: '1px solid rgba(255,255,255,0.07)', borderBottom: '1px solid rgba(255,255,255,0.07)', marginBottom: '24px', textAlign: 'center' }}>
@@ -350,31 +350,31 @@ export default function Home() {
                 ].map((s, i) => (
                   <div key={i}>
                     <p style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF' }}>{s.value}</p>
-                    <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginTop: '2px' }}>{s.label}</p>
+                    <p style={{ fontSize: '11px', color: 'white', marginTop: '2px' }}>{s.label}</p>
                   </div>
                 ))}
               </div>
               <div style={{ marginBottom: '16px', padding: '12px 16px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '4px' }}>{t('campaignCard.monthlyIncome')}</p>
+                <p style={{ fontSize: '11px', color: 'white', marginBottom: '4px' }}>{t('campaignCard.monthlyIncome')}</p>
                 <p style={{ fontSize: '18px', fontWeight: 800, color: '#00FFFF' }}>
-                  €{fmtInt(calcReturns(5000).monthlyPayment)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'rgba(255,255,255,0.35)' }}>{t('campaignCard.monthlyIncomeSuffix')}</span>
+                  €{fmtInt(calcReturns(5000).monthlyPayment)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'white' }}>{t('campaignCard.monthlyIncomeSuffix')}</span>
                 </p>
               </div>
               <div style={{ marginBottom: '24px', padding: '12px 16px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '4px' }}>{t('campaignCard.capitalRepaid')}</p>
+                <p style={{ fontSize: '11px', color: 'white', marginBottom: '4px' }}>{t('campaignCard.capitalRepaid')}</p>
                 <p style={{ fontSize: '18px', fontWeight: 800, color: '#00FFFF' }}>
-                  €{fmtInt(5000)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'rgba(255,255,255,0.35)' }}>{t('campaignCard.capitalRepaidSuffix')}</span>
+                  €{fmtInt(5000)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'white' }}>{t('campaignCard.capitalRepaidSuffix')}</span>
                 </p>
               </div>
               <div style={{ marginBottom: '24px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'rgba(255,255,255,0.4)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
                   <span>€{fmtInt(312000)} {t('campaignCard.raised')}</span>
                   <span style={{ fontWeight: 700, color: 'white' }}>62%</span>
                 </div>
                 <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
                   <div style={{ width: '62%', height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
                 </div>
-                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '6px' }}>€{fmtInt(500000)} {t('campaignCard.target')}</p>
+                <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>€{fmtInt(500000)} {t('campaignCard.target')}</p>
               </div>
             </div>
             <Link href="/campagne" style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '15px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none' }}>
@@ -423,7 +423,9 @@ export default function Home() {
                 {item.icon}
               </div>
               <h3 style={{ fontSize: '17px', fontWeight: 700, marginBottom: '12px' }}>{item.title}</h3>
-              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', lineHeight: '1.6' }}>{item.desc}</p>
+              <p style={{ fontSize: '14px', lineHeight: '1.6', color: 'white', textAlign: 'justify', hyphens: 'auto' }}>
+                {item.desc}
+              </p>
             </div>
           ))}
         </div>
@@ -449,7 +451,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 style={{ fontWeight: 700, fontSize: '17px', marginBottom: '6px' }}>{item.title}</h3>
-                  <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', lineHeight: '1.6' }}>{item.desc}</p>
+                  <p style={{ fontSize: '14px', color: 'white', lineHeight: '1.6' }}>{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -481,7 +483,7 @@ export default function Home() {
                   <p style={{ fontSize: '11px', fontWeight: 700, marginTop: '4px', color: '#13102B' }}>{t('comparison.ponyLabel')}</p>
                 </th>
                 {['Livret A', 'Assurance vie', 'Crowdfunding\nimmo', 'Bourse'].map((col, i) => (
-                  <th key={i} style={{ padding: '16px 20px', textAlign: 'center', color: 'rgba(255,255,255,0.5)', fontWeight: 600, fontSize: '13px' }}>{col}</th>
+                  <th key={i} style={{ padding: '16px 20px', textAlign: 'center', color: 'white', fontWeight: 600, fontSize: '13px' }}>{col}</th>
                 ))}
               </tr>
             </thead>
@@ -499,7 +501,7 @@ export default function Home() {
                   <td style={{ padding: '18px 20px', color: 'rgba(255,255,255,0.55)', fontSize: '13px', fontWeight: 500 }}>{row.label}</td>
                   <td style={{ padding: '18px 24px', textAlign: 'center', backgroundColor: row.highlight ? 'rgba(0,255,255,0.15)' : 'rgba(0,255,255,0.06)', borderLeft: '1px solid rgba(0,255,255,0.2)', borderRight: '1px solid rgba(0,255,255,0.2)', color: '#00FFFF', fontWeight: 800, fontSize: '15px' }}>{row.pony}</td>
                   {row.others.map((val, i) => (
-                    <td key={i} style={{ padding: '18px 20px', textAlign: 'center', color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>{val}</td>
+                    <td key={i} style={{ padding: '18px 20px', textAlign: 'center', color: 'white', fontSize: '13px' }}>{val}</td>
                   ))}
                 </tr>
               ))}
@@ -522,12 +524,12 @@ export default function Home() {
       {/* ── FOOTER ── */}
       <footer style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '40px 96px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <img src="/Logo.png" alt="Pony" style={{ height: '22px', width: 'auto' }} />
-        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)', maxWidth: '400px', textAlign: 'center' }}>
+        <p style={{ fontSize: '12px', color: 'white', maxWidth: '400px', textAlign: 'center' }}>
           {t('footer.disclaimer')}
         </p>
         <div style={{ display: 'flex', gap: '24px', fontSize: '12px' }}>
-          <a href="#" style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>{t('footer.privacy')}</a>
-          <a href="#" style={{ color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>{t('footer.terms')}</a>
+          <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.privacy')}</a>
+          <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.terms')}</a>
           <Link href="/admin" style={{ color: 'rgba(255,255,255,0.15)', textDecoration: 'none' }}>{t('footer.admin')}</Link>
         </div>
       </footer>

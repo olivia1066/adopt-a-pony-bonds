@@ -26,10 +26,10 @@ export default function Header() {
     }}>
       {/* Left nav */}
       <nav style={{ display: 'flex', gap: '32px', fontSize: '14px' }}>
-        <Link href="/" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
+        <Link href="/" style={{ color: 'white', textDecoration: 'none' }}>
           {t('home')}
         </Link>
-        <Link href="/campagne" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
+        <Link href="/campagne" style={{ color: 'white', textDecoration: 'none' }}>
           {t('campaigns')}
         </Link>
       </nav>

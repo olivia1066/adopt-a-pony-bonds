@@ -248,7 +248,7 @@ function AdminPanel() {
                 style={{ backgroundColor: '#1E1B4B', border: '1px solid rgba(0,255,255,0.3)' }}>
                 <h3 className="font-bold mb-1" style={{ color: '#00FFFF' }}>New campaign</h3>
                 <p className="text-xs mb-4" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                  Rate and duration are fixed: 9.5% / 36 months
+                  Rate and duration are fixed: 8.5% / 48 months
                 </p>
                 <div className="grid grid-cols-2 gap-4">
                   {[
@@ -272,7 +272,7 @@ function AdminPanel() {
                     style={{ backgroundColor: 'rgba(0,255,255,0.05)', border: '1px solid rgba(0,255,255,0.1)' }}>
                     <div>
                       <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Rate</p>
-                      <p className="font-bold" style={{ color: '#00FFFF' }}>9.5%</p>
+                      <p className="font-bold" style={{ color: '#00FFFF' }}>8.5%</p>
                     </div>
                     <div>
                       <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Duration</p>

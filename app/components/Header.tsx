@@ -1,12 +1,15 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useTranslations, useLocale } from 'next-intl'
 import { supabase } from '@/lib/supabase'
+import { Link, useRouter, usePathname } from '@/i18n/navigation'
 
 export default function Header() {
+  const t = useTranslations('header')
+  const locale = useLocale()
   const router = useRouter()
+  const pathname = usePathname()
   const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
@@ -37,6 +40,12 @@ export default function Header() {
     }
   }
 
+  function switchLocale(target: 'fr' | 'en') {
+    if (target !== locale) {
+      router.replace(pathname, { locale: target })
+    }
+  }
+
   return (
     <header style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
@@ -49,16 +58,16 @@ export default function Header() {
       {/* Left nav */}
       <nav style={{ display: 'flex', gap: '32px', fontSize: '14px' }}>
         <Link href="/" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
-          Home
+          {t('home')}
         </Link>
         <Link href="/campagne" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
-          Campaigns
+          {t('campaigns')}
         </Link>
         <button onClick={handleDashboard} style={{
           background: 'none', border: 'none', cursor: 'pointer',
           fontSize: '14px', color: 'rgba(255,255,255,0.6)', padding: 0,
         }}>
-          My Dashboard
+          {t('dashboard')}
         </button>
       </nav>
 
@@ -70,18 +79,41 @@ export default function Header() {
       </div>
 
       {/* Right */}
-      {loggedIn ? (
-        <button onClick={handleLogout} style={{
-          background: 'none', border: 'none', cursor: 'pointer',
-          fontSize: '14px', color: 'rgba(255,255,255,0.6)', padding: 0,
-        }}>
-          Sign out
-        </button>
-      ) : (
-        <Link href="/login" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
-          Log in
-        </Link>
-      )}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        {/* Language switch */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 700 }}>
+          <button
+            onClick={() => switchLocale('fr')}
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer', padding: '2px 4px',
+              color: locale === 'fr' ? '#00FFFF' : 'rgba(255,255,255,0.4)',
+            }}>
+            FR
+          </button>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>/</span>
+          <button
+            onClick={() => switchLocale('en')}
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer', padding: '2px 4px',
+              color: locale === 'en' ? '#00FFFF' : 'rgba(255,255,255,0.4)',
+            }}>
+            EN
+          </button>
+        </div>
+
+        {loggedIn ? (
+          <button onClick={handleLogout} style={{
+            background: 'none', border: 'none', cursor: 'pointer',
+            fontSize: '14px', color: 'rgba(255,255,255,0.6)', padding: 0,
+          }}>
+            {t('logout')}
+          </button>
+        ) : (
+          <Link href="/login" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
+            {t('login')}
+          </Link>
+        )}
+      </div>
     </header>
   )
 }

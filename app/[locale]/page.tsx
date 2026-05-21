@@ -297,106 +297,110 @@ export default function Home() {
         ))}
       </section>
 
-      {/* ── MISSION + CAMPAIGN ── */}
-      <section style={{ padding: '120px 96px', display: 'flex', gap: '60px', alignItems: 'stretch', position: 'relative', backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")` }}>
-        <div style={{
-          position: 'absolute', top: '40px', left: '96px', right: '96px', zIndex: 1,
-        }}>
-          <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: '1.1', color: 'white' }}>
-            {t('mission.title')}
-          </h2>
-        </div>
+      {/* ── MISSION ── */}
+      <section style={{ padding: '120px 96px' }}>
+        <h2 style={{ fontSize: '34px', fontWeight: 800, lineHeight: '1.3', color: 'white', maxWidth: '1100px', marginBottom: '176px' }}>
+          {t('mission.title')}
+        </h2>
 
-        <div style={{ flex: '1', paddingTop: '220px', display: 'flex', alignItems: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '100px' }}>
-            {[
-              { emoji: '🛴', title: t('mission.item1Title'), desc: t('mission.item1Desc') },
-              { emoji: '📅', title: t('mission.item2Title'), desc: t('mission.item2Desc') },
-              { emoji: '🎮', title: t('mission.item3Title'), desc: t('mission.item3Desc') },
-            ].map((item, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
-                <div style={{ width: '64px', height: '64px', borderRadius: '18px', flexShrink: 0, backgroundColor: 'rgba(0,255,255,0.08)', border: '1px solid rgba(0,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px' }}>
-                  {item.emoji}
-                </div>
-                <div style={{ paddingTop: '8px' }}>
-                  <h3 style={{ fontWeight: 700, fontSize: '17px', marginBottom: '4px' }}>{item.title}</h3>
-                  <p style={{ fontSize: '15px', color: 'white', lineHeight: '1.6' }}>{item.desc}</p>
-                </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 360px)', gap: '80px', justifyContent: 'space-between', marginBottom: '64px' }}>
+          {[
+            { emoji: '🛴', title: t('mission.item1Title'), desc: t('mission.item1Desc') },
+            { emoji: '📅', title: t('mission.item2Title'), desc: t('mission.item2Desc') },
+            { emoji: '🎮', title: t('mission.item3Title'), desc: t('mission.item3Desc') },
+          ].map((item, i) => (
+            <div key={i}>
+              <div style={{ width: '64px', height: '64px', borderRadius: '18px', backgroundColor: 'rgba(0,255,255,0.08)', border: '1px solid rgba(0,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', marginBottom: '24px' }}>
+                {item.emoji}
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div style={{ flex: '0 0 500px', display: 'flex', paddingTop: '220px' }}>
-          <div style={{ borderRadius: '24px', padding: '32px', backgroundColor: 'rgba(30,27,75,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                <span style={{ fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '100px', backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF', letterSpacing: '1px' }}>{t('campaignCard.status')}</span>
-                <span style={{ fontSize: '13px', color: 'white' }}>{t('campaignCard.date')}</span>
-              </div>
-              <h3 style={{ fontSize: '22px', fontWeight: 800, marginBottom: '8px' }}>{t('campaignCard.title')}</h3>
-              <p style={{ fontSize: '14px', color: 'white', lineHeight: '1.6', marginBottom: '24px' }}>
-                {t('campaignCard.subtitle')}
-              </p>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', padding: '20px 0', borderTop: '1px solid rgba(255,255,255,0.07)', borderBottom: '1px solid rgba(255,255,255,0.07)', marginBottom: '24px', textAlign: 'center' }}>
-                {[
-                  { value: t('simulator.rateValue'), label: t('campaignCard.annualRate') },
-                  { value: '48m', label: t('campaignCard.duration') },
-                  { value: '€500', label: t('campaignCard.minimum') },
-                ].map((s, i) => (
-                  <div key={i}>
-                    <p style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF' }}>{s.value}</p>
-                    <p style={{ fontSize: '11px', color: 'white', marginTop: '2px' }}>{s.label}</p>
-                  </div>
-                ))}
-              </div>
-              <div style={{ marginBottom: '16px', padding: '12px 16px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <p style={{ fontSize: '11px', color: 'white', marginBottom: '4px' }}>{t('campaignCard.monthlyIncome')}</p>
-                <p style={{ fontSize: '18px', fontWeight: 800, color: '#00FFFF' }}>
-                  €{fmtInt(calcReturns(5000).monthlyPayment)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'white' }}>{t('campaignCard.monthlyIncomeSuffix')}</span>
-                </p>
-              </div>
-              <div style={{ marginBottom: '24px', padding: '12px 16px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <p style={{ fontSize: '11px', color: 'white', marginBottom: '4px' }}>{t('campaignCard.capitalRepaid')}</p>
-                <p style={{ fontSize: '18px', fontWeight: 800, color: '#00FFFF' }}>
-                  €{fmtInt(5000)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'white' }}>{t('campaignCard.capitalRepaidSuffix')}</span>
-                </p>
-              </div>
-              <div style={{ marginBottom: '24px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
-                  <span>€{fmtInt(312000)} {t('campaignCard.raised')}</span>
-                  <span style={{ fontWeight: 700, color: 'white' }}>62%</span>
-                </div>
-                <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
-                  <div style={{ width: '62%', height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
-                </div>
-                <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>€{fmtInt(500000)} {t('campaignCard.target')}</p>
-              </div>
+              <h3 style={{ fontWeight: 700, fontSize: '20px', marginBottom: '8px', color: 'white' }}>{item.title}</h3>
+              <p style={{ fontSize: '15px', color: 'white', lineHeight: '1.6' }}>{item.desc}</p>
             </div>
-            <Link href="/campagne" style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '15px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none' }}>
-              {t('campaignCard.cta')}
-            </Link>
-          </div>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <Link href="/campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none' }}>
+            {t('hero.cta')}
+          </Link>
+          <a href="#" style={{ backgroundColor: 'transparent', color: '#00FFFF', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none', border: '2px solid #00FFFF' }}>
+            {t('hero.bookMeeting')}
+          </a>
         </div>
       </section>
 
-      {/* ── STATS BAR ── */}
-      <section style={{ borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '64px 96px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', marginBottom: '80px' }}>
-        {[
-          { value: '22', label: t('stats.cities') },
-          { value: '500+', label: t('stats.users') },
-          { value: '95%', label: t('stats.co2') },
-          { value: '20,000', label: t('stats.riders') },
-        ].map((stat, i) => (
-          <div key={i} style={{ textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.07)' : 'none', padding: '0 32px' }}>
-            <p style={{ fontSize: '44px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px' }}>
-              {stat.value}
+      {/* ── CAMPAIGN + STATS ── */}
+      <section style={{ padding: '120px 96px', display: 'flex', alignItems: 'center', position: 'relative' }}>
+
+        {/* LEFT — STATS COLUMN */}
+        <div style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'column', gap: '48px', marginLeft: '250px' }}>
+          {[
+            { value: '22', label: t('stats.cities') },
+            { value: '500+', label: t('stats.users') },
+            { value: '95%', label: t('stats.co2') },
+            { value: '20,000', label: t('stats.riders') },
+          ].map((stat, i) => (
+            <div key={i}>
+              <p style={{ fontSize: '52px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
+                {stat.value}
+              </p>
+              <p style={{ marginTop: '8px', fontSize: '11px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: '#00FFFF' }}>
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* CENTER — CAMPAIGN CARD */}
+        <div style={{ position: 'absolute', left: '50%', transform: 'translateX(calc(-50% + 160px))', width: '500px', borderRadius: '24px', padding: '32px', backgroundColor: 'rgba(30,27,75,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <span style={{ fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '100px', backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF', letterSpacing: '1px' }}>{t('campaignCard.status')}</span>
+              <span style={{ fontSize: '13px', color: 'white' }}>{t('campaignCard.date')}</span>
+            </div>
+            <h3 style={{ fontSize: '22px', fontWeight: 800, marginBottom: '8px' }}>{t('campaignCard.title')}</h3>
+            <p style={{ fontSize: '14px', color: 'white', lineHeight: '1.6', marginBottom: '24px' }}>
+              {t('campaignCard.subtitle')}
             </p>
-            <p style={{ marginTop: '6px', fontSize: '11px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: '#00FFFF' }}>
-              {stat.label}
-            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', padding: '20px 0', borderTop: '1px solid rgba(255,255,255,0.07)', borderBottom: '1px solid rgba(255,255,255,0.07)', marginBottom: '24px', textAlign: 'center' }}>
+              {[
+                { value: t('simulator.rateValue'), label: t('campaignCard.annualRate') },
+                { value: '48m', label: t('campaignCard.duration') },
+                { value: '€500', label: t('campaignCard.minimum') },
+              ].map((s, i) => (
+                <div key={i}>
+                  <p style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF' }}>{s.value}</p>
+                  <p style={{ fontSize: '11px', color: 'white', marginTop: '2px' }}>{s.label}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{ marginBottom: '16px', padding: '12px 16px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <p style={{ fontSize: '11px', color: 'white', marginBottom: '4px' }}>{t('campaignCard.monthlyIncome')}</p>
+              <p style={{ fontSize: '18px', fontWeight: 800, color: '#00FFFF' }}>
+                €{fmtInt(calcReturns(5000).monthlyPayment)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'white' }}>{t('campaignCard.monthlyIncomeSuffix')}</span>
+              </p>
+            </div>
+            <div style={{ marginBottom: '24px', padding: '12px 16px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <p style={{ fontSize: '11px', color: 'white', marginBottom: '4px' }}>{t('campaignCard.capitalRepaid')}</p>
+              <p style={{ fontSize: '18px', fontWeight: 800, color: '#00FFFF' }}>
+                €{fmtInt(5000)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'white' }}>{t('campaignCard.capitalRepaidSuffix')}</span>
+              </p>
+            </div>
+            <div style={{ marginBottom: '24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
+                <span>€{fmtInt(312000)} {t('campaignCard.raised')}</span>
+                <span style={{ fontWeight: 700, color: 'white' }}>62%</span>
+              </div>
+              <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
+                <div style={{ width: '62%', height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
+              </div>
+              <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>€{fmtInt(500000)} {t('campaignCard.target')}</p>
+            </div>
           </div>
-        ))}
+          <Link href="/campagne" style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '15px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none' }}>
+            {t('campaignCard.cta')}
+          </Link>
+        </div>
       </section>
 
       {/* ── WHY INVEST ── */}

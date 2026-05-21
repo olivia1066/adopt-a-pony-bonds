@@ -54,6 +54,9 @@
     },
     "campaignCard": {
       "status": "● OPEN",
+      "statusOngoing": "● ONGOING",
+      "statusComingSoon": "● COMING SOON",
+      "statusSoldOut": "● SOLD OUT",
       "date": "April 2026",
       "title": "Spring 2026 Fleet",
       "subtitle": "Financing 50 bikes and scooters deployed across 5 French cities.",
@@ -67,6 +70,14 @@
       "raised": "raised",
       "target": "target",
       "cta": "Adopt now →"
+    },
+    "waitlist": {
+      "title": "Be the first to know!",
+      "subtitle1": "Join the waitlist and receive an email when the next adoptions round opens.",
+      "subtitle2": "Available ponies all go within minutes!",
+      "emailLabel": "Email",
+      "emailPlaceholder": "your@email.com",
+      "submit": "Submit"
     },
     "stats": {
       "cities": "Partner cities",
@@ -98,6 +109,17 @@
       "item3Desc": "Receive news of your pony rides, earnings and maintenance interventions. Access its position in real time to visit it!",
       "item4Title": "Good city relations",
       "item4Desc": "Pony maintains close relations with city officials in order to ensure smooth operations."
+    },
+    "angelPerks": {
+      "title": "You'll be doing a service to others, to the planet, and to yourself!",
+      "item1Title": "Special angel ride prices",
+      "item1Desc": "Enjoy discounted rides across all pony vehicles in every city: no more unlock fees!",
+      "item2Title": "Free rides for your friends",
+      "item2Desc": "The more, the merrier! Give away free rides to your friends with your angel referral promo code!",
+      "item3Title": "The pony journey, front row",
+      "item3Desc": "As a pony angel, you receive regular updates on the company like new city launches, product releases, and more. You become part of a true community that actively supports pony every day.",
+      "item4Title": "Real-time tracking",
+      "item4Desc": "At the time of your investment, we allocate specific ponies to you, they become virtually yours. Receive notifications on rides and maintenance activity, and access their live GPS location anytime!"
     },
     "comparison": {
       "kicker": "How we compare",

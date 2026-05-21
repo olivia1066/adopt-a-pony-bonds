@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 
@@ -98,6 +98,77 @@ function TestimonialsSection() {
         <span style={{ fontSize: '13px', color: 'white', marginLeft: '8px' }}>
           {current + 1} / {testimonials.length}
         </span>
+      </div>
+    </section>
+  )
+}
+
+// ── Campaign status (TEMP — to be replaced by Supabase) ──
+type CampaignStatus = 'ongoing' | 'coming_soon' | 'sold_out'
+const CAMPAIGN_STATUS: CampaignStatus = 'coming_soon'
+
+function AngelPerksSection() {
+  const t = useTranslations('home.angelPerks')
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const items = [
+    { icon: '👑', titleKey: 'item1Title', descKey: 'item1Desc', imageIndex: 0 },
+    { icon: '🎁', titleKey: 'item2Title', descKey: 'item2Desc', imageIndex: 1 },
+    { icon: '📰', titleKey: 'item3Title', descKey: 'item3Desc', imageIndex: 2 },
+    { icon: '📡', titleKey: 'item4Title', descKey: 'item4Desc', imageIndex: 2 },
+  ]
+
+  // Auto-rotation every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex(prev => (prev + 1) % items.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [items.length])
+
+  const currentImageIndex = items[activeIndex].imageIndex
+
+  return (
+    <section style={{ padding: '120px 96px' }}>
+      <h2 style={{ fontSize: '34px', fontWeight: 800, lineHeight: '1.3', color: 'white', maxWidth: '1100px', marginBottom: '96px' }}>
+        {t('title')}
+      </h2>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
+        {/* LEFT — Image carousel */}
+        <div style={{ position: 'relative', height: '400px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px dashed rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+          <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>
+            Image {currentImageIndex + 1} à venir
+          </span>
+        </div>
+
+        {/* RIGHT — 4 items, only one active */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+          {items.map((item, i) => {
+            const isActive = i === activeIndex
+            return (
+              <div
+                key={i}
+                onClick={() => setActiveIndex(i)}
+                style={{
+                  cursor: 'pointer',
+                  opacity: isActive ? 1 : 0.3,
+                  transition: 'opacity 0.4s',
+                }}
+              >
+                <div style={{ width: '48px', height: '48px', borderRadius: '14px', backgroundColor: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', marginBottom: '16px' }}>
+                  {item.icon}
+                </div>
+                <h3 style={{ fontWeight: 700, fontSize: '20px', marginBottom: '8px', color: 'white' }}>
+                  {t(item.titleKey)}
+                </h3>
+                <p style={{ fontSize: '15px', color: 'white', lineHeight: '1.6' }}>
+                  {t(item.descKey)}
+                </p>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
@@ -354,54 +425,122 @@ export default function Home() {
         {/* CENTER — CAMPAIGN CARD */}
         <div style={{ position: 'absolute', left: '50%', transform: 'translateX(calc(-50% + 160px))', width: '500px', borderRadius: '24px', padding: '32px', backgroundColor: 'rgba(30,27,75,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-              <span style={{ fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '100px', backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF', letterSpacing: '1px' }}>{t('campaignCard.status')}</span>
-              <span style={{ fontSize: '13px', color: 'white' }}>{t('campaignCard.date')}</span>
+            {/* Status badge */}
+            <div style={{ marginBottom: '24px' }}>
+              <span style={{ fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '100px', backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF', letterSpacing: '1px' }}>
+                {CAMPAIGN_STATUS === 'ongoing' ? t('campaignCard.statusOngoing') : CAMPAIGN_STATUS === 'coming_soon' ? t('campaignCard.statusComingSoon') : t('campaignCard.statusSoldOut')}
+              </span>
             </div>
+
+            {/* Title + description */}
             <h3 style={{ fontSize: '22px', fontWeight: 800, marginBottom: '8px' }}>{t('campaignCard.title')}</h3>
             <p style={{ fontSize: '14px', color: 'white', lineHeight: '1.6', marginBottom: '24px' }}>
               {t('campaignCard.subtitle')}
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', padding: '20px 0', borderTop: '1px solid rgba(255,255,255,0.07)', borderBottom: '1px solid rgba(255,255,255,0.07)', marginBottom: '24px', textAlign: 'center' }}>
+
+            {/* Separator */}
+            <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '0 -32px 24px' }} />
+
+            {/* Terms — 4 lines, simulator style */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
               {[
-                { value: t('simulator.rateValue'), label: t('campaignCard.annualRate') },
-                { value: '48m', label: t('campaignCard.duration') },
-                { value: '€500', label: t('campaignCard.minimum') },
-              ].map((s, i) => (
-                <div key={i}>
-                  <p style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF' }}>{s.value}</p>
-                  <p style={{ fontSize: '11px', color: 'white', marginTop: '2px' }}>{s.label}</p>
+                { label: t('simulator.duration'), value: t('simulator.durationValue') },
+                { label: t('simulator.rate'), value: t('simulator.rateValue') },
+                { label: t('simulator.capital'), value: t('simulator.capitalValue') },
+                { label: t('simulator.gracePeriod'), value: t('simulator.gracePeriodValue') },
+              ].map((row, i) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '3px 0' }}>
+                  <span style={{ fontSize: '13px', color: 'white' }}>{row.label}</span>
+                  <span style={{ fontSize: '12px', fontWeight: 700, padding: '3px 12px', borderRadius: '6px', backgroundColor: 'rgba(0,255,255,0.1)', border: '1px solid rgba(0,255,255,0.2)', color: '#00FFFF' }}>{row.value}</span>
                 </div>
               ))}
             </div>
-            <div style={{ marginBottom: '16px', padding: '12px 16px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <p style={{ fontSize: '11px', color: 'white', marginBottom: '4px' }}>{t('campaignCard.monthlyIncome')}</p>
-              <p style={{ fontSize: '18px', fontWeight: 800, color: '#00FFFF' }}>
-                €{fmtInt(calcReturns(5000).monthlyPayment)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'white' }}>{t('campaignCard.monthlyIncomeSuffix')}</span>
-              </p>
-            </div>
-            <div style={{ marginBottom: '24px', padding: '12px 16px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <p style={{ fontSize: '11px', color: 'white', marginBottom: '4px' }}>{t('campaignCard.capitalRepaid')}</p>
-              <p style={{ fontSize: '18px', fontWeight: 800, color: '#00FFFF' }}>
-                €{fmtInt(5000)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'white' }}>{t('campaignCard.capitalRepaidSuffix')}</span>
-              </p>
-            </div>
-            <div style={{ marginBottom: '24px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
-                <span>€{fmtInt(312000)} {t('campaignCard.raised')}</span>
-                <span style={{ fontWeight: 700, color: 'white' }}>62%</span>
+
+            {/* Progress bar — only if ongoing or sold_out */}
+            {CAMPAIGN_STATUS !== 'coming_soon' && (
+              <div style={{ marginBottom: '24px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
+                  <span>€{fmtInt(CAMPAIGN_STATUS === 'sold_out' ? 500000 : 312000)} {t('campaignCard.raised')}</span>
+                  <span style={{ fontWeight: 700, color: 'white' }}>{CAMPAIGN_STATUS === 'sold_out' ? '100%' : '62%'}</span>
+                </div>
+                <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
+                  <div style={{ width: CAMPAIGN_STATUS === 'sold_out' ? '100%' : '62%', height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
+                </div>
+                <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>€{fmtInt(500000)} {t('campaignCard.target')}</p>
               </div>
-              <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
-                <div style={{ width: '62%', height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
-              </div>
-              <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>€{fmtInt(500000)} {t('campaignCard.target')}</p>
-            </div>
+            )}
           </div>
+
           <Link href="/campagne" style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '15px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none' }}>
             {t('campaignCard.cta')}
           </Link>
         </div>
       </section>
+
+      {/* ── WAITLIST ── (visible only if coming_soon or sold_out) */}
+      {CAMPAIGN_STATUS !== 'ongoing' && (
+        <section style={{ padding: '120px 96px' }}>
+          <div style={{ borderRadius: '24px', backgroundColor: '#321E64', padding: '64px', display: 'flex', alignItems: 'center', gap: '80px', maxWidth: 'calc(100% - 320px)', margin: '0 auto' }}>
+
+            {/* LEFT — Image placeholder */}
+            <div style={{ flex: '0 0 400px', height: '300px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px dashed rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>Image à venir</span>
+            </div>
+
+            {/* RIGHT — Form */}
+            <div style={{ flex: '1' }}>
+              <h2 style={{ fontSize: '32px', fontWeight: 800, marginBottom: '16px', color: 'white' }}>
+                {t('waitlist.title')}
+              </h2>
+              <p style={{ fontSize: '16px', color: 'white', lineHeight: '1.6', marginBottom: '8px' }}>
+                {t('waitlist.subtitle1')}
+              </p>
+              <p style={{ fontSize: '16px', color: 'white', lineHeight: '1.6', marginBottom: '32px' }}>
+                {t('waitlist.subtitle2')}
+              </p>
+
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: 'white', marginBottom: '8px' }}>
+                  {t('waitlist.emailLabel')}*
+                </label>
+                <input
+                  type="email"
+                  placeholder={t('waitlist.emailPlaceholder')}
+                  disabled
+                  style={{
+                    width: '100%',
+                    padding: '14px 16px',
+                    borderRadius: '10px',
+                    backgroundColor: 'rgba(0,0,0,0.2)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    color: 'white',
+                    fontSize: '14px',
+                    outline: 'none',
+                  }}
+                />
+              </div>
+
+              <button
+                disabled
+                style={{
+                  width: '100%',
+                  padding: '14px',
+                  borderRadius: '10px',
+                  backgroundColor: '#00FFFF',
+                  color: '#13102B',
+                  fontSize: '14px',
+                  fontWeight: 800,
+                  border: 'none',
+                  cursor: 'not-allowed',
+                  opacity: 0.7,
+                }}
+              >
+                {t('waitlist.submit')}
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── WHY INVEST ── */}
       <section style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: '#0D0B20' }}>
@@ -434,25 +573,19 @@ export default function Home() {
       {/* ── HOW WE OPERATE ── */}
       <section style={{ display: 'flex', alignItems: 'stretch', overflow: 'hidden', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
         <div style={{ flex: '0 0 55%', backgroundColor: '#321E64', padding: '120px 96px' }}>
-          <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px' }}>{t('howWeOperate.kicker')}</p>
-          <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: '1.1', marginBottom: '64px' }}>
-            {t('howWeOperate.title')}
-          </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '64px' }}>
             {[
               { icon: '🔋', title: t('howWeOperate.item1Title'), desc: t('howWeOperate.item1Desc') },
               { icon: '🪖', title: t('howWeOperate.item2Title'), desc: t('howWeOperate.item2Desc') },
               { icon: '📱', title: t('howWeOperate.item3Title'), desc: t('howWeOperate.item3Desc') },
               { icon: '🏙️', title: t('howWeOperate.item4Title'), desc: t('howWeOperate.item4Desc') },
             ].map((item, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
-                <div style={{ width: '48px', height: '48px', borderRadius: '14px', flexShrink: 0, backgroundColor: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>
+              <div key={i}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '14px', backgroundColor: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', marginBottom: '20px' }}>
                   {item.icon}
                 </div>
-                <div>
-                  <h3 style={{ fontWeight: 700, fontSize: '17px', marginBottom: '6px' }}>{item.title}</h3>
-                  <p style={{ fontSize: '14px', color: 'white', lineHeight: '1.6' }}>{item.desc}</p>
-                </div>
+                <h3 style={{ fontWeight: 700, fontSize: '20px', marginBottom: '8px', color: 'white' }}>{item.title}</h3>
+                <p style={{ fontSize: '15px', color: 'white', lineHeight: '1.6', maxWidth: '500px' }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -466,6 +599,9 @@ export default function Home() {
           <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: '120px', clipPath: 'polygon(0 0, 100% 0, 0 100%)', backgroundColor: '#321E64' }} />
         </div>
       </section>
+
+      {/* ── ANGEL PERKS ── */}
+      <AngelPerksSection />
 
       {/* ── COMPARISON TABLE ── */}
       <section style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>

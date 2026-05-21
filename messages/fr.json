@@ -54,6 +54,9 @@
     },
     "campaignCard": {
       "status": "● OUVERTE",
+      "statusOngoing": "● EN COURS",
+      "statusComingSoon": "● BIENTÔT DISPONIBLE",
+      "statusSoldOut": "● ÉPUISÉE",
       "date": "Avril 2026",
       "title": "Flotte Printemps 2026",
       "subtitle": "Financement de 50 vélos et trottinettes déployés dans 5 villes françaises.",
@@ -67,6 +70,14 @@
       "raised": "collectés",
       "target": "objectif",
       "cta": "Adopter maintenant →"
+    },
+    "waitlist": {
+      "title": "Soyez le premier informé !",
+      "subtitle1": "Inscrivez-vous pour être informé des prochaines ventes.",
+      "subtitle2": "Les pony sont adoptés en quelques minutes seulement !",
+      "emailLabel": "Email",
+      "emailPlaceholder": "votre@email.com",
+      "submit": "S'inscrire"
     },
     "stats": {
       "cities": "Villes partenaires",
@@ -98,6 +109,17 @@
       "item3Desc": "Recevez les actualités des trajets de vos ponies, vos revenus et les interventions de maintenance. Accédez à leur position en temps réel pour leur rendre visite !",
       "item4Title": "Bonnes relations avec les villes",
       "item4Desc": "Pony entretient des relations étroites avec les services municipaux pour garantir une exploitation fluide."
+    },
+    "angelPerks": {
+      "title": "Vous allez rendre service aux autres, à la planète et à vous-même !",
+      "item1Title": "Ridez à prix réduit",
+      "item1Desc": "Bénéficiez d'un tarif réduit sur tous les pony dans toutes les villes : vous ne payez plus les frais de déverrouillage !",
+      "item2Title": "Faites rider vos amis",
+      "item2Desc": "Plus nombreux on sera, plus vite on y arrivera ! Offrez des trajets gratuits à vos amis grâce à votre code de parrainage spécial angel !",
+      "item3Title": "L'aventure pony en première loge",
+      "item3Desc": "En tant que pony angel, vous recevez des nouvelles régulières de l'entreprise pony, ouvertures de villes, lancements de nouveaux produits etc. Vous rejoignez une véritable communauté qui soutient pony au quotidien.",
+      "item4Title": "Suivi en temps réel",
+      "item4Desc": "Au moment de votre investissement, nous vous allouons des pony qui deviennent virtuellement les vôtres. Recevez des notifications sur les trajets et les interventions de maintenance, et accédez à leur position GPS en direct !"
     },
     "comparison": {
       "kicker": "Comment nous nous comparons",

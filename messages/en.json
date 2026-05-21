@@ -98,17 +98,28 @@
       "item5Title": "Real-time tracking",
       "item5Desc": "At the time of your investment, we allocate specific ponies to you, they become virtually yours. Receive notifications on rides and maintenance activity, and access their live GPS location anytime!"
     },
+    "limitedRisks": {
+      "kicker": "LIMITED RISKS",
+      "item1Title": "Pony bears the risk of low demand",
+      "item1Desc": "Even if demand and therefore revenue falls below expectations, pony will make the monthly payments as planned.",
+      "item2Title": "Pony bears the risk of vandalism",
+      "item2Desc": "Theft and vandalism remain limited. Regardless, any losses are fully absorbed by pony and never passed on to investors. These risks are accounted for in the business model.",
+      "item3Title": "Pony bears permit risk",
+      "item3Desc": "We operate under multi-year permits across all our cities, working hand in hand with local authorities as a trusted mobility partner. Over 95% of our permits are renewed. If not, pony redeploys the fleet to other cities.",
+      "item4Title": "AMF compliant",
+      "item4Desc": "Pony Invest is an investment platform regulated by the AMF and operated by Pony SAS. Investments are structured as bonds issued to the public in accordance with the French Code monétaire et financier. A summary information document (DIS) has been filed with the AMF."
+    },
     "howWeOperate": {
       "kicker": "How we operate",
       "title": "Pony takes care of everything.",
-      "item1Title": "Maintenance & charging",
-      "item1Desc": "The pony team makes sure your bikes and scooters are safe, sound, clean and at the right place for people to find them.",
-      "item2Title": "Theft and damage",
-      "item2Desc": "For the duration of the cover, we will replace your pony with a pony of the same age in case of theft or irreversible damage.",
-      "item3Title": "Follow your fleet in realtime",
-      "item3Desc": "Receive news of your pony rides, earnings and maintenance interventions. Access its position in real time to visit it!",
-      "item4Title": "Good city relations",
-      "item4Desc": "Pony maintains close relations with city officials in order to ensure smooth operations."
+      "item1Title": "Maintenance & repairs",
+      "item1Desc": "The pony mechanic team makes sure the bikes and scooters are safe, sound, clean for users to rides. We use proven maintenance & quality control techniques in order to ensure maximum service level everyday.",
+      "item2Title": "Charging batteries & fleet rebalancing",
+      "item2Desc": "Our logistics team ensures batteries are charged and vehicles are available where and when users need them most. They operate using electric vans and cargo bikes to minimise environmental impact.",
+      "item3Title": "Design & production",
+      "item3Desc": "Our bikes are designed internally by our own engineering team and produced in France by the Manufacture Française du Cycle.",
+      "item4Title": "City relations",
+      "item4Desc": "We are working hand in hand with local authorities as a trusted mobility partner. Over 95% of our permits are renewed."
     },
     "angelPerks": {
       "title": "You'll be doing a service to others, to the planet, and to yourself!",
@@ -305,7 +316,7 @@
       "summaryTitle": "Investment summary",
       "amount": "Amount",
       "rate": "Rate",
-      "rateValue": "8.5% / year",
+      "rateValue": "8.5% x year",
       "duration": "Duration",
       "durationValue": "48 months",
       "gracePeriod": "Grace period",

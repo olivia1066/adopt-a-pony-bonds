@@ -98,17 +98,28 @@
       "item5Title": "Suivi en temps réel",
       "item5Desc": "Au moment de votre investissement, nous vous allouons des pony qui deviennent virtuellement les vôtres. Recevez des notifications sur les trajets et les interventions de maintenance, et accédez à leur position GPS en direct !"
     },
+    "limitedRisks": {
+      "kicker": "RISQUES LIMITÉS",
+      "item1Title": "Pony porte le risque sur le niveau de demande",
+      "item1Desc": "Même en cas de demande et donc de revenus inférieure aux attentes, pony effectuera le versement des mensualités prévues.",
+      "item2Title": "Pony porte le risque vandalisme",
+      "item2Desc": "Le vol et le vandalisme restent limités. Quelles que soient les pertes, elles sont entièrement absorbées par pony, sans impact pour les investisseurs. Ces risques sont pris en compte dans le modèle économique.",
+      "item3Title": "Pony assume le risque licences d'exploitation",
+      "item3Desc": "Nous avons des licences de plusieurs années avec toutes les villes ou nous opérons. Nous travaillons main dans la main avec elle en véritable partenaire mobilité. 95% de nos licences sont renouvelées. Dans le cas contraire, pony se charge de redéployer les flottes vers d'autres villes.",
+      "item4Title": "Régulé par l'AMF",
+      "item4Desc": "Pony Invest est une plateforme d'investissement dont l'activité est régulée par l'AMF, et opérée par la structure Pony SAS, qui émet des obligations au public conformément au Code monétaire et financier et a déposé à ce titre un DIS auprès de l'AMF."
+    },
     "howWeOperate": {
       "kicker": "Comment Pony opère",
       "title": "Pony s'occupe de tout.",
-      "item1Title": "Maintenance et recharge",
-      "item1Desc": "L'équipe Pony veille à ce que vos vélos et trottinettes soient sûrs, en bon état, propres et au bon endroit pour que les utilisateurs les trouvent.",
-      "item2Title": "Vol et casse",
-      "item2Desc": "Pendant la durée de la couverture, nous remplaçons votre pony par un pony du même âge en cas de vol ou de dommage irréversible.",
-      "item3Title": "Suivez votre flotte en temps réel",
-      "item3Desc": "Recevez les actualités des trajets de vos ponies, vos revenus et les interventions de maintenance. Accédez à leur position en temps réel pour leur rendre visite !",
-      "item4Title": "Bonnes relations avec les villes",
-      "item4Desc": "Pony entretient des relations étroites avec les services municipaux pour garantir une exploitation fluide."
+      "item1Title": "Maintenance & réparations",
+      "item1Desc": "Notre équipe de mécaniciens veille à ce que les vélos et trottinettes soient en bon état, fiables et propres pour les utilisateurs. Nous utilisons des techniques de maintenance et de contrôle qualité éprouvées afin de garantir un haut niveau de service à chaque trajet.",
+      "item2Title": "Recharge des batteries & gestion de flotte",
+      "item2Desc": "Notre équipe logistique veille à ce que les batteries soient chargées et que les pony soient disponibles où et quand les utilisateurs en ont le plus besoin. Elle se déplace en vans électriques et de vélos cargos afin de minimiser son impact environnemental.",
+      "item3Title": "Design & production",
+      "item3Desc": "Nos vélos sont conçus en interne par nos ingénieurs et fabriqués en France par la Manufacture Française du Cycle.",
+      "item4Title": "Relation avec les collectivités",
+      "item4Desc": "Nous travaillons main dans la main avec elle en véritable partenaire mobilité. 95% de nos licences sont renouvelées."
     },
     "angelPerks": {
       "title": "Vous allez rendre service aux autres, à la planète et à vous-même !",

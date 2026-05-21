@@ -4,6 +4,18 @@ import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 
+// ── Responsive hook ──
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+  return isMobile
+}
+
 function TestimonialsSection() {
   const t = useTranslations('home.testimonials')
   const [current, setCurrent] = useState(0)
@@ -107,6 +119,64 @@ function TestimonialsSection() {
 type CampaignStatus = 'ongoing' | 'coming_soon' | 'sold_out'
 const CAMPAIGN_STATUS: CampaignStatus = 'coming_soon'
 
+function FAQSection() {
+  const t = useTranslations('campagne.faq')
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  const faqs = [
+    { q: t('q1'), a: t('soon') },
+    { q: t('q2'), a: t('soon') },
+    { q: t('q3'), a: t('soon') },
+    { q: t('q4'), a: t('soon') },
+    { q: t('q5'), a: t('soon') },
+  ]
+
+  return (
+    <section style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+      <div style={{ marginBottom: '48px' }}>
+        <h2 style={{ fontSize: '38px', fontWeight: 800, letterSpacing: '-1px' }}>{t('title')}</h2>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '900px' }}>
+        {faqs.map((faq, i) => (
+          <div key={i} style={{
+            borderRadius: '16px',
+            backgroundColor: 'rgba(30,27,75,0.6)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            overflow: 'hidden',
+          }}>
+            <button
+              onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              style={{
+                width: '100%', display: 'flex', justifyContent: 'space-between',
+                alignItems: 'center', padding: '24px 28px',
+                background: 'none', border: 'none', cursor: 'pointer',
+                color: 'white', textAlign: 'left',
+              }}
+            >
+              <span style={{ fontSize: '17px', fontWeight: 700 }}>{faq.q}</span>
+              <span style={{
+                fontSize: '24px', fontWeight: 300, color: '#00FFFF',
+                flexShrink: 0, marginLeft: '16px', display: 'inline-block',
+                transform: openIndex === i ? 'rotate(45deg)' : 'rotate(0)',
+                transition: 'transform 0.2s',
+              }}>+</span>
+            </button>
+            {openIndex === i && (
+              <div style={{
+                padding: '0 28px 24px',
+                fontSize: '15px', lineHeight: '1.7',
+                color: 'white',
+              }}>
+                {faq.a}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 function AngelPerksSection() {
   const t = useTranslations('home.angelPerks')
   const [activeIndex, setActiveIndex] = useState(0)
@@ -193,6 +263,7 @@ export default function Home() {
   const locale = useLocale()
   const t = useTranslations('home')
   const [amount, setAmount] = useState(2000)
+  const isMobile = useIsMobile()
 
   const { monthlyPayment, totalInterest, totalRepaid } = calcReturns(amount)
 
@@ -205,30 +276,55 @@ export default function Home() {
     <main className="min-h-screen font-sans" style={{ backgroundColor: '#13102B', color: 'white' }}>
 
       {/* ── HERO ── */}
-      <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-          <img src="/Rectangle (1).png" alt=""
-            style={{
-              height: '90%', width: 'auto', objectFit: 'contain',
-              opacity: 0.18, marginRight: '5%',
-              maskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 40%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 40%, transparent 100%)',
-            }} />
-        </div>
-        <div style={{ position: 'absolute', top: '50%', left: '15%', transform: 'translate(-50%, -50%)', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,255,255,0.06) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }} />
+      <section style={{ minHeight: isMobile ? 'auto' : '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden', paddingTop: isMobile ? '40px' : '0', paddingBottom: isMobile ? '60px' : '0' }}>
+        {!isMobile && (
+          <>
+            <div style={{ position: 'absolute', inset: 0, zIndex: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+              <img src="/Rectangle (1).png" alt=""
+                style={{
+                  height: '90%', width: 'auto', objectFit: 'contain',
+                  opacity: 0.18, marginRight: '5%',
+                  maskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 40%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 40%, transparent 100%)',
+                }} />
+            </div>
+            <div style={{ position: 'absolute', top: '50%', left: '15%', transform: 'translate(-50%, -50%)', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,255,255,0.06) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }} />
+          </>
+        )}
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '60px', padding: '80px 64px 80px 96px', width: '100%', position: 'relative', zIndex: 1 }}>
+        <div style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          alignItems: isMobile ? 'stretch' : 'center',
+          justifyContent: 'space-between',
+          gap: isMobile ? '40px' : '60px',
+          padding: isMobile ? '24px' : '80px 64px 80px 96px',
+          width: '100%',
+          position: 'relative',
+          zIndex: 1
+        }}>
           {/* Left */}
-          <div style={{ flex: '0 0 auto', maxWidth: '500px', marginTop: '-80px', marginLeft: '80px' }}>
-            <div style={{ marginBottom: '28px' }}>
-              <img src="/Icon (1).png" alt="Pony Angel" style={{ width: '52px', height: '52px', borderRadius: '14px' }} />
+          <div style={{
+            flex: isMobile ? '1' : '0 0 auto',
+            maxWidth: isMobile ? '100%' : '500px',
+            marginTop: isMobile ? '0' : '-80px',
+            marginLeft: isMobile ? '0' : '80px'
+          }}>
+            <div style={{ marginBottom: isMobile ? '20px' : '28px' }}>
+              <img src="/Icon (1).png" alt="Pony Angel" style={{ width: isMobile ? '44px' : '52px', height: isMobile ? '44px' : '52px', borderRadius: '14px' }} />
             </div>
             <div style={{ marginBottom: '20px' }}>
-              <h1 style={{ fontSize: '50px', lineHeight: '1.0', fontWeight: 800, letterSpacing: '-2px', whiteSpace: 'nowrap' }}>
+              <h1 style={{
+                fontSize: isMobile ? '36px' : '50px',
+                lineHeight: '1.0',
+                fontWeight: 800,
+                letterSpacing: isMobile ? '-1px' : '-2px',
+                whiteSpace: isMobile ? 'normal' : 'nowrap'
+              }}>
                 {t('hero.title')}
               </h1>
             </div>
-            <p style={{ color: 'white', fontSize: '16px', fontWeight: 500, lineHeight: '1.5', marginBottom: '32px' }}>
+            <p style={{ color: 'white', fontSize: isMobile ? '15px' : '16px', fontWeight: 500, lineHeight: '1.5', marginBottom: isMobile ? '24px' : '32px' }}>
               {t('hero.subtitle1')}{' '}
               <span style={{ color: '#00FFFF', fontWeight: 600 }}>8,5 %</span>{t('hero.subtitle2')}
             </p>
@@ -256,18 +352,33 @@ export default function Home() {
           </div>
 
           {/* Right: simulator (2 columns) */}
-          <div style={{ flex: '0 0 720px', marginLeft: 'auto', marginTop: '-80px', marginRight: '80px' }}>
-            <div style={{ borderRadius: '24px', backgroundColor: 'rgba(30,27,75,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)', overflow: 'hidden', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+          <div style={{
+            flex: isMobile ? '1' : '0 0 720px',
+            marginLeft: isMobile ? '0' : 'auto',
+            marginTop: isMobile ? '0' : '-80px',
+            marginRight: isMobile ? '0' : '80px',
+            width: isMobile ? '100%' : 'auto'
+          }}>
+            <div style={{
+              borderRadius: '24px',
+              backgroundColor: 'rgba(30,27,75,0.9)',
+              backdropFilter: 'blur(16px)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)',
+              overflow: 'hidden',
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr'
+            }}>
 
               {/* LEFT — INPUT */}
-              <div style={{ padding: '32px', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
-                <p style={{ fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
+              <div style={{ padding: isMobile ? '24px' : '32px', borderRight: isMobile ? 'none' : '1px solid rgba(255,255,255,0.06)', borderBottom: isMobile ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
+                <p style={{ fontSize: isMobile ? '16px' : '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
                   {t('simulator.ifYouInvestWith')}
                 </p>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <span style={{ fontSize: '13px', color: 'white' }}>{t('simulator.iWantToInvest')}</span>
-                  <span style={{ fontSize: '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
+                  <span style={{ fontSize: isMobile ? '26px' : '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
                     €{fmtInt(amount)}
                   </span>
                 </div>
@@ -292,7 +403,7 @@ export default function Home() {
                   </span>
                 </div>
 
-                <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '28px -32px 20px' }} />
+                <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: isMobile ? '28px -24px 20px' : '28px -32px 20px' }} />
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   {[
@@ -310,13 +421,13 @@ export default function Home() {
               </div>
 
               {/* RIGHT — RESULTS */}
-              <div style={{ padding: '32px', backgroundColor: 'rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column' }}>
-                <p style={{ fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
+              <div style={{ padding: isMobile ? '24px' : '32px', backgroundColor: 'rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column' }}>
+                <p style={{ fontSize: isMobile ? '16px' : '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
                   {t('simulator.youReceive')}
                 </p>
 
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '4px', marginBottom: '24px' }}>
-                  <span style={{ fontSize: '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
+                  <span style={{ fontSize: isMobile ? '26px' : '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
                     €{fmtDec(monthlyPayment)}
                   </span>
                   <span title={t('simulator.paymentDetails')} style={{ fontSize: '14px', color: '#00FFFF', cursor: 'help' }}>*</span>
@@ -477,6 +588,51 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── WHY INVEST ── */}
+      <section style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: '#0D0B20' }}>
+        <p style={{
+          fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
+          color: '#00FFFF', textTransform: 'uppercase', marginBottom: '96px',
+        }}>{t('whyInvest.kicker')}</p>
+
+        {/* Ligne 1 — 3 items */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '64px', marginBottom: '80px' }}>
+          {[
+            { icon: '🛡️', title: t('whyInvest.item1Title'), desc: t('whyInvest.item1Desc') },
+            { icon: '📈', title: t('whyInvest.item2Title'), desc: t('whyInvest.item2Desc') },
+            { icon: '🏙️', title: t('whyInvest.item3Title'), desc: t('whyInvest.item3Desc') },
+          ].map((item, i) => (
+            <div key={i}>
+              <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px', marginBottom: '24px' }}>
+                {item.icon}
+              </div>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '12px' }}>{item.title}</h3>
+              <p style={{ fontSize: '15px', lineHeight: '1.6', color: 'white' }}>
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Ligne 2 — 2 items centrés */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '64px', maxWidth: 'calc(66.666% - 21px)', margin: '0 auto' }}>
+          {[
+            { icon: '🌱', title: t('whyInvest.item4Title'), desc: t('whyInvest.item4Desc') },
+            { icon: '📡', title: t('whyInvest.item5Title'), desc: t('whyInvest.item5Desc') },
+          ].map((item, i) => (
+            <div key={i}>
+              <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px', marginBottom: '24px' }}>
+                {item.icon}
+              </div>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '12px' }}>{item.title}</h3>
+              <p style={{ fontSize: '15px', lineHeight: '1.6', color: 'white' }}>
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ── WAITLIST ── (visible only if coming_soon or sold_out) */}
       {CAMPAIGN_STATUS !== 'ongoing' && (
         <section style={{ padding: '120px 96px' }}>
@@ -542,27 +698,33 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── WHY INVEST ── */}
+      {/* ── LIMITED RISKS ── */}
       <section style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: '#0D0B20' }}>
         <p style={{
           fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
           color: '#00FFFF', textTransform: 'uppercase', marginBottom: '96px',
-        }}>{t('whyInvest.kicker')}</p>
+        }}>{t('limitedRisks.kicker')}</p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '32px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '55px' }}>
           {[
-            { icon: '🛡️', title: t('whyInvest.item1Title'), desc: t('whyInvest.item1Desc') },
-            { icon: '📈', title: t('whyInvest.item2Title'), desc: t('whyInvest.item2Desc') },
-            { icon: '🏙️', title: t('whyInvest.item3Title'), desc: t('whyInvest.item3Desc') },
-            { icon: '🌱', title: t('whyInvest.item4Title'), desc: t('whyInvest.item4Desc') },
-            { icon: '📡', title: t('whyInvest.item5Title'), desc: t('whyInvest.item5Desc') },
+            { icon: '🛡️', title: t('limitedRisks.item1Title'), desc: t('limitedRisks.item1Desc') },
+            { icon: '🔒', title: t('limitedRisks.item2Title'), desc: t('limitedRisks.item2Desc') },
+            { icon: '🤝', title: t('limitedRisks.item3Title'), desc: t('limitedRisks.item3Desc') },
+            { icon: '⚖️', title: t('limitedRisks.item4Title'), desc: t('limitedRisks.item4Desc') },
           ].map((item, i) => (
-            <div key={i}>
+            <div key={i} style={{
+              padding: '24px',
+              borderRadius: '24px',
+              backgroundColor: 'rgba(30,27,75,0.9)',
+              backdropFilter: 'blur(16px)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)',
+            }}>
               <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px', marginBottom: '24px' }}>
                 {item.icon}
               </div>
-              <h3 style={{ fontSize: '17px', fontWeight: 700, marginBottom: '12px' }}>{item.title}</h3>
-              <p style={{ fontSize: '14px', lineHeight: '1.6', color: 'white', textAlign: 'justify', hyphens: 'auto' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '12px' }}>{item.title}</h3>
+              <p style={{ fontSize: '14px', lineHeight: '1.6', color: 'white' }}>
                 {item.desc}
               </p>
             </div>
@@ -573,6 +735,10 @@ export default function Home() {
       {/* ── HOW WE OPERATE ── */}
       <section style={{ display: 'flex', alignItems: 'stretch', overflow: 'hidden', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
         <div style={{ flex: '0 0 55%', backgroundColor: '#321E64', padding: '120px 96px' }}>
+          <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px' }}>{t('howWeOperate.kicker')}</p>
+          <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: '1.1', marginBottom: '64px' }}>
+            {t('howWeOperate.title')}
+          </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '64px' }}>
             {[
               { icon: '🔋', title: t('howWeOperate.item1Title'), desc: t('howWeOperate.item1Desc') },
@@ -585,7 +751,7 @@ export default function Home() {
                   {item.icon}
                 </div>
                 <h3 style={{ fontWeight: 700, fontSize: '20px', marginBottom: '8px', color: 'white' }}>{item.title}</h3>
-                <p style={{ fontSize: '15px', color: 'white', lineHeight: '1.6', maxWidth: '500px' }}>{item.desc}</p>
+                <p style={{ fontSize: '15px', color: 'white', lineHeight: '1.6', maxWidth: '1000px' }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -656,6 +822,9 @@ export default function Home() {
 
       {/* ── TESTIMONIALS ── */}
       <TestimonialsSection />
+
+      {/* ── FAQ ── */}
+      <FAQSection />
 
       {/* ── FOOTER ── */}
       <footer style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '40px 96px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

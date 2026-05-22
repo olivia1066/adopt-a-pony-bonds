@@ -454,4 +454,26 @@ html {
     font-size: 36px !important;
   }
 
+  /* ========== CAMPAGNE — CTA ========== */
+  .campagne-cta {
+    margin: 48px 16px 0 !important;
+    padding: 40px 24px !important;
+  }
+
+  .campagne-cta h2 {
+    font-size: 28px !important;
+    letter-spacing: -0.5px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .campagne-cta > p:nth-of-type(2) {
+    font-size: 14px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .campagne-cta a {
+    padding: 14px 32px !important;
+    font-size: 14px !important;
+  }
+
 }

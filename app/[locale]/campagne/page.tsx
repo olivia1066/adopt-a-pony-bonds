@@ -487,7 +487,7 @@ export default function Campagne() {
       </div>
 
       {/* ── CTA ── */}
-      <div style={{
+      <div className="campagne-cta" style={{
         margin: '80px 200px 0', borderRadius: '24px', padding: '64px',
         background: 'linear-gradient(135deg, #1E1B4B 0%, #0D0D2B 100%)',
         border: '1px solid rgba(255,255,255,0.08)',

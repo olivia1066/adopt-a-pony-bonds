@@ -384,12 +384,12 @@ export default function Campagne() {
       </div>
 
       {/* ── ABOUT ── */}
-      <div style={{ margin: '80px 200px 0' }}>
+      <div className="campagne-block campagne-about" style={{ margin: '80px 200px 0' }}>
         <p style={{
           fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
           color: '#00FFFF', textTransform: 'uppercase', marginBottom: '16px',
         }}>{t('about.kicker')}</p>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
+        <div className="campagne-block-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
           <div>
             <h2 style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1 }}>
               {t('about.title')}
@@ -417,8 +417,8 @@ export default function Campagne() {
       </div>
 
       {/* ── PROCÉDURE ── */}
-      <div style={{ margin: '80px 200px 0' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
+      <div className="campagne-block" style={{ margin: '80px 200px 0' }}>
+        <div className="campagne-block-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
           <div>
             <h2 style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1 }}>
               {t('procedure.title')}
@@ -433,8 +433,8 @@ export default function Campagne() {
       </div>
 
       {/* ── PROTECTION DU CAPITAL ── */}
-      <div style={{ margin: '80px 200px 0' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
+      <div className="campagne-block" style={{ margin: '80px 200px 0' }}>
+        <div className="campagne-block-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
           <div>
             <h2 style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1 }}>
               {t('capitalProtection.title')}

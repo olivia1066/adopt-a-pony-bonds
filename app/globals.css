@@ -412,4 +412,22 @@ html {
     gap: 12px !important;
   }
 
+  /* ========== CAMPAGNE — TEXT BLOCKS (About / Procédure / Protection) ========== */
+  .campagne-block {
+    margin: 48px 24px 0 !important;
+  }
+
+  .campagne-block-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .campagne-block-grid h2 {
+    font-size: 26px !important;
+  }
+
+  .campagne-block-grid p {
+    font-size: 14px !important;
+  }
+
 }

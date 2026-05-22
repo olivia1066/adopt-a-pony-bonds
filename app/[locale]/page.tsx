@@ -728,8 +728,8 @@ export default function Home() {
       </section>
 
       {/* ── HOW WE OPERATE ── */}
-      <section style={{ display: 'flex', alignItems: 'stretch', overflow: 'hidden', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <div style={{ flex: '0 0 55%', backgroundColor: '#321E64', padding: '120px 96px' }}>
+      <section className="how-section" style={{ display: 'flex', alignItems: 'stretch', overflow: 'hidden', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <div className="how-left" style={{ flex: '0 0 55%', backgroundColor: '#321E64', padding: '120px 96px' }}>
           <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px' }}>{t('howWeOperate.kicker')}</p>
           <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: '1.1', marginBottom: '64px' }}>
             {t('howWeOperate.title')}
@@ -752,12 +752,12 @@ export default function Home() {
           </div>
         </div>
 
-        <div style={{ flex: '1', position: 'relative', overflow: 'hidden' }}>
+        <div className="how-right" style={{ flex: '1', position: 'relative', overflow: 'hidden' }}>
           <img src="/hero-photo2.jpg" alt="Pony fleet"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
           />
           <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,200,255,0.55)', mixBlendMode: 'color' }} />
-          <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: '120px', clipPath: 'polygon(0 0, 100% 0, 0 100%)', backgroundColor: '#321E64' }} />
+          <div className="how-triangle" style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: '120px', clipPath: 'polygon(0 0, 100% 0, 0 100%)', backgroundColor: '#321E64' }} />
         </div>
       </section>
 

@@ -198,6 +198,25 @@ html {
     gap: 16px !important;
   }
 
+  /* ========== HOW WE OPERATE ========== */
+  .how-section {
+    flex-direction: column !important;
+  }
+
+  .how-left {
+    flex: 1 !important;
+    padding: 60px 24px !important;
+  }
+
+  .how-right {
+    flex: 1 !important;
+    height: 250px !important;
+  }
+
+  .how-triangle {
+    display: none !important;
+  }
+
   /* ========== WHY INVEST ========== */
   .why-section {
     padding: 60px 24px !important;

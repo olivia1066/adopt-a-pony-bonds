@@ -111,7 +111,7 @@ function InvestirForm() {
     a.code === 'OTHER' ? 1 : b.code === 'OTHER' ? -1 : (locale === 'fr' ? a.fr.localeCompare(b.fr, 'fr') : a.en.localeCompare(b.en, 'en'))
   )
 
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(3)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [investorId, setInvestorId] = useState('')

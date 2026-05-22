@@ -394,5 +394,21 @@
       "totalInterest": "Total interest",
       "secure": "🔒 Your data is secure and encrypted."
     }
+  },
+  "waitlist": {
+    "title": "Join the waitlist",
+    "subtitle": "Get an email as soon as a new campaign opens.",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone (optional)",
+    "submit": "Join the waitlist",
+    "submitting": "Submitting…",
+    "errorFillRequired": "Please fill in all required fields.",
+    "errorInvalidEmail": "Please enter a valid email.",
+    "errorGeneric": "An error occurred. Please try again.",
+    "successTitle": "You're in!",
+    "successDesc": "We'll let you know as soon as a new campaign is available.",
+    "close": "Close"
   }
 }

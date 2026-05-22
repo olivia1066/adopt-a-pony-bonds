@@ -394,5 +394,21 @@
       "totalInterest": "Intérêts totaux",
       "secure": "🔒 Vos données sont sécurisées et chiffrées."
     }
+  },
+  "waitlist": {
+    "title": "M'informer des prochaines ventes",
+    "subtitle": "Recevez un email dès qu'une nouvelle campagne ouvre.",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "phone": "Téléphone (optionnel)",
+    "submit": "S'inscrire à la waitlist",
+    "submitting": "Envoi en cours…",
+    "errorFillRequired": "Veuillez remplir tous les champs obligatoires.",
+    "errorInvalidEmail": "Veuillez saisir un email valide.",
+    "errorGeneric": "Une erreur s'est produite. Réessayez.",
+    "successTitle": "Inscription confirmée !",
+    "successDesc": "Nous vous préviendrons dès qu'une nouvelle campagne sera disponible.",
+    "close": "Fermer"
   }
 }

@@ -630,16 +630,16 @@ export default function Home() {
 
       {/* ── WAITLIST ── (visible only if coming_soon or sold_out) */}
       {CAMPAIGN_STATUS !== 'ongoing' && (
-        <section style={{ padding: '120px 96px' }}>
-          <div style={{ borderRadius: '24px', backgroundColor: '#321E64', padding: '64px', display: 'flex', alignItems: 'center', gap: '80px', maxWidth: 'calc(100% - 320px)', margin: '0 auto' }}>
+        <section className="waitlist-section" style={{ padding: '120px 96px' }}>
+          <div className="waitlist-card" style={{ borderRadius: '24px', backgroundColor: '#321E64', padding: '64px', display: 'flex', alignItems: 'center', gap: '80px', maxWidth: 'calc(100% - 320px)', margin: '0 auto' }}>
 
             {/* LEFT — Image placeholder */}
-            <div style={{ flex: '0 0 400px', height: '300px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px dashed rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="waitlist-image" style={{ flex: '0 0 400px', height: '300px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px dashed rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>Image à venir</span>
             </div>
 
             {/* RIGHT — Form */}
-            <div style={{ flex: '1' }}>
+            <div className="waitlist-form" style={{ flex: '1' }}>
               <h2 style={{ fontSize: '32px', fontWeight: 800, marginBottom: '16px', color: 'white' }}>
                 {t('waitlist.title')}
               </h2>

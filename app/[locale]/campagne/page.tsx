@@ -226,7 +226,7 @@ export default function Campagne() {
       </div>
 
       {/* ── SIMULATOR ── */}
-      <div style={{
+      <div className="campagne-simulator" style={{
         margin: '16px 200px 0',
         borderRadius: '24px', overflow: 'hidden',
         border: '1px solid rgba(255,255,255,0.08)',
@@ -234,11 +234,11 @@ export default function Campagne() {
         display: 'grid', gridTemplateColumns: '1fr 1fr',
       }}>
         {/* Left — input */}
-        <div style={{ padding: '40px', backgroundColor: '#1E1B4B' }}>
+        <div className="campagne-sim-input" style={{ padding: '40px', backgroundColor: '#1E1B4B' }}>
           
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
             <span style={{ fontSize: '22px', fontWeight: 800, color: 'white' }}>{t('simulator.ifYouInvest')}</span>
-            <span style={{ fontSize: '28px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px' }}>
+            <span className="campagne-sim-amount" style={{ fontSize: '28px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px' }}>
               €{fmtInt(amount)}
             </span>
           </div>
@@ -307,11 +307,11 @@ export default function Campagne() {
         </div>
 
         {/* Right — results */}
-        <div style={{ padding: '40px', backgroundColor: '#0D0D2B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div className="campagne-sim-results" style={{ padding: '40px', backgroundColor: '#0D0D2B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
               <span style={{ fontSize: '22px', fontWeight: 800, color: 'white' }}>{t('simulator.receiveMonthly')}</span>
-              <span style={{ fontSize: '52px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-2px', lineHeight: 1 }}>
+              <span className="campagne-sim-monthly" style={{ fontSize: '52px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-2px', lineHeight: 1 }}>
                 €{fmtDec(monthlyPayment)}
               </span>
             </div>
@@ -330,7 +330,7 @@ export default function Campagne() {
               </a>
             </div>
 
-           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
+           <div className="campagne-sim-summary" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
               <div style={{
                 borderRadius: '14px', padding: '20px',
                 backgroundColor: 'rgba(0,255,255,0.08)',

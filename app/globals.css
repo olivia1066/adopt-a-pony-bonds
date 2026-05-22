@@ -383,4 +383,33 @@ html {
     border-bottom: none !important;
   }
 
+  /* ========== CAMPAGNE — SIMULATOR ========== */
+  .campagne-simulator {
+    margin: 24px 16px 0 !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .campagne-sim-input,
+  .campagne-sim-results {
+    padding: 24px !important;
+  }
+
+  .campagne-sim-input {
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  }
+
+  .campagne-sim-amount {
+    font-size: 24px !important;
+  }
+
+  .campagne-sim-monthly {
+    font-size: 38px !important;
+    letter-spacing: -1px !important;
+  }
+
+  .campagne-sim-summary {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
 }

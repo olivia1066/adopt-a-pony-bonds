@@ -507,10 +507,10 @@ export default function Home() {
       </section>
 
       {/* ── CAMPAIGN + STATS ── */}
-      <section style={{ padding: '120px 96px', display: 'flex', alignItems: 'center', position: 'relative' }}>
+      <section className="campaign-section" style={{ padding: '120px 96px', display: 'flex', alignItems: 'center', position: 'relative' }}>
 
         {/* LEFT — STATS COLUMN */}
-        <div style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'column', gap: '48px', marginLeft: '250px' }}>
+        <div className="campaign-stats" style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'column', gap: '48px', marginLeft: '250px' }}>
           {[
             { value: '22', label: t('stats.cities') },
             { value: '500+', label: t('stats.users') },
@@ -529,7 +529,7 @@ export default function Home() {
         </div>
 
         {/* CENTER — CAMPAIGN CARD */}
-        <div style={{ position: 'absolute', left: '50%', transform: 'translateX(calc(-50% + 160px))', width: '500px', borderRadius: '24px', padding: '32px', backgroundColor: 'rgba(30,27,75,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div className="campaign-card" style={{ position: 'absolute', left: '50%', transform: 'translateX(calc(-50% + 160px))', width: '500px', borderRadius: '24px', padding: '32px', backgroundColor: 'rgba(30,27,75,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             {/* Status badge */}
             <div style={{ marginBottom: '24px' }}>

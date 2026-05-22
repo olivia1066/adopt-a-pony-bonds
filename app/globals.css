@@ -36,6 +36,7 @@ h1, h2, h3, h4, h5, h6, p, span, a, button, input, select {
 html {
   scroll-behavior: smooth;
 }
+
 /* ====================================== */
 /* ======= RESPONSIVE — MOBILE ========== */
 /* ====================================== */
@@ -44,6 +45,12 @@ html {
 /* Les !important sont nécessaires pour surcharger les styles inline du JSX */
 
 @media (max-width: 768px) {
+
+  /* ========== GLOBAL ========== */
+  body, html {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
 
   /* ========== HERO ========== */
   .hero-section {
@@ -104,8 +111,7 @@ html {
     font-size: 26px !important;
   }
 
-
-    /* ========== MISSION ========== */
+  /* ========== MISSION ========== */
   .mission-section {
     padding: 60px 24px !important;
   }
@@ -113,6 +119,12 @@ html {
   .mission-title {
     font-size: 24px !important;
     margin-bottom: 48px !important;
+  }
+
+  .mission-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+    margin-bottom: 32px !important;
   }
 
   /* ========== PRESS ========== */
@@ -127,6 +139,30 @@ html {
   .press-item {
     border-right: none !important;
     padding: 12px !important;
+  }
+
+  /* ========== CAMPAIGN + STATS ========== */
+  .campaign-section {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 60px 24px !important;
+    gap: 48px !important;
+  }
+
+  .campaign-stats {
+    margin-left: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px !important;
+    width: 100% !important;
+  }
+
+  .campaign-card {
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    padding: 24px !important;
   }
 
   /* ========== HEADER MOBILE ========== */
@@ -155,11 +191,4 @@ html {
     margin-right: 0 !important;
   }
 
-}
-
-@media (max-width: 768px) {
-  body, html {
-    overflow-x: hidden !important;
-    max-width: 100vw !important;
-  }
 }

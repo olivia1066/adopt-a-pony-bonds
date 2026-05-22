@@ -115,10 +115,18 @@ html {
     margin-bottom: 48px !important;
   }
 
-  .mission-grid {
-    grid-template-columns: 1fr !important;
-    gap: 48px !important;
-    margin-bottom: 32px !important;
+  /* ========== PRESS ========== */
+  .press-section {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+    padding: 32px 24px !important;
+    margin-bottom: 40px !important;
+  }
+
+  .press-item {
+    border-right: none !important;
+    padding: 12px !important;
   }
 
   /* ========== HEADER MOBILE ========== */

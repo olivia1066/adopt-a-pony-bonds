@@ -457,14 +457,14 @@ export default function Home() {
       </section>
 
       {/* ── PRESS ── */}
-      <section style={{ borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '48px 96px', marginBottom: '80px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '48px' }}>
+      <section className="press-section" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '48px 96px', marginBottom: '80px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '48px' }}>
         {[
           { name: 'Maddyness', url: 'https://www.maddyness.com' },
           { name: 'le Bonbon', url: 'https://www.lebonbon.fr' },
           { name: 'TRAX', url: 'https://www.traxmag.com' },
           { name: 'LE FIGARO', url: 'https://www.lefigaro.fr' },
         ].map((press, i, arr) => (
-          <div key={i} style={{ flex: '1', textAlign: 'center', borderRight: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none', padding: '0 32px' }}>
+          <div key={i} className="press-item" style={{ flex: '1', textAlign: 'center', borderRight: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none', padding: '0 32px' }}>
             <a href={press.url} target="_blank" rel="noopener noreferrer">
               <div style={{ height: '32px', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', color: 'white' }}>
                 {press.name} logo

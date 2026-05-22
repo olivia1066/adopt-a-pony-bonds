@@ -293,18 +293,18 @@ export default function Home() {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '60px',
-          padding: '80px 64px 80px 96px',
+          gap: '80px',
+          padding: '80px 64px',
+          maxWidth: '1400px',
+          margin: '0 auto',
           width: '100%',
           position: 'relative',
           zIndex: 1
         }}>
           {/* Left */}
           <div className="hero-left" style={{
-            flex: '0 0 auto',
-            maxWidth: '500px',
-            marginTop: '-80px',
-            marginLeft: '80px'
+            flex: '1 1 auto',
+            maxWidth: '500px'
           }}>
             <div style={{ marginBottom: '28px' }}>
               <img src="/Icon (1).png" alt="Pony Angel" style={{ width: '52px', height: '52px', borderRadius: '14px' }} />
@@ -349,10 +349,7 @@ export default function Home() {
 
           {/* Right: simulator (2 columns) */}
           <div className="hero-right" style={{
-            flex: '0 0 720px',
-            marginLeft: 'auto',
-            marginTop: '-80px',
-            marginRight: '80px'
+            flex: '0 0 720px'
           }}>
             <div className="simulator-grid" style={{
               borderRadius: '24px',

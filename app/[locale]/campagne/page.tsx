@@ -531,16 +531,16 @@ export default function Campagne() {
       <FaqSection />
 
       {/* ── FOOTER ── */}
-      <footer style={{
+      <footer className="campagne-footer" style={{
         borderTop: '1px solid rgba(255,255,255,0.05)',
         padding: '32px 40px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
         <img src="/Logo.png" alt="Pony" style={{ height: '22px', width: 'auto' }} />
-        <p style={{ fontSize: '12px', color: 'white', textAlign: 'center', maxWidth: '400px' }}>
+        <p className="campagne-footer-disclaimer" style={{ fontSize: '12px', color: 'white', textAlign: 'center', maxWidth: '400px' }}>
           {t('footer.disclaimer')}
         </p>
-        <div style={{ display: 'flex', gap: '24px', fontSize: '12px' }}>
+        <div className="campagne-footer-links" style={{ display: 'flex', gap: '24px', fontSize: '12px' }}>
           <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.privacy')}</a>
           <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.terms')}</a>
         </div>

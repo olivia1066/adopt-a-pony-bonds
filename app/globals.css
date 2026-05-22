@@ -500,4 +500,21 @@ html {
     font-size: 14px !important;
   }
 
+  /* ========== CAMPAGNE — FOOTER ========== */
+  .campagne-footer {
+    flex-direction: column !important;
+    padding: 32px 24px !important;
+    gap: 20px !important;
+    text-align: center !important;
+  }
+
+  .campagne-footer-disclaimer {
+    max-width: 100% !important;
+  }
+
+  .campagne-footer-links {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+
 }

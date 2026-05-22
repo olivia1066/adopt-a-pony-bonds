@@ -694,13 +694,13 @@ export default function Home() {
       )}
 
       {/* ── LIMITED RISKS ── */}
-      <section style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: '#0D0B20' }}>
+      <section className="risks-section" style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: '#0D0B20' }}>
         <p style={{
           fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
           color: '#00FFFF', textTransform: 'uppercase', marginBottom: '96px',
         }}>{t('limitedRisks.kicker')}</p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '55px' }}>
+        <div className="risks-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '55px' }}>
           {[
             { icon: '🛡️', title: t('limitedRisks.item1Title'), desc: t('limitedRisks.item1Desc') },
             { icon: '🔒', title: t('limitedRisks.item2Title'), desc: t('limitedRisks.item2Desc') },

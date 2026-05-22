@@ -188,6 +188,16 @@ html {
     width: 100% !important;
   }
 
+  /* ========== LIMITED RISKS ========== */
+  .risks-section {
+    padding: 60px 24px !important;
+  }
+
+  .risks-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
   /* ========== WHY INVEST ========== */
   .why-section {
     padding: 60px 24px !important;

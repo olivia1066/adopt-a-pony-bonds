@@ -44,9 +44,9 @@ function FaqSection() {
   ]
 
   return (
-    <div style={{ margin: '80px 200px', paddingBottom: '40px' }}>
+    <div className="campagne-faq" style={{ margin: '80px 200px', paddingBottom: '40px' }}>
       <div style={{ marginBottom: '48px' }}>
-        <h2 style={{ fontSize: '56px', fontWeight: 800, letterSpacing: '-2px' }}>{t('title')}</h2>
+        <h2 className="campagne-faq-title" style={{ fontSize: '56px', fontWeight: 800, letterSpacing: '-2px' }}>{t('title')}</h2>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {faqs.map((faq, i) => (
@@ -58,6 +58,7 @@ function FaqSection() {
           }}>
             <button
               onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              className="campagne-faq-button"
               style={{
                 width: '100%', display: 'flex', justifyContent: 'space-between',
                 alignItems: 'center', padding: '24px 28px',
@@ -74,7 +75,7 @@ function FaqSection() {
               }}>+</span>
             </button>
             {openIndex === i && (
-              <div style={{
+              <div className="campagne-faq-answer" style={{
                 padding: '0 28px 24px',
                 fontSize: '15px', lineHeight: '1.7',
                 color: 'white',

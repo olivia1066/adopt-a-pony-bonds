@@ -150,11 +150,7 @@ export default function Campagne() {
         />
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to right, rgba(13,13,43,0.75) 25%, rgba(13,13,43,0.2) 60%, rgba(13,13,43,0.6) 100%)',
-        }} />
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(to top, rgba(13,13,43,0.8) 0%, transparent 50%)',
+          background: 'linear-gradient(to top, rgba(13,13,43,0.85) 0%, rgba(13,13,43,0.4) 30%, transparent 60%)',
         }} />
 
         <div className="campagne-hero-content" style={{ position: 'absolute', bottom: 0, left: 0, padding: '40px', zIndex: 2 }}>
@@ -179,33 +175,52 @@ export default function Campagne() {
         <div className="campagne-hero-card" style={{
           position: 'absolute', right: '40px', top: '50%',
           transform: 'translateY(-50%)', zIndex: 2,
-          width: '320px', borderRadius: '20px', padding: '32px',
-          backgroundColor: 'rgba(13,11,32,0.98)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255,255,255,0.15)',
-          boxShadow: '0 16px 48px rgba(0,0,0,0.6)',
+          width: '360px', borderRadius: '24px', padding: '24px',
+          backgroundColor: 'rgba(30,27,75,0.9)',
+          backdropFilter: 'blur(16px)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)',
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <span style={{ fontSize: '14px', color: 'white' }}>{t('hero.statusLabel')}</span>
+          {/* Status row */}
+          <div style={{
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            marginBottom: '14px',
+          }}>
+            <span style={{ fontSize: '14px', fontWeight: 700, color: 'white' }}>
+              {t('hero.statusLabel')}
+            </span>
             <span style={{
-              fontSize: '12px', padding: '5px 12px', borderRadius: '100px', fontWeight: 700,
-              backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF',
-            }}>{t('hero.statusOpen')}</span>
+              fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '100px',
+              backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF', letterSpacing: '1px',
+            }}>
+              {t('hero.statusOpen')}
+            </span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
+
+          {/* Separator */}
+          <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '0 -24px 16px' }} />
+
+          {/* Terms — 4 lines with pills */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '18px' }}>
             {[
-              { label: t('hero.interestRate'), value: t('simulator.rateValue') },
-              { label: t('hero.duration'), value: t('simulator.durationValue') },
-              { label: t('hero.capital'), value: t('hero.capitalValue') },
-              { label: t('hero.minInvestment'), value: '€500' },
+              { label: t('simulator.duration'), value: t('simulator.durationValue') },
+              { label: t('simulator.rate'), value: t('simulator.rateValue') },
+              { label: t('simulator.capital'), value: t('simulator.capitalValue') },
+              { label: t('simulator.gracePeriod'), value: t('simulator.gracePeriodValue') },
             ].map((row, i) => (
-              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '15px' }}>
-                <span style={{ color: 'white' }}>{row.label}</span>
-                <span style={{ fontWeight: 700, color: 'white' }}>{row.value}</span>
+              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '3px 0' }}>
+                <span style={{ fontSize: '13px', color: 'white' }}>{row.label}</span>
+                <span style={{
+                  fontSize: '12px', fontWeight: 700, padding: '3px 12px', borderRadius: '6px',
+                  backgroundColor: 'rgba(0,255,255,0.1)', border: '1px solid rgba(0,255,255,0.2)',
+                  color: '#00FFFF',
+                }}>{row.value}</span>
               </div>
             ))}
           </div>
-          <div style={{ marginBottom: '12px' }}>
+
+          {/* Progress bar */}
+          <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
               <span>€{fmtInt(campaign?.raised_amount ?? 312000)} {t('hero.raised')}</span>
               <span style={{ fontWeight: 700 }}>{raisedPct.toFixed(0)}%</span>
@@ -220,8 +235,41 @@ export default function Campagne() {
               €{fmtInt(campaign?.target_amount ?? 500000)} {t('hero.target')}
             </p>
           </div>
-          <div style={{ fontSize: '12px', color: 'white', marginTop: '4px' }}>
-            {t('hero.protected')}
+
+          {/* Capital protected — hover popover */}
+          <div style={{
+            marginTop: '14px', position: 'relative', display: 'inline-block', cursor: 'help',
+          }}
+          className="campagne-capital-protected">
+            <span style={{ fontSize: '12px', color: 'white', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              🛡️ <span style={{ fontWeight: 700 }}>{t('hero.capitalProtectedTitle')}</span>
+              <span style={{
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                width: '16px', height: '16px', borderRadius: '50%',
+                backgroundColor: 'rgba(255,255,255,0.1)', color: 'white',
+                fontSize: '10px', fontWeight: 700,
+              }}>?</span>
+            </span>
+            <div className="campagne-capital-protected-popover" style={{
+              position: 'absolute', bottom: 'calc(100% + 12px)', left: '0',
+              width: '300px', padding: '16px',
+              backgroundColor: '#0D0B20', borderRadius: '12px',
+              border: '1px solid rgba(255,255,255,0.1)',
+              boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
+              fontSize: '12px', lineHeight: '1.5', color: 'white',
+              opacity: 0, pointerEvents: 'none',
+              transition: 'opacity 0.2s',
+              zIndex: 10,
+            }}>
+              {t('hero.capitalProtectedDesc')}
+              <div style={{
+                position: 'absolute', top: '100%', left: '20px',
+                width: 0, height: 0,
+                borderLeft: '8px solid transparent',
+                borderRight: '8px solid transparent',
+                borderTop: '8px solid #0D0B20',
+              }} />
+            </div>
           </div>
         </div>
       </div>

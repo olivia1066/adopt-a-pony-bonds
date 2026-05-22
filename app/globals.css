@@ -41,6 +41,12 @@ html {
   display: none;
 }
 
+/* Capital protected — popover on hover */
+.campagne-capital-protected:hover .campagne-capital-protected-popover {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
 /* ====================================== */
 /* ======= RESPONSIVE — MOBILE ========== */
 /* ====================================== */

@@ -276,55 +276,51 @@ export default function Home() {
     <main className="min-h-screen font-sans" style={{ backgroundColor: '#13102B', color: 'white' }}>
 
       {/* ── HERO ── */}
-      <section style={{ minHeight: isMobile ? 'auto' : '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden', paddingTop: isMobile ? '40px' : '0', paddingBottom: isMobile ? '60px' : '0' }}>
-        {!isMobile && (
-          <>
-            <div style={{ position: 'absolute', inset: 0, zIndex: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-              <img src="/Rectangle (1).png" alt=""
-                style={{
-                  height: '90%', width: 'auto', objectFit: 'contain',
-                  opacity: 0.18, marginRight: '5%',
-                  maskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 40%, transparent 100%)',
-                  WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 40%, transparent 100%)',
-                }} />
-            </div>
-            <div style={{ position: 'absolute', top: '50%', left: '15%', transform: 'translate(-50%, -50%)', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,255,255,0.06) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }} />
-          </>
-        )}
+      <section className="hero-section" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
+        <div className="hero-bg-image" style={{ position: 'absolute', inset: 0, zIndex: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+          <img src="/Rectangle (1).png" alt=""
+            style={{
+              height: '90%', width: 'auto', objectFit: 'contain',
+              opacity: 0.18, marginRight: '5%',
+              maskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 40%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 40%, transparent 100%)',
+            }} />
+        </div>
+        <div className="hero-glow" style={{ position: 'absolute', top: '50%', left: '15%', transform: 'translate(-50%, -50%)', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,255,255,0.06) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }} />
 
-        <div style={{
+        <div className="hero-container" style={{
           display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-          alignItems: isMobile ? 'stretch' : 'center',
+          flexDirection: 'row',
+          alignItems: 'center',
           justifyContent: 'space-between',
-          gap: isMobile ? '40px' : '60px',
-          padding: isMobile ? '24px' : '80px 64px 80px 96px',
+          gap: '60px',
+          padding: '80px 64px 80px 96px',
           width: '100%',
           position: 'relative',
           zIndex: 1
         }}>
           {/* Left */}
-          <div style={{
-            flex: isMobile ? '1' : '0 0 auto',
-            maxWidth: isMobile ? '100%' : '500px',
-            marginTop: isMobile ? '0' : '-80px',
-            marginLeft: isMobile ? '0' : '80px'
+          <div className="hero-left" style={{
+            flex: '0 0 auto',
+            maxWidth: '500px',
+            marginTop: '-80px',
+            marginLeft: '80px'
           }}>
-            <div style={{ marginBottom: isMobile ? '20px' : '28px' }}>
-              <img src="/Icon (1).png" alt="Pony Angel" style={{ width: isMobile ? '44px' : '52px', height: isMobile ? '44px' : '52px', borderRadius: '14px' }} />
+            <div style={{ marginBottom: '28px' }}>
+              <img src="/Icon (1).png" alt="Pony Angel" style={{ width: '52px', height: '52px', borderRadius: '14px' }} />
             </div>
             <div style={{ marginBottom: '20px' }}>
-              <h1 style={{
-                fontSize: isMobile ? '36px' : '50px',
+              <h1 className="hero-title" style={{
+                fontSize: '50px',
                 lineHeight: '1.0',
                 fontWeight: 800,
-                letterSpacing: isMobile ? '-1px' : '-2px',
-                whiteSpace: isMobile ? 'normal' : 'nowrap'
+                letterSpacing: '-2px',
+                whiteSpace: 'nowrap'
               }}>
                 {t('hero.title')}
               </h1>
             </div>
-            <p style={{ color: 'white', fontSize: isMobile ? '15px' : '16px', fontWeight: 500, lineHeight: '1.5', marginBottom: isMobile ? '24px' : '32px' }}>
+            <p className="hero-subtitle" style={{ color: 'white', fontSize: '16px', fontWeight: 500, lineHeight: '1.5', marginBottom: '32px' }}>
               {t('hero.subtitle1')}{' '}
               <span style={{ color: '#00FFFF', fontWeight: 600 }}>8,5 %</span>{t('hero.subtitle2')}
             </p>
@@ -352,14 +348,13 @@ export default function Home() {
           </div>
 
           {/* Right: simulator (2 columns) */}
-          <div style={{
-            flex: isMobile ? '1' : '0 0 720px',
-            marginLeft: isMobile ? '0' : 'auto',
-            marginTop: isMobile ? '0' : '-80px',
-            marginRight: isMobile ? '0' : '80px',
-            width: isMobile ? '100%' : 'auto'
+          <div className="hero-right" style={{
+            flex: '0 0 720px',
+            marginLeft: 'auto',
+            marginTop: '-80px',
+            marginRight: '80px'
           }}>
-            <div style={{
+            <div className="simulator-grid" style={{
               borderRadius: '24px',
               backgroundColor: 'rgba(30,27,75,0.9)',
               backdropFilter: 'blur(16px)',
@@ -367,18 +362,18 @@ export default function Home() {
               boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)',
               overflow: 'hidden',
               display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr'
+              gridTemplateColumns: '1fr 1fr'
             }}>
 
               {/* LEFT — INPUT */}
-              <div style={{ padding: isMobile ? '24px' : '32px', borderRight: isMobile ? 'none' : '1px solid rgba(255,255,255,0.06)', borderBottom: isMobile ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
-                <p style={{ fontSize: isMobile ? '16px' : '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
+              <div className="simulator-input" style={{ padding: '32px', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+                <p style={{ fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
                   {t('simulator.ifYouInvestWith')}
                 </p>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <span style={{ fontSize: '13px', color: 'white' }}>{t('simulator.iWantToInvest')}</span>
-                  <span style={{ fontSize: isMobile ? '26px' : '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
+                  <span className="simulator-amount" style={{ fontSize: '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
                     €{fmtInt(amount)}
                   </span>
                 </div>
@@ -403,7 +398,7 @@ export default function Home() {
                   </span>
                 </div>
 
-                <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: isMobile ? '28px -24px 20px' : '28px -32px 20px' }} />
+                <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '28px -32px 20px' }} />
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   {[
@@ -421,13 +416,13 @@ export default function Home() {
               </div>
 
               {/* RIGHT — RESULTS */}
-              <div style={{ padding: isMobile ? '24px' : '32px', backgroundColor: 'rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column' }}>
-                <p style={{ fontSize: isMobile ? '16px' : '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
+              <div className="simulator-results" style={{ padding: '32px', backgroundColor: 'rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column' }}>
+                <p style={{ fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
                   {t('simulator.youReceive')}
                 </p>
 
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '4px', marginBottom: '24px' }}>
-                  <span style={{ fontSize: isMobile ? '26px' : '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
+                  <span className="simulator-monthly" style={{ fontSize: '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
                     €{fmtDec(monthlyPayment)}
                   </span>
                   <span title={t('simulator.paymentDetails')} style={{ fontSize: '14px', color: '#00FFFF', cursor: 'help' }}>*</span>

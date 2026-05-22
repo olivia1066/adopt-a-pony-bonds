@@ -36,3 +36,72 @@ h1, h2, h3, h4, h5, h6, p, span, a, button, input, select {
 html {
   scroll-behavior: smooth;
 }
+/* ====================================== */
+/* ======= RESPONSIVE — MOBILE ========== */
+/* ====================================== */
+
+/* Tout ce qui est dans @media (max-width: 768px) s'applique aux écrans < 768px */
+/* Les !important sont nécessaires pour surcharger les styles inline du JSX */
+
+@media (max-width: 768px) {
+
+  /* ========== HERO ========== */
+  .hero-section {
+    min-height: auto !important;
+    padding: 40px 0 60px !important;
+  }
+
+  .hero-bg-image,
+  .hero-glow {
+    display: none !important;
+  }
+
+  .hero-container {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 40px !important;
+    padding: 24px !important;
+  }
+
+  .hero-left {
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .hero-title {
+    font-size: 36px !important;
+    letter-spacing: -1px !important;
+    white-space: normal !important;
+  }
+
+  .hero-subtitle {
+    font-size: 15px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .hero-right {
+    flex: 1 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .simulator-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .simulator-input,
+  .simulator-results {
+    padding: 24px !important;
+  }
+
+  .simulator-input {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  }
+
+  .simulator-amount,
+  .simulator-monthly {
+    font-size: 26px !important;
+  }
+
+}

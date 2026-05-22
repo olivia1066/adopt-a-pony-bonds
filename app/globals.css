@@ -586,4 +586,14 @@ html {
     padding: 20px !important;
   }
 
+  /* ========== INVESTIR — KYC FORM ========== */
+  .invest-kyc-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .invest-kyc-grid > .col-span-2 {
+    grid-column: span 1 / span 1 !important;
+  }
+
 }

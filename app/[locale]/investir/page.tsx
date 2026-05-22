@@ -280,7 +280,7 @@ function InvestirForm() {
 
               <div>
                 <h2 className="text-xl font-bold mb-4">{t('kyc.personalInfo')}</h2>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="invest-kyc-grid grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.firstName')} *</label>
                     <input type="text" value={form.prenom} onChange={e => update('prenom', e.target.value)}
@@ -394,7 +394,7 @@ function InvestirForm() {
 
               <div>
                 <h2 className="text-xl font-bold mb-4">{t('kyc.documents')}</h2>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="invest-kyc-grid grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.documentType')} *</label>
                     <select value={form.documentType} onChange={e => update('documentType', e.target.value)}

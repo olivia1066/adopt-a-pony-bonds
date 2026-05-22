@@ -45,13 +45,13 @@ function TestimonialsSection() {
   }
 
   return (
-    <section style={{
+    <section className="testimonials-section" style={{
       padding: '120px 96px',
       borderTop: '1px solid rgba(255,255,255,0.05)',
       backgroundColor: '#13102B',
     }}>
       <div style={{ marginBottom: '64px' }}>
-        <h2 style={{ fontSize: '38px', fontWeight: 800, marginBottom: '16px' }}>
+        <h2 className="testimonials-title" style={{ fontSize: '38px', fontWeight: 800, marginBottom: '16px' }}>
           {t('title')}
         </h2>
         <p style={{ fontSize: '16px', color: 'white', maxWidth: '400px', lineHeight: '1.6' }}>
@@ -59,7 +59,7 @@ function TestimonialsSection() {
         </p>
       </div>
 
-      <div style={{ display: 'flex', gap: '24px', marginBottom: '40px' }}>
+      <div className="testimonials-row" style={{ display: 'flex', gap: '24px', marginBottom: '40px' }}>
         {getVisible().map((idx, pos) => {
           const tm = testimonials[idx]
           return (
@@ -132,9 +132,9 @@ function FAQSection() {
   ]
 
   return (
-    <section style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+    <section className="faq-section" style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
       <div style={{ marginBottom: '48px' }}>
-        <h2 style={{ fontSize: '38px', fontWeight: 800, letterSpacing: '-1px' }}>{t('title')}</h2>
+        <h2 className="faq-title" style={{ fontSize: '38px', fontWeight: 800, letterSpacing: '-1px' }}>{t('title')}</h2>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '900px' }}>
         {faqs.map((faq, i) => (
@@ -822,12 +822,12 @@ export default function Home() {
       <FAQSection />
 
       {/* ── FOOTER ── */}
-      <footer style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '40px 96px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <footer className="site-footer" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '40px 96px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <img src="/Logo.png" alt="Pony" style={{ height: '22px', width: 'auto' }} />
-        <p style={{ fontSize: '12px', color: 'white', maxWidth: '400px', textAlign: 'center' }}>
+        <p className="footer-disclaimer" style={{ fontSize: '12px', color: 'white', maxWidth: '400px', textAlign: 'center' }}>
           {t('footer.disclaimer')}
         </p>
-        <div style={{ display: 'flex', gap: '24px', fontSize: '12px' }}>
+        <div className="footer-links" style={{ display: 'flex', gap: '24px', fontSize: '12px' }}>
           <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.privacy')}</a>
           <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.terms')}</a>
           <Link href="/admin" style={{ color: 'rgba(255,255,255,0.15)', textDecoration: 'none' }}>{t('footer.admin')}</Link>

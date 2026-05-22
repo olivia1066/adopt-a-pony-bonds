@@ -245,6 +245,51 @@ html {
     margin-bottom: 32px !important;
   }
 
+  /* ========== TESTIMONIALS ========== */
+  .testimonials-section {
+    padding: 60px 24px !important;
+  }
+
+  .testimonials-title {
+    font-size: 24px !important;
+  }
+
+  .testimonials-row {
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+
+  .testimonials-row > div {
+    flex: 1 1 100% !important;
+    opacity: 1 !important;
+  }
+
+  /* ========== FAQ ========== */
+  .faq-section {
+    padding: 60px 24px !important;
+  }
+
+  .faq-title {
+    font-size: 24px !important;
+  }
+
+  /* ========== FOOTER ========== */
+  .site-footer {
+    flex-direction: column !important;
+    padding: 32px 24px !important;
+    gap: 20px !important;
+    text-align: center !important;
+  }
+
+  .footer-disclaimer {
+    max-width: 100% !important;
+  }
+
+  .footer-links {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+
   /* ========== WHY INVEST ========== */
   .why-section {
     padding: 60px 24px !important;

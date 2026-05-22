@@ -765,9 +765,9 @@ export default function Home() {
       <AngelPerksSection />
 
       {/* ── COMPARISON TABLE ── */}
-      <section style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+      <section className="compare-section" style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
         <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px' }}>{t('comparison.kicker')}</p>
-        <h2 style={{ fontSize: '38px', fontWeight: 800, lineHeight: 1.1, marginBottom: '64px' }}>
+        <h2 className="compare-title" style={{ fontSize: '38px', fontWeight: 800, lineHeight: 1.1, marginBottom: '64px' }}>
           {t('comparison.title1')}<br />{t('comparison.title2')}
         </h2>
         <div style={{ overflowX: 'auto' }}>

@@ -430,4 +430,28 @@ html {
     font-size: 14px !important;
   }
 
+  /* ========== CAMPAGNE — KEY NUMBERS ========== */
+  .campagne-keynumbers {
+    margin: 48px 16px 0 !important;
+    padding: 32px 16px !important;
+  }
+
+  .campagne-keynumbers-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px 0 !important;
+  }
+
+  .campagne-keynumber-item {
+    border-right: none !important;
+    padding: 0 12px !important;
+  }
+
+  .campagne-keynumber-item:nth-child(odd) {
+    border-right: 1px solid rgba(255,255,255,0.07) !important;
+  }
+
+  .campagne-keynumber-item p:first-child {
+    font-size: 36px !important;
+  }
+
 }

@@ -449,7 +449,7 @@ export default function Campagne() {
       </div>
 
       {/* ── KEY NUMBERS ── */}
-      <div style={{
+      <div className="campagne-keynumbers" style={{
         margin: '80px 200px 0',
         borderRadius: '24px', padding: '48px',
         backgroundColor: 'rgba(30,27,75,0.5)',
@@ -459,14 +459,14 @@ export default function Campagne() {
           fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
           color: '#00FFFF', textTransform: 'uppercase', marginBottom: '32px',
         }}>{t('keyNumbers.kicker')}</p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0' }}>
+        <div className="campagne-keynumbers-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0' }}>
           {[
             { value: '50', label: t('keyNumbers.vehicles') },
             { value: '5', label: t('keyNumbers.cities') },
             { value: t('simulator.rateValue'), label: t('keyNumbers.annualRate') },
             { value: '48m', label: t('keyNumbers.duration') },
           ].map((stat, i) => (
-            <div key={i} style={{
+            <div key={i} className="campagne-keynumber-item" style={{
               textAlign: 'center',
               borderRight: i < 3 ? '1px solid rgba(255,255,255,0.07)' : 'none',
               padding: '0 32px',

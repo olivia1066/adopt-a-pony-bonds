@@ -584,14 +584,14 @@ export default function Home() {
       </section>
 
       {/* ── WHY INVEST ── */}
-      <section style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: '#0D0B20' }}>
+      <section className="why-section" style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: '#0D0B20' }}>
         <p style={{
           fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
           color: '#00FFFF', textTransform: 'uppercase', marginBottom: '96px',
         }}>{t('whyInvest.kicker')}</p>
 
         {/* Ligne 1 — 3 items */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '64px', marginBottom: '80px' }}>
+        <div className="why-row1" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '64px', marginBottom: '80px' }}>
           {[
             { icon: '🛡️', title: t('whyInvest.item1Title'), desc: t('whyInvest.item1Desc') },
             { icon: '📈', title: t('whyInvest.item2Title'), desc: t('whyInvest.item2Desc') },
@@ -610,7 +610,7 @@ export default function Home() {
         </div>
 
         {/* Ligne 2 — 2 items centrés */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '64px', maxWidth: 'calc(66.666% - 21px)', margin: '0 auto' }}>
+        <div className="why-row2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '64px', maxWidth: 'calc(66.666% - 21px)', margin: '0 auto' }}>
           {[
             { icon: '🌱', title: t('whyInvest.item4Title'), desc: t('whyInvest.item4Desc') },
             { icon: '📡', title: t('whyInvest.item5Title'), desc: t('whyInvest.item5Desc') },

@@ -165,6 +165,19 @@ html {
     padding: 24px !important;
   }
 
+  /* ========== WHY INVEST ========== */
+  .why-section {
+    padding: 60px 24px !important;
+  }
+
+  .why-row1,
+  .why-row2 {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+    max-width: 100% !important;
+    margin-bottom: 48px !important;
+  }
+
   /* ========== HEADER MOBILE ========== */
   .site-header {
     padding: 0 16px !important;

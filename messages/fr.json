@@ -266,6 +266,7 @@
     "errorGeneric": "Une erreur s'est produite.",
     "errorFillAll": "Veuillez remplir tous les champs obligatoires.",
     "errorReadContract": "Veuillez confirmer que vous avez lu et accepté le contrat.",
+    "stepperOf": "Étape {current} sur {total}",
     "steps": {
       "kyc": "KYC",
       "confirmation": "Confirmation",

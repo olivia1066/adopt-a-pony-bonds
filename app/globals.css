@@ -37,6 +37,10 @@ html {
   scroll-behavior: smooth;
 }
 
+.invest-stepper-mobile {
+  display: none;
+}
+
 /* ====================================== */
 /* ======= RESPONSIVE — MOBILE ========== */
 /* ====================================== */
@@ -515,6 +519,71 @@ html {
   .campagne-footer-links {
     flex-wrap: wrap !important;
     justify-content: center !important;
+  }
+
+  /* ========== INVESTIR — STEPPER + LAYOUT ========== */
+  .invest-stepper-desktop {
+    display: none !important;
+  }
+
+  .invest-stepper-mobile {
+    display: block !important;
+    padding: 24px 16px 8px !important;
+  }
+
+  .invest-stepper-mobile-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 12px !important;
+  }
+
+  .invest-stepper-mobile-label {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: white !important;
+  }
+
+  .invest-stepper-mobile-count {
+    font-size: 12px !important;
+    color: rgba(255,255,255,0.6) !important;
+  }
+
+  .invest-stepper-mobile-bar {
+    width: 100% !important;
+    height: 4px !important;
+    border-radius: 100px !important;
+    background-color: rgba(255,255,255,0.1) !important;
+    overflow: hidden !important;
+  }
+
+  .invest-stepper-mobile-fill {
+    height: 100% !important;
+    background-color: #00FFFF !important;
+    transition: width 0.3s ease !important;
+  }
+
+  .invest-main {
+    grid-template-columns: 1fr !important;
+    padding: 16px 16px 40px !important;
+    gap: 24px !important;
+    max-width: 100% !important;
+  }
+
+  .invest-content {
+    grid-column: span 1 / span 1 !important;
+    order: 1 !important;
+  }
+
+  .invest-sidebar {
+    grid-column: span 1 / span 1 !important;
+    order: 2 !important;
+  }
+
+  .invest-sidebar-card {
+    position: static !important;
+    top: auto !important;
+    padding: 20px !important;
   }
 
 }

@@ -221,8 +221,8 @@ function InvestirForm() {
   return (
     <main className="min-h-screen font-sans" style={{ backgroundColor: '#13102B', color: 'white' }}>
 
-      {/* Steps indicator */}
-      <div className="flex justify-center items-center gap-4 py-10">
+      {/* Steps indicator — DESKTOP */}
+      <div className="invest-stepper-desktop flex justify-center items-center gap-4 py-10">
         {STEPS.map(({ n, label }, i) => (
           <div key={n} className="flex items-center gap-4">
             <div className="flex items-center gap-3">
@@ -245,8 +245,26 @@ function InvestirForm() {
         ))}
       </div>
 
-      <div className="max-w-5xl mx-auto px-8 pb-16 grid grid-cols-3 gap-8">
-        <div className="col-span-2 space-y-8">
+      {/* Steps indicator — MOBILE */}
+      <div className="invest-stepper-mobile">
+        <div className="invest-stepper-mobile-header">
+          <span className="invest-stepper-mobile-label">
+            {STEPS[Math.min(step - 1, STEPS.length - 1)]?.label}
+          </span>
+          <span className="invest-stepper-mobile-count">
+            {t('stepperOf', { current: step, total: STEPS.length })}
+          </span>
+        </div>
+        <div className="invest-stepper-mobile-bar">
+          <div
+            className="invest-stepper-mobile-fill"
+            style={{ width: `${(step / STEPS.length) * 100}%` }}
+          />
+        </div>
+      </div>
+
+      <div className="invest-main max-w-5xl mx-auto px-8 pb-16 grid grid-cols-3 gap-8">
+        <div className="invest-content col-span-2 space-y-8">
 
           {/* ── STEP 1: KYC ── */}
           {step === 1 && (
@@ -664,8 +682,8 @@ function InvestirForm() {
 
         {/* ── SIDEBAR ── */}
         {step < 5 && (
-          <div className="col-span-1">
-            <div style={{
+          <div className="invest-sidebar col-span-1">
+            <div className="invest-sidebar-card" style={{
               position: 'sticky', top: '90px',
               backgroundColor: '#1E1B4B', borderRadius: '20px',
               padding: '24px',

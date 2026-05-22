@@ -199,14 +199,14 @@ function AngelPerksSection() {
   const currentImageIndex = items[activeIndex].imageIndex
 
   return (
-    <section style={{ padding: '120px 96px' }}>
-      <h2 style={{ fontSize: '34px', fontWeight: 800, lineHeight: '1.3', color: 'white', maxWidth: '1100px', marginBottom: '96px' }}>
+    <section className="angel-section" style={{ padding: '120px 96px' }}>
+      <h2 className="angel-title" style={{ fontSize: '34px', fontWeight: 800, lineHeight: '1.3', color: 'white', maxWidth: '1100px', marginBottom: '96px' }}>
         {t('title')}
       </h2>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
+      <div className="angel-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
         {/* LEFT — Image carousel */}
-        <div style={{ position: 'relative', height: '400px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px dashed rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+        <div className="angel-image" style={{ position: 'relative', height: '400px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px dashed rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
           <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>
             Image {currentImageIndex + 1} à venir
           </span>

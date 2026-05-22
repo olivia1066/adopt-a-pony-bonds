@@ -216,6 +216,24 @@ html {
   .how-triangle {
     display: none !important;
   }
+  /* ========== ANGEL PERKS ========== */
+  .angel-section {
+    padding: 60px 24px !important;
+  }
+
+  .angel-title {
+    font-size: 24px !important;
+    margin-bottom: 48px !important;
+  }
+
+  .angel-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .angel-image {
+    height: 250px !important;
+  }
 
   /* ========== WHY INVEST ========== */
   .why-section {

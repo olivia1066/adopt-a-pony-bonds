@@ -129,14 +129,14 @@ export default function Campagne() {
     <main className="min-h-screen font-sans" style={{ backgroundColor: '#13102B', color: 'white' }}>
 
       {/* ── BACK ── */}
-      <div style={{ padding: '16px 40px' }}>
+      <div className="campagne-back" style={{ padding: '16px 40px' }}>
         <Link href="/" style={{ fontSize: '13px', color: 'white', textDecoration: 'none' }}>
           {t('back')}
         </Link>
       </div>
 
       {/* ── HERO ── */}
-      <div style={{
+      <div className="campagne-hero" style={{
         margin: '0 200px', borderRadius: '24px', overflow: 'hidden',
         position: 'relative', minHeight: '420px',
         background: 'linear-gradient(135deg, #1E1B4B 0%, #0D0D2B 100%)',
@@ -156,7 +156,7 @@ export default function Campagne() {
           background: 'linear-gradient(to top, rgba(13,13,43,0.8) 0%, transparent 50%)',
         }} />
 
-        <div style={{ position: 'absolute', bottom: 0, left: 0, padding: '40px', zIndex: 2 }}>
+        <div className="campagne-hero-content" style={{ position: 'absolute', bottom: 0, left: 0, padding: '40px', zIndex: 2 }}>
           <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
             <span style={{
               fontSize: '11px', padding: '4px 12px', borderRadius: '100px', fontWeight: 600,
@@ -175,7 +175,7 @@ export default function Campagne() {
           </p>
         </div>
 
-        <div style={{
+        <div className="campagne-hero-card" style={{
           position: 'absolute', right: '40px', top: '50%',
           transform: 'translateY(-50%)', zIndex: 2,
           width: '320px', borderRadius: '20px', padding: '32px',

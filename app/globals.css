@@ -329,4 +329,58 @@ html {
     margin-right: 0 !important;
   }
 
+  /* ========== CAMPAGNE — BACK + HERO ========== */
+  .campagne-back {
+    padding: 16px 24px !important;
+  }
+
+  .campagne-hero {
+    margin: 0 16px !important;
+    min-height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .campagne-hero > img {
+    position: relative !important;
+    width: 100% !important;
+    height: 240px !important;
+    object-fit: cover !important;
+    inset: auto !important;
+  }
+
+  .campagne-hero > div:nth-of-type(1),
+  .campagne-hero > div:nth-of-type(2) {
+    display: none !important;
+  }
+
+  .campagne-hero-content {
+    position: static !important;
+    padding: 24px !important;
+    padding-bottom: 16px !important;
+    background: linear-gradient(135deg, #1E1B4B 0%, #0D0D2B 100%) !important;
+  }
+
+  .campagne-hero-content h1 {
+    font-size: 32px !important;
+    letter-spacing: -1px !important;
+  }
+
+  .campagne-hero-content p {
+    font-size: 14px !important;
+    max-width: 100% !important;
+  }
+
+  .campagne-hero-card {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 24px !important;
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+  }
+
 }

@@ -475,12 +475,12 @@ export default function Home() {
       </section>
 
       {/* ── MISSION ── */}
-      <section style={{ padding: '120px 96px' }}>
-        <h2 style={{ fontSize: '34px', fontWeight: 800, lineHeight: '1.3', color: 'white', maxWidth: '1100px', marginBottom: '176px' }}>
+      <section className="mission-section" style={{ padding: '120px 96px' }}>
+        <h2 className="mission-title" style={{ fontSize: '34px', fontWeight: 800, lineHeight: '1.3', color: 'white', maxWidth: '1100px', marginBottom: '176px' }}>
           {t('mission.title')}
         </h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 360px)', gap: '80px', justifyContent: 'space-between', marginBottom: '64px' }}>
+        <div className="mission-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 360px)', gap: '80px', justifyContent: 'space-between', marginBottom: '64px' }}>
           {[
             { emoji: '🛴', title: t('mission.item1Title'), desc: t('mission.item1Desc') },
             { emoji: '📅', title: t('mission.item2Title'), desc: t('mission.item2Desc') },

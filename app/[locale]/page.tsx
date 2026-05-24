@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { Link } from '@/i18n/navigation'
+import { getActiveCampaign, isInvestmentOpen, showProgressBar, type Campaign, type CampaignStatus } from '@/lib/campaigns'
+import WaitlistModal from '@/components/WaitlistModal'
 
 // ── Responsive hook ──
 function useIsMobile() {
@@ -115,9 +117,7 @@ function TestimonialsSection() {
   )
 }
 
-// ── Campaign status (TEMP — to be replaced by Supabase) ──
-type CampaignStatus = 'ongoing' | 'coming_soon' | 'sold_out'
-const CAMPAIGN_STATUS: CampaignStatus = 'coming_soon'
+// CampaignStatus type imported from @/lib/campaigns
 
 function FAQSection() {
   const t = useTranslations('campagne.faq')
@@ -262,8 +262,28 @@ function calcReturns(amount: number) {
 export default function Home() {
   const locale = useLocale()
   const t = useTranslations('home')
+  const tWaitlist = useTranslations('waitlist')
   const [amount, setAmount] = useState(2000)
+  const [campaign, setCampaign] = useState<Campaign | null>(null)
+  const [waitlistOpen, setWaitlistOpen] = useState(false)
+  const [waitlistSource, setWaitlistSource] = useState<string>('home')
   const isMobile = useIsMobile()
+
+  useEffect(() => {
+    getActiveCampaign().then(setCampaign)
+  }, [])
+
+  const campaignStatus: CampaignStatus = campaign?.status ?? 'coming_soon'
+  const canInvest = isInvestmentOpen(campaignStatus)
+  const progressVisible = showProgressBar(campaignStatus)
+  const raisedPct = campaign && campaign.target_amount > 0
+    ? Math.min((campaign.raised_amount / campaign.target_amount) * 100, 100)
+    : 0
+
+  const openWaitlist = (source: string) => {
+    setWaitlistSource(source)
+    setWaitlistOpen(true)
+  }
 
   const { monthlyPayment, totalInterest, totalRepaid } = calcReturns(amount)
 
@@ -274,6 +294,12 @@ export default function Home() {
 
   return (
     <main className="min-h-screen font-sans" style={{ backgroundColor: '#13102B', color: 'white' }}>
+
+      <WaitlistModal
+        isOpen={waitlistOpen}
+        onClose={() => setWaitlistOpen(false)}
+        source={waitlistSource}
+      />
 
       {/* ── HERO ── */}
       <section className="hero-section" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
@@ -531,7 +557,7 @@ export default function Home() {
             {/* Status badge */}
             <div style={{ marginBottom: '24px' }}>
               <span style={{ fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '100px', backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF', letterSpacing: '1px' }}>
-                {CAMPAIGN_STATUS === 'ongoing' ? t('campaignCard.statusOngoing') : CAMPAIGN_STATUS === 'coming_soon' ? t('campaignCard.statusComingSoon') : t('campaignCard.statusSoldOut')}
+                {campaignStatus === 'ongoing' ? t('campaignCard.statusOngoing') : campaignStatus === 'coming_soon' ? t('campaignCard.statusComingSoon') : t('campaignCard.statusSoldOut')}
               </span>
             </div>
 
@@ -560,14 +586,14 @@ export default function Home() {
             </div>
 
             {/* Progress bar — only if ongoing or sold_out */}
-            {CAMPAIGN_STATUS !== 'coming_soon' && (
+            {campaignStatus !== 'coming_soon' && (
               <div style={{ marginBottom: '24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
-                  <span>€{fmtInt(CAMPAIGN_STATUS === 'sold_out' ? 500000 : 312000)} {t('campaignCard.raised')}</span>
-                  <span style={{ fontWeight: 700, color: 'white' }}>{CAMPAIGN_STATUS === 'sold_out' ? '100%' : '62%'}</span>
+                  <span>€{fmtInt(campaignStatus === 'sold_out' ? 500000 : 312000)} {t('campaignCard.raised')}</span>
+                  <span style={{ fontWeight: 700, color: 'white' }}>{campaignStatus === 'sold_out' ? '100%' : '62%'}</span>
                 </div>
                 <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
-                  <div style={{ width: CAMPAIGN_STATUS === 'sold_out' ? '100%' : '62%', height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
+                  <div style={{ width: campaignStatus === 'sold_out' ? '100%' : '62%', height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
                 </div>
                 <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>€{fmtInt(500000)} {t('campaignCard.target')}</p>
               </div>
@@ -626,7 +652,7 @@ export default function Home() {
       </section>
 
       {/* ── WAITLIST ── (visible only if coming_soon or sold_out) */}
-      {CAMPAIGN_STATUS !== 'ongoing' && (
+      {campaignStatus !== 'ongoing' && (
         <section className="waitlist-section" style={{ padding: '120px 96px' }}>
           <div className="waitlist-card" style={{ borderRadius: '24px', backgroundColor: '#321E64', padding: '64px', display: 'flex', alignItems: 'center', gap: '80px', maxWidth: 'calc(100% - 320px)', margin: '0 auto' }}>
 

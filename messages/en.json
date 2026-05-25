@@ -16,7 +16,8 @@
       "cta": "Adopt now →",
       "bookMeeting": "Book a meeting",
       "usersBadge": "Pony users already on the platform",
-      "riskNotice": "All investments carry risk, including the risk of capital loss."
+      "riskNotice": "All investments carry risk, including the risk of capital loss.",
+      "joinWaitlist": "🔔 Join the waitlist"
     },
     "simulator": {
       "title": "How much could you make",
@@ -53,20 +54,11 @@
       "item3Desc": "Earn up to 8.5% annual interest, landing in your bank account every single month. And after 42 months, your full investment comes back home."
     },
     "campaignCard": {
-      "status": "● OPEN",
       "statusOngoing": "● ONGOING",
       "statusComingSoon": "● COMING SOON",
       "statusSoldOut": "● SOLD OUT",
-      "date": "April 2026",
       "title": "Spring 2026 Fleet",
       "subtitle": "Financing 50 bikes and scooters deployed across 5 French cities.",
-      "annualRate": "Annual rate",
-      "duration": "Duration",
-      "minimum": "Minimum",
-      "monthlyIncome": "Monthly income",
-      "monthlyIncomeSuffix": "/ month from month 13, for 36 months",
-      "capitalRepaid": "Capital repaid monthly",
-      "capitalRepaidSuffix": "spread across months 13–48",
       "raised": "raised",
       "target": "target",
       "cta": "Adopt now →"
@@ -77,7 +69,12 @@
       "subtitle2": "Available ponies all go within minutes!",
       "emailLabel": "Email",
       "emailPlaceholder": "your@email.com",
-      "submit": "Submit"
+      "submit": "Submit",
+      "submitting": "Submitting…",
+      "errorInvalidEmail": "Please enter a valid email.",
+      "errorGeneric": "An error occurred. Please try again.",
+      "successTitle": "✓ You're in!",
+      "successDesc": "We'll let you know as soon as a new campaign is available."
     },
     "stats": {
       "cities": "Partner cities",
@@ -184,7 +181,10 @@
       "defaultName": "Spring 2026 Fleet",
       "subtitle": "Finance Pony's electric fleet and earn regular monthly returns.",
       "statusLabel": "Status",
-      "statusOpen": "🟢 Open",
+      "statusOngoing": "🟢 Ongoing",
+      "statusComingSoon": "🟡 Coming soon",
+      "statusSoldOut": "🔴 Sold out",
+      "joinWaitlist": "🔔 Join the waitlist",
       "capitalProtectedTitle": "Capital protected",
       "capitalProtectedDesc": "Explanatory text coming soon — will describe the guarantee provided by the Pony vehicle fleet and the protection of your investment.",
       "interestRate": "Interest rate",
@@ -217,7 +217,8 @@
       "totalRepaid": "Total repaid at end of term",
       "totalInterest": "Total interest",
       "capitalInvested": "Capital invested",
-      "investNow": "Invest now →"
+      "investNow": "Invest now →",
+      "joinWaitlist": "🔔 Join the waitlist"
     },
     "about": {
       "kicker": "About this campaign",
@@ -247,7 +248,8 @@
       "kicker": "Limited spots available",
       "title": "Ready to invest?",
       "subtitle": "Join the investors financing Pony's fleet and earning up to 8.5% annual returns, paid monthly.",
-      "button": "Invest now →"
+      "button": "Invest now →",
+      "buttonWaitlist": "🔔 Join the waitlist"
     },
     "faq": {
       "title": "FAQs",

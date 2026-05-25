@@ -16,7 +16,8 @@
       "cta": "Adopter maintenant →",
       "bookMeeting": "Prendre rendez-vous",
       "usersBadge": "utilisateurs Pony déjà sur la plateforme",
-      "riskNotice": "Tout investissement comporte un risque, y compris le risque de perte en capital."
+      "riskNotice": "Tout investissement comporte un risque, y compris le risque de perte en capital.",
+      "joinWaitlist": "🔔 Rejoindre la waitlist"
     },
     "simulator": {
       "title": "Combien pourriez-vous gagner",
@@ -53,20 +54,11 @@
       "item3Desc": "Gagnez jusqu’à 8,5 % d’intérêt annuel, versé directement sur votre compte chaque mois. Et au bout de 42 mois, votre capital vous revient en intégralité."
     },
     "campaignCard": {
-      "status": "● OUVERTE",
       "statusOngoing": "● EN COURS",
       "statusComingSoon": "● BIENTÔT DISPONIBLE",
       "statusSoldOut": "● ÉPUISÉE",
-      "date": "Avril 2026",
       "title": "Flotte Printemps 2026",
       "subtitle": "Financement de 50 vélos et trottinettes déployés dans 5 villes françaises.",
-      "annualRate": "Taux annuel",
-      "duration": "Durée",
-      "minimum": "Minimum",
-      "monthlyIncome": "Revenu mensuel",
-      "monthlyIncomeSuffix": "/ mois à partir du mois 13, pendant 36 mois",
-      "capitalRepaid": "Capital remboursé mensuellement",
-      "capitalRepaidSuffix": "réparti sur les mois 13 à 48",
       "raised": "collectés",
       "target": "objectif",
       "cta": "Adopter maintenant →"
@@ -77,7 +69,12 @@
       "subtitle2": "Les pony sont adoptés en quelques minutes seulement !",
       "emailLabel": "Email",
       "emailPlaceholder": "votre@email.com",
-      "submit": "S'inscrire"
+      "submit": "S'inscrire",
+      "submitting": "Envoi en cours…",
+      "errorInvalidEmail": "Veuillez saisir un email valide.",
+      "errorGeneric": "Une erreur s'est produite. Réessayez.",
+      "successTitle": "✓ Inscription confirmée !",
+      "successDesc": "Nous vous préviendrons dès qu'une nouvelle campagne sera disponible."
     },
     "stats": {
       "cities": "Villes partenaires",
@@ -184,7 +181,10 @@
       "defaultName": "Flotte Printemps 2026",
       "subtitle": "Financez la flotte électrique de Pony et touchez des revenus mensuels réguliers.",
       "statusLabel": "Statut",
-      "statusOpen": "🟢 Ouverte",
+      "statusOngoing": "🟢 En cours",
+      "statusComingSoon": "🟡 Bientôt disponible",
+      "statusSoldOut": "🔴 Épuisée",
+      "joinWaitlist": "🔔 Rejoindre la waitlist",
       "capitalProtectedTitle": "Capital protégé",
       "capitalProtectedDesc": "Texte explicatif à venir — décrira la garantie offerte par la flotte de véhicules Pony et les modalités de protection de votre investissement.",
       "interestRate": "Taux d'intérêt",
@@ -217,7 +217,8 @@
       "totalRepaid": "Total remboursé en fin de période",
       "totalInterest": "Intérêts totaux",
       "capitalInvested": "Capital investi",
-      "investNow": "Investir maintenant →"
+      "investNow": "Investir maintenant →",
+      "joinWaitlist": "🔔 Rejoindre la waitlist"
     },
     "about": {
       "kicker": "À propos de cette campagne",
@@ -247,7 +248,8 @@
       "kicker": "Places limitées",
       "title": "Prêt à investir ?",
       "subtitle": "Rejoignez les investisseurs qui financent la flotte Pony et touchent jusqu'à 8,5 % de rendement annuel, versé mensuellement.",
-      "button": "Investir maintenant →"
+      "button": "Investir maintenant →",
+      "buttonWaitlist": "🔔 Rejoindre la waitlist"
     },
     "faq": {
       "title": "Questions fréquentes",

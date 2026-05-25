@@ -2,19 +2,17 @@
 
 import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { supabase } from '@/lib/supabase'
 import { Link } from '@/i18n/navigation'
-
-type Campaign = {
-  id: string
-  name: string
-  target_amount: number
-  raised_amount: number
-  rate: number
-  duration: number
-  status: string
-  start_date: string
-}
+import {
+  getActiveCampaign,
+  isInvestmentOpen,
+  showProgressBar,
+  getCampaignName,
+  getCampaignDescription,
+  type Campaign,
+  type CampaignStatus,
+} from '@/lib/campaigns'
+import WaitlistModal from '@/components/WaitlistModal'
 
 // ── Product terms ──
 const ANNUAL_RATE = 0.085
@@ -96,24 +94,31 @@ export default function Campagne() {
   const [amount, setAmount] = useState(5000)
   const [campaign, setCampaign] = useState<Campaign | null>(null)
   const [loading, setLoading] = useState(true)
+  const [waitlistOpen, setWaitlistOpen] = useState(false)
+  const [waitlistSource, setWaitlistSource] = useState<string>('campagne')
 
   useEffect(() => {
-    async function fetchCampaign() {
-      const { data } = await supabase
-        .from('campaigns')
-        .select('*')
-        .eq('status', 'Ouverte')
-        .single()
-      if (data) setCampaign(data)
+    getActiveCampaign().then((data) => {
+      setCampaign(data)
       setLoading(false)
-    }
-    fetchCampaign()
+    })
   }, [])
 
+  const campaignStatus: CampaignStatus = campaign?.status ?? 'coming_soon'
+  const canInvest = isInvestmentOpen(campaignStatus)
+  const progressVisible = showProgressBar(campaignStatus)
+
+  const openWaitlist = (source: string) => {
+    setWaitlistSource(source)
+    setWaitlistOpen(true)
+  }
+
   const { monthlyPayment, totalInterest, totalRepaid } = calcReturns(amount)
-  const raisedPct = campaign
-    ? Math.min((campaign.raised_amount / campaign.target_amount) * 100, 100)
-    : 62
+  const raisedPct = campaignStatus === 'sold_out'
+    ? 100
+    : campaign && campaign.target_amount > 0
+      ? Math.min((campaign.raised_amount / campaign.target_amount) * 100, 100)
+      : 0
 
   // Number formatting helpers
   const numberLocale = locale === 'fr' ? 'fr-FR' : 'en-GB'
@@ -128,6 +133,12 @@ export default function Campagne() {
 
   return (
     <main className="min-h-screen font-sans" style={{ backgroundColor: '#13102B', color: 'white' }}>
+
+      <WaitlistModal
+        isOpen={waitlistOpen}
+        onClose={() => setWaitlistOpen(false)}
+        source={waitlistSource}
+      />
 
       {/* ── BACK ── */}
       <div className="campagne-back" style={{ padding: '16px 40px' }}>
@@ -165,7 +176,7 @@ export default function Campagne() {
             }}>{t('hero.tagCities')}</span>
           </div>
           <h1 style={{ fontSize: '48px', fontWeight: 800, letterSpacing: '-1.5px', lineHeight: 1.05, marginBottom: '10px' }}>
-            {campaign?.name || t('hero.defaultName')}
+            {getCampaignName(campaign, locale) || t('hero.defaultName')}
           </h1>
           <p style={{ fontSize: '16px', color: 'white', maxWidth: '480px' }}>
             {t('hero.subtitle')}
@@ -193,7 +204,11 @@ export default function Campagne() {
               fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '100px',
               backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF', letterSpacing: '1px',
             }}>
-              {t('hero.statusOpen')}
+              {campaignStatus === 'ongoing'
+                ? t('hero.statusOngoing')
+                : campaignStatus === 'coming_soon'
+                  ? t('hero.statusComingSoon')
+                  : t('hero.statusSoldOut')}
             </span>
           </div>
 
@@ -219,22 +234,24 @@ export default function Campagne() {
             ))}
           </div>
 
-          {/* Progress bar */}
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
-              <span>€{fmtInt(campaign?.raised_amount ?? 312000)} {t('hero.raised')}</span>
-              <span style={{ fontWeight: 700 }}>{raisedPct.toFixed(0)}%</span>
+          {/* Progress bar — only if ongoing or sold_out */}
+          {progressVisible && (
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
+                <span>€{fmtInt(campaignStatus === 'sold_out' ? (campaign?.target_amount ?? 0) : (campaign?.raised_amount ?? 0))} {t('hero.raised')}</span>
+                <span style={{ fontWeight: 700 }}>{raisedPct.toFixed(0)}%</span>
+              </div>
+              <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
+                <div style={{
+                  width: `${raisedPct}%`, height: '4px', borderRadius: '100px',
+                  backgroundColor: '#00FFFF',
+                }} />
+              </div>
+              <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>
+                €{fmtInt(campaign?.target_amount ?? 500000)} {t('hero.target')}
+              </p>
             </div>
-            <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
-              <div style={{
-                width: `${raisedPct}%`, height: '4px', borderRadius: '100px',
-                backgroundColor: '#00FFFF',
-              }} />
-            </div>
-            <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>
-              €{fmtInt(campaign?.target_amount ?? 500000)} {t('hero.target')}
-            </p>
-          </div>
+          )}
 
           {/* Capital protected — hover popover */}
           <div style={{
@@ -419,16 +436,30 @@ export default function Campagne() {
             </div>
           </div>
 
-          <Link
-            href={`/investir?campaignId=${campaign?.id}&amount=${amount}`}
-            style={{
-              display: 'block', textAlign: 'center',
-              backgroundColor: '#00FFFF', color: '#13102B',
-              padding: '16px', borderRadius: '14px',
-              fontSize: '15px', fontWeight: 800, textDecoration: 'none',
-            }}>
-            {t('simulator.investNow')}
-          </Link>
+          {canInvest ? (
+            <Link
+              href={`/investir?campaignId=${campaign?.id}&amount=${amount}`}
+              style={{
+                display: 'block', textAlign: 'center',
+                backgroundColor: '#00FFFF', color: '#13102B',
+                padding: '16px', borderRadius: '14px',
+                fontSize: '15px', fontWeight: 800, textDecoration: 'none',
+              }}>
+              {t('simulator.investNow')}
+            </Link>
+          ) : (
+            <button
+              onClick={() => openWaitlist('site_campagne_simulator')}
+              style={{
+                display: 'block', width: '100%', textAlign: 'center',
+                backgroundColor: '#00FFFF', color: '#13102B',
+                padding: '16px', borderRadius: '14px',
+                fontSize: '15px', fontWeight: 800, border: 'none',
+                cursor: 'pointer', fontFamily: 'inherit',
+              }}>
+              {t('simulator.joinWaitlist')}
+            </button>
+          )}
         </div>
       </div>
 
@@ -446,7 +477,7 @@ export default function Campagne() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
-              {t('about.paragraph1')}
+              {getCampaignDescription(campaign, locale) || t('about.paragraph1')}
             </p>
             <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
               {t('about.paragraph2')}
@@ -563,16 +594,30 @@ export default function Campagne() {
         }}>
           {t('cta.subtitle')}
         </p>
-        <Link
-          href={`/investir?campaignId=${campaign?.id}&amount=5000`}
-          style={{
-            display: 'inline-block',
-            backgroundColor: '#00FFFF', color: '#13102B',
-            padding: '16px 48px', borderRadius: '14px',
-            fontSize: '16px', fontWeight: 800, textDecoration: 'none',
-          }}>
-          {t('cta.button')}
-        </Link>
+        {canInvest ? (
+          <Link
+            href={`/investir?campaignId=${campaign?.id}&amount=5000`}
+            style={{
+              display: 'inline-block',
+              backgroundColor: '#00FFFF', color: '#13102B',
+              padding: '16px 48px', borderRadius: '14px',
+              fontSize: '16px', fontWeight: 800, textDecoration: 'none',
+            }}>
+            {t('cta.button')}
+          </Link>
+        ) : (
+          <button
+            onClick={() => openWaitlist('site_campagne_cta')}
+            style={{
+              display: 'inline-block',
+              backgroundColor: '#00FFFF', color: '#13102B',
+              padding: '16px 48px', borderRadius: '14px',
+              fontSize: '16px', fontWeight: 800, border: 'none',
+              cursor: 'pointer', fontFamily: 'inherit',
+            }}>
+            {t('cta.buttonWaitlist')}
+          </button>
+        )}
       </div>
 
       {/* ── FAQ ── */}

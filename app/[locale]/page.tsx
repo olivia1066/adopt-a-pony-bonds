@@ -3,20 +3,9 @@
 import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { Link } from '@/i18n/navigation'
-import { getActiveCampaign, isInvestmentOpen, showProgressBar, type Campaign, type CampaignStatus } from '@/lib/campaigns'
+import { supabase } from '@/lib/supabase'
+import { getActiveCampaign, isInvestmentOpen, showProgressBar, getCampaignName, getCampaignDescription, type Campaign, type CampaignStatus } from '@/lib/campaigns'
 import WaitlistModal from '@/components/WaitlistModal'
-
-// ── Responsive hook ──
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false)
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 1024)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
-  return isMobile
-}
 
 function TestimonialsSection() {
   const t = useTranslations('home.testimonials')
@@ -262,12 +251,43 @@ function calcReturns(amount: number) {
 export default function Home() {
   const locale = useLocale()
   const t = useTranslations('home')
-  const tWaitlist = useTranslations('waitlist')
+  const tWaitlist = useTranslations('home.waitlist')
   const [amount, setAmount] = useState(2000)
   const [campaign, setCampaign] = useState<Campaign | null>(null)
   const [waitlistOpen, setWaitlistOpen] = useState(false)
   const [waitlistSource, setWaitlistSource] = useState<string>('home')
-  const isMobile = useIsMobile()
+
+  // Inline waitlist form state
+  const [inlineEmail, setInlineEmail] = useState('')
+  const [inlineSubmitting, setInlineSubmitting] = useState(false)
+  const [inlineError, setInlineError] = useState('')
+  const [inlineSuccess, setInlineSuccess] = useState(false)
+
+  async function handleInlineWaitlist() {
+    setInlineError('')
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inlineEmail)
+    if (!emailValid) {
+      setInlineError(tWaitlist('errorInvalidEmail'))
+      return
+    }
+    setInlineSubmitting(true)
+    try {
+      const { error } = await supabase.from('waitlist_signups').insert({
+        prenom: null,
+        nom: null,
+        email: inlineEmail.trim().toLowerCase(),
+        telephone: null,
+        locale,
+        source: 'site_home_waitlist_section',
+      })
+      if (error) throw error
+      setInlineSuccess(true)
+    } catch (err: any) {
+      setInlineError(err.message || tWaitlist('errorGeneric'))
+    } finally {
+      setInlineSubmitting(false)
+    }
+  }
 
   useEffect(() => {
     getActiveCampaign().then(setCampaign)
@@ -276,9 +296,11 @@ export default function Home() {
   const campaignStatus: CampaignStatus = campaign?.status ?? 'coming_soon'
   const canInvest = isInvestmentOpen(campaignStatus)
   const progressVisible = showProgressBar(campaignStatus)
-  const raisedPct = campaign && campaign.target_amount > 0
-    ? Math.min((campaign.raised_amount / campaign.target_amount) * 100, 100)
-    : 0
+  const raisedPct = campaignStatus === 'sold_out'
+    ? 100
+    : campaign && campaign.target_amount > 0
+      ? Math.min((campaign.raised_amount / campaign.target_amount) * 100, 100)
+      : 0
 
   const openWaitlist = (source: string) => {
     setWaitlistSource(source)
@@ -351,9 +373,15 @@ export default function Home() {
               <span style={{ color: '#00FFFF', fontWeight: 600 }}>8,5 %</span>{t('hero.subtitle2')}
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Link href="/campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none'}}>
-                {t('hero.cta')}
-              </Link>
+              {canInvest ? (
+                <Link href="/campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none'}}>
+                  {t('hero.cta')}
+                </Link>
+              ) : (
+                <button onClick={() => openWaitlist('site_home_hero')} style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                  {t('hero.joinWaitlist')}
+                </button>
+              )}
               <a href="#" style={{ backgroundColor: 'transparent', color: '#00FFFF', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none', border: '2px solid #00FFFF' }}>
                 {t('hero.bookMeeting')}
               </a>
@@ -520,9 +548,15 @@ export default function Home() {
         </div>
 
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <Link href="/campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none' }}>
-            {t('hero.cta')}
-          </Link>
+          {canInvest ? (
+            <Link href="/campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none' }}>
+              {t('hero.cta')}
+            </Link>
+          ) : (
+            <button onClick={() => openWaitlist('site_home_mission')} style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+              {t('hero.joinWaitlist')}
+            </button>
+          )}
           <a href="#" style={{ backgroundColor: 'transparent', color: '#00FFFF', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none', border: '2px solid #00FFFF' }}>
             {t('hero.bookMeeting')}
           </a>
@@ -561,10 +595,12 @@ export default function Home() {
               </span>
             </div>
 
-            {/* Title + description */}
-            <h3 style={{ fontSize: '22px', fontWeight: 800, marginBottom: '8px' }}>{t('campaignCard.title')}</h3>
+            {/* Title + description — Supabase with hardcoded fallback */}
+            <h3 style={{ fontSize: '22px', fontWeight: 800, marginBottom: '8px' }}>
+              {getCampaignName(campaign, locale) || t('campaignCard.title')}
+            </h3>
             <p style={{ fontSize: '14px', color: 'white', lineHeight: '1.6', marginBottom: '24px' }}>
-              {t('campaignCard.subtitle')}
+              {getCampaignDescription(campaign, locale) || t('campaignCard.subtitle')}
             </p>
 
             {/* Separator */}
@@ -585,24 +621,30 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Progress bar — only if ongoing or sold_out */}
-            {campaignStatus !== 'coming_soon' && (
+            {/* Progress bar — only if ongoing or sold_out (uses progressVisible helper) */}
+            {progressVisible && (
               <div style={{ marginBottom: '24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
-                  <span>€{fmtInt(campaignStatus === 'sold_out' ? 500000 : 312000)} {t('campaignCard.raised')}</span>
-                  <span style={{ fontWeight: 700, color: 'white' }}>{campaignStatus === 'sold_out' ? '100%' : '62%'}</span>
+                  <span>€{fmtInt(campaignStatus === 'sold_out' ? (campaign?.target_amount ?? 0) : (campaign?.raised_amount ?? 0))} {t('campaignCard.raised')}</span>
+                  <span style={{ fontWeight: 700, color: 'white' }}>{Math.round(raisedPct)}%</span>
                 </div>
                 <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
-                  <div style={{ width: campaignStatus === 'sold_out' ? '100%' : '62%', height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
+                  <div style={{ width: `${raisedPct}%`, height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
                 </div>
-                <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>€{fmtInt(500000)} {t('campaignCard.target')}</p>
+                <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>€{fmtInt(campaign?.target_amount ?? 500000)} {t('campaignCard.target')}</p>
               </div>
             )}
           </div>
 
-          <Link href="/campagne" style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '15px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none' }}>
-            {t('campaignCard.cta')}
-          </Link>
+          {canInvest ? (
+            <Link href="/campagne" style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '15px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none' }}>
+              {t('campaignCard.cta')}
+            </Link>
+          ) : (
+            <button onClick={() => openWaitlist('site_campaign_card')} style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '15px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+              {t('hero.joinWaitlist')}
+            </button>
+          )}
         </div>
       </section>
 
@@ -661,56 +703,87 @@ export default function Home() {
               <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>Image à venir</span>
             </div>
 
-            {/* RIGHT — Form */}
+            {/* RIGHT — Form or Success state */}
             <div className="waitlist-form" style={{ flex: '1' }}>
-              <h2 style={{ fontSize: '32px', fontWeight: 800, marginBottom: '16px', color: 'white' }}>
-                {t('waitlist.title')}
-              </h2>
-              <p style={{ fontSize: '16px', color: 'white', lineHeight: '1.6', marginBottom: '8px' }}>
-                {t('waitlist.subtitle1')}
-              </p>
-              <p style={{ fontSize: '16px', color: 'white', lineHeight: '1.6', marginBottom: '32px' }}>
-                {t('waitlist.subtitle2')}
-              </p>
+              {!inlineSuccess ? (
+                <>
+                  <h2 style={{ fontSize: '32px', fontWeight: 800, marginBottom: '16px', color: 'white' }}>
+                    {t('waitlist.title')}
+                  </h2>
+                  <p style={{ fontSize: '16px', color: 'white', lineHeight: '1.6', marginBottom: '8px' }}>
+                    {t('waitlist.subtitle1')}
+                  </p>
+                  <p style={{ fontSize: '16px', color: 'white', lineHeight: '1.6', marginBottom: '32px' }}>
+                    {t('waitlist.subtitle2')}
+                  </p>
 
-              <div style={{ marginBottom: '24px' }}>
-                <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: 'white', marginBottom: '8px' }}>
-                  {t('waitlist.emailLabel')}*
-                </label>
-                <input
-                  type="email"
-                  placeholder={t('waitlist.emailPlaceholder')}
-                  disabled
-                  style={{
-                    width: '100%',
-                    padding: '14px 16px',
-                    borderRadius: '10px',
-                    backgroundColor: 'rgba(0,0,0,0.2)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    color: 'white',
-                    fontSize: '14px',
-                    outline: 'none',
-                  }}
-                />
-              </div>
+                  <div style={{ marginBottom: '16px' }}>
+                    <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: 'white', marginBottom: '8px' }}>
+                      {t('waitlist.emailLabel')}*
+                    </label>
+                    <input
+                      type="email"
+                      placeholder={t('waitlist.emailPlaceholder')}
+                      value={inlineEmail}
+                      onChange={(e) => setInlineEmail(e.target.value)}
+                      disabled={inlineSubmitting}
+                      style={{
+                        width: '100%',
+                        padding: '14px 16px',
+                        borderRadius: '10px',
+                        backgroundColor: 'rgba(0,0,0,0.2)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        color: 'white',
+                        fontSize: '14px',
+                        outline: 'none',
+                        fontFamily: 'inherit',
+                      }}
+                    />
+                  </div>
 
-              <button
-                disabled
-                style={{
-                  width: '100%',
-                  padding: '14px',
-                  borderRadius: '10px',
-                  backgroundColor: '#00FFFF',
-                  color: '#13102B',
-                  fontSize: '14px',
-                  fontWeight: 800,
-                  border: 'none',
-                  cursor: 'not-allowed',
-                  opacity: 0.7,
-                }}
-              >
-                {t('waitlist.submit')}
-              </button>
+                  {inlineError && (
+                    <p style={{ fontSize: '13px', color: '#FF6B6B', marginBottom: '16px' }}>
+                      {inlineError}
+                    </p>
+                  )}
+
+                  <button
+                    onClick={handleInlineWaitlist}
+                    disabled={inlineSubmitting}
+                    style={{
+                      width: '100%',
+                      padding: '14px',
+                      borderRadius: '10px',
+                      backgroundColor: '#00FFFF',
+                      color: '#13102B',
+                      fontSize: '14px',
+                      fontWeight: 800,
+                      border: 'none',
+                      cursor: inlineSubmitting ? 'not-allowed' : 'pointer',
+                      opacity: inlineSubmitting ? 0.7 : 1,
+                      fontFamily: 'inherit',
+                    }}
+                  >
+                    {inlineSubmitting ? tWaitlist('submitting') : t('waitlist.submit')}
+                  </button>
+                </>
+              ) : (
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{
+                    width: '56px', height: '56px', borderRadius: '50%',
+                    backgroundColor: 'rgba(0,255,255,0.15)',
+                    color: '#00FFFF', fontSize: '28px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    marginBottom: '20px',
+                  }}>✓</div>
+                  <h2 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '12px', color: 'white' }}>
+                    {tWaitlist('successTitle')}
+                  </h2>
+                  <p style={{ fontSize: '16px', color: 'white', lineHeight: '1.6' }}>
+                    {tWaitlist('successDesc')}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </section>

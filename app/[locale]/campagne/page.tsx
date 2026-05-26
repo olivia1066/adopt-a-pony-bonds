@@ -203,6 +203,7 @@ function InfoToggleSection() {
 export default function Campagne() {
   const t = useTranslations('campagne')
   const tStats = useTranslations('home.stats')
+  const tHome = useTranslations('home')
   const locale = useLocale()
   const [amount, setAmount] = useState(5000)
   const [campaign, setCampaign] = useState<Campaign | null>(null)
@@ -405,46 +406,29 @@ export default function Campagne() {
         {/* Left — input */}
         <div className="campagne-sim-input" style={{ padding: '40px', backgroundColor: '#1E1B4B' }}>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-            <span style={{ fontSize: '22px', fontWeight: 800, color: 'white' }}>{t('simulator.ifYouInvest')}</span>
-            <span className="campagne-sim-amount" style={{ fontSize: '28px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px' }}>
+          {/* Titre à gauche */}
+          <h3 style={{ fontSize: '22px', fontWeight: 800, color: 'white', marginBottom: '24px' }}>
+            {tHome('simulator.ifYouInvestWith')}
+          </h3>
+
+          {/* Montant centré, gros */}
+          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+            <span className="campagne-sim-amount" style={{ fontSize: '48px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-2px', lineHeight: 1 }}>
               €{fmtInt(amount)}
             </span>
           </div>
+
+          {/* Slider */}
           <input
-            type="range" min={500} max={50000} step={500} value={amount}
+            type="range" min={500} max={200000} step={500} value={amount}
             onChange={e => setAmount(Number(e.target.value))}
             style={{ accentColor: '#00FFFF', width: '100%', cursor: 'pointer' }}
           />
           <div style={{
             display: 'flex', justifyContent: 'space-between',
-            fontSize: '11px', color: 'white', marginTop: '4px', marginBottom: '20px',
+            fontSize: '11px', color: 'white', marginTop: '4px', marginBottom: '32px',
           }}>
-            <span>€500</span><span>€50,000</span>
-          </div>
-
-          <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', marginBottom: '20px' }} />
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '20px' }}>
-            {[
-              { label: t('simulator.duration'), value: t('simulator.durationValue') },
-              { label: t('simulator.rate'), value: t('simulator.rateValue') },
-              { label: t('simulator.capital'), value: t('simulator.capitalValue') },
-            ].map((row, i) => (
-              <div key={i} style={{
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '4px 0',
-              }}>
-                <span style={{ fontSize: '13px', color: 'white' }}>{row.label}</span>
-                <span style={{
-                  fontSize: '12px', fontWeight: 700,
-                  padding: '3px 12px', borderRadius: '6px',
-                  backgroundColor: 'rgba(0,255,255,0.1)',
-                  border: '1px solid rgba(0,255,255,0.2)',
-                  color: '#00FFFF',
-                }}>{row.value}</span>
-              </div>
-            ))}
+            <span>€500</span><span>€200,000</span>
           </div>
 
           <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', marginBottom: '20px' }} />
@@ -465,78 +449,87 @@ export default function Campagne() {
             </span>
           </div>
 
-          <div style={{ display: 'flex', gap: '16px', fontSize: '12px' }}>
-            <span style={{ color: 'white', textDecoration: 'underline', cursor: 'pointer' }}>
+          <div style={{ display: 'flex', gap: '12px', fontSize: '12px', alignItems: 'center', flexWrap: 'wrap', marginTop: '24px' }}>
+            <a href="#" style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              fontSize: '12px', color: 'white',
+              textDecoration: 'none',
+              padding: '6px 12px', borderRadius: '8px',
+              border: '1px solid rgba(255,255,255,0.15)',
+            }}>
               {t('simulator.taxInfo')}
-            </span>
-            <span style={{ color: 'white', textDecoration: 'underline', cursor: 'pointer' }}>
+            </a>
+            <a href="#" style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              fontSize: '12px', color: 'white',
+              textDecoration: 'none',
+              padding: '6px 12px', borderRadius: '8px',
+              border: '1px solid rgba(255,255,255,0.15)',
+            }}>
               {t('simulator.investmentNote')}
-            </span>
+            </a>
+            <a href="#" style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              fontSize: '12px', color: 'white',
+              textDecoration: 'none',
+              padding: '6px 12px', borderRadius: '8px',
+              border: '1px solid rgba(255,255,255,0.15)',
+            }}>
+              {t('simulator.paymentSchedule')}
+            </a>
           </div>
         </div>
 
         {/* Right — results */}
         <div className="campagne-sim-results" style={{ padding: '40px', backgroundColor: '#0D0D2B', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <span style={{ fontSize: '22px', fontWeight: 800, color: 'white' }}>{t('simulator.receiveMonthly')}</span>
-              <span className="campagne-sim-monthly" style={{ fontSize: '52px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-2px', lineHeight: 1 }}>
+            {/* Titre à gauche */}
+            <h3 style={{ fontSize: '22px', fontWeight: 800, color: 'white', marginBottom: '24px' }}>
+              {tHome('simulator.youReceive')}
+            </h3>
+
+            {/* Montant centré, gros */}
+            <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+              <span className="campagne-sim-monthly" style={{ fontSize: '48px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-2px', lineHeight: 1 }}>
                 €{fmtDec(monthlyPayment)}
               </span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
-              <p style={{ fontSize: '12px', color: 'white' }}>
-                {t('simulator.fromMonth13')}
-              </p>
-              <a href="#" style={{
-                display: 'flex', alignItems: 'center', gap: '6px',
-                fontSize: '12px', color: 'white',
-                textDecoration: 'none',
-                padding: '6px 12px', borderRadius: '8px',
-                border: '1px solid rgba(255,255,255,0.15)',
-              }}>
-                {t('simulator.paymentSchedule')}
-              </a>
+              <span title={tHome('simulator.paymentDetails')} style={{ fontSize: '20px', color: '#00FFFF', cursor: 'help', marginLeft: '4px' }}>*</span>
             </div>
 
-            <div className="campagne-sim-summary" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
+            {/* 2 cards empilées verticalement, pleine largeur */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
               <div style={{
-                borderRadius: '14px', padding: '20px',
-                backgroundColor: 'rgba(0,255,255,0.08)',
-                border: '1px solid rgba(0,255,255,0.2)',
-                display: 'flex', flexDirection: 'column', justifyContent: 'center',
+                borderRadius: '14px', padding: '16px 20px',
+                backgroundColor: 'rgba(0,255,255,0.06)',
+                border: '1px solid rgba(0,255,255,0.15)',
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
               }}>
-                <p style={{ fontSize: '12px', color: 'white', fontWeight: 700, marginBottom: '8px' }}>
+                <p style={{ fontSize: '14px', color: 'white', fontWeight: 700 }}>
                   {t('simulator.totalRepaid')}
                 </p>
-                <p style={{ fontSize: '32px', fontWeight: 800, color: 'white', letterSpacing: '-1px' }}>
+                <p style={{ fontSize: '22px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
                   €{fmtInt(totalRepaid)}
                 </p>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div style={{
-                  borderRadius: '14px', padding: '16px', flex: 1,
-                  backgroundColor: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                }}>
-                  <p style={{ fontSize: '11px', color: 'white', marginBottom: '6px' }}>{t('simulator.totalInterest')}</p>
-                  <p style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-0.5px' }}>
-                    €{fmtInt(totalInterest)}
-                  </p>
-                </div>
-                <div style={{
-                  borderRadius: '14px', padding: '16px', flex: 1,
-                  backgroundColor: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                }}>
-                  <p style={{ fontSize: '11px', color: 'white', marginBottom: '6px' }}>{t('simulator.capitalInvested')}</p>
-                  <p style={{ fontSize: '20px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-0.5px' }}>
-                    €{fmtInt(amount)}
-                  </p>
-                </div>
+              <div style={{
+                borderRadius: '14px', padding: '16px 20px',
+                backgroundColor: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              }}>
+                <p style={{ fontSize: '14px', color: 'white', fontWeight: 700 }}>
+                  {t('simulator.totalInterest')}
+                </p>
+                <p style={{ fontSize: '22px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
+                  €{fmtInt(totalInterest)}
+                </p>
               </div>
             </div>
+
+            <p style={{ fontSize: '11px', color: 'white', fontStyle: 'italic', marginBottom: '16px' }}>
+              *{tHome('simulator.paymentDetails')}
+            </p>
           </div>
 
           {canInvest ? (

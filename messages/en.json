@@ -223,10 +223,16 @@
     "about": {
       "kicker": "About this campaign",
       "title": "Description",
-      "paragraph1": "This campaign finances the acquisition and deployment of new Pony electric bikes and scooters across French cities. Your investment goes directly into the fleet that riders use every day.",
-      "paragraph2": "You finance the entire fleet, which reduces risk and simplifies your experience. For the first 12 months, interest is compounded and added to your capital. Then, every month from month 13 to month 48, you receive a fixed payment combining capital and interest directly to your bank account.",
+      "paragraph1": "...",
+      "paragraph2Intro": "Pony is the French leader in shared micro-mobility. We design, deploy and operate electric bikes and scooters across France, already present in 22 cities with over 500,000 regular users and more than 20,000 rides per day.",
+      "paragraph2Opportunity": "This campaign gives you the opportunity to invest directly in our fleet: the bikes and scooters you finance will be deployed on the streets of French cities, and their operation is what generates the return on your investment.",
+      "paragraph2GrowthTitle": "Micro-mobility is experiencing sustained growth in France:",
+      "paragraph2GrowthItem1": "Increasing urban density and traffic congestion make cars less and less viable for short trips",
+      "paragraph2GrowthItem2": "The growing share of transportation in French household spending pushes people to seek cheaper and more efficient alternatives",
+      "paragraph2GrowthItem3": "The weight of cars in CO2 emissions pushes users and public authorities towards more sustainable alternatives",
+      "paragraph2Ambition": "Pony is growing accordingly: our activity nearly doubled between 2024 and 2025, and we regularly win new tenders to deploy in new cities. Our ambition: to become the reference player in shared mobility in France.",
       "riskTitle": "⚠️ Risk notice",
-      "riskDesc": "All investments carry risk, including the risk of partial or total capital loss. Past performance is not a guarantee of future results."
+      "riskDesc": "..."
     },
     
     "procedure": {

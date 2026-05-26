@@ -223,10 +223,16 @@
     "about": {
       "kicker": "À propos de cette campagne",
       "title": "Description",
-      "paragraph1": "Cette campagne finance l'acquisition et le déploiement de nouveaux vélos et trottinettes électriques Pony dans les villes françaises. Votre investissement va directement dans la flotte que les utilisateurs empruntent chaque jour.",
-      "paragraph2": "Vous financez l'ensemble de la flotte, ce qui réduit le risque et simplifie votre expérience. Pendant les 12 premiers mois, les intérêts sont capitalisés et ajoutés à votre capital. Ensuite, chaque mois du mois 13 au mois 48, vous recevez un versement fixe combinant capital et intérêts, directement sur votre compte bancaire.",
+      "paragraph1": "...",
+      "paragraph2Intro": "Pony est le leader français de la micro-mobilité partagée. Nous produisons, déployons et opérons des vélos et trottinettes électriques sur l'ensemble du territoire français, déjà présents dans 22 villes avec plus de 500 000 utilisateurs réguliers et plus de 20 000 trajets par jour.",
+      "paragraph2Opportunity": "Cette campagne vous donne l'opportunité d'investir directement dans notre flotte : les vélos et trottinettes que vous financez seront déployés dans les rues des villes françaises, et c'est leur exploitation qui rémunère votre investissement.",
+      "paragraph2GrowthTitle": "La micro-mobilité connaît une croissance soutenue en France :",
+      "paragraph2GrowthItem1": "La densification des villes et la saturation du trafic rendent la voiture de moins en moins viable sur les trajets courts",
+      "paragraph2GrowthItem2": "La part croissante du transport dans les dépenses des Français pousse à chercher des alternatives moins chères et plus efficaces",
+      "paragraph2GrowthItem3": "Le poids de la voiture dans les émissions de CO2 pousse usagers et pouvoirs publics à se tourner vers des alternatives plus durables",
+      "paragraph2Ambition": "Pony croît en proportion : notre activité a quasiment doublé entre 2024 et 2025, et nous remportons régulièrement de nouveaux appels d'offres pour déployer des nouvelles villes. Notre ambition : devenir l'acteur de référence de la mobilité partagée en France.",
       "riskTitle": "⚠️ Avertissement sur les risques",
-      "riskDesc": "Tout investissement comporte un risque, y compris le risque de perte partielle ou totale du capital. Les performances passées ne préjugent pas des performances futures."
+      "riskDesc": "..."
     },
 
     "procedure": {

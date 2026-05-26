@@ -88,6 +88,92 @@ function FaqSection() {
   )
 }
 
+function InfoToggleSection() {
+  const t = useTranslations('campagne')
+  const [openIndex, setOpenIndex] = useState<number | null>(0)
+
+  const sections = [
+    {
+      title: t('about.title'),
+      content: (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+            {t('about.paragraph2Intro')}
+          </p>
+          <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+            {t('about.paragraph2Opportunity')}
+          </p>
+          <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+            {t('about.paragraph2GrowthTitle')}
+          </p>
+          <ul style={{ fontSize: '15px', lineHeight: '1.7', color: 'white', paddingLeft: '24px', margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <li>{t('about.paragraph2GrowthItem1')}</li>
+            <li>{t('about.paragraph2GrowthItem2')}</li>
+            <li>{t('about.paragraph2GrowthItem3')}</li>
+          </ul>
+          <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+            {t('about.paragraph2Ambition')}
+          </p>
+        </div>
+      ),
+    },
+    {
+      title: t('procedure.title'),
+      content: (
+        <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+          {t('procedure.soon')}
+        </p>
+      ),
+    },
+    {
+      title: t('capitalProtection.title'),
+      content: (
+        <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+          {t('capitalProtection.soon')}
+        </p>
+      ),
+    },
+  ]
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      {sections.map((section, i) => (
+        <div key={i} style={{
+          borderRadius: '16px',
+          backgroundColor: 'rgba(30,27,75,0.6)',
+          border: '1px solid rgba(255,255,255,0.07)',
+          overflow: 'hidden',
+        }}>
+          <button
+            onClick={() => setOpenIndex(openIndex === i ? null : i)}
+            style={{
+              width: '100%', display: 'flex', justifyContent: 'space-between',
+              alignItems: 'center', padding: '24px 28px',
+              background: 'none', border: 'none', cursor: 'pointer',
+              color: 'white', textAlign: 'left',
+            }}
+          >
+            <span style={{ fontSize: '17px', fontWeight: 700 }}>{section.title}</span>
+            <span style={{
+              fontSize: '24px', fontWeight: 300, color: '#00FFFF',
+              flexShrink: 0, marginLeft: '16px', display: 'inline-block',
+              transform: openIndex === i ? 'rotate(45deg)' : 'rotate(0)',
+              transition: 'transform 0.2s',
+            }}>+</span>
+          </button>
+          {openIndex === i && (
+            <div style={{
+              padding: '0 28px 24px',
+            }}>
+              {section.content}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function Campagne() {
   const t = useTranslations('campagne')
   const locale = useLocale()
@@ -179,7 +265,7 @@ export default function Campagne() {
             {getCampaignName(campaign, locale) || t('hero.defaultName')}
           </h1>
           <p style={{ fontSize: '16px', color: 'white', maxWidth: '480px' }}>
-            {t('hero.subtitle')}
+            {getCampaignDescription(campaign, locale) || t('hero.subtitle')}
           </p>
         </div>
 
@@ -257,7 +343,7 @@ export default function Campagne() {
           <div style={{
             marginTop: '14px', position: 'relative', display: 'inline-block', cursor: 'help',
           }}
-          className="campagne-capital-protected">
+            className="campagne-capital-protected">
             <span style={{ fontSize: '12px', color: 'white', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
               🛡️ <span style={{ fontWeight: 700 }}>{t('hero.capitalProtectedTitle')}</span>
               <span style={{
@@ -301,7 +387,7 @@ export default function Campagne() {
       }}>
         {/* Left — input */}
         <div className="campagne-sim-input" style={{ padding: '40px', backgroundColor: '#1E1B4B' }}>
-          
+
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
             <span style={{ fontSize: '22px', fontWeight: 800, color: 'white' }}>{t('simulator.ifYouInvest')}</span>
             <span className="campagne-sim-amount" style={{ fontSize: '28px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px' }}>
@@ -396,7 +482,7 @@ export default function Campagne() {
               </a>
             </div>
 
-           <div className="campagne-sim-summary" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
+            <div className="campagne-sim-summary" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
               <div style={{
                 borderRadius: '14px', padding: '20px',
                 backgroundColor: 'rgba(0,255,255,0.08)',
@@ -463,68 +549,26 @@ export default function Campagne() {
         </div>
       </div>
 
-      {/* ── ABOUT ── */}
+      {/* ── ABOUT (toggles) ── */}
       <div className="campagne-block campagne-about" style={{ margin: '80px 200px 0' }}>
         <p style={{
           fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
-          color: '#00FFFF', textTransform: 'uppercase', marginBottom: '16px',
+          color: '#00FFFF', textTransform: 'uppercase', marginBottom: '32px',
         }}>{t('about.kicker')}</p>
-        <div className="campagne-block-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
-          <div>
-            <h2 style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1 }}>
-              {t('about.title')}
-            </h2>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
-              {getCampaignDescription(campaign, locale) || t('about.paragraph1')}
-            </p>
-            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
-              {t('about.paragraph2')}
-            </p>
-            <div style={{
-              borderRadius: '16px', padding: '20px',
-              backgroundColor: 'rgba(0,255,255,0.05)',
-              border: '1px solid rgba(0,255,255,0.12)',
-            }}>
-              <p style={{ fontSize: '12px', fontWeight: 700, color: '#00FFFF', marginBottom: '4px' }}>{t('about.riskTitle')}</p>
-              <p style={{ fontSize: '13px', color: 'white', lineHeight: '1.6' }}>
-                {t('about.riskDesc')}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* ── PROCÉDURE ── */}
-      <div className="campagne-block" style={{ margin: '80px 200px 0' }}>
-        <div className="campagne-block-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
-          <div>
-            <h2 style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1 }}>
-              {t('procedure.title')}
-            </h2>
-          </div>
-          <div>
-            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
-              {t('procedure.soon')}
-            </p>
-          </div>
-        </div>
-      </div>
+        <InfoToggleSection />
 
-      {/* ── PROTECTION DU CAPITAL ── */}
-      <div className="campagne-block" style={{ margin: '80px 200px 0' }}>
-        <div className="campagne-block-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }}>
-          <div>
-            <h2 style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1.1 }}>
-              {t('capitalProtection.title')}
-            </h2>
-          </div>
-          <div>
-            <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
-              {t('capitalProtection.soon')}
-            </p>
-          </div>
+        {/* Risk notice — toujours visible, sous les toggles */}
+        <div style={{
+          marginTop: '32px',
+          borderRadius: '16px', padding: '20px',
+          backgroundColor: 'rgba(0,255,255,0.05)',
+          border: '1px solid rgba(0,255,255,0.12)',
+        }}>
+          <p style={{ fontSize: '12px', fontWeight: 700, color: '#00FFFF', marginBottom: '4px' }}>{t('about.riskTitle')}</p>
+          <p style={{ fontSize: '13px', color: 'white', lineHeight: '1.6' }}>
+            {t('about.riskDesc')}
+          </p>
         </div>
       </div>
 

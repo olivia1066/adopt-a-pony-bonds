@@ -926,7 +926,6 @@ export default function Home() {
         <div className="footer-links" style={{ display: 'flex', gap: '24px', fontSize: '12px' }}>
           <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.privacy')}</a>
           <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.terms')}</a>
-          <Link href="/admin" style={{ color: 'rgba(255,255,255,0.15)', textDecoration: 'none' }}>{t('footer.admin')}</Link>
         </div>
       </footer>
 

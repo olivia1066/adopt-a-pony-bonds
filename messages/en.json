@@ -154,16 +154,46 @@
     "testimonials": {
       "title": "Join hundreds of Pony Angels!",
       "subtitle": "Get in touch with existing angels to learn more about the adoption scheme.",
-      "1": { "title": "The most mobile", "quote": "I like the idea of sharing the way Pony does because it's important to (re)create links between people." },
-      "2": { "title": "The environmental warrior", "quote": "I am a bike person & I want to keep cars out of cities. I like the way adopting ponies supports my cause." },
-      "3": { "title": "The smart investor", "quote": "8.5% annual return while doing something good for the planet? That's exactly what I was looking for." },
-      "4": { "title": "The city builder", "quote": "Investing in Pony means investing in the cities I live in. It's tangible, local and it makes sense." },
-      "5": { "title": "The daily commuter", "quote": "I use Pony every day to get to work. Now I also earn from it. Best investment I've ever made." },
-      "6": { "title": "The fintech native", "quote": "The returns are real, the asset is real, the impact is real. This is what modern investing looks like." },
-      "7": { "title": "The impact seeker", "quote": "I was looking for an investment that aligns with my values. Pony checks every single box." },
-      "8": { "title": "The early adopter", "quote": "I joined at the very beginning and I've been recommending it to everyone since. It just works." },
-      "9": { "title": "The long-term thinker", "quote": "Monthly income for 36 months and my capital back along the way. The math is simple and I love it." },
-      "10": { "title": "The green convert", "quote": "I used to invest in stocks. Now I invest in bikes that reduce CO2. Much more satisfying." }
+      "1": {
+        "title": "The most mobile",
+        "quote": "I like the idea of sharing the way Pony does because it's important to (re)create links between people."
+      },
+      "2": {
+        "title": "The environmental warrior",
+        "quote": "I am a bike person & I want to keep cars out of cities. I like the way adopting ponies supports my cause."
+      },
+      "3": {
+        "title": "The smart investor",
+        "quote": "8.5% annual return while doing something good for the planet? That's exactly what I was looking for."
+      },
+      "4": {
+        "title": "The city builder",
+        "quote": "Investing in Pony means investing in the cities I live in. It's tangible, local and it makes sense."
+      },
+      "5": {
+        "title": "The daily commuter",
+        "quote": "I use Pony every day to get to work. Now I also earn from it. Best investment I've ever made."
+      },
+      "6": {
+        "title": "The fintech native",
+        "quote": "The returns are real, the asset is real, the impact is real. This is what modern investing looks like."
+      },
+      "7": {
+        "title": "The impact seeker",
+        "quote": "I was looking for an investment that aligns with my values. Pony checks every single box."
+      },
+      "8": {
+        "title": "The early adopter",
+        "quote": "I joined at the very beginning and I've been recommending it to everyone since. It just works."
+      },
+      "9": {
+        "title": "The long-term thinker",
+        "quote": "Monthly income for 36 months and my capital back along the way. The math is simple and I love it."
+      },
+      "10": {
+        "title": "The green convert",
+        "quote": "I used to invest in stocks. Now I invest in bikes that reduce CO2. Much more satisfying."
+      }
     },
     "footer": {
       "disclaimer": "All investments carry risk, including the risk of capital loss. Pony Bonds is regulated by the AMF.",
@@ -176,8 +206,6 @@
     "back": "← Back",
     "loading": "Loading…",
     "hero": {
-      "tagUrban": "🛴 Urban fleet",
-      "tagCities": "📍 France — 15+ cities",
       "defaultName": "Spring 2026 Fleet",
       "subtitle": "Finance Pony's electric fleet and earn regular monthly returns.",
       "statusLabel": "Status",
@@ -227,21 +255,30 @@
       "paragraph2Intro": "Pony is the French leader in shared micro-mobility. We design, deploy and operate electric bikes and scooters across France, already present in 22 cities with over 500,000 regular users and more than 20,000 rides per day.",
       "paragraph2Opportunity": "This campaign gives you the opportunity to invest directly in our fleet: the bikes and scooters you finance will be deployed on the streets of French cities, and their operation is what generates the return on your investment.",
       "paragraph2GrowthTitle": "Micro-mobility is experiencing sustained growth in France:",
-      "paragraph2GrowthItem1": "Increasing urban density and traffic congestion make cars less and less viable for short trips",
-      "paragraph2GrowthItem2": "The growing share of transportation in French household spending pushes people to seek cheaper and more efficient alternatives",
-      "paragraph2GrowthItem3": "The weight of cars in CO2 emissions pushes users and public authorities towards more sustainable alternatives",
+      "paragraph2GrowthItem1": "- Increasing urban density and traffic congestion make cars less and less viable for short trips",
+      "paragraph2GrowthItem2": "- The growing share of transportation in French household spending pushes people to seek cheaper and more efficient alternatives",
+      "paragraph2GrowthItem3": "- The weight of cars in CO2 emissions pushes users and public authorities towards more sustainable alternatives",
       "paragraph2Ambition": "Pony is growing accordingly: our activity nearly doubled between 2024 and 2025, and we regularly win new tenders to deploy in new cities. Our ambition: to become the reference player in shared mobility in France.",
       "riskTitle": "⚠️ Risk notice",
       "riskDesc": "..."
     },
-    
-    "procedure": {
-      "title": "Procedure",
-      "soon": "Detailed content coming soon."
+    "howItWorks": {
+      "title": "How it works",
+      "intro": "We open investment campaigns at the pace of our expansion needs: winning a new tender, launching a new city, or densifying the fleet in an existing city.",
+      "cycleIntro": "The cycle is simple:",
+      "step1": "1. Once funds are raised, pony orders the vehicles",
+      "step2": "2. Bikes and scooters are delivered and put into service within approximately 12 months",
+      "step3": "3. Once in operation, the margin generated by their use finances the repayment of your investment",
+      "outro": "Concretely, for the first 12 months, interest is compounded and added to your capital. From month 13 to month 48, you receive a fixed monthly payment combining capital and interest, directly to your bank account."
     },
     "capitalProtection": {
       "title": "Capital protection",
-      "soon": "Detailed content coming soon."
+      "intro1": "Pony takes on the commercial performance risk and the customer risk.",
+      "intro2": "Our model rests on two solid pillars: the tangible value of our assets (a fleet of real vehicles) and our operating licenses with cities, signed for long durations (between 4 and 10 years) and renewed in the vast majority of cases (75% of cases).",
+      "guarantees": "Pony takes on the main operational risks and pays the scheduled monthly installments even in the event of:",
+      "guarantee1": "- Demand and revenue below forecasts",
+      "guarantee2": "- Vandalism and damage to the fleet → pony replaces the vehicles",
+      "guarantee3": "- Non-renewal of an operating license → fleets are redeployed to a new city"
     },
     "keyNumbers": {
       "kicker": "Key numbers",
@@ -249,6 +286,16 @@
       "cities": "French cities",
       "annualRate": "Annual rate",
       "duration": "Duration"
+    },
+    "products": {
+      "card1Title": "Double pony 2.0",
+      "card1Desc": "The 2-seater electric bike, designed and built as robust as a motorcycle. With its padded second seat, it's the perfect partner to ride with two over 100 km!",
+      "card1Bullet1": "5-year lifespan",
+      "card2Title": "Pony scooter",
+      "card2Desc": "The electric scooter developed for shared use. Extremely solid, it withstands intensive use and extreme weather conditions.",
+      "card2Bullet1": "7-year lifespan",
+      "adoptCta": "Adopt now →",
+      "waitlistCta": "🔔 Notify me about future sales"
     },
     "cta": {
       "kicker": "Limited spots available",

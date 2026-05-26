@@ -118,19 +118,45 @@ function InfoToggleSection() {
       ),
     },
     {
-      title: t('procedure.title'),
+      title: t('howItWorks.title'),
       content: (
-        <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
-          {t('procedure.soon')}
-        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+            {t('howItWorks.intro')}
+          </p>
+          <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+            {t('howItWorks.cycleIntro')}
+          </p>
+          <ol style={{ fontSize: '15px', lineHeight: '1.7', color: 'white', paddingLeft: '24px', margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <li>{t('howItWorks.step1')}</li>
+            <li>{t('howItWorks.step2')}</li>
+            <li>{t('howItWorks.step3')}</li>
+          </ol>
+          <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+            {t('howItWorks.outro')}
+          </p>
+        </div>
       ),
     },
     {
       title: t('capitalProtection.title'),
       content: (
-        <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
-          {t('capitalProtection.soon')}
-        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+            {t('capitalProtection.intro1')}
+          </p>
+          <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+            {t('capitalProtection.intro2')}
+          </p>
+          <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'white' }}>
+            {t('capitalProtection.guarantees')}
+          </p>
+          <ul style={{ fontSize: '15px', lineHeight: '1.7', color: 'white', paddingLeft: '24px', margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <li>{t('capitalProtection.guarantee1')}</li>
+            <li>{t('capitalProtection.guarantee2')}</li>
+            <li>{t('capitalProtection.guarantee3')}</li>
+          </ul>
+        </div>
       ),
     },
   ]
@@ -176,6 +202,7 @@ function InfoToggleSection() {
 
 export default function Campagne() {
   const t = useTranslations('campagne')
+  const tStats = useTranslations('home.stats')
   const locale = useLocale()
   const [amount, setAmount] = useState(5000)
   const [campaign, setCampaign] = useState<Campaign | null>(null)
@@ -251,16 +278,6 @@ export default function Campagne() {
         }} />
 
         <div className="campagne-hero-content" style={{ position: 'absolute', bottom: 0, left: 0, padding: '40px', zIndex: 2 }}>
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-            <span style={{
-              fontSize: '11px', padding: '4px 12px', borderRadius: '100px', fontWeight: 600,
-              backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF',
-            }}>{t('hero.tagUrban')}</span>
-            <span style={{
-              fontSize: '11px', padding: '4px 12px', borderRadius: '100px', fontWeight: 600,
-              backgroundColor: 'rgba(255,255,255,0.08)', color: 'white',
-            }}>{t('hero.tagCities')}</span>
-          </div>
           <h1 style={{ fontSize: '48px', fontWeight: 800, letterSpacing: '-1.5px', lineHeight: 1.05, marginBottom: '10px' }}>
             {getCampaignName(campaign, locale) || t('hero.defaultName')}
           </h1>
@@ -572,9 +589,126 @@ export default function Campagne() {
         </div>
       </div>
 
-      {/* ── KEY NUMBERS ── */}
-      <div className="campagne-keynumbers" style={{
+      {/* ── PRODUITS (2 cards centrées, ~60% largeur) ── */}
+      <div className="campagne-products" style={{
         margin: '80px 200px 0',
+        display: 'flex',
+        justifyContent: 'center',
+      }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '16px',
+          width: '100%',
+          maxWidth: '720px',
+        }}>
+          {[
+            {
+              title: t('products.card1Title'),
+              desc: t('products.card1Desc'),
+              bullet: t('products.card1Bullet1'),
+              image: '/product-bike-placeholder.jpg',
+              source: 'site_campagne_product_card1',
+            },
+            {
+              title: t('products.card2Title'),
+              desc: t('products.card2Desc'),
+              bullet: t('products.card2Bullet1'),
+              image: '/product-scooter-placeholder.jpg',
+              source: 'site_campagne_product_card2',
+            },
+          ].map((product, i) => (
+            <div key={i} style={{
+              borderRadius: '24px',
+              backgroundColor: '#321E64',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+            }}>
+              {/* Image — dominante */}
+              <div style={{
+                aspectRatio: '4 / 3',
+                backgroundColor: 'rgba(255,255,255,0.05)',
+                backgroundImage: `url(${product.image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'rgba(255,255,255,0.4)',
+                fontSize: '12px',
+                fontStyle: 'italic',
+              }}>
+                Image à venir
+              </div>
+
+              {/* Content */}
+              <div style={{
+                padding: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+                flex: 1,
+              }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 800, color: 'white', lineHeight: 1.2 }}>
+                  {product.title}
+                </h3>
+                <p style={{ fontSize: '13px', lineHeight: '1.6', color: 'white', flex: 1 }}>
+                  {product.desc}
+                </p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
+                  <span style={{ color: '#00FFFF', fontSize: '14px' }}>●</span>
+                  <span style={{ fontSize: '13px', color: 'white' }}>{product.bullet}</span>
+                </div>
+
+                {/* CTA conditionnel */}
+                {canInvest ? (
+                  <Link
+                    href={`/investir?campaignId=${campaign?.id}&amount=5000`}
+                    style={{
+                      display: 'block',
+                      textAlign: 'center',
+                      marginTop: '12px',
+                      backgroundColor: '#00FFFF',
+                      color: '#13102B',
+                      padding: '12px',
+                      borderRadius: '10px',
+                      fontSize: '13px',
+                      fontWeight: 800,
+                      textDecoration: 'none',
+                    }}>
+                    {t('products.adoptCta')}
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => openWaitlist(product.source)}
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      textAlign: 'center',
+                      marginTop: '12px',
+                      backgroundColor: '#00FFFF',
+                      color: '#13102B',
+                      padding: '12px',
+                      borderRadius: '10px',
+                      fontSize: '13px',
+                      fontWeight: 800,
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontFamily: 'inherit',
+                    }}>
+                    {t('products.waitlistCta')}
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── KEY NUMBERS (barre horizontale, 4 chiffres Pony global) ── */}
+      <div className="campagne-keynumbers" style={{
+        margin: '40px 200px 0',
         borderRadius: '24px', padding: '48px',
         backgroundColor: 'rgba(30,27,75,0.5)',
         border: '1px solid rgba(255,255,255,0.06)',
@@ -585,10 +719,10 @@ export default function Campagne() {
         }}>{t('keyNumbers.kicker')}</p>
         <div className="campagne-keynumbers-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0' }}>
           {[
-            { value: '50', label: t('keyNumbers.vehicles') },
-            { value: '5', label: t('keyNumbers.cities') },
-            { value: t('simulator.rateValue'), label: t('keyNumbers.annualRate') },
-            { value: '48m', label: t('keyNumbers.duration') },
+            { value: '22', label: tStats('cities') },
+            { value: '500K+', label: tStats('users') },
+            { value: '95%', label: tStats('co2') },
+            { value: '20 000', label: tStats('riders') },
           ].map((stat, i) => (
             <div key={i} className="campagne-keynumber-item" style={{
               textAlign: 'center',

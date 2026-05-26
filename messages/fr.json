@@ -154,16 +154,46 @@
     "testimonials": {
       "title": "Rejoignez des centaines de Pony Angels !",
       "subtitle": "Échangez avec les angels existants pour en savoir plus sur le programme d'adoption.",
-      "1": { "title": "Le plus mobile", "quote": "J'aime l'idée du partage à la façon Pony, parce que c'est important de (re)créer du lien entre les gens." },
-      "2": { "title": "Le guerrier écolo", "quote": "Je suis cycliste & je veux sortir les voitures des villes. J'aime la manière dont adopter des ponies soutient ma cause." },
-      "3": { "title": "L'investisseuse avisée", "quote": "8,5 % de rendement annuel tout en faisant quelque chose de bien pour la planète ? C'est exactement ce que je cherchais." },
-      "4": { "title": "Le bâtisseur de villes", "quote": "Investir dans Pony, c'est investir dans les villes où je vis. C'est concret, local, et ça a du sens." },
-      "5": { "title": "La pendulaire quotidienne", "quote": "J'utilise Pony tous les jours pour aller au travail. Maintenant j'en tire aussi des revenus. Mon meilleur investissement." },
-      "6": { "title": "Le natif de la fintech", "quote": "Les rendements sont réels, l'actif est réel, l'impact est réel. C'est à ça que ressemble l'investissement moderne." },
-      "7": { "title": "L'engagée pour l'impact", "quote": "Je cherchais un investissement aligné avec mes valeurs. Pony coche toutes les cases." },
-      "8": { "title": "Le pionnier", "quote": "J'ai rejoint la plateforme dès le début et je la recommande à tout le monde depuis. Ça fonctionne, point." },
-      "9": { "title": "La visionnaire long terme", "quote": "Des revenus mensuels pendant 36 mois et mon capital qui revient au fil du temps. Le calcul est simple et j'adore." },
-      "10": { "title": "Le converti au vert", "quote": "J'investissais en bourse. Maintenant j'investis dans des vélos qui réduisent le CO₂. Bien plus satisfaisant." }
+      "1": {
+        "title": "Le plus mobile",
+        "quote": "J'aime l'idée du partage à la façon Pony, parce que c'est important de (re)créer du lien entre les gens."
+      },
+      "2": {
+        "title": "Le guerrier écolo",
+        "quote": "Je suis cycliste & je veux sortir les voitures des villes. J'aime la manière dont adopter des ponies soutient ma cause."
+      },
+      "3": {
+        "title": "L'investisseuse avisée",
+        "quote": "8,5 % de rendement annuel tout en faisant quelque chose de bien pour la planète ? C'est exactement ce que je cherchais."
+      },
+      "4": {
+        "title": "Le bâtisseur de villes",
+        "quote": "Investir dans Pony, c'est investir dans les villes où je vis. C'est concret, local, et ça a du sens."
+      },
+      "5": {
+        "title": "La pendulaire quotidienne",
+        "quote": "J'utilise Pony tous les jours pour aller au travail. Maintenant j'en tire aussi des revenus. Mon meilleur investissement."
+      },
+      "6": {
+        "title": "Le natif de la fintech",
+        "quote": "Les rendements sont réels, l'actif est réel, l'impact est réel. C'est à ça que ressemble l'investissement moderne."
+      },
+      "7": {
+        "title": "L'engagée pour l'impact",
+        "quote": "Je cherchais un investissement aligné avec mes valeurs. Pony coche toutes les cases."
+      },
+      "8": {
+        "title": "Le pionnier",
+        "quote": "J'ai rejoint la plateforme dès le début et je la recommande à tout le monde depuis. Ça fonctionne, point."
+      },
+      "9": {
+        "title": "La visionnaire long terme",
+        "quote": "Des revenus mensuels pendant 36 mois et mon capital qui revient au fil du temps. Le calcul est simple et j'adore."
+      },
+      "10": {
+        "title": "Le converti au vert",
+        "quote": "J'investissais en bourse. Maintenant j'investis dans des vélos qui réduisent le CO₂. Bien plus satisfaisant."
+      }
     },
     "footer": {
       "disclaimer": "Tout investissement comporte un risque, y compris le risque de perte en capital. Pony Bonds est régulé par l'AMF.",
@@ -176,8 +206,6 @@
     "back": "← Retour",
     "loading": "Chargement…",
     "hero": {
-      "tagUrban": "🛴 Flotte urbaine",
-      "tagCities": "📍 France — 15+ villes",
       "defaultName": "Flotte Printemps 2026",
       "subtitle": "Financez la flotte électrique de Pony et touchez des revenus mensuels réguliers.",
       "statusLabel": "Statut",
@@ -227,21 +255,30 @@
       "paragraph2Intro": "Pony est le leader français de la micro-mobilité partagée. Nous produisons, déployons et opérons des vélos et trottinettes électriques sur l'ensemble du territoire français, déjà présents dans 22 villes avec plus de 500 000 utilisateurs réguliers et plus de 20 000 trajets par jour.",
       "paragraph2Opportunity": "Cette campagne vous donne l'opportunité d'investir directement dans notre flotte : les vélos et trottinettes que vous financez seront déployés dans les rues des villes françaises, et c'est leur exploitation qui rémunère votre investissement.",
       "paragraph2GrowthTitle": "La micro-mobilité connaît une croissance soutenue en France :",
-      "paragraph2GrowthItem1": "La densification des villes et la saturation du trafic rendent la voiture de moins en moins viable sur les trajets courts",
-      "paragraph2GrowthItem2": "La part croissante du transport dans les dépenses des Français pousse à chercher des alternatives moins chères et plus efficaces",
-      "paragraph2GrowthItem3": "Le poids de la voiture dans les émissions de CO2 pousse usagers et pouvoirs publics à se tourner vers des alternatives plus durables",
+      "paragraph2GrowthItem1": "- La densification des villes et la saturation du trafic rendent la voiture de moins en moins viable sur les trajets courts",
+      "paragraph2GrowthItem2": "- La part croissante du transport dans les dépenses des Français pousse à chercher des alternatives moins chères et plus efficaces",
+      "paragraph2GrowthItem3": "- Le poids de la voiture dans les émissions de CO2 pousse usagers et pouvoirs publics à se tourner vers des alternatives plus durables",
       "paragraph2Ambition": "Pony croît en proportion : notre activité a quasiment doublé entre 2024 et 2025, et nous remportons régulièrement de nouveaux appels d'offres pour déployer des nouvelles villes. Notre ambition : devenir l'acteur de référence de la mobilité partagée en France.",
       "riskTitle": "⚠️ Avertissement sur les risques",
       "riskDesc": "..."
     },
-
-    "procedure": {
-      "title": "Procédure",
-      "soon": "Contenu détaillé bientôt disponible."
+    "howItWorks": {
+      "title": "Fonctionnement",
+      "intro": "Nous ouvrons les campagnes d'investissement au rythme de nos besoins d'expansion : gain d'un nouvel appel d'offres, lancement d'une nouvelle ville, ou densification de la flotte dans une ville existante.",
+      "cycleIntro": "Le cycle est simple :",
+      "step1": "1. Une fois les fonds collectés, pony commande les véhicules",
+      "step2": "2. Les vélos et trottinettes sont livrés et mis en service sous environ 12 mois",
+      "step3": "3. Une fois en circulation, la marge générée par leur exploitation finance le remboursement de votre investissement",
+      "outro": "Concrètement, pendant les 12 premiers mois, les intérêts sont capitalisés et viennent s'ajouter à votre capital. Du mois 13 au mois 48, vous recevez chaque mois un versement fixe combinant capital et intérêts, directement sur votre compte bancaire."
     },
     "capitalProtection": {
       "title": "Protection du capital",
-      "soon": "Contenu détaillé bientôt disponible."
+      "intro1": "Pony prend à sa charge le risque de performance commerciale et le risque client.",
+      "intro2": "Notre modèle repose sur deux piliers solides : la valeur tangible de nos actifs (une flotte de véhicules réels) et nos licences d'exploitation avec les villes, signées sur des durées longues (entre 4 et 10 ans) et renouvelées dans la grande majorité des cas (75% des cas).",
+      "guarantees": "Pony prend à sa charge les principaux aléas opérationnels et verse les mensualités prévues même en cas de :",
+      "guarantee1": "- Demande et chiffre d'affaires inférieurs aux prévisions",
+      "guarantee2": "- Vandalisme et dégradations sur la flotte → pony remplace les véhicules",
+      "guarantee3": "- Non-renouvellement d'une licence d'exploitation → les flottes sont déplacées dans une nouvelle ville"
     },
     "keyNumbers": {
       "kicker": "Chiffres clés",
@@ -249,6 +286,16 @@
       "cities": "Villes françaises",
       "annualRate": "Taux annuel",
       "duration": "Durée"
+    },
+    "products": {
+      "card1Title": "Double pony 2.0",
+      "card1Desc": "Le vélo électrique 2 places, conçu et robuste comme une moto. Avec son 2ème siège rembourré, c'est le partenaire idéal pour galoper à 2 sur 100 km !",
+      "card1Bullet1": "Durée de vie 5 ans",
+      "card2Title": "Trottinette pony",
+      "card2Desc": "La trottinette électrique développée pour un usage partagé. Extrêmement solide, résiste à une utilisation intensive et à des conditions climatiques extrêmes.",
+      "card2Bullet1": "Durée de vie 7 ans",
+      "adoptCta": "Adopter maintenant →",
+      "waitlistCta": "🔔 M'informer des prochaines ventes"
     },
     "cta": {
       "kicker": "Places limitées",

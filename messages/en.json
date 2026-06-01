@@ -42,7 +42,10 @@
       "iWantToInvest": "I want to invest",
       "paymentDetails": "Interest and capital paid from month 13, interest compounded",
       "gracePeriod": "Grace period",
-      "gracePeriodValue": "12 months"
+      "gracePeriodValue": "12 months",
+      "taxInfo": "Tax information",
+      "investmentNote": "Investment note",
+      "paymentSchedule": "📅 Payment schedule"
     },
     "mission": {
       "title": "At pony, our mission is simple: allow everyone to play a direct role in their city and beyond, in the transition away from a car centric society",
@@ -54,14 +57,33 @@
       "item3Desc": "Earn up to 8.5% annual interest, landing in your bank account every single month. And after 42 months, your full investment comes back home."
     },
     "campaignCard": {
-      "statusOngoing": "● ONGOING",
-      "statusComingSoon": "● COMING SOON",
-      "statusSoldOut": "● SOLD OUT",
+      "statusOngoing": "🟢 Ongoing",
+      "statusComingSoon": "🟡 Coming soon",
+      "statusSoldOut": "🔴 Sold out",
       "title": "Spring 2026 Fleet",
       "subtitle": "Financing 50 bikes and scooters deployed across 5 French cities.",
       "raised": "raised",
       "target": "target",
-      "cta": "Adopt now →"
+      "cta": "Adopt now →",
+      "capitalProtectedTitle": "Capital protected",
+      "capitalProtectedDesc": "Explanatory text coming soon — will describe the guarantee provided by the Pony vehicle fleet and the protection of your investment."
+    },
+    "campaign": {
+      "kicker": "CAMPAIGN"
+    },
+    "products": {
+      "kicker": "OUR PRODUCTS",
+      "card1Title": "Double pony 2.0",
+      "card1Desc": "The 2-seater electric bike, designed and robust like a motorcycle. With its padded 2nd seat, it's the ideal partner to ride 2-up for 100 km!",
+      "card1Bullet1": "5-year lifespan",
+      "card2Title": "Pony scooter",
+      "card2Desc": "The electric scooter developed for shared use. Extremely solid, withstands intensive use and extreme weather conditions.",
+      "card2Bullet1": "7-year lifespan",
+      "adoptCta": "Adopt now →",
+      "notifyCta": "🔔 Notify me of upcoming sales"
+    },
+    "keyNumbers": {
+      "kicker": "PONY IN NUMBERS"
     },
     "waitlist": {
       "title": "Be the first to know!",
@@ -326,7 +348,7 @@
     "errorReadContract": "Please confirm that you have read and agree to the contract.",
     "stepperOf": "Step {current} of {total}",
     "steps": {
-      "kyc": "KYC",
+      "kyc": "Personal details",
       "confirmation": "Confirmation",
       "signature": "Signature",
       "payment": "Payment",
@@ -367,11 +389,13 @@
       "documentNumber": "Document number",
       "iban": "IBAN",
       "ibanHelp": "The IBAN of the account that will receive your monthly repayments.",
-      "submit": "Submit my KYC →"
+      "submit": "Continue →"
     },
     "confirmation": {
       "title": "Review your investment",
       "desc": "Please check the information below before signing the contract.",
+      "contactTitle": "Your details",
+      "editContact": "← Edit",
       "summaryTitle": "Investment summary",
       "amount": "Amount",
       "rate": "Rate",
@@ -415,6 +439,11 @@
       "bic": "BIC",
       "reference": "Reference",
       "amount": "Amount",
+      "copy": "Copy",
+      "copied": "✓ Copied",
+      "yourIban": "Your IBAN",
+      "yourIbanHelp": "The IBAN of the account that will receive your monthly repayments.",
+      "refWarning": "You must include your reference (PONY-…) in the transfer description / reference field, otherwise we won't be able to match your payment.",
       "delayNotice1": "⏱️ Once the transfer is received, your investment will be confirmed within",
       "delayNotice2": "2–3 business days",
       "delayNotice3": ". You will receive a confirmation email.",

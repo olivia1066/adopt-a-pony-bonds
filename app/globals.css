@@ -602,4 +602,39 @@ html {
     grid-column: span 1 / span 1 !important;
   }
 
+  /* ========== HOME — CAMPAIGN + PRODUCTS ========== */
+  .home-campaign-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .home-products-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* ========== HOME — KEY NUMBERS ========== */
+  .home-keynumbers-section {
+    padding: 48px 16px !important;
+  }
+
+  .home-keynumbers-section > div {
+    padding: 32px 20px !important;
+  }
+
+  .home-keynumbers-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px 16px !important;
+  }
+
+  .home-keynumbers-grid > div {
+    border-right: none !important;
+    padding: 0 !important;
+  }
+
+  .home-keynumbers-grid > div:nth-child(odd) {
+    border-right: 1px solid rgba(255,255,255,0.07) !important;
+    padding-right: 16px !important;
+  }
+
 }

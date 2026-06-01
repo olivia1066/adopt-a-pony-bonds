@@ -498,6 +498,33 @@ export default function Home() {
                   *{t('simulator.paymentDetails')}
                 </p>
 
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
+                  <a href="#" style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    fontSize: '12px', color: 'white', textDecoration: 'none',
+                    padding: '6px 12px', borderRadius: '8px',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                  }}>
+                    {t('simulator.taxInfo')}
+                  </a>
+                  <a href="#" style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    fontSize: '12px', color: 'white', textDecoration: 'none',
+                    padding: '6px 12px', borderRadius: '8px',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                  }}>
+                    {t('simulator.investmentNote')}
+                  </a>
+                  <a href="#" style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    fontSize: '12px', color: 'white', textDecoration: 'none',
+                    padding: '6px 12px', borderRadius: '8px',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                  }}>
+                    {t('simulator.paymentSchedule')}
+                  </a>
+                </div>
+
                 <Link href="/campagne" style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '14px', borderRadius: '10px', fontSize: '14px', fontWeight: 800, textDecoration: 'none', marginTop: 'auto' }}>
                   {t('hero.cta')}
                 </Link>
@@ -563,88 +590,250 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CAMPAIGN + STATS ── */}
-      <section className="campaign-section" style={{ padding: '120px 96px', display: 'flex', alignItems: 'center', position: 'relative' }}>
+      {/* ── CAMPAIGN + PRODUCTS (layout B : Campaign Card large + 2 product cards à droite) ── */}
+      <section className="campaign-section" style={{ padding: '120px 96px' }}>
 
-        {/* LEFT — STATS COLUMN */}
-        <div className="campaign-stats" style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'column', gap: '48px', marginLeft: '250px' }}>
-          {[
-            { value: '22', label: t('stats.cities') },
-            { value: '500+', label: t('stats.users') },
-            { value: '95%', label: t('stats.co2') },
-            { value: '20,000', label: t('stats.riders') },
-          ].map((stat, i) => (
-            <div key={i}>
-              <p style={{ fontSize: '52px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
-                {stat.value}
-              </p>
-              <p style={{ marginTop: '8px', fontSize: '11px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: '#00FFFF' }}>
-                {stat.label}
-              </p>
+        <div className="home-campaign-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', alignItems: 'stretch' }}>
+
+          {/* LEFT — CAMPAIGN CARD */}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <p style={{
+              fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
+              color: '#00FFFF', textTransform: 'uppercase', marginBottom: '24px',
+            }}>{t('campaign.kicker')}</p>
+
+            <div className="campaign-card" style={{
+              flex: 1,
+              borderRadius: '24px', padding: '40px',
+              backgroundColor: 'rgba(30,27,75,0.9)',
+              backdropFilter: 'blur(16px)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)',
+              display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+            }}>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '100px', backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF', letterSpacing: '1px' }}>
+                    {campaignStatus === 'ongoing' ? t('campaignCard.statusOngoing') : campaignStatus === 'coming_soon' ? t('campaignCard.statusComingSoon') : t('campaignCard.statusSoldOut')}
+                  </span>
+
+                  {/* Capital protected — hover popover */}
+                  <div style={{
+                    position: 'relative', display: 'inline-block', cursor: 'help',
+                  }}
+                    className="campagne-capital-protected">
+                    <span style={{ fontSize: '13px', color: 'white', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      🛡️ <span style={{ fontWeight: 700 }}>{t('campaignCard.capitalProtectedTitle')}</span>
+                      <span style={{
+                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                        width: '16px', height: '16px', borderRadius: '50%',
+                        backgroundColor: 'rgba(255,255,255,0.1)', color: 'white',
+                        fontSize: '10px', fontWeight: 700,
+                      }}>?</span>
+                    </span>
+                    <div className="campagne-capital-protected-popover" style={{
+                      position: 'absolute', bottom: 'calc(100% + 12px)', right: '0',
+                      width: '300px', padding: '16px',
+                      backgroundColor: '#0D0B20', borderRadius: '12px',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
+                      fontSize: '12px', lineHeight: '1.5', color: 'white',
+                      opacity: 0, pointerEvents: 'none',
+                      transition: 'opacity 0.2s',
+                      zIndex: 10,
+                    }}>
+                      {t('campaignCard.capitalProtectedDesc')}
+                      <div style={{
+                        position: 'absolute', top: '100%', right: '20px',
+                        width: 0, height: 0,
+                        borderLeft: '8px solid transparent',
+                        borderRight: '8px solid transparent',
+                        borderTop: '8px solid #0D0B20',
+                      }} />
+                    </div>
+                  </div>
+                </div>
+
+                <h3 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '12px' }}>
+                  {getCampaignName(campaign, locale) || t('campaignCard.title')}
+                </h3>
+                <p style={{ fontSize: '15px', color: 'white', lineHeight: '1.6', marginBottom: '28px' }}>
+                  {getCampaignDescription(campaign, locale) || t('campaignCard.subtitle')}
+                </p>
+
+                <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '0 -40px 28px' }} />
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '28px' }}>
+                  {[
+                    { label: t('simulator.duration'), value: t('simulator.durationValue') },
+                    { label: t('simulator.rate'), value: t('simulator.rateValue') },
+                    { label: t('simulator.capital'), value: t('simulator.capitalValue') },
+                    { label: t('simulator.gracePeriod'), value: t('simulator.gracePeriodValue') },
+                  ].map((row, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '3px 0' }}>
+                      <span style={{ fontSize: '14px', color: 'white' }}>{row.label}</span>
+                      <span style={{ fontSize: '13px', fontWeight: 700, padding: '4px 14px', borderRadius: '6px', backgroundColor: 'rgba(0,255,255,0.1)', border: '1px solid rgba(0,255,255,0.2)', color: '#00FFFF' }}>{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <p style={{
+                  fontSize: '11px',
+                  color: 'rgba(255,255,255,0.6)',
+                  fontStyle: 'italic',
+                  lineHeight: 1.4,
+                  marginBottom: '24px',
+                }}>
+                  *{t('simulator.paymentDetails')}
+                </p>
+
+                {progressVisible && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '8px', color: 'white' }}>
+                      <span>€{fmtInt(campaignStatus === 'sold_out' ? (campaign?.target_amount ?? 0) : (campaign?.raised_amount ?? 0))} {t('campaignCard.raised')}</span>
+                      <span style={{ fontWeight: 700, color: 'white' }}>{Math.round(raisedPct)}%</span>
+                    </div>
+                    <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
+                      <div style={{ width: `${raisedPct}%`, height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
+                    </div>
+                    <p style={{ fontSize: '12px', color: 'white', marginTop: '6px' }}>€{fmtInt(campaign?.target_amount ?? 500000)} {t('campaignCard.target')}</p>
+                  </div>
+                )}
+              </div>
+
+              {canInvest ? (
+                <Link href="/campagne" style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '16px', borderRadius: '12px', fontSize: '15px', fontWeight: 800, textDecoration: 'none' }}>
+                  {t('campaignCard.cta')}
+                </Link>
+              ) : (
+                <button onClick={() => openWaitlist('site_campaign_card')} style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '16px', borderRadius: '12px', fontSize: '15px', fontWeight: 800, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                  {t('hero.joinWaitlist')}
+                </button>
+              )}
             </div>
-          ))}
-        </div>
+          </div>
 
-        {/* CENTER — CAMPAIGN CARD */}
-        <div className="campaign-card" style={{ position: 'absolute', left: '50%', transform: 'translateX(calc(-50% + 160px))', width: '500px', borderRadius: '24px', padding: '32px', backgroundColor: 'rgba(30,27,75,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div>
-            {/* Status badge */}
-            <div style={{ marginBottom: '24px' }}>
-              <span style={{ fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '100px', backgroundColor: 'rgba(0,255,255,0.12)', color: '#00FFFF', letterSpacing: '1px' }}>
-                {campaignStatus === 'ongoing' ? t('campaignCard.statusOngoing') : campaignStatus === 'coming_soon' ? t('campaignCard.statusComingSoon') : t('campaignCard.statusSoldOut')}
-              </span>
-            </div>
+          {/* RIGHT — PRODUCT CARDS SIDE BY SIDE */}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <p style={{
+              fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
+              color: '#00FFFF', textTransform: 'uppercase', marginBottom: '24px',
+            }}>{t('products.kicker')}</p>
 
-            {/* Title + description — Supabase with hardcoded fallback */}
-            <h3 style={{ fontSize: '22px', fontWeight: 800, marginBottom: '8px' }}>
-              {getCampaignName(campaign, locale) || t('campaignCard.title')}
-            </h3>
-            <p style={{ fontSize: '14px', color: 'white', lineHeight: '1.6', marginBottom: '24px' }}>
-              {getCampaignDescription(campaign, locale) || t('campaignCard.subtitle')}
-            </p>
-
-            {/* Separator */}
-            <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '0 -32px 24px' }} />
-
-            {/* Terms — 4 lines, simulator style */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
+            <div className="home-products-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', flex: 1 }}>
               {[
-                { label: t('simulator.duration'), value: t('simulator.durationValue') },
-                { label: t('simulator.rate'), value: t('simulator.rateValue') },
-                { label: t('simulator.capital'), value: t('simulator.capitalValue') },
-                { label: t('simulator.gracePeriod'), value: t('simulator.gracePeriodValue') },
-              ].map((row, i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '3px 0' }}>
-                  <span style={{ fontSize: '13px', color: 'white' }}>{row.label}</span>
-                  <span style={{ fontSize: '12px', fontWeight: 700, padding: '3px 12px', borderRadius: '6px', backgroundColor: 'rgba(0,255,255,0.1)', border: '1px solid rgba(0,255,255,0.2)', color: '#00FFFF' }}>{row.value}</span>
+                {
+                  title: t('products.card1Title'),
+                  desc: t('products.card1Desc'),
+                  bullet: t('products.card1Bullet1'),
+                  image: '/product-bike-placeholder.jpg',
+                  source: 'site_home_product_card1',
+                },
+                {
+                  title: t('products.card2Title'),
+                  desc: t('products.card2Desc'),
+                  bullet: t('products.card2Bullet1'),
+                  image: '/product-scooter-placeholder.jpg',
+                  source: 'site_home_product_card2',
+                },
+              ].map((product, i) => (
+                <div key={i} style={{
+                  borderRadius: '20px',
+                  backgroundColor: '#321E64',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}>
+                  <div style={{
+                    aspectRatio: '4 / 3',
+                    backgroundColor: 'rgba(255,255,255,0.05)',
+                    backgroundImage: `url(${product.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'rgba(255,255,255,0.4)',
+                    fontSize: '11px',
+                    fontStyle: 'italic',
+                  }}>
+                    Image à venir
+                  </div>
+                  <div style={{
+                    padding: '16px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '8px',
+                    flex: 1,
+                  }}>
+                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: 'white', lineHeight: 1.2 }}>
+                      {product.title}
+                    </h3>
+                    <p style={{ fontSize: '12px', lineHeight: '1.5', color: 'white', flex: 1 }}>
+                      {product.desc}
+                    </p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ color: '#00FFFF', fontSize: '12px' }}>●</span>
+                      <span style={{ fontSize: '12px', color: 'white' }}>{product.bullet}</span>
+                    </div>
+                    {canInvest ? (
+                      <Link href={`/investir?campaignId=${campaign?.id}&amount=5000`}
+                        style={{ display: 'block', textAlign: 'center', marginTop: '6px', backgroundColor: '#00FFFF', color: '#13102B', padding: '10px', borderRadius: '8px', fontSize: '12px', fontWeight: 800, textDecoration: 'none' }}>
+                        {t('products.adoptCta')}
+                      </Link>
+                    ) : (
+                      <button onClick={() => openWaitlist(product.source)}
+                        style={{ display: 'block', width: '100%', textAlign: 'center', marginTop: '6px', backgroundColor: '#00FFFF', color: '#13102B', padding: '10px', borderRadius: '8px', fontSize: '12px', fontWeight: 800, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                        {t('products.notifyCta')}
+                      </button>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
-
-            {/* Progress bar — only if ongoing or sold_out (uses progressVisible helper) */}
-            {progressVisible && (
-              <div style={{ marginBottom: '24px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px', color: 'white' }}>
-                  <span>€{fmtInt(campaignStatus === 'sold_out' ? (campaign?.target_amount ?? 0) : (campaign?.raised_amount ?? 0))} {t('campaignCard.raised')}</span>
-                  <span style={{ fontWeight: 700, color: 'white' }}>{Math.round(raisedPct)}%</span>
-                </div>
-                <div style={{ width: '100%', height: '4px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
-                  <div style={{ width: `${raisedPct}%`, height: '4px', borderRadius: '100px', backgroundColor: '#00FFFF' }} />
-                </div>
-                <p style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>€{fmtInt(campaign?.target_amount ?? 500000)} {t('campaignCard.target')}</p>
-              </div>
-            )}
           </div>
 
-          {canInvest ? (
-            <Link href="/campagne" style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '15px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, textDecoration: 'none' }}>
-              {t('campaignCard.cta')}
-            </Link>
-          ) : (
-            <button onClick={() => openWaitlist('site_campaign_card')} style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '15px', borderRadius: '12px', fontSize: '14px', fontWeight: 800, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-              {t('hero.joinWaitlist')}
-            </button>
-          )}
+        </div>
+
+      </section>
+
+      {/* ── PONY EN CHIFFRES (section autonome) ── */}
+      <section className="home-keynumbers-section" style={{ padding: '80px 96px' }}>
+        <div style={{
+          borderRadius: '24px', padding: '48px 64px',
+          backgroundColor: 'rgba(30,27,75,0.5)',
+          border: '1px solid rgba(255,255,255,0.06)',
+        }}>
+          <p style={{
+            fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
+            color: '#00FFFF', textTransform: 'uppercase', marginBottom: '32px',
+            textAlign: 'center',
+          }}>{t('keyNumbers.kicker')}</p>
+          <div className="home-keynumbers-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0' }}>
+            {[
+              { value: '22', label: t('stats.cities') },
+              { value: '500K+', label: t('stats.users') },
+              { value: '95%', label: t('stats.co2') },
+              { value: '20 000', label: t('stats.riders') },
+            ].map((stat, i) => (
+              <div key={i} style={{
+                textAlign: 'center',
+                borderRight: i < 3 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+                padding: '0 32px',
+              }}>
+                <p style={{ fontSize: '44px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px' }}>
+                  {stat.value}
+                </p>
+                <p style={{
+                  marginTop: '6px', fontSize: '11px', fontWeight: 600,
+                  letterSpacing: '2px', textTransform: 'uppercase',
+                  color: 'white',
+                }}>
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

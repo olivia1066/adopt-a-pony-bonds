@@ -42,7 +42,10 @@
       "iWantToInvest": "Je veux investir",
       "paymentDetails": "Intérêts et capital versés à partir du 13e mois, intérêts capitalisés",
       "gracePeriod": "Période de différé",
-      "gracePeriodValue": "12 mois"
+      "gracePeriodValue": "12 mois",
+      "taxInfo": "Informations fiscales",
+      "investmentNote": "Note d'investissement",
+      "paymentSchedule": "📅 Calendrier des paiements"
     },
     "mission": {
       "title": "Chez pony, notre mission est simple : permettre à chacun de participer directement dans sa ville et ailleurs, à la transition vers les mobilités douces",
@@ -54,14 +57,33 @@
       "item3Desc": "Gagnez jusqu’à 8,5 % d’intérêt annuel, versé directement sur votre compte chaque mois. Et au bout de 42 mois, votre capital vous revient en intégralité."
     },
     "campaignCard": {
-      "statusOngoing": "● EN COURS",
-      "statusComingSoon": "● BIENTÔT DISPONIBLE",
-      "statusSoldOut": "● ÉPUISÉE",
+      "statusOngoing": "🟢 En cours",
+      "statusComingSoon": "🟡 Bientôt disponible",
+      "statusSoldOut": "🔴 Épuisée",
       "title": "Flotte Printemps 2026",
       "subtitle": "Financement de 50 vélos et trottinettes déployés dans 5 villes françaises.",
       "raised": "collectés",
       "target": "objectif",
-      "cta": "Adopter maintenant →"
+      "cta": "Adopter maintenant →",
+      "capitalProtectedTitle": "Capital protégé",
+      "capitalProtectedDesc": "Texte explicatif à venir — décrira la garantie offerte par la flotte de véhicules Pony et les modalités de protection de votre investissement."
+    },
+    "campaign": {
+      "kicker": "CAMPAGNE"
+    },
+    "products": {
+      "kicker": "NOS PRODUITS",
+      "card1Title": "Double pony 2.0",
+      "card1Desc": "Le vélo électrique 2 places, conçu et robuste comme une moto. Avec son 2ème siège rembourré, c'est le partenaire idéal pour galoper à 2 sur 100 km !",
+      "card1Bullet1": "Durée de vie 5 ans",
+      "card2Title": "Trottinette pony",
+      "card2Desc": "La trottinette électrique développée pour un usage partagé. Extrêmement solide, résiste à une utilisation intensive et à des conditions climatiques extrêmes.",
+      "card2Bullet1": "Durée de vie 7 ans",
+      "adoptCta": "Adopter maintenant →",
+      "notifyCta": "🔔 M'informer des prochaines ventes"
+    },
+    "keyNumbers": {
+      "kicker": "PONY EN CHIFFRES"
     },
     "waitlist": {
       "title": "Soyez le premier informé !",
@@ -326,7 +348,7 @@
     "errorReadContract": "Veuillez confirmer que vous avez lu et accepté le contrat.",
     "stepperOf": "Étape {current} sur {total}",
     "steps": {
-      "kyc": "KYC",
+      "kyc": "Coordonnées",
       "confirmation": "Confirmation",
       "signature": "Signature",
       "payment": "Paiement",
@@ -367,11 +389,13 @@
       "documentNumber": "Numéro du document",
       "iban": "IBAN",
       "ibanHelp": "L'IBAN du compte qui recevra vos remboursements mensuels.",
-      "submit": "Soumettre mon KYC →"
+      "submit": "Continuer →"
     },
     "confirmation": {
       "title": "Vérifiez votre investissement",
       "desc": "Vérifiez les informations ci-dessous avant de signer le contrat.",
+      "contactTitle": "Vos coordonnées",
+      "editContact": "← Modifier",
       "summaryTitle": "Récapitulatif de l'investissement",
       "amount": "Montant",
       "rate": "Taux",
@@ -415,6 +439,11 @@
       "bic": "BIC",
       "reference": "Référence",
       "amount": "Montant",
+      "copy": "Copier",
+      "copied": "✓ Copié",
+      "yourIban": "Votre IBAN",
+      "yourIbanHelp": "L'IBAN du compte qui recevra vos remboursements mensuels.",
+      "refWarning": "Indiquez impérativement votre référence (PONY-…) dans le libellé / motif du virement, sinon nous ne pourrons pas associer votre paiement.",
       "delayNotice1": "⏱️ Dès réception du virement, votre investissement sera confirmé sous",
       "delayNotice2": "2 à 3 jours ouvrés",
       "delayNotice3": ". Vous recevrez un email de confirmation.",

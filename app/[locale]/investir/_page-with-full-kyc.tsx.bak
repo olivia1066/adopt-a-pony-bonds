@@ -1,11 +1,9 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { useRouter } from '@/i18n/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { supabase } from '@/lib/supabase'
-import { getActiveCampaign, isInvestmentOpen } from '@/lib/campaigns'
 import { Link } from '@/i18n/navigation'
 
 // ── Product terms ──
@@ -99,37 +97,9 @@ const COUNTRIES: { code: string; fr: string; en: string }[] = [
 function InvestirForm() {
   const t = useTranslations('investir')
   const locale = useLocale()
-  const router = useRouter()
   const searchParams = useSearchParams()
   const campaignId = searchParams.get('campaignId')
-  const vipToken = searchParams.get('vip')
-
-  // Montant borné entre 500 et 100 000
-  const rawAmount = Number(searchParams.get('amount')) || 5000
-  const amount = Math.min(100000, Math.max(500, rawAmount))
-
-  // Contrôle d'accès : autorisé si campagne ongoing OU token VIP valide
-  const [accessChecked, setAccessChecked] = useState(false)
-  useEffect(() => {
-    let active = true
-    async function checkAccess() {
-      const isVip = !!vipToken && vipToken === process.env.NEXT_PUBLIC_VIP_TOKEN
-      if (isVip) {
-        if (active) setAccessChecked(true)
-        return
-      }
-      const campaign = await getActiveCampaign()
-      const open = campaign ? isInvestmentOpen(campaign.status) : false
-      if (!active) return
-      if (open) {
-        setAccessChecked(true)
-      } else {
-        router.replace('/')
-      }
-    }
-    checkAccess()
-    return () => { active = false }
-  }, [vipToken, router])
+  const amount = Number(searchParams.get('amount')) || 5000
 
   const { monthlyPayment, totalInterest, totalRepaid } = calcReturns(amount)
 
@@ -141,20 +111,29 @@ function InvestirForm() {
     a.code === 'OTHER' ? 1 : b.code === 'OTHER' ? -1 : (locale === 'fr' ? a.fr.localeCompare(b.fr, 'fr') : a.en.localeCompare(b.en, 'en'))
   )
 
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(3)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [investorId, setInvestorId] = useState('')
   const [contractSigned, setContractSigned] = useState(false)
-  const [investorIban, setInvestorIban] = useState('')
-  const [copied, setCopied] = useState('')
 
   const [form, setForm] = useState({
+    type: 'individual',
     prenom: '',
     nom: '',
     email: '',
+    lieuNaissance: '',
+    dateNaissance: '',
+    nationalite: '',
     telephone: '',
+    residenceFiscale: 'fr',
+    iban: '',
     adresse: '',
+    profession: '',
+    pep: 'no',
+    revenus: '',
+    documentType: 'passport',
+    documentNumero: '',
   })
 
   const update = (field: string, value: string | boolean) =>
@@ -162,7 +141,10 @@ function InvestirForm() {
 
   async function handleSubmitKYC() {
     setError('')
-    if (!form.prenom || !form.nom || !form.email || !form.telephone || !form.adresse) {
+    if (!form.prenom || !form.nom || !form.email || !form.telephone ||
+        !form.dateNaissance || !form.lieuNaissance || !form.nationalite ||
+        !form.adresse || !form.profession || !form.revenus ||
+        !form.documentNumero || !form.iban) {
       setError(t('errorFillAll'))
       return
     }
@@ -175,8 +157,18 @@ function InvestirForm() {
           nom: form.nom,
           email: form.email,
           telephone: form.telephone,
+          date_naissance: form.dateNaissance,
+          lieu_naissance: form.lieuNaissance,
+          nationalite: form.nationalite,
+          residence_fiscale: form.residenceFiscale,
           adresse: form.adresse,
-          kyc_status: 'pending',
+          profession: form.profession,
+          revenus: form.revenus,
+          pep: form.pep,
+          document_type: form.documentType,
+          document_numero: form.documentNumero,
+          iban: form.iban,
+          kyc_status: 'Validé',
         }, { onConflict: 'email' })
         .select()
         .single()
@@ -215,32 +207,6 @@ function InvestirForm() {
     setLoading(false)
   }
 
-  function copyToClipboard(value: string, key: string) {
-    navigator.clipboard.writeText(value).then(() => {
-      setCopied(key)
-      setTimeout(() => setCopied(''), 1500)
-    })
-  }
-
-  async function handleTransferDone() {
-    setError('')
-    if (!investorIban.trim()) {
-      setError(t('errorFillAll'))
-      return
-    }
-    setLoading(true)
-    try {
-      const { error } = await supabase
-        .from('investors')
-        .update({ iban: investorIban })
-        .eq('id', investorId)
-      if (error) throw error
-      setStep(5)
-    } catch (err: any) {
-      setError(err.message || t('errorGeneric'))
-    }
-    setLoading(false)
-  }
   const inputClass = "w-full rounded-xl px-4 py-3 text-sm text-white outline-none"
   const inputStyle = { backgroundColor: '#1E1B4B', border: '1px solid rgba(255,255,255,0.1)' }
 
@@ -251,14 +217,6 @@ function InvestirForm() {
     { n: 4, label: t('steps.payment') },
     { n: 5, label: t('steps.done') },
   ]
-
-  if (!accessChecked) {
-    return (
-      <main className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#13102B' }}>
-        <p style={{ color: '#00FFFF' }}>{t('loading')}</p>
-      </main>
-    )
-  }
 
   return (
     <main className="min-h-screen font-sans" style={{ backgroundColor: '#13102B', color: 'white' }}>
@@ -308,9 +266,18 @@ function InvestirForm() {
       <div className="invest-main max-w-5xl mx-auto px-8 pb-16 grid grid-cols-3 gap-8">
         <div className="invest-content col-span-2 space-y-8">
 
-          {/* ── STEP 1: COORDONNÉES ── */}
+          {/* ── STEP 1: KYC ── */}
           {step === 1 && (
             <>
+              <div>
+                <h2 className="text-xl font-bold mb-4">{t('kyc.accountType')}</h2>
+                <select value={form.type} onChange={e => update('type', e.target.value)}
+                  className={inputClass} style={inputStyle}>
+                  <option value="individual">{t('kyc.individual')}</option>
+                  <option value="company">{t('kyc.company')}</option>
+                </select>
+              </div>
+
               <div>
                 <h2 className="text-xl font-bold mb-4">{t('kyc.personalInfo')}</h2>
                 <div className="invest-kyc-grid grid grid-cols-2 gap-4">
@@ -334,10 +301,121 @@ function InvestirForm() {
                     <input type="tel" value={form.telephone} onChange={e => update('telephone', e.target.value)}
                       className={inputClass} style={inputStyle} />
                   </div>
+                  <div>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.dateOfBirth')} *</label>
+                    <input type="date" value={form.dateNaissance} onChange={e => update('dateNaissance', e.target.value)}
+                      className={inputClass} style={inputStyle} />
+                  </div>
+                  <div>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.placeOfBirth')} *</label>
+                    <input type="text" value={form.lieuNaissance} onChange={e => update('lieuNaissance', e.target.value)}
+                      className={inputClass} style={inputStyle} />
+                  </div>
+                  <div>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.nationality')} *</label>
+                    <select value={form.nationalite} onChange={e => update('nationalite', e.target.value)}
+                      className={inputClass} style={inputStyle}>
+                      <option value="">{t('kyc.selectCountry')}</option>
+                      {sortedCountries.map(c => (
+                        <option key={c.code} value={c.code}>
+                          {locale === 'fr' ? c.fr : c.en}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.taxResidence')} *</label>
+                    <select value={form.residenceFiscale} onChange={e => update('residenceFiscale', e.target.value)}
+                      className={inputClass} style={inputStyle}>
+                      {sortedCountries.filter(c => c.code !== 'OTHER').map(c => (
+                        <option key={c.code} value={c.code.toLowerCase()}>
+                          {locale === 'fr' ? c.fr : c.en}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                   <div className="col-span-2">
                     <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.address')} *</label>
                     <input type="text" value={form.adresse} onChange={e => update('adresse', e.target.value)}
                       className={inputClass} style={inputStyle} />
+                  </div>
+                  <div>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.profession')} *</label>
+                    <input type="text" value={form.profession} onChange={e => update('profession', e.target.value)}
+                      className={inputClass} style={inputStyle} />
+                  </div>
+                  <div>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.annualIncome')} *</label>
+                    <select value={form.revenus} onChange={e => update('revenus', e.target.value)}
+                      className={inputClass} style={inputStyle}>
+                      <option value="">{t('kyc.incomePlaceholder')}</option>
+                      <option value="1">{t('kyc.income1')}</option>
+                      <option value="2">{t('kyc.income2')}</option>
+                      <option value="3">{t('kyc.income3')}</option>
+                      <option value="4">{t('kyc.income4')}</option>
+                      <option value="5">{t('kyc.income5')}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-bold mb-2">{t('kyc.pepTitle')}</h2>
+                <p className="text-sm mb-4" style={{ color: 'white' }}>
+                  {t('kyc.pepDesc')}
+                </p>
+                <div className="flex gap-3">
+                  <label className="flex-1 cursor-pointer">
+                    <input type="radio" name="pep" value="yes" checked={form.pep === 'yes'}
+                      onChange={e => update('pep', e.target.value)} className="hidden" />
+                    <div className="rounded-xl px-4 py-3 text-sm text-center"
+                      style={{
+                        backgroundColor: form.pep === 'yes' ? 'rgba(0,255,255,0.1)' : '#1E1B4B',
+                        border: form.pep === 'yes' ? '1px solid #00FFFF' : '1px solid rgba(255,255,255,0.1)',
+                        color: form.pep === 'yes' ? '#00FFFF' : 'rgba(255,255,255,0.7)',
+                      }}>
+                      {t('kyc.pepYes')}
+                    </div>
+                  </label>
+                  <label className="flex-1 cursor-pointer">
+                    <input type="radio" name="pep" value="no" checked={form.pep === 'no'}
+                      onChange={e => update('pep', e.target.value)} className="hidden" />
+                    <div className="rounded-xl px-4 py-3 text-sm text-center"
+                      style={{
+                        backgroundColor: form.pep === 'no' ? 'rgba(0,255,255,0.1)' : '#1E1B4B',
+                        border: form.pep === 'no' ? '1px solid #00FFFF' : '1px solid rgba(255,255,255,0.1)',
+                        color: form.pep === 'no' ? '#00FFFF' : 'rgba(255,255,255,0.7)',
+                      }}>
+                      {t('kyc.pepNo')}
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-bold mb-4">{t('kyc.documents')}</h2>
+                <div className="invest-kyc-grid grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.documentType')} *</label>
+                    <select value={form.documentType} onChange={e => update('documentType', e.target.value)}
+                      className={inputClass} style={inputStyle}>
+                      <option value="passport">{t('kyc.passport')}</option>
+                      <option value="idCard">{t('kyc.idCard')}</option>
+                      <option value="drivingLicence">{t('kyc.drivingLicence')}</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.documentNumber')} *</label>
+                    <input type="text" value={form.documentNumero} onChange={e => update('documentNumero', e.target.value)}
+                      className={inputClass} style={inputStyle} />
+                  </div>
+                  <div className="col-span-2">
+                    <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('kyc.iban')} *</label>
+                    <input type="text" value={form.iban} onChange={e => update('iban', e.target.value)}
+                      className={inputClass} style={inputStyle} placeholder="FR76 XXXX XXXX XXXX XXXX" />
+                    <p className="text-xs mt-1" style={{ color: 'white' }}>
+                      {t('kyc.ibanHelp')}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -368,27 +446,23 @@ function InvestirForm() {
               </div>
 
               <div className="rounded-2xl p-6" style={{ backgroundColor: '#1E1B4B' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                  <h3 className="font-bold text-sm" style={{ color: 'white', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                    {t('confirmation.contactTitle')}
-                  </h3>
-                  <button onClick={() => setStep(1)}
-                    className="text-xs font-bold"
-                    style={{ color: '#00FFFF', background: 'none', border: 'none', cursor: 'pointer' }}>
-                    {t('confirmation.editContact')}
-                  </button>
-                </div>
+                <h3 className="font-bold text-sm mb-4" style={{ color: 'white', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  {t('confirmation.summaryTitle')}
+                </h3>
                 <div className="space-y-3 text-sm">
                   {[
-                    { label: t('kyc.firstName'), value: form.prenom },
-                    { label: t('kyc.lastName'), value: form.nom },
-                    { label: t('kyc.email'), value: form.email },
-                    { label: t('kyc.phone'), value: form.telephone },
-                    { label: t('kyc.address'), value: form.adresse },
+                    { label: t('confirmation.amount'), value: `€${fmtInt(amount)}`, highlight: true },
+                    { label: t('confirmation.rate'), value: t('confirmation.rateValue') },
+                    { label: t('confirmation.duration'), value: t('confirmation.durationValue') },
+                    { label: t('confirmation.gracePeriod'), value: t('confirmation.gracePeriodValue') },
+                    { label: t('confirmation.monthlyGrace'), value: '€0,00' },
+                    { label: t('confirmation.monthlyPayback'), value: `€${fmtDec(monthlyPayment)}` },
+                    { label: t('confirmation.totalInterest'), value: `€${fmtDec(totalInterest)}` },
+                    { label: t('confirmation.totalRepaid'), value: `€${fmtDec(totalRepaid)}` },
                   ].map((row, i) => (
-                    <div key={i} className="flex justify-between items-center gap-4">
+                    <div key={i} className="flex justify-between items-center">
                       <span style={{ color: 'white' }}>{row.label}</span>
-                      <span className="font-bold" style={{ color: 'white', textAlign: 'right' }}>{row.value}</span>
+                      <span className="font-bold" style={{ color: row.highlight ? '#00FFFF' : 'white' }}>{row.value}</span>
                     </div>
                   ))}
                 </div>
@@ -514,57 +588,20 @@ function InvestirForm() {
                   {t('payment.desc')}
                 </p>
               </div>
-              <div className="rounded-2xl p-6 text-sm" style={{ backgroundColor: '#1E1B4B' }}>
+              <div className="rounded-2xl p-6 space-y-4 text-sm" style={{ backgroundColor: '#1E1B4B' }}>
                 {[
-                  { label: t('payment.beneficiary'), value: 'Pony Finance SA', key: 'beneficiary' },
-                  { label: t('payment.iban'), value: 'FR76 XXXX XXXX XXXX XXXX', key: 'iban' },
-                  { label: t('payment.bic'), value: 'XXXXXXXX', key: 'bic' },
-                  { label: t('payment.reference'), value: `PONY-${investorId.slice(0, 8).toUpperCase()}`, key: 'ref', highlight: true },
-                  { label: t('payment.amount'), value: `€${fmtInt(amount)}`, key: '' },
+                  { label: t('payment.beneficiary'), value: 'Pony Finance SA' },
+                  { label: t('payment.iban'), value: 'FR76 XXXX XXXX XXXX XXXX' },
+                  { label: t('payment.bic'), value: 'XXXXXXXX' },
+                  { label: t('payment.reference'), value: `PONY-${investorId.slice(0, 8).toUpperCase()}` },
+                  { label: t('payment.amount'), value: `€${fmtInt(amount)}` },
                 ].map((row, i) => (
-                  <div key={i}
-                    style={{ display: 'grid', gridTemplateColumns: '1fr auto 28px', alignItems: 'center', columnGap: '12px', padding: '8px 0' }}>
+                  <div key={i} className="flex justify-between items-center">
                     <span style={{ color: 'white' }}>{row.label}</span>
-                    <span className="font-bold font-mono" style={{ textAlign: 'right', color: (row as any).highlight ? '#00FFFF' : 'white' }}>{row.value}</span>
-                    {row.key ? (
-                      <button onClick={() => copyToClipboard(row.value, row.key)}
-                        aria-label={t('payment.copy')}
-                        style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: copied === row.key ? '#00FFFF' : 'rgba(255,255,255,0.5)' }}>
-                        {copied === row.key ? (
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="20 6 9 17 4 12" />
-                          </svg>
-                        ) : (
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                          </svg>
-                        )}
-                      </button>
-                    ) : (
-                      <span />
-                    )}
+                    <span className="font-bold font-mono">{row.value}</span>
                   </div>
                 ))}
               </div>
-
-              <div className="rounded-2xl p-4 text-sm"
-                style={{ backgroundColor: 'rgba(255,200,0,0.08)', border: '1px solid rgba(255,200,0,0.25)', display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                <span style={{ flexShrink: 0, lineHeight: '1.5' }}>⚠️</span>
-                <p style={{ color: '#FFC800', fontWeight: 600, lineHeight: '1.5' }}>
-                  {t('payment.refWarning')}
-                </p>
-              </div>
-
-              <div>
-                <label className="text-xs mb-1 block" style={{ color: 'white' }}>{t('payment.yourIban')} *</label>
-                <input type="text" value={investorIban} onChange={e => setInvestorIban(e.target.value)}
-                  className={inputClass} style={inputStyle} placeholder="FR76 XXXX XXXX XXXX XXXX" />
-                <p className="text-xs mt-1" style={{ color: 'white' }}>
-                  {t('payment.yourIbanHelp')}
-                </p>
-              </div>
-
               <div className="rounded-2xl p-4 text-sm"
                 style={{ backgroundColor: 'rgba(0,255,255,0.05)', border: '1px solid rgba(0,255,255,0.15)' }}>
                 <p style={{ color: 'white' }}>
@@ -572,17 +609,10 @@ function InvestirForm() {
                   <strong>{t('payment.delayNotice2')}</strong>{t('payment.delayNotice3')}
                 </p>
               </div>
-
-              {error && (
-                <div className="rounded-xl px-4 py-3 text-sm" style={{ backgroundColor: 'rgba(255,80,80,0.1)', border: '1px solid rgba(255,80,80,0.3)', color: '#FF8080' }}>
-                  {error}
-                </div>
-              )}
-
-              <button onClick={handleTransferDone} disabled={loading}
+              <button onClick={() => setStep(5)}
                 className="w-full py-4 rounded-xl font-bold text-sm transition-opacity hover:opacity-90"
-                style={{ backgroundColor: '#00FFFF', color: '#13102B', opacity: loading ? 0.7 : 1 }}>
-                {loading ? t('processing') : t('payment.transferDone')}
+                style={{ backgroundColor: '#00FFFF', color: '#13102B' }}>
+                {t('payment.transferDone')}
               </button>
             </div>
           )}

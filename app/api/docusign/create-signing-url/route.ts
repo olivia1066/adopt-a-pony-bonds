@@ -128,6 +128,8 @@ export async function POST(request: Request) {
       returnUrl: returnUrl || `${baseUrl}/fr/investir?signed=1`,
       userName: fullName,
       email,
+      frameAncestors: [baseUrl, 'https://apps-d.docusign.com'],
+      messageOrigins: ['https://apps-d.docusign.com'],
     }
 
     const viewResult = await envelopesApi.createRecipientView(accountId, envelopeId, {

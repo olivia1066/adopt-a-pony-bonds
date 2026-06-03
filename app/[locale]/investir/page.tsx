@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from '@/i18n/navigation'
 import { useTranslations, useLocale } from 'next-intl'
@@ -148,6 +148,8 @@ function InvestirForm() {
   const [contractSigned, setContractSigned] = useState(false)
   const [investorIban, setInvestorIban] = useState('')
   const [copied, setCopied] = useState('')
+  const [signingUrl, setSigningUrl] = useState('')
+  const signingDoneRef = useRef(false)
 
   const [form, setForm] = useState({
     prenom: '',
@@ -194,12 +196,40 @@ function InvestirForm() {
     setStep(3)
   }
 
-  async function handleSignContract() {
+  // Étape 3a : lance la signature embarquée DocuSign
+  async function handleStartSigning() {
     if (!contractSigned) {
       setError(t('errorReadContract'))
       return
     }
     setError('')
+    setLoading(true)
+    signingDoneRef.current = false
+    try {
+      const res = await fetch('/api/docusign/create-signing-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: form.email,
+          firstName: form.prenom,
+          lastName: form.nom,
+          amount,
+          returnUrl: `${window.location.origin}/${locale}/docusign/return`,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok || !data.success || !data.signingUrl) {
+        throw new Error(data.error || t('errorGeneric'))
+      }
+      setSigningUrl(data.signingUrl)
+    } catch (err: any) {
+      setError(err.message || t('errorGeneric'))
+    }
+    setLoading(false)
+  }
+
+  // Étape 3b : appelée une fois la signature confirmée par DocuSign
+  async function completeSignature() {
     setLoading(true)
     try {
       await supabase.from('investments').insert({
@@ -211,9 +241,35 @@ function InvestirForm() {
       setStep(4)
     } catch (err: any) {
       setError(err.message || t('errorGeneric'))
+      signingDoneRef.current = false // permet de retenter
     }
     setLoading(false)
   }
+
+  // Écoute le retour de l'iframe DocuSign (via /docusign/return)
+  useEffect(() => {
+    function onMessage(e: MessageEvent) {
+      if (e.origin !== window.location.origin) return
+      if (!e.data || e.data.type !== 'docusign') return
+
+      if (e.data.event === 'signing_complete') {
+        if (signingDoneRef.current) return
+        signingDoneRef.current = true
+        completeSignature()
+      } else {
+        // cancel / decline / ttl_expired / session_timeout ...
+        setSigningUrl('')
+        setError(
+          locale === 'fr'
+            ? 'Signature non finalisée. Vous pouvez relancer la signature.'
+            : 'Signing not completed. You can restart the signature.'
+        )
+      }
+    }
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [investorId, campaignId, amount, locale])
 
   function copyToClipboard(value: string, key: string) {
     navigator.clipboard.writeText(value).then(() => {
@@ -448,60 +504,73 @@ function InvestirForm() {
                 </p>
               </div>
 
-              <div className="rounded-2xl p-6" style={{ backgroundColor: '#1E1B4B' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                  <h3 className="font-bold text-sm">{t('signature.contractTitle')}</h3>
-                  <span style={{
-                    fontSize: '11px', padding: '4px 12px', borderRadius: '100px',
-                    backgroundColor: 'rgba(255,200,0,0.1)',
-                    border: '1px solid rgba(255,200,0,0.2)',
-                    color: '#FFC800', fontWeight: 600,
+              {!signingUrl ? (
+                <>
+                  <div className="rounded-2xl p-6" style={{ backgroundColor: '#1E1B4B' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                      <h3 className="font-bold text-sm">{t('signature.contractTitle')}</h3>
+                    </div>
+                    <div style={{ fontSize: '13px', color: 'white' }}>
+                      {t('signature.contractDoc')}{form.prenom}_{form.nom}.pdf
+                    </div>
+                  </div>
+
+                  <label style={{
+                    display: 'flex', alignItems: 'flex-start', gap: '12px',
+                    padding: '16px', borderRadius: '12px',
+                    backgroundColor: '#1E1B4B', cursor: 'pointer',
+                    border: '1px solid rgba(255,255,255,0.1)',
                   }}>
-                    {t('signature.contractSoon')}
-                  </span>
-                </div>
-                <div style={{ fontSize: '13px', color: 'white' }}>
-                  {t('signature.contractDoc')}{form.prenom}_{form.nom}.pdf
-                </div>
-              </div>
+                    <input type="checkbox" checked={contractSigned}
+                      onChange={e => setContractSigned(e.target.checked)}
+                      style={{ accentColor: '#00FFFF', marginTop: '3px' }} />
+                    <span style={{ fontSize: '13px', color: 'white', lineHeight: '1.6' }}>
+                      {t('signature.checkbox1')}{' '}
+                      <strong style={{ color: 'white' }}>€{fmtInt(amount)}</strong>{' '}
+                      {t('signature.checkbox2')}{' '}
+                      <strong style={{ color: 'white' }}>Spring 2026 Fleet</strong>{' '}
+                      {t('signature.checkbox3')}{' '}
+                      <strong style={{ color: '#00FFFF' }}>8,5 %</strong>{' '}
+                      {t('signature.checkbox4')}{' '}
+                      <strong style={{ color: 'white' }}>48 {locale === 'fr' ? 'mois' : 'months'}</strong>{t('signature.checkbox5')}
+                    </span>
+                  </label>
 
-              <label style={{
-                display: 'flex', alignItems: 'flex-start', gap: '12px',
-                padding: '16px', borderRadius: '12px',
-                backgroundColor: '#1E1B4B', cursor: 'pointer',
-                border: '1px solid rgba(255,255,255,0.1)',
-              }}>
-                <input type="checkbox" checked={contractSigned}
-                  onChange={e => setContractSigned(e.target.checked)}
-                  style={{ accentColor: '#00FFFF', marginTop: '3px' }} />
-                <span style={{ fontSize: '13px', color: 'white', lineHeight: '1.6' }}>
-                  {t('signature.checkbox1')}{' '}
-                  <strong style={{ color: 'white' }}>€{fmtInt(amount)}</strong>{' '}
-                  {t('signature.checkbox2')}{' '}
-                  <strong style={{ color: 'white' }}>Spring 2026 Fleet</strong>{' '}
-                  {t('signature.checkbox3')}{' '}
-                  <strong style={{ color: '#00FFFF' }}>8,5 %</strong>{' '}
-                  {t('signature.checkbox4')}{' '}
-                  <strong style={{ color: 'white' }}>48 {locale === 'fr' ? 'mois' : 'months'}</strong>{t('signature.checkbox5')}
-                </span>
-              </label>
+                  {error && (
+                    <div className="rounded-xl px-4 py-3 text-sm" style={{ backgroundColor: 'rgba(255,80,80,0.1)', border: '1px solid rgba(255,80,80,0.3)', color: '#FF8080' }}>
+                      {error}
+                    </div>
+                  )}
 
-              {error && (
-                <div className="rounded-xl px-4 py-3 text-sm" style={{ backgroundColor: 'rgba(255,80,80,0.1)', border: '1px solid rgba(255,80,80,0.3)', color: '#FF8080' }}>
-                  {error}
-                </div>
+                  <button onClick={handleStartSigning} disabled={!contractSigned || loading}
+                    className="w-full py-4 rounded-xl font-bold text-sm transition-opacity"
+                    style={{
+                      backgroundColor: contractSigned ? '#00FFFF' : 'rgba(255,255,255,0.1)',
+                      color: contractSigned ? '#13102B' : 'rgba(255,255,255,0.3)',
+                      opacity: loading ? 0.7 : 1,
+                      cursor: contractSigned ? 'pointer' : 'not-allowed',
+                    }}>
+                    {loading
+                      ? t('processing')
+                      : (locale === 'fr' ? 'Lancer la signature électronique' : 'Launch electronic signature')}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.1)' }}>
+                    <iframe
+                      src={signingUrl}
+                      title="DocuSign"
+                      style={{ width: '100%', height: '75vh', border: 'none', display: 'block' }}
+                    />
+                  </div>
+                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                    {locale === 'fr'
+                      ? 'Ne fermez pas cette fenêtre pendant la signature.'
+                      : 'Please do not close this window during signing.'}
+                  </p>
+                </>
               )}
-
-              <button onClick={handleSignContract} disabled={!contractSigned || loading}
-                className="w-full py-4 rounded-xl font-bold text-sm transition-opacity"
-                style={{
-                  backgroundColor: contractSigned ? '#00FFFF' : 'rgba(255,255,255,0.1)',
-                  color: contractSigned ? '#13102B' : 'rgba(255,255,255,0.3)',
-                  opacity: loading ? 0.7 : 1,
-                  cursor: contractSigned ? 'pointer' : 'not-allowed',
-                }}>
-                {loading ? t('processing') : t('signature.sign')}
-              </button>
             </div>
           )}
 

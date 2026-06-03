@@ -374,7 +374,7 @@ export default function Home() {
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               {canInvest ? (
-                <Link href="/campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none'}}>
+                <Link href="/#campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none'}}>
                   {t('hero.cta')}
                 </Link>
               ) : (
@@ -525,9 +525,15 @@ export default function Home() {
                   </a>
                 </div>
 
-                <Link href="/campagne" style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '14px', borderRadius: '10px', fontSize: '14px', fontWeight: 800, textDecoration: 'none', marginTop: 'auto' }}>
-                  {t('hero.cta')}
-                </Link>
+                {canInvest ? (
+                  <Link href={`/investir?campaignId=${campaign?.id}&amount=${amount}`} style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '14px', borderRadius: '10px', fontSize: '14px', fontWeight: 800, textDecoration: 'none', marginTop: 'auto' }}>
+                    {t('hero.cta')}
+                  </Link>
+                ) : (
+                  <button onClick={() => openWaitlist('site_home_simulator')} style={{ width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '14px', borderRadius: '10px', fontSize: '14px', fontWeight: 800, border: 'none', cursor: 'pointer', fontFamily: 'inherit', marginTop: 'auto' }}>
+                    {t('hero.joinWaitlist')}
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -576,7 +582,7 @@ export default function Home() {
 
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
           {canInvest ? (
-            <Link href="/campagne" style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none' }}>
+            <Link href={`/investir?campaignId=${campaign?.id}&amount=5000`} style={{ backgroundColor: '#00FFFF', color: '#13102B', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none' }}>
               {t('hero.cta')}
             </Link>
           ) : (
@@ -591,7 +597,7 @@ export default function Home() {
       </section>
 
       {/* ── CAMPAIGN + PRODUCTS (layout B : Campaign Card large + 2 product cards à droite) ── */}
-      <section className="campaign-section" style={{ padding: '120px 96px' }}>
+      <section id="campagne" className="campaign-section" style={{ padding: '120px 96px', scrollMarginTop: '80px' }}>
 
         <div className="home-campaign-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', alignItems: 'stretch' }}>
 
@@ -702,7 +708,7 @@ export default function Home() {
               </div>
 
               {canInvest ? (
-                <Link href="/campagne" style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '16px', borderRadius: '12px', fontSize: '15px', fontWeight: 800, textDecoration: 'none' }}>
+                <Link href={`/investir?campaignId=${campaign?.id}&amount=5000`} style={{ display: 'block', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '16px', borderRadius: '12px', fontSize: '15px', fontWeight: 800, textDecoration: 'none' }}>
                   {t('campaignCard.cta')}
                 </Link>
               ) : (

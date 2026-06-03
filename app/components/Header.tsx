@@ -32,9 +32,9 @@ export default function Header() {
           <Link href="/" style={{ color: 'white', textDecoration: 'none' }}>
             {t('home')}
           </Link>
-          <Link href="/campagne" style={{ color: 'white', textDecoration: 'none' }}>
+          <a href="#campagne" style={{ color: 'white', textDecoration: 'none' }}>
             {t('campaigns')}
-          </Link>
+          </a>
         </nav>
 
         <div className="header-logo" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
@@ -64,9 +64,9 @@ export default function Header() {
           <Link href="/" onClick={() => setMenuOpen(false)} style={{ color: 'white', textDecoration: 'none', fontSize: '20px', fontWeight: 700 }}>
             {t('home')}
           </Link>
-          <Link href="/campagne" onClick={() => setMenuOpen(false)} style={{ color: 'white', textDecoration: 'none', fontSize: '20px', fontWeight: 700 }}>
+          <a href="#campagne" onClick={() => setMenuOpen(false)} style={{ color: 'white', textDecoration: 'none', fontSize: '20px', fontWeight: 700 }}>
             {t('campaigns')}
-          </Link>
+          </a>
           <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.1)', margin: '8px 0' }} />
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '16px', fontWeight: 700 }}>
             <button onClick={() => switchLocale('fr')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px', color: locale === 'fr' ? '#00FFFF' : 'rgba(255,255,255,0.4)' }}>FR</button>

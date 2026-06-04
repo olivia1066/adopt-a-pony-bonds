@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import docusign from 'docusign-esign'
+import { supabaseAdmin } from '@/lib/supabaseAdmin'
 
 export async function POST(request: Request) {
   try {
@@ -24,6 +25,8 @@ export async function POST(request: Request) {
       address = '',
       zipCity = '',
       city = 'Paris',
+      investorId,
+      campaignId,
     } = body
 
     if (!email || !firstName || !lastName || !amount) {
@@ -116,6 +119,20 @@ export async function POST(request: Request) {
 
     const envelopeId = envelopeResult.envelopeId!
     console.log('✅ Enveloppe créée (embedded):', envelopeId)
+
+    // Crée l'investissement maintenant (avant signature), avec son envelope_id.
+    // Le webhook DocuSign le passera ensuite en "completed" (source de vérité).
+    if (investorId) {
+      const { error: dbError } = await supabaseAdmin.from('investments').insert({
+        investor_id: investorId,
+        campaign_id: campaignId ?? null,
+        montant: investorAmount,
+        statut: 'En attente',
+        envelope_id: envelopeId,
+        signature_status: 'en_attente_signature',
+      })
+      if (dbError) console.error('❌ Erreur insertion investment:', dbError)
+    }
 
     // === 7. Génération de l'URL de signature embarquée (Focused View) ===
     const baseUrl = new URL(request.url).origin

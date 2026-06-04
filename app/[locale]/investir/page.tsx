@@ -258,6 +258,8 @@ function InvestirForm() {
           firstName: form.prenom,
           lastName: form.nom,
           amount,
+          investorId,
+          campaignId,
         }),
       })
       const data = await res.json()
@@ -271,22 +273,12 @@ function InvestirForm() {
     setLoading(false)
   }
 
-  // Étape 3b : appelée une fois la signature confirmée par DocuSign
+  // Étape 3b : appelée une fois la signature confirmée par DocuSign.
+  // La ligne investments est déjà créée à l'ouverture de la signature
+  // (route create-signing-url) ; le webhook la passera en "signé" côté
+  // serveur. Ici on ne fait qu'avancer l'écran (affichage optimiste).
   async function completeSignature() {
-    setLoading(true)
-    try {
-      await supabase.from('investments').insert({
-        investor_id: investorId,
-        campaign_id: campaignId,
-        montant: amount,
-        statut: 'En attente',
-      })
-      setStep(4)
-    } catch (err: any) {
-      setError(err.message || t('errorGeneric'))
-      signingDoneRef.current = false // permet de retenter
-    }
-    setLoading(false)
+    setStep(4)
   }
 
   // Monte le Focused View DocuSign dès qu'une signingUrl est disponible.

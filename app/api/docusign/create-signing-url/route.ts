@@ -167,11 +167,13 @@ export async function POST(request: Request) {
       signingUrl,
     })
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Erreur inconnue'
-    const stack = error instanceof Error ? error.stack : undefined
-    console.error('❌ Erreur DocuSign embedded:', error)
+    // Affiche le détail renvoyé par DocuSign (errorCode + message)
+    const dsData = (error as { response?: { data?: unknown } })?.response?.data
+    const baseMessage = error instanceof Error ? error.message : 'Erreur inconnue'
+    const message = dsData ? JSON.stringify(dsData) : baseMessage
+    console.error('❌ Erreur DocuSign embedded:', dsData ?? error)
     return NextResponse.json(
-      { success: false, error: message, stack },
+      { success: false, error: message },
       { status: 500 },
     )
   }

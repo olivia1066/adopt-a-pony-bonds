@@ -8,6 +8,47 @@ import { supabase } from '@/lib/supabase'
 import { getActiveCampaign, isInvestmentOpen } from '@/lib/campaigns'
 import { Link } from '@/i18n/navigation'
 
+// ── DocuSign Focused View ──
+// Bundle JS DocuSign. Demo/sandbox : js-d.docusign.com.
+// ⚠️ Passage en PRODUCTION : remplacer par 'https://js.docusign.com/bundle.js'.
+const DOCUSIGN_JS_SRC = 'https://js-d.docusign.com/bundle.js'
+
+declare global {
+  interface Window {
+    DocuSign?: {
+      loadDocuSign: (integrationKey: string) => Promise<{
+        signing: (config: Record<string, unknown>) => {
+          on: (event: string, cb: (e: { sessionEndType?: string }) => void) => void
+          mount: (target: string | HTMLElement) => void
+        }
+      }>
+    }
+  }
+}
+
+let docusignScriptPromise: Promise<void> | null = null
+function loadDocusignScript(): Promise<void> {
+  if (typeof window === 'undefined') return Promise.reject(new Error('window indisponible'))
+  if (window.DocuSign) return Promise.resolve()
+  if (docusignScriptPromise) return docusignScriptPromise
+
+  docusignScriptPromise = new Promise<void>((resolve, reject) => {
+    const existing = document.querySelector<HTMLScriptElement>(`script[src="${DOCUSIGN_JS_SRC}"]`)
+    if (existing) {
+      existing.addEventListener('load', () => resolve())
+      existing.addEventListener('error', () => reject(new Error('Échec chargement DocuSign JS')))
+      return
+    }
+    const s = document.createElement('script')
+    s.src = DOCUSIGN_JS_SRC
+    s.async = true
+    s.onload = () => resolve()
+    s.onerror = () => reject(new Error('Échec chargement DocuSign JS'))
+    document.head.appendChild(s)
+  })
+  return docusignScriptPromise
+}
+
 // ── Product terms ──
 const ANNUAL_RATE = 0.085
 const MONTHLY_RATE = ANNUAL_RATE / 12
@@ -150,6 +191,8 @@ function InvestirForm() {
   const [copied, setCopied] = useState('')
   const [signingUrl, setSigningUrl] = useState('')
   const signingDoneRef = useRef(false)
+  const signingMountedRef = useRef(false)
+  const signingContainerRef = useRef<HTMLDivElement>(null)
 
   const [form, setForm] = useState({
     prenom: '',
@@ -205,6 +248,7 @@ function InvestirForm() {
     setError('')
     setLoading(true)
     signingDoneRef.current = false
+    signingMountedRef.current = false
     try {
       const res = await fetch('/api/docusign/create-signing-url', {
         method: 'POST',
@@ -214,7 +258,6 @@ function InvestirForm() {
           firstName: form.prenom,
           lastName: form.nom,
           amount,
-          returnUrl: `${window.location.origin}/${locale}/docusign/return`,
         }),
       })
       const data = await res.json()
@@ -246,30 +289,84 @@ function InvestirForm() {
     setLoading(false)
   }
 
-  // Écoute le retour de l'iframe DocuSign (via /docusign/return)
+  // Monte le Focused View DocuSign dès qu'une signingUrl est disponible.
   useEffect(() => {
-    function onMessage(e: MessageEvent) {
-      if (e.origin !== window.location.origin) return
-      if (!e.data || e.data.type !== 'docusign') return
+    if (!signingUrl) {
+      signingMountedRef.current = false
+      return
+    }
+    if (signingMountedRef.current) return
 
-      if (e.data.event === 'signing_complete') {
-        if (signingDoneRef.current) return
-        signingDoneRef.current = true
-        completeSignature()
-      } else {
-        // cancel / decline / ttl_expired / session_timeout ...
+    let cancelled = false
+
+    async function mountFocusedView() {
+      try {
+        await loadDocusignScript()
+        if (cancelled || !window.DocuSign) return
+
+        const ik = process.env.NEXT_PUBLIC_DOCUSIGN_INTEGRATION_KEY
+        if (!ik) throw new Error('NEXT_PUBLIC_DOCUSIGN_INTEGRATION_KEY manquante')
+
+        const docusign = await window.DocuSign.loadDocuSign(ik)
+        if (cancelled) return
+
+        const signing = docusign.signing({
+          url: signingUrl,
+          displayFormat: 'focused',
+          style: {
+            branding: {
+              primaryButton: {
+                backgroundColor: '#00FFFF',
+                color: '#13102B',
+              },
+            },
+            signingNavigationButton: {
+              finishText: locale === 'fr' ? 'Terminer' : 'Finish',
+              position: 'bottom-center',
+            },
+          },
+        })
+
+        signing.on('ready', () => {})
+
+        signing.on('sessionEnd', (event) => {
+          if (cancelled) return
+          if (event?.sessionEndType === 'signing_complete') {
+            if (signingDoneRef.current) return
+            signingDoneRef.current = true
+            completeSignature()
+          } else {
+            signingMountedRef.current = false
+            setSigningUrl('')
+            setError(
+              locale === 'fr'
+                ? 'Signature non finalisée. Vous pouvez relancer la signature.'
+                : 'Signing not completed. You can restart the signature.'
+            )
+          }
+        })
+
+        const container = signingContainerRef.current
+        if (!container) throw new Error('Conteneur de signature introuvable')
+
+        signing.mount(container)
+        signingMountedRef.current = true
+      } catch {
+        if (cancelled) return
+        signingMountedRef.current = false
         setSigningUrl('')
         setError(
           locale === 'fr'
-            ? 'Signature non finalisée. Vous pouvez relancer la signature.'
-            : 'Signing not completed. You can restart the signature.'
+            ? 'Impossible de charger la signature. Veuillez réessayer.'
+            : 'Unable to load the signing session. Please try again.'
         )
       }
     }
-    window.addEventListener('message', onMessage)
-    return () => window.removeEventListener('message', onMessage)
+
+    mountFocusedView()
+    return () => { cancelled = true }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [investorId, campaignId, amount, locale])
+  }, [signingUrl])
 
   function copyToClipboard(value: string, key: string) {
     navigator.clipboard.writeText(value).then(() => {
@@ -557,13 +654,12 @@ function InvestirForm() {
                 </>
               ) : (
                 <>
-                  <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.1)' }}>
-                    <iframe
-                      src={signingUrl}
-                      title="DocuSign"
-                      style={{ width: '100%', height: '75vh', border: 'none', display: 'block' }}
-                    />
-                  </div>
+                  <div
+                    ref={signingContainerRef}
+                    id="docusign-signing-ceremony"
+                    className="rounded-2xl overflow-hidden"
+                    style={{ height: '85vh', border: '1px solid rgba(255,255,255,0.1)' }}
+                  />
                   <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>
                     {locale === 'fr'
                       ? 'Ne fermez pas cette fenêtre pendant la signature.'

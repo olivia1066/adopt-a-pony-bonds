@@ -24,7 +24,6 @@ export async function POST(request: Request) {
       address = '',
       zipCity = '',
       city = 'Paris',
-      returnUrl,
     } = body
 
     if (!email || !firstName || !lastName || !amount) {
@@ -118,14 +117,16 @@ export async function POST(request: Request) {
     const envelopeId = envelopeResult.envelopeId!
     console.log('✅ Enveloppe créée (embedded):', envelopeId)
 
-    // === 7. Génération de l'URL de signature embarquée ===
+    // === 7. Génération de l'URL de signature embarquée (Focused View) ===
     const baseUrl = new URL(request.url).origin
 
+    // ⚠️ Passage en PRODUCTION DocuSign : remplacer 'https://apps-d.docusign.com'
+    //    par 'https://apps.docusign.com' (et le bundle JS dans investir/page.tsx).
     const recipientViewRequest = {
       authenticationMethod: 'none',
       clientUserId,
       recipientId: '1',
-      returnUrl: returnUrl || `${baseUrl}/fr/investir?signed=1`,
+      returnUrl: `${baseUrl}/fr/investir`,
       userName: fullName,
       email,
       frameAncestors: [baseUrl, 'https://apps-d.docusign.com'],
@@ -138,12 +139,15 @@ export async function POST(request: Request) {
 
     console.log('✅ URL de signature générée')
 
+    // Force l'interface de signature en français (append &locale=fr).
+    const signingUrl = `${viewResult.url}&locale=fr`
+
     // === 8. Réponse ===
     return NextResponse.json({
       success: true,
       envelopeId,
       reference,
-      signingUrl: viewResult.url,
+      signingUrl,
     })
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Erreur inconnue'

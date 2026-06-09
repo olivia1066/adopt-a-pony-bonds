@@ -11,8 +11,8 @@
   "home": {
     "hero": {
       "title": "Adoptez un pony",
-      "subtitle1": "Investissez dans un vélo ou une trottinette électrique. Touchez des revenus mensuels jusqu'à",
-      "subtitle2": ". Voyez vos vélos rouler à travers la France.",
+      "subtitle1": "Investissez dans nos vélos et trottinettes, nous les mettons en location partout en France et vous gagnez",
+      "subtitle2": " d'intérêt annuel.",
       "cta": "Adopter maintenant →",
       "bookMeeting": "Prendre rendez-vous",
       "usersBadge": "utilisateurs Pony déjà sur la plateforme",
@@ -21,7 +21,7 @@
     },
     "simulator": {
       "title": "Combien pourriez-vous gagner",
-      "duration": "Durée",
+      "duration": "Durée totale",
       "durationValue": "48 mois",
       "rate": "Taux d'intérêt annuel",
       "rateValue": "8,5 %",
@@ -34,11 +34,11 @@
       "receiveMonthly": "Vous recevez chaque mois",
       "fromMonth13": "à partir du mois 13 · 36 versements mensuels",
       "graceNotice": "12 premiers mois : intérêts capitalisés, aucun versement",
-      "totalRepaid": "Total remboursé en fin de période",
-      "totalInterest": "Intérêts totaux",
+      "totalRepaid": "Total perçu en fin de période",
+      "totalInterest": "Dont intérêts gagnés",
       "capitalInvested": "Capital investi",
-      "ifYouInvestWith": "Si vous investissez avec pony...",
-      "youReceive": "...vous recevez chaque mois",
+      "ifYouInvestWith": "Investissez",
+      "youReceive": "Recevez chaque mois",
       "iWantToInvest": "Je veux investir",
       "paymentDetails": "Intérêts et capital versés à partir du 13e mois, intérêts capitalisés",
       "gracePeriod": "Période de différé",
@@ -50,11 +50,11 @@
     "mission": {
       "title": "Chez pony, notre mission est simple : permettre à chacun de participer directement dans sa ville et ailleurs, à la transition vers les mobilités douces",
       "item1Title": "Choisissez combien vous investissez",
-      "item1Desc": "Financez des vélos et trottinettes pony, à partir de €500.",
+      "item1Desc": "Financez des vélos et trottinettes pony, à partir de 500 €.",
       "item2Title": "Pony gère votre flotte",
-      "item2Desc": "Pony déploie vos vélos et trottinettes dans nos villes. Nous gérons l'entretien, la recharge et les réparations. Vous ne faites rien..",
-      "item3Title": "Recevez un versement tous les mois",
-      "item3Desc": "Gagnez jusqu’à 8,5 % d’intérêt annuel, versé directement sur votre compte chaque mois. Et au bout de 42 mois, votre capital vous revient en intégralité."
+      "item2Desc": "Pony déploie les vélos et trottinettes dans les villes en services. Nous gérons l'entretien, la recharge et les réparations. Vous ne faites rien.",
+      "item3Title": "Recevez vos gains tous les mois",
+      "item3Desc": "Gagnez jusqu’à 8,5 % d’intérêt annuel, versé directement sur votre compte chaque mois. Et au bout de 48 mois, vous avez récupéré l’intégralité de votre capital."
     },
     "campaignCard": {
       "statusOngoing": "🟢 En cours",
@@ -107,11 +107,11 @@
     "whyInvest": {
       "kicker": "Pourquoi investir dans Pony ?",
       "item1Title": "Rendement élevé",
-      "item1Desc": "Jusqu’à 9% d’intérêt annuel. Fondé sur la forte rentabilité structurelle des vélos et des trottinettes exploitées en libre service par pony",
+      "item1Desc": "Jusqu’à 8.5% d’intérêt annuel. Fondé sur la forte rentabilité structurelle des vélos et des trottinettes exploitées en libre service par pony",
       "item2Title": "Un actif tangible",
       "item2Desc": "L’investissement porte sur de vrais vélos et trottinettes, conçus par pony pour être durables et robustes. Un sous-jacent claire, basé sur un actif tangible avec sa valeur propre",
       "item3Title": "10X moins d’émission",
-      "item3Desc": "Un trajet à pony émet jusqu’à 10x moins de Co2 qu’une voiture. Vous contribuez directement à réduire les émissions de CO2 là ou vous investissez",
+      "item3Desc": "Un trajet à pony émet jusqu’à 10x moins de CO₂ qu’une voiture. Vous contribuez directement à réduire les émissions de CO₂ là ou vous investissez",
       "item4Title": "Soutenir la souveraineté",
       "item4Desc": "Pony est le seul acteur français du secteur, et leader avec 22 villes en service. Nos vélos sont conçus en interne par nos ingénieurs et fabriqués en France par la Manufacture Française du Cycle.",
       "item5Title": "Suivi en temps réel",
@@ -177,50 +177,41 @@
       "title": "Rejoignez des centaines de Pony Angels !",
       "subtitle": "Échangez avec les angels existants pour en savoir plus sur le programme d'adoption.",
       "1": {
-        "title": "Le plus mobile",
-        "quote": "J'aime l'idée du partage à la façon Pony, parce que c'est important de (re)créer du lien entre les gens."
+        "title": "Angel depuis 2021",
+        "quote": "Le premier jour où j'ai vu les trottinettes pony, j'ai téléchargé l'app et par curiosité, j'ai appuyé sur le bouton \"adopter un pony\". C'est ainsi que l'histoire a commencé... Adopter favorise le transport durable et permet de participer activement au développement urbain. C'est innovant, stimulant et excitant !"
       },
       "2": {
-        "title": "Le guerrier écolo",
-        "quote": "Je suis cycliste & je veux sortir les voitures des villes. J'aime la manière dont adopter des ponies soutient ma cause."
+        "title": "Angel depuis 2020",
+        "quote": "C'était pour moi une évidence : j'adore leurs vélos et trottinettes et participer à mon échelle au changement de la mobilité dans ma ville m'enchante !"
       },
       "3": {
-        "title": "L'investisseuse avisée",
-        "quote": "8,5 % de rendement annuel tout en faisant quelque chose de bien pour la planète ? C'est exactement ce que je cherchais."
+        "title": "Angel depuis 2020",
+        "quote": "Après une première trottinette en 2020, j'en ai acheté 2 de plus en 2022 ! Jessica, Cassandra et Sandra me permettent d'investir tout en soutenant la transition écologique dans ma ville. Un investissement vert, un vrai !"
       },
       "4": {
-        "title": "Le bâtisseur de villes",
-        "quote": "Investir dans Pony, c'est investir dans les villes où je vis. C'est concret, local, et ça a du sens."
+        "title": "Angel depuis 2021",
+        "quote": "Je suis souvent en voyage et j'adore trouver des trottinettes dans les villes que je visite. Soutenir l'arrivée de ce mode de transport dans les villes françaises est pour moi une évidence !"
       },
       "5": {
-        "title": "La pendulaire quotidienne",
-        "quote": "J'utilise Pony tous les jours pour aller au travail. Maintenant j'en tire aussi des revenus. Mon meilleur investissement."
-      },
-      "6": {
-        "title": "Le natif de la fintech",
-        "quote": "Les rendements sont réels, l'actif est réel, l'impact est réel. C'est à ça que ressemble l'investissement moderne."
-      },
-      "7": {
-        "title": "L'engagée pour l'impact",
-        "quote": "Je cherchais un investissement aligné avec mes valeurs. Pony coche toutes les cases."
-      },
-      "8": {
-        "title": "Le pionnier",
-        "quote": "J'ai rejoint la plateforme dès le début et je la recommande à tout le monde depuis. Ça fonctionne, point."
-      },
-      "9": {
-        "title": "La visionnaire long terme",
-        "quote": "Des revenus mensuels pendant 36 mois et mon capital qui revient au fil du temps. Le calcul est simple et j'adore."
-      },
-      "10": {
-        "title": "Le converti au vert",
-        "quote": "J'investissais en bourse. Maintenant j'investis dans des vélos qui réduisent le CO₂. Bien plus satisfaisant."
+        "title": "Angel depuis 2022",
+        "quote": "J'ai acheté un Double pony il y a plusieurs mois afin de soutenir le développement d'une entreprise française qui facilite ma vie au quotidien ! J'adore ce vélo et son concept : pouvoir se déplacer à deux à vélo le week-end, c'est juste génial."
       }
     },
     "footer": {
       "disclaimer": "Tout investissement comporte un risque, y compris le risque de perte en capital. Pony Bonds est régulé par l'AMF.",
       "privacy": "Politique de confidentialité",
-      "terms": "Conditions générales"
+      "terms": "Conditions générales",
+      "helpCenter": "Centre d'aide",
+      "ridersTitle": "RIDERS",
+      "howToRide": "Comment rouler",
+      "safety": "Sécurité",
+      "pricing": "Tarifs",
+      "download": "Télécharger l'app",
+      "angelsTitle": "ANGELS",
+      "adoptPony": "Adopter un Pony",
+      "bikes": "Vélos",
+      "scooters": "Trottinettes",
+      "tagline": "Investissez dans nos vélos et trottinettes, nous les mettons en location partout en France et vous gagnez 8,5 % d'intérêt annuel."
     }
   },
   "campagne": {
@@ -327,17 +318,38 @@
     },
     "faq": {
       "title": "Questions fréquentes",
-      "soon": "Bientôt.",
-      "q1": "Qu'est-ce que Pony et Adopt a Pony ?",
-      "q2": "Pourquoi investir avec Adopt a Pony ?",
-      "q3": "Comment générez-vous 8,5 % de rendement ?",
-      "q4": "Quels sont les risques liés à l'adoption d'un pony ?",
-      "q5": "Quelle est la fiscalité associée ?"
+      "q1": "Qu'est-ce qu'Adopt a Pony ?",
+      "q2": "Pourquoi investir et adopter un pony ?",
+      "q3": "Comment Pony génère-t-il des rendements ?",
+      "q4": "Y a-t-il des risques ?",
+      "q5": "Quelle est la fiscalité associée ?",
+      "q6": "Quand et comment vais-je recevoir les intérêts et le remboursement du capital ?",
+      "q7": "Je suis déjà Pony Angel, puis-je payer avec le solde de ma balance Angel ?",
+      "q8": "Puis-je privatiser un de mes ponys virtuels ?",
+      "a1": "Adopt a Pony est un programme qui vous permet d'investir dans une flotte de vélos et trottinettes électriques de la flotte Pony.\n\nLe principe est gagnant-gagnant : Pony finance les flottes nécessaires à sa croissance et vous obtenez une rémunération mensuelle attractive tout en soutenant le développement d'une mobilité plus durable dans les villes en service.",
+      "a2": "• <strong>Rendement élevé</strong> : jusqu'à 8,5 % de rendement annuel, soit l'équivalent de 25 % de gains sur l'ensemble de la période, grâce à la forte rentabilité structurelle des vélos et trottinettes opérés par Pony.\n\n• <strong>Un actif tangible</strong> : l'investissement porte sur de vrais vélos et trottinettes, conçus par Pony pour être durables et robustes. Un sous-jacent basé sur un actif tangible, avec sa valeur propre.\n\n• <strong>10x moins d'émissions</strong> : un trajet Pony émet jusqu'à 10x moins de CO2 qu'une voiture. Vous contribuez directement à réduire les émissions de CO2 dans les villes où Pony est présent.\n\n• <strong>Un leader français</strong> : Pony est le seul acteur français du secteur et leader avec 22 villes en service. Nos vélos sont conçus en interne par nos ingénieurs et fabriqués en France par la Manufacture Française du Cycle.\n\n• <strong>Suivi en temps réel</strong> : au moment de votre investissement, nous vous allouons des pony qui deviennent virtuellement les vôtres. Recevez des notifications sur les trajets et les interventions de maintenance, et accédez à leur position GPS en direct !",
+      "a3": "Notre modèle repose sur quatre fondamentaux qui nous permettent de dégager une marge d'exploitation attractive :\n\n• <strong>Une expertise unique</strong> : Pony opère depuis 7 ans et a développé un savoir-faire unique au monde dans la gestion de flottes partagées, porté par des équipes hautement expérimentées et des outils internes affinés au fil des années.\n\n• <strong>Des actifs robustes</strong> : nos véhicules ont une durée de vie supérieure à 7 ans. Conçus intégralement en interne, ils tombent rarement en panne et nous gardons une maîtrise totale de leur réparabilité, assurée en express.\n\n• <strong>Une demande forte et croissante</strong> : l'usage de nos services progresse chaque année. Nous comptons aujourd'hui plus de 500 000 utilisateurs actifs, et cette demande croît plus vite que la taille de notre flotte.\n\n• <strong>Les meilleures batteries du marché</strong> : leur autonomie est près de 1,6x supérieure à celle de nos concurrents. Résultat : un coût de recharge très faible, et donc une rentabilité supérieure par véhicule.",
+      "a4": "Contrairement aux plateformes de crowdfunding classiques, Adopt a Pony assume directement le risque opérationnel et commercial du projet financé. Concrètement :\n\n• En cas de demande plus faible que les prévisions, nous vous versons quand même vos rendements mensuels.\n\n• En cas de dégradation de la flotte, nous la remplaçons sans interrompre le versement des intérêts.\n\n• Si une licence dans une ville n'était pas renouvelée, nous redéployons les véhicules dans une autre ville et poursuivons vos versements.\n\nEn résumé, nous absorbons l'essentiel des aléas opérationnels et commerciaux du projet financé. Le risque résiduel se limite au scénario d'un défaut de Pony : dans ce cas, le remboursement reposerait sur la revente des actifs. Consultez ici l'ensemble des risques identifiés.",
+      "a5": "Les taux d'intérêt sur Adopt a Pony sont présentés en brut (avant impôts).\n\n<strong>Particuliers :</strong>\n\n• <strong>Résidents fiscaux français</strong> : les intérêts sont soumis à un prélèvement forfaitaire unique (PFU) de 30 %, prélevé à la source et prérempli dans votre déclaration de revenus. Si vous relevez du barème progressif, envoyez-nous une déclaration sur l'honneur et nous vous verserons les intérêts bruts.\n\n• <strong>Non-résidents fiscaux français</strong> : pas de retenue à la source. Déclarez selon vos règles locales.\n\n<strong>Entreprises :</strong>\n\n• Les intérêts sont traités comme des revenus et soumis à l'impôt sur les sociétés ou à l'impôt sur le revenu, selon votre statut juridique.\n\nChaque année en janvier, Adopt a Pony met à votre disposition un relevé fiscal pour vous aider à remplir votre déclaration. Pour un conseil personnalisé, consultez un professionnel de la fiscalité.",
+      "a6": "Les intérêts et le capital sont versés mensuellement à partir du 13e mois, et jusqu'au 48e mois.\n\nPourquoi ce délai ? En pratique, il peut s'écouler jusqu'à 12 mois entre le moment de la commande et le déploiement des flottes que vous avez financées. Cette période inclut par exemple l'achat et l'approvisionnement des matières premières, la production ou encore le transport.\n\nAfin de rapprocher le mécanisme de financement au maximum de la réalité du modèle économique, une période de grâce peut être introduite. Pendant cette période de grâce, vos intérêts sont capitalisés et s'ajoutent à votre capital, qui sera ensuite remboursé chaque mois avec les intérêts associés.",
+      "a7": "Nous souhaitons rendre cette option possible dès la prochaine campagne pour tous les Pony Angels qui détiennent une balance, et nous y travaillons activement. Nous vous tiendrons informés dès que la fonctionnalité sera disponible.",
+      "a8": "La grande nouveauté d'Adopt, c'est que vous n'investissez plus dans un véhicule unique, mais dans une flotte entière de vélos ou de trottinettes. La privatisation d'un véhicule est donc remplacée par un ensemble d'avantages — trajets gratuits, suivi de votre flotte sur l'app — et bien d'autres fonctionnalités à venir."
     },
-    "footer": {
+      "footer": {
       "disclaimer": "Tout investissement comporte un risque, y compris le risque de perte en capital.",
       "privacy": "Politique de confidentialité",
-      "terms": "Conditions générales"
+      "terms": "Conditions générales",
+      "helpCenter": "Centre d'aide",
+      "ridersTitle": "RIDERS",
+      "howToRide": "Comment rouler",
+      "safety": "Sécurité",
+      "pricing": "Tarifs",
+      "download": "Télécharger l'app",
+      "angelsTitle": "ANGELS",
+      "adoptPony": "Adopter un Pony",
+      "bikes": "Vélos",
+      "scooters": "Trottinettes",
+      "tagline": "Investissez dans la mobilité électrique partagée et touchez des revenus mensuels."
     }
   },
   "investir": {
@@ -479,7 +491,7 @@
     }
   },
   "waitlist": {
-    "title": "M'informer des prochaines ventes",
+    "title": "M'informer des prochaines campagnes",
     "subtitle": "Recevez un email dès qu'une nouvelle campagne ouvre.",
     "firstName": "Prénom",
     "lastName": "Nom",

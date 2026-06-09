@@ -12,16 +12,11 @@ function TestimonialsSection() {
   const [current, setCurrent] = useState(0)
 
   const testimonials = [
-    { name: 'Hugo',    key: '1',  titleColor: '#FF6B6B', cardColor: 'linear-gradient(135deg, #FF6B6B 0%, #C44B4B 100%)' },
-    { name: 'Vincent', key: '2',  titleColor: '#00FFFF', cardColor: 'linear-gradient(135deg, #00BFFF 0%, #0066CC 100%)' },
-    { name: 'Marie',   key: '3',  titleColor: '#A78BFA', cardColor: 'linear-gradient(135deg, #A78BFA 0%, #6D28D9 100%)' },
-    { name: 'Thomas',  key: '4',  titleColor: '#34D399', cardColor: 'linear-gradient(135deg, #34D399 0%, #059669 100%)' },
-    { name: 'Camille', key: '5',  titleColor: '#FBBF24', cardColor: 'linear-gradient(135deg, #FBBF24 0%, #D97706 100%)' },
-    { name: 'Antoine', key: '6',  titleColor: '#F472B6', cardColor: 'linear-gradient(135deg, #F472B6 0%, #DB2777 100%)' },
-    { name: 'Lucie',   key: '7',  titleColor: '#00FFFF', cardColor: 'linear-gradient(135deg, #2DD4BF 0%, #0D9488 100%)' },
-    { name: 'Maxime',  key: '8',  titleColor: '#FB923C', cardColor: 'linear-gradient(135deg, #FB923C 0%, #EA580C 100%)' },
-    { name: 'Sophie',  key: '9',  titleColor: '#A78BFA', cardColor: 'linear-gradient(135deg, #818CF8 0%, #4F46E5 100%)' },
-    { name: 'Romain',  key: '10', titleColor: '#4ADE80', cardColor: 'linear-gradient(135deg, #4ADE80 0%, #16A34A 100%)' },
+    { name: 'Jari',     key: '1', titleColor: '#00FFFF', cardColor: 'linear-gradient(135deg, #00BFFF 0%, #0066CC 100%)', photo: '/angels/jari.png' },
+    { name: 'Emmanuel', key: '2', titleColor: '#2DD4BF', cardColor: 'linear-gradient(135deg, #2DD4BF 0%, #0D9488 100%)', photo: '/angels/emmanuel.png' },
+    { name: 'Nathan',   key: '3', titleColor: '#A78BFA', cardColor: 'linear-gradient(135deg, #A78BFA 0%, #6D28D9 100%)', photo: '/angels/nathan.png' },
+    { name: 'Didier',   key: '4', titleColor: '#FF6B6B', cardColor: 'linear-gradient(135deg, #FF6B6B 0%, #C44B4B 100%)', photo: '/angels/didier.png' },
+    { name: 'Clara',    key: '5', titleColor: '#FBBF24', cardColor: 'linear-gradient(135deg, #FBBF24 0%, #D97706 100%)', photo: '/angels/clara.png' },
   ]
 
   const prev = () => setCurrent(i => (i - 1 + testimonials.length) % testimonials.length)
@@ -45,9 +40,6 @@ function TestimonialsSection() {
         <h2 className="testimonials-title" style={{ fontSize: '38px', fontWeight: 800, marginBottom: '16px' }}>
           {t('title')}
         </h2>
-        <p style={{ fontSize: '16px', color: 'white', maxWidth: '400px', lineHeight: '1.6' }}>
-          {t('subtitle')}
-        </p>
       </div>
 
       <div className="testimonials-row" style={{ display: 'flex', gap: '24px', marginBottom: '40px' }}>
@@ -63,6 +55,8 @@ function TestimonialsSection() {
               opacity: pos === 2 ? 0.4 : 1,
               transition: 'opacity 0.3s',
               position: 'relative',
+              display: 'flex',
+              flexDirection: 'column',
             }}>
               <div style={{ position: 'absolute', bottom: '160px', left: '-60px', width: '220px', height: '220px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.05)', pointerEvents: 'none' }} />
               <div style={{ position: 'absolute', bottom: '80px', right: '-40px', width: '160px', height: '160px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.04)', pointerEvents: 'none' }} />
@@ -73,12 +67,16 @@ function TestimonialsSection() {
                 <p style={{ fontSize: '14px', color: tm.titleColor, fontWeight: 600 }}>{t(`${tm.key}.title`)}</p>
               </div>
 
-              <div style={{ padding: '0 20px 20px' }}>
-                <div style={{ borderRadius: '16px', overflow: 'hidden', position: 'relative' }}>
+              <div style={{ padding: '0 20px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ borderRadius: '16px', overflow: 'hidden', position: 'relative', flex: 1, display: 'flex', flexDirection: 'column' }}>
                   <div style={{ height: '280px', background: tm.cardColor, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px' }}>👤</div>
+                    {tm.photo ? (
+                      <img src={tm.photo} alt={tm.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px' }}>👤</div>
+                    )}
                   </div>
-                  <div style={{ backgroundColor: 'white', padding: '20px' }}>
+                  <div style={{ backgroundColor: 'white', padding: '20px', flex: 1 }}>
                     <p style={{ fontSize: '13px', lineHeight: '1.6', color: '#1E1B4B', fontWeight: 500 }}>
                       {t(`${tm.key}.quote`)}
                     </p>
@@ -86,10 +84,7 @@ function TestimonialsSection() {
                 </div>
               </div>
 
-              <div style={{ padding: '0 28px 24px', display: 'flex', gap: '16px', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <span style={{ fontSize: '14px', cursor: 'pointer', color: 'white', fontWeight: 700 }}>𝕏</span>
-                <span style={{ fontSize: '14px', cursor: 'pointer', color: 'white', fontWeight: 700 }}>in</span>
-              </div>
+              
             </div>
           )
         })}
@@ -112,12 +107,16 @@ function FAQSection() {
   const t = useTranslations('campagne.faq')
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
+  const bold = { strong: (chunks: string) => `<strong>${chunks}</strong>` }
   const faqs = [
-    { q: t('q1'), a: t('soon') },
-    { q: t('q2'), a: t('soon') },
-    { q: t('q3'), a: t('soon') },
-    { q: t('q4'), a: t('soon') },
-    { q: t('q5'), a: t('soon') },
+    { q: t('q1'), a: t.markup('a1', bold) },
+    { q: t('q2'), a: t.markup('a2', bold) },
+    { q: t('q3'), a: t.markup('a3', bold) },
+    { q: t('q4'), a: t.markup('a4', bold) },
+    { q: t('q5'), a: t.markup('a5', bold) },
+    { q: t('q6'), a: t.markup('a6', bold) },
+    { q: t('q7'), a: t.markup('a7', bold) },
+    { q: t('q8'), a: t.markup('a8', bold) },
   ]
 
   return (
@@ -151,13 +150,14 @@ function FAQSection() {
               }}>+</span>
             </button>
             {openIndex === i && (
-              <div style={{
-                padding: '0 28px 24px',
-                fontSize: '15px', lineHeight: '1.7',
-                color: 'white',
-              }}>
-                {faq.a}
-              </div>
+              <div
+                style={{
+                  padding: '0 28px 24px',
+                  fontSize: '15px', lineHeight: '1.7',
+                  color: 'white', whiteSpace: 'pre-line',
+                }}
+                dangerouslySetInnerHTML={{ __html: faq.a }}
+              />
             )}
           </div>
         ))}
@@ -195,10 +195,8 @@ function AngelPerksSection() {
 
       <div className="angel-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
         {/* LEFT — Image carousel */}
-        <div className="angel-image" style={{ position: 'relative', height: '400px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px dashed rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-          <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>
-            Image {currentImageIndex + 1} à venir
-          </span>
+        <div className="angel-image" style={{ position: 'relative', height: '400px', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <img src="/phone.png" alt="" style={{ width: '70%', height: 'auto', maxHeight: '100%', objectFit: 'contain' }} />
         </div>
 
         {/* RIGHT — 4 items, only one active */}
@@ -241,9 +239,9 @@ const PAYBACK_MONTHS = 36
 
 function calcReturns(amount: number) {
   const capitalAfterGrace = amount * Math.pow(1 + MONTHLY_RATE, GRACE_MONTHS)
-  const paybackInterest = capitalAfterGrace * ANNUAL_RATE * (PAYBACK_MONTHS / 12)
-  const monthlyPayment = (capitalAfterGrace + paybackInterest) / PAYBACK_MONTHS
-  const totalRepaid = capitalAfterGrace + paybackInterest
+  const monthlyPayment = capitalAfterGrace * MONTHLY_RATE / (1 - Math.pow(1 + MONTHLY_RATE, -PAYBACK_MONTHS))
+  const totalRepaid = monthlyPayment * PAYBACK_MONTHS
+  const paybackInterest = totalRepaid - capitalAfterGrace
   const totalInterest = totalRepaid - amount
   return { capitalAfterGrace, paybackInterest, monthlyPayment, totalRepaid, totalInterest }
 }
@@ -253,6 +251,7 @@ export default function Home() {
   const t = useTranslations('home')
   const tWaitlist = useTranslations('home.waitlist')
   const [amount, setAmount] = useState(2000)
+  const [amountB, setAmountB] = useState(2000)
   const [campaign, setCampaign] = useState<Campaign | null>(null)
   const [waitlistOpen, setWaitlistOpen] = useState(false)
   const [waitlistSource, setWaitlistSource] = useState<string>('home')
@@ -308,6 +307,7 @@ export default function Home() {
   }
 
   const { monthlyPayment, totalInterest, totalRepaid } = calcReturns(amount)
+  const { monthlyPayment: monthlyPaymentB, totalInterest: totalInterestB, totalRepaid: totalRepaidB } = calcReturns(amountB)
 
   // Number formatting helpers based on locale
   const numberLocale = locale === 'fr' ? 'fr-FR' : 'en-GB'
@@ -368,7 +368,7 @@ export default function Home() {
                 {t('hero.title')}
               </h1>
             </div>
-            <p className="hero-subtitle" style={{ color: 'white', fontSize: '16px', fontWeight: 500, lineHeight: '1.5', marginBottom: '32px' }}>
+            <p className="hero-subtitle" style={{ color: 'white', fontSize: '16px', fontWeight: 500, lineHeight: '1.5', marginBottom: '55px' }}>
               {t('hero.subtitle1')}{' '}
               <span style={{ color: '#00FFFF', fontWeight: 600 }}>8,5 %</span>{t('hero.subtitle2')}
             </p>
@@ -382,21 +382,11 @@ export default function Home() {
                   {t('hero.joinWaitlist')}
                 </button>
               )}
-              <a href="#" style={{ backgroundColor: 'transparent', color: '#00FFFF', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none', border: '2px solid #00FFFF' }}>
+              <a href="https://app.lemcal.com/@oliviabally/adopt-a-pony" target="_blank" rel="noopener noreferrer" style={{ backgroundColor: 'transparent', color: '#00FFFF', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none', border: '2px solid #00FFFF' }}>
                 {t('hero.bookMeeting')}
               </a>
             </div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '32px', padding: '8px 16px', borderRadius: '100px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div style={{ display: 'flex' }}>
-                {['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4'].map((c, i) => (
-                  <div key={i} style={{ width: '22px', height: '22px', borderRadius: '50%', backgroundColor: c, border: '2px solid #13102B', marginLeft: i > 0 ? '-8px' : '0' }} />
-                ))}
-              </div>
-              <span style={{ fontSize: '12px', color: 'white' }}>
-                <span style={{ color: 'white', fontWeight: 700 }}>500k+</span> {t('hero.usersBadge')}
-              </span>
-            </div>
-            <p style={{ marginTop: '16px', fontSize: '13px', color: 'white', lineHeight: '1.5', paddingLeft: '4px' }}>
+            <p style={{ marginTop: '16px', fontSize: '11px', color: 'white', lineHeight: '1.5', paddingLeft: '4px' }}>
               {t('hero.riskNotice')}
             </p>
           </div>
@@ -422,8 +412,7 @@ export default function Home() {
                   {t('simulator.ifYouInvestWith')}
                 </p>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <span style={{ fontSize: '13px', color: 'white' }}>{t('simulator.iWantToInvest')}</span>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', marginBottom: '12px' }}>
                   <span className="simulator-amount" style={{ fontSize: '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
                     €{fmtInt(amount)}
                   </span>
@@ -435,7 +424,7 @@ export default function Home() {
                   style={{ accentColor: '#00FFFF', width: '100%', cursor: 'pointer' }}
                 />
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: 'white', marginTop: '2px' }}>
-                  <span>€500</span><span>€200,000</span>
+                  <span>€{fmtInt(500)}</span><span>€{fmtInt(200000)}</span>
                 </div>
 
                 <div style={{ marginTop: '20px', padding: '10px 14px', borderRadius: '10px', backgroundColor: 'rgba(0,255,255,0.06)', border: '1px solid rgba(0,255,255,0.12)', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -448,15 +437,12 @@ export default function Home() {
                     {' '}{t('simulator.inFleet')}
                   </span>
                 </div>
-
                 <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '28px -32px 20px' }} />
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   {[
                     { label: t('simulator.duration'), value: t('simulator.durationValue') },
                     { label: t('simulator.rate'), value: t('simulator.rateValue') },
-                    { label: t('simulator.capital'), value: t('simulator.capitalValue') },
-                    { label: t('simulator.gracePeriod'), value: t('simulator.gracePeriodValue') },
                   ].map((row, i) => (
                     <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1px 0' }}>
                       <span style={{ fontSize: '13px', color: 'white' }}>{row.label}</span>
@@ -476,7 +462,6 @@ export default function Home() {
                   <span className="simulator-monthly" style={{ fontSize: '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
                     €{fmtDec(monthlyPayment)}
                   </span>
-                  <span title={t('simulator.paymentDetails')} style={{ fontSize: '14px', color: '#00FFFF', cursor: 'help' }}>*</span>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
@@ -492,37 +477,6 @@ export default function Home() {
                       €{fmtInt(totalInterest)}
                     </p>
                   </div>
-                </div>
-
-                <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', fontStyle: 'italic', marginBottom: '16px', lineHeight: 1.4 }}>
-                  *{t('simulator.paymentDetails')}
-                </p>
-
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
-                  <a href="#" style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '6px',
-                    fontSize: '12px', color: 'white', textDecoration: 'none',
-                    padding: '6px 12px', borderRadius: '8px',
-                    border: '1px solid rgba(255,255,255,0.15)',
-                  }}>
-                    {t('simulator.taxInfo')}
-                  </a>
-                  <a href="#" style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '6px',
-                    fontSize: '12px', color: 'white', textDecoration: 'none',
-                    padding: '6px 12px', borderRadius: '8px',
-                    border: '1px solid rgba(255,255,255,0.15)',
-                  }}>
-                    {t('simulator.investmentNote')}
-                  </a>
-                  <a href="#" style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '6px',
-                    fontSize: '12px', color: 'white', textDecoration: 'none',
-                    padding: '6px 12px', borderRadius: '8px',
-                    border: '1px solid rgba(255,255,255,0.15)',
-                  }}>
-                    {t('simulator.paymentSchedule')}
-                  </a>
                 </div>
 
                 {canInvest ? (
@@ -543,16 +497,15 @@ export default function Home() {
       {/* ── PRESS ── */}
       <section className="press-section" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '48px 96px', marginBottom: '80px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '48px' }}>
         {[
-          { name: 'Maddyness', url: 'https://www.maddyness.com' },
-          { name: 'le Bonbon', url: 'https://www.lebonbon.fr' },
-          { name: 'TRAX', url: 'https://www.traxmag.com' },
-          { name: 'LE FIGARO', url: 'https://www.lefigaro.fr' },
+          { name: 'Les Echos', logo: '/press/lesechos.png', h: 26, url: 'https://entrepreneurs.lesechos.fr/creation-entreprise/idees-success-stories/pony-la-start-up-francaise-qui-tient-tete-aux-licornes-des-velos-en-libre-service-2161389' },
+          { name: 'Ouest France', logo: '/press/ouest-france.png', h: 44, url: 'https://www.ouest-france.fr/economie/entreprises/pourquoi-deux-leaders-du-velo-bases-en-pays-de-la-loire-travaillent-ensemble-8c177082-a9e6-11f0-bf9e-dc0be67a8d9b' },
+          { name: 'Sud Ouest', logo: '/press/sud-ouest.png', h: 42, url: 'https://www.sudouest.fr/charente/nersac/trottinettes-et-velos-partages-pourquoi-pony-roule-toujours-plus-pour-la-france-25079309.php' },
+          { name: 'La Tribune', logo: '/press/la-tribune.png', h: 24, url: 'https://www.latribune.fr/article/regions/pays-de-loire/18329934673818/de-taiwan-a-la-loire-atlantique-pony-relocalise-ses-velos-en-france' },
+          { name: 'Maddyness', logo: '/press/maddyness.png', h: 28, url: 'https://www.maddyness.com/2024/09/18/pony-leve-23-millions-deuros-pour-redefinir-la-mobilite-durable-en-france/' },
         ].map((press, i, arr) => (
           <div key={i} className="press-item" style={{ flex: '1', textAlign: 'center', borderRight: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none', padding: '0 32px' }}>
-            <a href={press.url} target="_blank" rel="noopener noreferrer">
-              <div style={{ height: '32px', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', color: 'white' }}>
-                {press.name} logo
-              </div>
+            <a href={press.url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src={press.logo} alt={press.name} style={{ height: press.h, maxWidth: '170px', width: 'auto', objectFit: 'contain' }} />
             </a>
           </div>
         ))}
@@ -590,16 +543,16 @@ export default function Home() {
               {t('hero.joinWaitlist')}
             </button>
           )}
-          <a href="#" style={{ backgroundColor: 'transparent', color: '#00FFFF', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none', border: '2px solid #00FFFF' }}>
+          <a href="https://app.lemcal.com/@oliviabally/adopt-a-pony" target="_blank" rel="noopener noreferrer" style={{ backgroundColor: 'transparent', color: '#00FFFF', padding: '14px 28px', borderRadius: '12px', fontSize: '14px', fontWeight: 600, letterSpacing: '0.3px', textDecoration: 'none', border: '2px solid #00FFFF' }}>
             {t('hero.bookMeeting')}
           </a>
         </div>
       </section>
 
-      {/* ── CAMPAIGN + PRODUCTS (layout B : Campaign Card large + 2 product cards à droite) ── */}
+      {/* ── CAMPAGNE + SIMULATEUR + PRODUITS (campagne à gauche, simulateur à droite, produits centrés en dessous) ── */}
       <section id="campagne" className="campaign-section" style={{ padding: '120px 96px', scrollMarginTop: '80px' }}>
 
-        <div className="home-campaign-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', alignItems: 'stretch' }}>
+        <div className="home-campaign-grid" style={{ display: 'grid', gridTemplateColumns: 'calc((100% - 32px) / 2 - 57px) 1fr', gap: '32px', alignItems: 'stretch' }}>
 
           {/* LEFT — CAMPAIGN CARD */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -673,8 +626,9 @@ export default function Home() {
                   {[
                     { label: t('simulator.duration'), value: t('simulator.durationValue') },
                     { label: t('simulator.rate'), value: t('simulator.rateValue') },
-                    { label: t('simulator.capital'), value: t('simulator.capitalValue') },
+                    { label: t('simulator.capital'), value: locale === 'fr' ? 'Mensuel' : 'Monthly' },
                     { label: t('simulator.gracePeriod'), value: t('simulator.gracePeriodValue') },
+                    { label: locale === 'fr' ? 'Date du premier versement' : 'First payment date', value: locale === 'fr' ? 'Mois 13' : 'Month 13' },
                   ].map((row, i) => (
                     <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '3px 0' }}>
                       <span style={{ fontSize: '14px', color: 'white' }}>{row.label}</span>
@@ -682,16 +636,6 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-
-                <p style={{
-                  fontSize: '11px',
-                  color: 'rgba(255,255,255,0.6)',
-                  fontStyle: 'italic',
-                  lineHeight: 1.4,
-                  marginBottom: '24px',
-                }}>
-                  *{t('simulator.paymentDetails')}
-                </p>
 
                 {progressVisible && (
                   <div style={{ marginBottom: '24px' }}>
@@ -719,86 +663,222 @@ export default function Home() {
             </div>
           </div>
 
-          {/* RIGHT — PRODUCT CARDS SIDE BY SIDE */}
+          {/* RIGHT — SIMULATEUR (duplicate du Hero, slider indépendant) */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <p style={{
               fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
               color: '#00FFFF', textTransform: 'uppercase', marginBottom: '24px',
-            }}>{t('products.kicker')}</p>
+            }}>{locale === 'fr' ? 'SIMULATEUR' : 'SIMULATOR'}</p>
 
-            <div className="home-products-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', flex: 1 }}>
-              {[
-                {
-                  title: t('products.card1Title'),
-                  desc: t('products.card1Desc'),
-                  bullet: t('products.card1Bullet1'),
-                  image: '/product-bike-placeholder.jpg',
-                  source: 'site_home_product_card1',
-                },
-                {
-                  title: t('products.card2Title'),
-                  desc: t('products.card2Desc'),
-                  bullet: t('products.card2Bullet1'),
-                  image: '/product-scooter-placeholder.jpg',
-                  source: 'site_home_product_card2',
-                },
-              ].map((product, i) => (
-                <div key={i} style={{
-                  borderRadius: '20px',
-                  backgroundColor: '#321E64',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}>
-                  <div style={{
-                    aspectRatio: '4 / 3',
-                    backgroundColor: 'rgba(255,255,255,0.05)',
-                    backgroundImage: `url(${product.image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'rgba(255,255,255,0.4)',
-                    fontSize: '11px',
-                    fontStyle: 'italic',
-                  }}>
-                    Image à venir
-                  </div>
-                  <div style={{
-                    padding: '16px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '8px',
-                    flex: 1,
-                  }}>
-                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: 'white', lineHeight: 1.2 }}>
-                      {product.title}
-                    </h3>
-                    <p style={{ fontSize: '12px', lineHeight: '1.5', color: 'white', flex: 1 }}>
-                      {product.desc}
-                    </p>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ color: '#00FFFF', fontSize: '12px' }}>●</span>
-                      <span style={{ fontSize: '12px', color: 'white' }}>{product.bullet}</span>
+            <div className="simulator-grid" style={{
+              flex: 1,
+              borderRadius: '24px',
+              backgroundColor: 'rgba(30,27,75,0.9)',
+              backdropFilter: 'blur(16px)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,255,0.05)',
+              overflow: 'hidden',
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr'
+            }}>
+
+              {/* LEFT — INPUT */}
+              <div className="simulator-input" style={{ padding: '32px', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+                <p style={{ fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
+                  {t('simulator.ifYouInvestWith')}
+                </p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', marginBottom: '12px' }}>
+                  <span className="simulator-amount" style={{ fontSize: '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
+                    €{fmtInt(amountB)}
+                  </span>
+                </div>
+
+                <input
+                  type="range" min={500} max={200000} step={500} value={amountB}
+                  onChange={e => setAmountB(Number(e.target.value))}
+                  style={{ accentColor: '#00FFFF', width: '100%', cursor: 'pointer' }}
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: 'white', marginTop: '2px' }}>
+                  <span>€{fmtInt(500)}</span><span>€{fmtInt(200000)}</span>
+                </div>
+
+                <div style={{ marginTop: '20px', padding: '10px 14px', borderRadius: '10px', backgroundColor: 'rgba(0,255,255,0.06)', border: '1px solid rgba(0,255,255,0.12)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontSize: '14px' }}>🛴</span>
+                  <span style={{ fontSize: '12px', color: 'white', lineHeight: 1.4 }}>
+                    {t('simulator.fleetFinances')}{' '}
+                    <span style={{ color: '#00FFFF', fontWeight: 700 }}>
+                      {amountB / 2100 < 1 ? (amountB / 2100).toFixed(1) : Math.floor(amountB / 2100)} {t('simulator.ebikes')}
+                    </span>
+                    {' '}{t('simulator.inFleet')}
+                  </span>
+                </div>
+
+                <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '28px -32px 20px' }} />
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {[
+                    { label: t('simulator.duration'), value: t('simulator.durationValue') },
+                    { label: t('simulator.rate'), value: t('simulator.rateValue') },
+                    { label: t('simulator.capital'), value: locale === 'fr' ? 'Mensuel' : 'Monthly' },
+                    { label: t('simulator.gracePeriod'), value: t('simulator.gracePeriodValue') },
+                    { label: locale === 'fr' ? 'Date du premier versement' : 'First payment date', value: locale === 'fr' ? 'Mois 13' : 'Month 13' },
+                  ].map((row, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1px 0' }}>
+                      <span style={{ fontSize: '13px', color: 'white' }}>{row.label}</span>
+                      <span style={{ fontSize: '12px', fontWeight: 700, padding: '3px 12px', borderRadius: '6px', backgroundColor: 'rgba(0,255,255,0.1)', border: '1px solid rgba(0,255,255,0.2)', color: '#00FFFF' }}>{row.value}</span>
                     </div>
-                    {canInvest ? (
-                      <Link href={`/investir?campaignId=${campaign?.id}&amount=5000`}
-                        style={{ display: 'block', textAlign: 'center', marginTop: '6px', backgroundColor: '#00FFFF', color: '#13102B', padding: '10px', borderRadius: '8px', fontSize: '12px', fontWeight: 800, textDecoration: 'none' }}>
-                        {t('products.adoptCta')}
-                      </Link>
-                    ) : (
-                      <button onClick={() => openWaitlist(product.source)}
-                        style={{ display: 'block', width: '100%', textAlign: 'center', marginTop: '6px', backgroundColor: '#00FFFF', color: '#13102B', padding: '10px', borderRadius: '8px', fontSize: '12px', fontWeight: 800, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-                        {t('products.notifyCta')}
-                      </button>
-                    )}
+                  ))}
+                </div>
+              </div>
+
+              {/* RIGHT — RESULTS */}
+              <div className="simulator-results" style={{ padding: '32px', backgroundColor: 'rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column' }}>
+                <p style={{ fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '20px' }}>
+                  {t('simulator.youReceive')}
+                </p>
+
+                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '4px', marginBottom: '24px' }}>
+                  <span className="simulator-monthly" style={{ fontSize: '32px', fontWeight: 800, color: '#00FFFF', letterSpacing: '-1px', lineHeight: 1 }}>
+                    €{fmtDec(monthlyPaymentB)}
+                  </span>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
+                  <div style={{ padding: '14px 18px', borderRadius: '10px', backgroundColor: 'rgba(0,255,255,0.08)', border: '1px solid rgba(0,255,255,0.25)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p style={{ fontSize: '13px', color: 'white', fontWeight: 700 }}>{t('simulator.totalRepaid')}</p>
+                    <p style={{ fontSize: '20px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
+                      €{fmtInt(totalRepaidB)}
+                    </p>
+                  </div>
+                  <div style={{ padding: '14px 18px', borderRadius: '10px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p style={{ fontSize: '13px', color: 'white', fontWeight: 700 }}>{t('simulator.totalInterest')}</p>
+                    <p style={{ fontSize: '20px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
+                      €{fmtInt(totalInterestB)}
+                    </p>
                   </div>
                 </div>
-              ))}
+
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
+                  <a href="#" style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    fontSize: '12px', color: 'white', textDecoration: 'none',
+                    padding: '6px 12px', borderRadius: '8px',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                  }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>{t('simulator.taxInfo')}
+                  </a>
+                  <a href="#" style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    fontSize: '12px', color: 'white', textDecoration: 'none',
+                    padding: '6px 12px', borderRadius: '8px',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                  }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>{t('simulator.investmentNote')}
+                  </a>
+                  <a href="#" style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    fontSize: '12px', color: 'white', textDecoration: 'none',
+                    padding: '6px 12px', borderRadius: '8px',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                  }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>{t('simulator.paymentSchedule')}
+                  </a>
+                </div>
+
+                {canInvest ? (
+                  <Link href={`/investir?campaignId=${campaign?.id}&amount=${amountB}`} style={{ display: 'block', width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '14px', borderRadius: '10px', fontSize: '14px', fontWeight: 800, textDecoration: 'none', marginTop: 'auto' }}>
+                    {t('hero.cta')}
+                  </Link>
+                ) : (
+                  <button onClick={() => openWaitlist('site_home_campaign_simulator')} style={{ width: '100%', textAlign: 'center', backgroundColor: '#00FFFF', color: '#13102B', padding: '14px', borderRadius: '10px', fontSize: '14px', fontWeight: 800, border: 'none', cursor: 'pointer', fontFamily: 'inherit', marginTop: 'auto' }}>
+                    {t('hero.joinWaitlist')}
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
+        </div>
+
+        {/* ── NOS PRODUITS — 2 cartes centrées en dessous ── */}
+        <div style={{ maxWidth: '776px', margin: '64px auto 0' }}>
+          <p style={{
+            fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
+            color: '#00FFFF', textTransform: 'uppercase', marginBottom: '24px', textAlign: 'center',
+          }}>{t('products.kicker')}</p>
+
+          <div className="home-products-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+            {[
+              {
+                title: t('products.card1Title'),
+                desc: t('products.card1Desc'),
+                bullet: t('products.card1Bullet1'),
+                image: '/ebike.png',
+                source: 'site_home_product_card1',
+              },
+              {
+                title: t('products.card2Title'),
+                desc: t('products.card2Desc'),
+                bullet: t('products.card2Bullet1'),
+                image: '/product-scooter-placeholder.jpg',
+                source: 'site_home_product_card2',
+              },
+            ].map((product, i) => (
+              <div key={i} style={{
+                borderRadius: '20px',
+                backgroundColor: '#321E64',
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+              }}>
+                <div style={{
+                  aspectRatio: '4 / 3',
+                  backgroundColor: 'rgba(255,255,255,0.05)',
+                  backgroundImage: `url(${product.image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'rgba(255,255,255,0.4)',
+                  fontSize: '11px',
+                  fontStyle: 'italic',
+                }}>
+                  {product.image.includes('placeholder') ? 'Image à venir' : ''}
+                </div>
+                <div style={{
+                  padding: '16px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px',
+                  flex: 1,
+                }}>
+                  <h3 style={{ fontSize: '16px', fontWeight: 800, color: 'white', lineHeight: 1.2 }}>
+                    {product.title}
+                  </h3>
+                  <p style={{ fontSize: '12px', lineHeight: '1.5', color: 'white', flex: 1 }}>
+                    {product.desc}
+                  </p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ color: '#00FFFF', fontSize: '12px' }}>●</span>
+                    <span style={{ fontSize: '12px', color: 'white' }}>{product.bullet}</span>
+                  </div>
+                  {canInvest ? (
+                    <Link href={`/investir?campaignId=${campaign?.id}&amount=5000`}
+                      style={{ display: 'block', textAlign: 'center', marginTop: '6px', backgroundColor: '#00FFFF', color: '#13102B', padding: '10px', borderRadius: '8px', fontSize: '12px', fontWeight: 800, textDecoration: 'none' }}>
+                      {t('products.adoptCta')}
+                    </Link>
+                  ) : (
+                    <button onClick={() => openWaitlist(product.source)}
+                      style={{ display: 'block', width: '100%', textAlign: 'center', marginTop: '6px', backgroundColor: '#00FFFF', color: '#13102B', padding: '10px', borderRadius: '8px', fontSize: '12px', fontWeight: 800, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                      {t('products.notifyCta')}
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
       </section>
@@ -894,8 +974,8 @@ export default function Home() {
           <div className="waitlist-card" style={{ borderRadius: '24px', backgroundColor: '#321E64', padding: '64px', display: 'flex', alignItems: 'center', gap: '80px', maxWidth: 'calc(100% - 320px)', margin: '0 auto' }}>
 
             {/* LEFT — Image placeholder */}
-            <div className="waitlist-image" style={{ flex: '0 0 400px', height: '300px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px dashed rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>Image à venir</span>
+            <div className="waitlist-image" style={{ flex: '0 0 400px', height: '300px', borderRadius: '16px', overflow: 'hidden' }}>
+              <img src="/waitlist.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
 
             {/* RIGHT — Form or Success state */}
@@ -1044,7 +1124,7 @@ export default function Home() {
         </div>
 
         <div className="how-right" style={{ flex: '1', position: 'relative', overflow: 'hidden' }}>
-          <img src="/hero-photo2.jpg" alt="Pony fleet"
+          <img src="/hero-photo2.png" alt="Pony fleet"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
           />
           <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,200,255,0.55)', mixBlendMode: 'color' }} />
@@ -1057,18 +1137,14 @@ export default function Home() {
 
       {/* ── COMPARISON TABLE ── */}
       <section className="compare-section" style={{ padding: '120px 96px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#00FFFF', textTransform: 'uppercase', marginBottom: '20px' }}>{t('comparison.kicker')}</p>
-        <h2 className="compare-title" style={{ fontSize: '38px', fontWeight: 800, lineHeight: 1.1, marginBottom: '64px' }}>
-          {t('comparison.title1')}<br />{t('comparison.title2')}
-        </h2>
+        <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#00FFFF', textTransform: 'uppercase', marginBottom: '56px' }}>{t('comparison.kicker')}</p>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
             <thead>
               <tr>
                 <th style={{ width: '180px', padding: '16px 20px', textAlign: 'left' }} />
                 <th style={{ padding: '20px 24px', textAlign: 'center', backgroundColor: '#00FFFF', borderRadius: '16px 16px 0 0', color: '#13102B' }}>
-                  <img src="/Logo.png" alt="Pony" style={{ height: '20px', width: 'auto', filter: 'invert(1) brightness(0)' }} />
-                  <p style={{ fontSize: '11px', fontWeight: 700, marginTop: '4px', color: '#13102B' }}>{t('comparison.ponyLabel')}</p>
+                  <img src="/Logo.png" alt="Pony" style={{ height: '20px', width: 'auto', display: 'block', margin: '0 auto', filter: 'invert(1) brightness(0)' }} />
                 </th>
                 {['Livret A', 'Assurance vie', 'Crowdfunding\nimmo', 'Bourse'].map((col, i) => (
                   <th key={i} style={{ padding: '16px 20px', textAlign: 'center', color: 'white', fontWeight: 600, fontSize: '13px' }}>{col}</th>
@@ -1113,14 +1189,42 @@ export default function Home() {
       <FAQSection />
 
       {/* ── FOOTER ── */}
-      <footer className="site-footer" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '40px 96px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <img src="/Logo.png" alt="Pony" style={{ height: '22px', width: 'auto' }} />
-        <p className="footer-disclaimer" style={{ fontSize: '12px', color: 'white', maxWidth: '400px', textAlign: 'center' }}>
-          {t('footer.disclaimer')}
-        </p>
-        <div className="footer-links" style={{ display: 'flex', gap: '24px', fontSize: '12px' }}>
-          <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.privacy')}</a>
-          <a href="#" style={{ color: 'white', textDecoration: 'none' }}>{t('footer.terms')}</a>
+      <footer className="site-footer" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '64px 96px 32px' }}>
+        <div className="footer-top" style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', columnGap: '48px', rowGap: '20px', alignItems: 'start' }}>
+
+          {/* Ligne 1 : logo | réseaux sociaux (collés à droite) */}
+          <img src="/fer-a-cheval.svg" alt="Pony" style={{ height: '44px', width: 'auto' }} />
+          <div style={{ display: 'flex', gap: '18px', justifySelf: 'end' }}>
+            <a href="https://instagram.com/getapony" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ color: 'white' }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://twitter.com/getapony" target="_blank" rel="noopener noreferrer" aria-label="Twitter" style={{ color: 'white' }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+            </a>
+            <a href="https://facebook.com/getapony" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style={{ color: 'white' }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+          </div>
+
+          {/* Ligne 2 : Centre d'aide + liens dessous | tagline */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <a href="https://help.getapony.com" target="_blank" rel="noopener noreferrer" style={{ color: 'white', textDecoration: 'none', fontSize: '15px', fontWeight: 600 }}>{t('footer.helpCenter')}</a>
+            <a href="https://getapony.com" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.55)', textDecoration: 'none', fontSize: '13px' }}>{t('footer.download')}</a>
+            <a href="#" style={{ color: 'rgba(255,255,255,0.55)', textDecoration: 'none', fontSize: '13px' }}>{t('footer.terms')}</a>
+            <a href="#" style={{ color: 'rgba(255,255,255,0.55)', textDecoration: 'none', fontSize: '13px' }}>{t('footer.privacy')}</a>
+          </div>
+          <p style={{ fontSize: '20px', fontWeight: 600, color: 'white', lineHeight: 1.4, margin: 0, textAlign: 'justify', maxWidth: '450px', justifySelf: 'end' }}>
+            {t('footer.tagline')}
+          </p>
+
+        </div>
+
+        {/* Bas : avertissement AMF + copyright */}
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', marginTop: '40px', paddingTop: '18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
+          <p className="footer-disclaimer" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', margin: 0, maxWidth: '700px' }}>
+            {t('footer.disclaimer')}
+          </p>
+          <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', whiteSpace: 'nowrap' }}>Pony © 2026</span>
         </div>
       </footer>
 

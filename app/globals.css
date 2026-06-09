@@ -285,19 +285,21 @@ html {
 
   /* ========== FOOTER ========== */
   .site-footer {
-    flex-direction: column !important;
-    padding: 32px 24px !important;
-    gap: 20px !important;
-    text-align: center !important;
+    padding: 48px 24px 32px !important;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+
+  .footer-spacer {
+    display: none !important;
   }
 
   .footer-disclaimer {
     max-width: 100% !important;
-  }
-
-  .footer-links {
-    flex-wrap: wrap !important;
-    justify-content: center !important;
+    margin-top: 32px !important;
   }
 
   /* ========== WHY INVEST ========== */

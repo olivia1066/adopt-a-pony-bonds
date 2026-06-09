@@ -11,8 +11,8 @@
   "home": {
     "hero": {
       "title": "Adopt a pony",
-      "subtitle1": "Invest in an e-bike or e-scooter. Earn monthly returns up to",
-      "subtitle2": ". Watch your bikes ride across France.",
+      "subtitle1": "Invest in our e-bikes and scooters, we rent them out across France, and you earn",
+      "subtitle2": " annual interest.",
       "cta": "Adopt now →",
       "bookMeeting": "Book a meeting",
       "usersBadge": "Pony users already on the platform",
@@ -21,7 +21,7 @@
     },
     "simulator": {
       "title": "How much could you make",
-      "duration": "Duration",
+      "duration": "Total duration",
       "durationValue": "48 months",
       "rate": "Annual interest rate",
       "rateValue": "8.5%",
@@ -34,11 +34,11 @@
       "receiveMonthly": "You receive every month",
       "fromMonth13": "from month 13 · 36 monthly payments",
       "graceNotice": "First 12 months: interest compounded, nothing paid out",
-      "totalRepaid": "Total repaid at end of term",
-      "totalInterest": "Total interest",
+      "totalRepaid": "Total you receive at the end of term",
+      "totalInterest": "Of which interest earned",
       "capitalInvested": "Capital invested",
-      "ifYouInvestWith": "If you invest with pony...",
-      "youReceive": "...you receive every month",
+      "ifYouInvestWith": "Invest",
+      "youReceive": "Receive each month",
       "iWantToInvest": "I want to invest",
       "paymentDetails": "Interest and capital paid from month 13, interest compounded",
       "gracePeriod": "Grace period",
@@ -50,11 +50,11 @@
     "mission": {
       "title": "At pony, our mission is simple: allow everyone to play a direct role in their city and beyond, in the transition away from a car centric society",
       "item1Title": "Choose how much you invest",
-      "item1Desc": "You can finance as many bikes and scooters, starting from €500.",
+      "item1Desc": "Finance pony bikes and scooters, starting from €500.",
       "item2Title": "Pony manages your fleet",
-      "item2Desc": "Pony deploys your bikes and scooters across our cities, and makes sure they are safe, in good condition, clean, and in the right place.",
-      "item3Title": "You get paid every month",
-      "item3Desc": "Earn up to 8.5% annual interest, landing in your bank account every single month. And after 42 months, your full investment comes back home."
+      "item2Desc": "Pony deploys the bikes and scooters in its active cities. We handle the maintenance, charging and repairs. You do nothing.",
+      "item3Title": "Get paid every month",
+      "item3Desc": "Earn up to 8.5% annual interest, landing in your bank account every single month. And after 48 months, your full investment comes back home."
     },
     "campaignCard": {
       "statusOngoing": "🟢 Ongoing",
@@ -107,7 +107,7 @@
     "whyInvest": {
       "kicker": "Why invest in Pony?",
       "item1Title": "High yield",
-      "item1Desc": "Up to 9% interest rate. Driven by the high structural profitability of shared bikes and scooters managed by pony",
+      "item1Desc": "Up to 8.5% interest rate. Driven by the high structural profitability of shared bikes and scooters managed by pony",
       "item2Title": "Tangible assets",
       "item2Desc": "The investment is backed by physical bikes and scooters, engineered by pony for durability and resilience. Physical assets with their own worth.",
       "item3Title": "Lower CO₂ emissions",
@@ -177,50 +177,41 @@
       "title": "Join hundreds of Pony Angels!",
       "subtitle": "Get in touch with existing angels to learn more about the adoption scheme.",
       "1": {
-        "title": "The most mobile",
-        "quote": "I like the idea of sharing the way Pony does because it's important to (re)create links between people."
+        "title": "Angel since 2021",
+        "quote": "The first day I saw the pony scooters, I downloaded the app and, out of curiosity, tapped the \"adopt a pony\" button. That's how the story began... Adopting supports sustainable transport and lets you take an active part in urban development. It's innovative, inspiring and exciting!"
       },
       "2": {
-        "title": "The environmental warrior",
-        "quote": "I am a bike person & I want to keep cars out of cities. I like the way adopting ponies supports my cause."
+        "title": "Angel since 2020",
+        "quote": "It was obvious to me: I love their bikes and scooters, and being able to play my part in changing mobility in my city is a real thrill!"
       },
       "3": {
-        "title": "The smart investor",
-        "quote": "8.5% annual return while doing something good for the planet? That's exactly what I was looking for."
+        "title": "Angel since 2020",
+        "quote": "After my first scooter in 2020, I bought 2 more in 2022! Jessica, Cassandra and Sandra let me invest while supporting the ecological transition in my city. A green investment, a real one!"
       },
       "4": {
-        "title": "The city builder",
-        "quote": "Investing in Pony means investing in the cities I live in. It's tangible, local and it makes sense."
+        "title": "Angel since 2021",
+        "quote": "I travel a lot and I love finding scooters in the cities I visit. Supporting the arrival of this mode of transport in French cities is a no-brainer for me!"
       },
       "5": {
-        "title": "The daily commuter",
-        "quote": "I use Pony every day to get to work. Now I also earn from it. Best investment I've ever made."
-      },
-      "6": {
-        "title": "The fintech native",
-        "quote": "The returns are real, the asset is real, the impact is real. This is what modern investing looks like."
-      },
-      "7": {
-        "title": "The impact seeker",
-        "quote": "I was looking for an investment that aligns with my values. Pony checks every single box."
-      },
-      "8": {
-        "title": "The early adopter",
-        "quote": "I joined at the very beginning and I've been recommending it to everyone since. It just works."
-      },
-      "9": {
-        "title": "The long-term thinker",
-        "quote": "Monthly income for 36 months and my capital back along the way. The math is simple and I love it."
-      },
-      "10": {
-        "title": "The green convert",
-        "quote": "I used to invest in stocks. Now I invest in bikes that reduce CO2. Much more satisfying."
+        "title": "Angel since 2022",
+        "quote": "I bought a Double pony a few months ago to support the growth of a French company that makes my daily life easier! I love this bike and its concept: being able to ride two-up at the weekend is just brilliant."
       }
     },
     "footer": {
       "disclaimer": "All investments carry risk, including the risk of capital loss. Pony Bonds is regulated by the AMF.",
       "privacy": "Privacy policy",
-      "terms": "Terms"
+      "terms": "Terms",
+      "helpCenter": "Help center",
+      "ridersTitle": "RIDERS",
+      "howToRide": "How to ride",
+      "safety": "Safety",
+      "pricing": "Pricing",
+      "download": "Download the app",
+      "angelsTitle": "ANGELS",
+      "adoptPony": "Adopt a Pony",
+      "bikes": "Bikes",
+      "scooters": "Scooters",
+      "tagline": "Invest in our bikes and scooters, we rent them out across France, and you earn 8.5% annual interest."
     }
   },
   "campagne": {
@@ -327,17 +318,38 @@
     },
     "faq": {
       "title": "FAQs",
-      "soon": "Coming soon.",
-      "q1": "What is Pony and Adopt a Pony?",
-      "q2": "Why invest with Adopt a Pony?",
-      "q3": "How do you generate 8.5% returns?",
-      "q4": "What is the risk associated to adopting a Pony?",
-      "q5": "What is the associated fiscality?"
+      "q1": "What is Adopt a Pony?",
+      "q2": "Why invest and adopt a pony?",
+      "q3": "How does Pony generate returns?",
+      "q4": "Are there any risks?",
+      "q5": "What is the associated taxation?",
+      "q6": "When and how will I receive interest and capital repayment?",
+      "q7": "I'm already a Pony Angel — can I pay with my Angel balance?",
+      "q8": "Can I privatise one of my virtual ponies?",
+      "a1": "Adopt a Pony is a programme that lets you invest in a fleet of Pony electric bikes and scooters.\n\nThe principle is win-win: Pony funds the fleets it needs to grow, and you earn an attractive monthly return while supporting the development of more sustainable mobility in the cities where Pony operates.",
+      "a2": "• <strong>High returns</strong>: up to 8.5% annual return, the equivalent of 25% in gains over the full period, thanks to the strong structural profitability of the bikes and scooters operated by Pony.\n\n• <strong>A tangible asset</strong>: your investment is backed by real bikes and scooters, designed by Pony to be durable and robust. An underlying asset with its own intrinsic value.\n\n• <strong>10x fewer emissions</strong>: a Pony trip emits up to 10x less CO2 than a car. You directly help cut CO2 emissions in the cities where Pony operates.\n\n• <strong>A French leader</strong>: Pony is the only French player in the sector and the leader, with 22 cities in service. Our bikes are designed in-house by our engineers and made in France by the Manufacture Française du Cycle.\n\n• <strong>Real-time tracking</strong>: when you invest, we allocate ponies that virtually become yours. Get notifications about trips and maintenance, and see their live GPS location!",
+      "a3": "Our model rests on four fundamentals that let us generate an attractive operating margin:\n\n• <strong>Unique expertise</strong>: Pony has been operating for 7 years and has built world-leading know-how in managing shared fleets, driven by highly experienced teams and in-house tools refined over the years.\n\n• <strong>Robust assets</strong>: our vehicles last more than 7 years. Designed entirely in-house, they rarely break down and we keep full control over their repairability, handled on an express basis.\n\n• <strong>Strong and growing demand</strong>: usage of our services grows every year. We now have more than 500,000 active users, and this demand is growing faster than the size of our fleet.\n\n• <strong>The best batteries on the market</strong>: their range is nearly 1.6x greater than our competitors'. The result: a very low charging cost, and therefore higher profitability per vehicle.",
+      "a4": "Unlike traditional crowdfunding platforms, Adopt a Pony directly bears the operational and commercial risk of the financed project. Concretely:\n\n• If demand is lower than forecast, we still pay your monthly returns.\n\n• If the fleet is damaged, we replace it without interrupting interest payments.\n\n• If a city licence isn't renewed, we redeploy the vehicles to another city and keep paying you.\n\nIn short, we absorb most of the operational and commercial uncertainties of the financed project. The residual risk is limited to a Pony default scenario: in that case, repayment would rely on reselling the assets. See here for all identified risks.",
+      "a5": "Interest rates on Adopt a Pony are shown gross (before tax).\n\n<strong>Individuals:</strong>\n\n• <strong>French tax residents</strong>: interest is subject to a 30% flat tax (PFU), withheld at source and pre-filled in your tax return. If you fall under the progressive income tax scale, send us a declaration on your honour and we'll pay the gross interest.\n\n• <strong>Non-French tax residents</strong>: no withholding at source. Declare according to your local rules.\n\n<strong>Companies:</strong>\n\n• Interest is treated as income and subject to corporate or income tax, depending on your legal status.\n\nEvery January, Adopt a Pony provides you with a tax statement to help you complete your return. For personalised advice, consult a tax professional.",
+      "a6": "Interest and capital are paid monthly from the 13th month through to the 48th month.\n\nWhy the delay? In practice, up to 12 months can pass between ordering and deploying the fleets you've financed. This period includes, for example, purchasing and sourcing raw materials, production and transport.\n\nTo align the financing mechanism as closely as possible with the reality of the business model, a grace period may be introduced. During this grace period, your interest is capitalised and added to your capital, which is then repaid each month along with the associated interest.",
+      "a7": "We aim to make this option available from the next campaign for all Pony Angels who hold a balance, and we're actively working on it. We'll keep you posted as soon as the feature is available.",
+      "a8": "The big new feature of Adopt is that you no longer invest in a single vehicle, but in an entire fleet of bikes or scooters. Privatising a single vehicle is therefore replaced by a set of perks — free rides, tracking your fleet in the app — and many more features to come."
     },
     "footer": {
       "disclaimer": "All investments carry risk, including the risk of capital loss.",
       "privacy": "Privacy policy",
-      "terms": "Terms"
+      "terms": "Terms",
+      "helpCenter": "Help center",
+      "ridersTitle": "RIDERS",
+      "howToRide": "How to ride",
+      "safety": "Safety",
+      "pricing": "Pricing",
+      "download": "Download the app",
+      "angelsTitle": "ANGELS",
+      "adoptPony": "Adopt a Pony",
+      "bikes": "Bikes",
+      "scooters": "Scooters",
+      "tagline": "Invest in shared electric mobility and earn monthly income."
     }
   },
   "investir": {

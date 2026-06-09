@@ -49,7 +49,7 @@ export default function Header() {
             <span style={{ color: 'rgba(255,255,255,0.2)' }}>/</span>
             <button onClick={() => switchLocale('en')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px 4px', color: locale === 'en' ? '#00FFFF' : 'rgba(255,255,255,0.4)' }}>EN</button>
           </div>
-          <a href="#" style={{ fontSize: '13px', fontWeight: 700, color: '#13102B', backgroundColor: '#00FFFF', padding: '8px 16px', borderRadius: '10px', textDecoration: 'none' }}>
+          <a href="https://app.lemcal.com/@oliviabally/adopt-a-pony" target="_blank" rel="noopener noreferrer" style={{ fontSize: '13px', fontWeight: 700, color: '#13102B', backgroundColor: '#00FFFF', padding: '8px 16px', borderRadius: '10px', textDecoration: 'none' }}>
             {t('bookMeeting')}
           </a>
         </div>
@@ -73,7 +73,7 @@ export default function Header() {
             <span style={{ color: 'rgba(255,255,255,0.2)' }}>/</span>
             <button onClick={() => switchLocale('en')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px', color: locale === 'en' ? '#00FFFF' : 'rgba(255,255,255,0.4)' }}>EN</button>
           </div>
-          <a href="#" onClick={() => setMenuOpen(false)} style={{ fontSize: '15px', fontWeight: 700, color: '#13102B', backgroundColor: '#00FFFF', padding: '14px 20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', marginTop: '8px' }}>
+          <a href="https://app.lemcal.com/@oliviabally/adopt-a-pony" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} style={{ fontSize: '15px', fontWeight: 700, color: '#13102B', backgroundColor: '#00FFFF', padding: '14px 20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', marginTop: '8px' }}>
             {t('bookMeeting')}
           </a>
         </div>
